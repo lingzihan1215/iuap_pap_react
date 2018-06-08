@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { actions } from "mirrorx";
 import {
   Table,
-  Breadcrumb,
   Button,
   Col,
   Row,
@@ -69,25 +68,18 @@ const PlanIndexProj = ({
     actions.PlanIndexProj.showAddModal();
   };
   const selectPageHandler = (selectedKeys, data) => {
-    // console.log('selected1', selectedKeys);
-    //console.log('selected2', data);
     actions.PlanIndexProj.load_proj(selectedKeys);
   };
   const clickPageHandler = (record, index, event) => {
-    //console.log(record);
     actions.PlanIndexProj.row_click({ record: record, index: index });
   };
   const checkForm = (flag, obj) => {
     if (flag) {
-      //console.log(obj, 'yyyyyyyyyyyyyyyyy');
-      //console.log("success");
       actions.PlanIndexProj.changeCheckFlag({
         checkFormNow: false,
         isCheckOk: true
       });
     } else {
-      //console.log(obj, 'yyyyyyyyyyyyyyyyy');
-      //console.log("fail");
       actions.PlanIndexProj.changeCheckFlag({
         checkFormNow: false,
         isCheckOk: false
@@ -96,7 +88,6 @@ const PlanIndexProj = ({
     actions.PlanIndexProj.saveData(obj);
   };
   const LoadDataHandler = node => {
-    //console.log(node);
     actions.PlanIndexProj.loadData(node);
     return datathen;
   };
@@ -113,7 +104,6 @@ const PlanIndexProj = ({
     }
   }
   const ExpandHandler = (expandedKeys, data) => {
-    //console.log(data);
     actions.PlanIndexProj.ExpandHandler(expandedKeys);
   };
   const columns = [
@@ -178,11 +168,6 @@ const PlanIndexProj = ({
 
   return (
     <div className="me-wraps">
-      <Breadcrumb>
-        <Breadcrumb.Item href="#">生产计划</Breadcrumb.Item>
-        <Breadcrumb.Item active>基础配置</Breadcrumb.Item>
-        <Breadcrumb.Item active>计划指标项目</Breadcrumb.Item>
-      </Breadcrumb>
       <div className="me-header">
         <div className="header-btn">
           <Button
@@ -260,13 +245,6 @@ const PlanIndexProj = ({
               }
             />
           </div>
-          {/* <div className="filter-item">
-                        创建人：<FormControl value={searchParam.creator_name} placeholder="请输入创建人"
-                            onChange={(param) => actions.PlanIndexProj.qryValueChange({
-                                param: param,
-                                key: "creator_name"
-                            })} />
-                    </div> */}
           <Checkbox
             className="filter-item"
             onChange={param =>
