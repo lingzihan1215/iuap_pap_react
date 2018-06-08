@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { Table, Row, Col } from 'tinper-bee';
 import axios from 'axios';
 import qs from 'query-string';
-import { timestampToDate,descriptionToText } from '../common';
+import { timestampToDate, descriptionToText } from '../common';
 import BpmFlowChart from './BpmFlowChart';
 const propTypes = {
     processDefinitionId: PropTypes.string,
@@ -97,6 +97,7 @@ class BpmTable extends Component {
 BpmTable.propTypes = propTypes;
 BpmTable.defaultProps = {
     processDefinitionId: "eiap508870:4:c3bc57e8-631a-11e8-8d04-0686c4000fcf",
-    processInstanceId: "d5c3ab59-631a-11e8-8d04-0686c4000fcf"
+    processInstanceId: "d5c3ab59-631a-11e8-8d04-0686c4000fcf",
+    host: ""
 }
 export default BpmTable;

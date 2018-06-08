@@ -33,7 +33,7 @@ BpmFlowChart.defaultProps = {
     height: "300px",
     processDefinitionId: "eiap508870:4:c3bc57e8-631a-11e8-8d04-0686c4000fcf",
     processInstanceId: "d5c3ab59-631a-11e8-8d04-0686c4000fcf",
-    host: "http://10.10.24.84:8080"
+    host: ""
 }
 
 export default BpmFlowChart;
