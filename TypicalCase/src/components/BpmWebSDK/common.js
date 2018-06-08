@@ -64,7 +64,7 @@ export const descriptionToText = (vApproveType) => {
     }
 }
 
-export const getBpmTaskURL = (type, root = "/eiap-plus/") => {
+export const getBpmTaskURL = (type, root = "eiap-plus/") => {
     switch (type) {
         case 'agree':
             return root + 'task/completetask/approveCard';
@@ -84,9 +84,6 @@ export const getBpmTaskURL = (type, root = "/eiap-plus/") => {
         case 'delegate':
             return root + 'task/assignee/getlist';
             break;
-        case 'withdraw':
-            return root + 'task/withdrawtask/withdraw';
-            break;
         default:
             break;
     }
@@ -102,7 +99,7 @@ export const sendBpmTaskAJAX = (type, data) => {
                 processInstanceId: data.processInstanceId,
                 taskId: data.taskId,
             }).catch((e) => {
-                Message.create({ content: `${e.toString()}`, color: 'danger', position: 'top' });
+                Message.create({ content: `${url} ${e.toString()}`, color: 'danger', position: 'top' });
             })
         case 'unagree':
             return axios.post(getBpmTaskURL(type), {
@@ -112,7 +109,7 @@ export const sendBpmTaskAJAX = (type, data) => {
                 processInstanceId: data.processInstanceId,
                 taskId: data.taskId,
             }).catch((e) => {
-                Message.create({ content: `${e.toString()}`, color: 'danger', position: 'top' });
+                Message.create({ content: `${url} ${e.toString()}`, color: 'danger', position: 'top' });
             })
         case 'rejectToActivity':
             return axios.post(getBpmTaskURL(type), {
@@ -122,7 +119,7 @@ export const sendBpmTaskAJAX = (type, data) => {
                 processInstanceId: data.processInstanceId,
                 taskId: data.taskId,
             }).catch((e) => {
-                Message.create({ content: `${e.toString()}`, color: 'danger', position: 'top' });
+                Message.create({ content: `${url} ${e.toString()}`, color: 'danger', position: 'top' });
             })
         case 'rejectToBillMaker':
             return axios.post(getBpmTaskURL(type), {
@@ -133,7 +130,7 @@ export const sendBpmTaskAJAX = (type, data) => {
                 taskId: data.taskId,
                 activityId: "markerbill"
             }).catch((e) => {
-                Message.create({ content: `${e.toString()}`, color: 'danger', position: 'top' });
+                Message.create({ content: `${url} ${e.toString()}`, color: 'danger', position: 'top' });
             })
         case 'signAdd':
             return axios.post(getBpmTaskURL(type), {
@@ -145,7 +142,7 @@ export const sendBpmTaskAJAX = (type, data) => {
                 pageNum: 1,
                 pageSize: 2000
             }).catch((e) => {
-                Message.create({ content: `${e.toString()}`, color: 'danger', position: 'top' });
+                Message.create({ content: `${url} ${e.toString()}`, color: 'danger', position: 'top' });
             })
         case 'delegate':
             return axios.post(getBpmTaskURL(type), {
@@ -157,28 +154,32 @@ export const sendBpmTaskAJAX = (type, data) => {
                 pageNum: 1,
                 pageSize: 2000
             }).catch((e) => {
-                Message.create({ content: `${e.toString()}`, color: 'danger', position: 'top' });
-            })
-        case 'withdraw':
-            return axios.post(getBpmTaskURL(type), {
-                approvetype: data.approvetype,
-                comment: data.comment,
-                processDefinitionId: data.processDefinitionId,
-                processInstanceId: data.processInstanceId,
-                taskId: data.taskId
-            }).catch((e) => {
-                Message.create({ content: `${e.toString()}`, color: 'danger', position: 'top' });
+                Message.create({ content: `${url} ${e.toString()}`, color: 'danger', position: 'top' });
             })
         default:
             break;
     }
     return axios.post(getBpmTaskURL(type), data).catch((e) => {
-        Message.create({ content: `${e.toString()}`, color: 'danger', position: 'top' });
+        Message.create({ content: `${url} ${e.toString()}`, color: 'danger', position: 'top' });
     })
 }
 
-export const billidToIds = (billId) => {
-    return axios.post('/eiap-plus/process/getbillbpm',{
-        billId
-    });
+export const sendBpmTaskAJAXConfirm = (type, data) => {
+    switch (type) {
+        case 'rejectToActivity':
+            console.log(data);
+            break;
+        case 'rejectToBillMaker':
+
+            break;
+        case 'signAdd':
+
+            break;
+        case 'delegate':
+
+            break;
+        default:
+            return {}
+            break;
+    }
 }

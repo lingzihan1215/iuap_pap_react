@@ -41,6 +41,7 @@ class BpmTestCheckTable extends Component {
         let { processDefinitionId, processInstanceId, host } = this.props;
         let hisTasklist = `eiap-plus/process/undoTasklist`;
         let hisTasklistData = await axios.post(hisTasklist, { "draw": 1, "length": 10, "order": {}, "search": { "search_EQ_code": "", "undefined": "", "processDefinitionName": "", "billno": "" }, "searchconfirm": {} });
+        console.log(hisTasklistData)
         this.setState({
             data: hisTasklistData.data.data
         });
@@ -51,11 +52,10 @@ class BpmTestCheckTable extends Component {
             emptyText={() => <span>暂时没有数据</span>}
             columns={this.columns}
             data={this.state.data}
-            title={() => <Button colors="primary"  onClick={() => {
-                //document.location.hash = `#/bdm/bpm?processDefinitionId=${this.state.factoryValue.processDefinitionId}&processInstanceId=${this.state.factoryValue.processInstanceId}`;
-                document.location.hash = `#/bdm/bpmapproval?id=${this.state.factoryValue.id}&processDefinitionId=${this.state.factoryValue.processDefinitionId}&processInstanceId=${this.state.factoryValue.processInstanceId}`;
-                //window.open(`http://127.0.0.1:3000/#/bdm/bpm?processDefinitionId=${this.state.factoryValue.processDefinitionId}&processInstanceId=${this.state.factoryValue.processInstanceId}`);
-            }}>任务中心打开审批</Button>}
+            title={() => <Button onClick={() => {
+                console.log(this.state.factoryValue);
+                window.open(`http://127.0.0.1:3000/#/bdm/bpm?processDefinitionId=${this.state.factoryValue.processDefinitionId}&processInstanceId=${this.state.factoryValue.processInstanceId}&id=${this.state.factoryValue.id}`);
+            }}>打开审批</Button>}
             onRowClick={(record, index, indent) => {
                 this.setState({
                     factoryValue: record
