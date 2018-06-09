@@ -148,12 +148,17 @@ class TableWrapper extends Component {
     onRowDel = (text, record, index)=>{
         return async ()=>{
             console.log("点击删除",record,index);
-                let {removeFlag} = await actions.master.remove([{"id":record["id"]}]);
-                console.log("removeFlag",removeFlag);
-                if(removeFlag){
-                    // 重新加载
-                    this.onLoad();
+            
+            this.setState({
+                showLine:true
+            },async ()=>{
+                let {done} = await actions.master.remove([{"id":record["id"]}]);
+                if(done){
+                    this.setState({
+                        showLine:false
+                    })
                 }
+            })
         }
         
     }
@@ -302,14 +307,24 @@ class TableWrapper extends Component {
                 "nodekey": "003",
                 "submitArray": submitArray
             }
-            let {pomFlag,message} = await actions.master.onCommit(tempState);
-            if(pomFlag){
-                Message.create({content: '单据提交操作成功', color: 'success'});
-                this.onLoad();
-                
-            }else {
-                Message.create({content: message, color: 'danger'});
-            }
+            this.setState({
+                showLine:true
+            },async ()=>{
+                let {done,message} = await actions.master.onCommit(tempState);
+                if(done){
+                    this.setState({
+                        showLine:false
+                    });
+                    Message.create({content: '单据提交操作成功', color: 'success'});
+                    
+                    
+                    
+                }else {
+                    this.setState({showLine:false});
+                    Message.create({content: message, color: 'danger'});
+                }
+            })
+            
         } else {
             // 弹出提示请选择数据
             Message.create({content: "请重新选择提交数据", color: 'warning'});
@@ -335,13 +350,20 @@ class TableWrapper extends Component {
         }
         console.log("撤回",recallArray);
         if(recallArray.length>0){
-            let {pomFlag,message} = await actions.master.onRecall(recallArray);
-            if(pomFlag){
-                Message.create({content: '单据撤回操作成功', color: 'success'});
-                this.onLoad();
-            }else {
-                Message.create({content: message, color: 'danger'});
-            }
+            this.setState({
+                showLine:true
+            },async ()=>{
+                let {done,message} = await actions.master.onRecall(recallArray);
+                if(done){
+                    this.setState({
+                        showLine:false
+                    })
+                    Message.create({content: '单据收回操作成功', color: 'success'});
+                    
+                }else {
+                    Message.create({content: message, color: 'danger'});
+                }
+            }) 
         }else {
             // 弹出提示请选择数据
             Message.create({content: '请选择收回数据', color: 'warning'});
@@ -362,11 +384,19 @@ class TableWrapper extends Component {
         }
         console.log("delArray",delArray);
         if(delArray.length>0){
-                let {removeFlag} = await actions.master.remove(delArray);
-                console.log("removeFlag",removeFlag);
-                if(removeFlag){
-                    this.onLoad();
+            this.setState({
+                showLine:true
+            },async ()=>{
+                let {done} = await actions.master.remove(delArray);
+                if(done){
+                    this.setState({
+                        showLine:false
+                    });
+                    Message.create({content: '单据删除成功', color: 'success'});
                 }
+            })    
+                
+
         }else {
             // 弹出提示请选择数据
             Message.create({content: '请选择删除数据', color: 'warning'});

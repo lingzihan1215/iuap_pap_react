@@ -137,8 +137,8 @@ export default {
         async remove(data,getState){
             let { data : { success } } = await api.remove(data);
             if (success=="success") {
-                // removeFlag
-                return {"removeFlag":true};
+                await actions.master.load();
+                return {"done":true};
             }
         },
 
@@ -150,7 +150,7 @@ export default {
             let {data:{success}} = result;
             if(success=="success") {
                 // 添加成功后，提示保存成功
-                return {'pomFlag':true};
+                return {"done":true};
             }
             console.log("addMasterData",success)
         },
@@ -176,12 +176,12 @@ export default {
                 let flag = result["data"]["success"];
                 console.log("flag",flag);
                 if(flag=="success"){
-                    // actions.master.load();
-                    return {'pomFlag':true};
+                    await actions.master.load();
+                    return {'done':true};
                 }
             }else if(success=="fail_global") {
                 let {data:{message}} = result
-                return {'pomFlag':false,"message":message};
+                return {'done':false,"message":message};
             }
         },
 
@@ -189,10 +189,11 @@ export default {
         async onRecall(data,getState) {
             let {data:{success,message}} = await api.onRecall(data);
             if(success=="success"){
-                return {'pomFlag':true};
+                await actions.master.load();
+                return {'done':true};
             }else if(success=="fail_global") {
                 return {
-                    'pomFlag':false,
+                    'done':false,
                     'message':message
                 }
             }
