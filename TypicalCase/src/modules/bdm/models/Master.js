@@ -62,6 +62,7 @@ export default {
             let reqParam = Object.assign({},data,paginationParam);
             console.log("reqParam",reqParam);
             let {data:{success,detailMsg:{data:{content,totalElements,totalPages}}}} = await api.get(reqParam);
+            console.log("content",content);
             if(content){
                 content = content.map((item,index)=>{
                     // console.log("applyTime",moment(item.applyTime).format('YYYY-MM-DD HH:mm:ss'));
@@ -136,13 +137,6 @@ export default {
                 actions.master.load();
             }
         },
-        /* async editByPage(data,getState){
-            let { data : { success } } = await api.edit(data);
-            if (success) {
-                Info("用户修改成功");
-                actions.routing.goBack();
-            }
-        }, */
         
         async remove(data,getState){
             let { data : { success } } = await api.remove(data);
@@ -164,36 +158,6 @@ export default {
             console.log("addMasterData",success)
         },
 
-        /* async taskSwitch(data,getState) {
-            console.log("taskSwitch",data);
-            actions.master.save(data);
-        }, */
-        // 改变卡片页面子页面数据
-        /* async changeCardList(data,getState){
-            console.log(data);
-            let tempState = {
-                cardPageChildData : data
-            }
-            actions.master.save(tempState);
-        }, */
-
-        // 卡片页面添加空行
-        /* async addEmptyRow(data,getState){
-            console.log("addEmptyRow",data);
-            actions.master.save(data);
-        }, */
-
-        // 删除卡片页面空行
-       /*  async deleteEmptyRow(data,getState){
-            actions.master.save({cardPageChildData:[]});
-            actions.master.save(data);
-        }, */
-
-        // 改变卡片页面任务分解功能中分页控件
-       /*  async changeChildPagination(data,getState) {
-            actions.master.save(data);
-        }, */
-
         // 提交数据
         async onCommit(data,getState) {
             // 先去查询是否启动了bpm流程，如果没有启动则直接进行提交，如果已经启动则提示已
@@ -203,7 +167,6 @@ export default {
                 nodekey : nodekey
             }
             let { data : { success,detailMsg } } = await api.queryBpm(bpmParam);
-
             
             if (success=="success") {
                 let commitParam = {

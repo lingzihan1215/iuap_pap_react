@@ -6,13 +6,13 @@ import React, { Component } from 'react';
 import { Radio, Row, Col, FormControl, Button, Modal, Message, Table, Checkbox } from 'tinper-bee';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { getBpmTaskURL, sendBpmTaskAJAX, sendBpmTaskAJAXConfirm } from '../common';
+import { getBpmTaskURL, sendBpmTaskAJAX, billidToIds } from '../common';
 
 const propTypes = {
-    processDefinitionId: PropTypes.string,
-    processInstanceId: PropTypes.string,
     host: PropTypes.string,
-    id: PropTypes.string
+    id: PropTypes.string,
+    appType: PropTypes.string,
+    onBpmFlowClick: PropTypes.func
 };
 
 class BpmTaskApproval extends Component {
@@ -34,7 +34,8 @@ class BpmTaskApproval extends Component {
             checkedAll: false,
             userIds: [],
             delegateList: [],
-            delegateShow: false
+            delegateShow: false,
+            userId: null
         }
         //驳回到环节的Modal-Table
         this.rejectToActivityCol = [{
@@ -76,8 +77,18 @@ class BpmTaskApproval extends Component {
             width: "30%"
         }]
     }
-    componentDidMount() {
-
+    componentWillMount = async () => {
+        //通过billID获得processDefinitionId,processInstanceId
+        // let pID = await billidToIds('f39234a2-ed92-473f-b7c1-45f71559facb');
+        // console.log(pID.data);
+    }
+    componentDidMount = async () => {
+        //传入类型是弃审，那么直接设置2
+        if (this.props.appType == "2") {
+            this.setState({
+                approvetype: "withdraw"
+            });
+        }
     }
     onAllCheckChange = () => {
         let self = this;
@@ -202,7 +213,7 @@ class BpmTaskApproval extends Component {
     handerSubmitBtn = async () => {
         console.log('state=', this.state);
         if (this.state.comment == "") {
-            Message.create({ content: '不能为空', color: 'warning', position: 'topRight' });
+            Message.create({ content: '不能为空', color: 'warning', position: 'top' });
             return;
         }
         //第一次请求审批，有的是直接一次请求，有的需要二次请求
@@ -243,13 +254,14 @@ class BpmTaskApproval extends Component {
                     this.setState({
                         delegateList: result.data.data.content,
                         delegateShow: true,
-                        selectedRow: new Array(result.data.data.content)
+                        selectedRow: new Array(result.data.data.content.length)
                     });
 
                 } else {
                     Message.create({ content: result.data.msg, color: 'danger', position: 'top' });
                 }
                 break;
+
             //所有都不满足的话那就是只有一次请求直接给出提示
             default:
                 if (result.data.flag == 'success') {
@@ -313,6 +325,7 @@ class BpmTaskApproval extends Component {
 
         console.log(msg);
     }
+    //加签
     signAddOK = async () => {
         console.log(this.state);
         let msg = await axios.post('eiap-plus/task/signaddtask/signadd', {
@@ -342,6 +355,47 @@ class BpmTaskApproval extends Component {
 
         console.log(msg);
     }
+    //改派
+    delegatedOK = async () => {
+        console.log(this.state);
+        if (this.state.userId == null) {
+            Message.create({ content: `请选择一条数据`, color: 'danger', position: 'top' });
+            return;
+        }
+        let msg = await axios.post('eiap-plus/task/delegatetask/delegate', {
+            approvetype: this.state.approvetype,
+            comment: this.state.comment,
+            processInstanceId: this.state.processInstanceId,
+            taskId: this.state.taskId,
+            userId: this.state.userId
+        }).catch((e) => {
+            Message.create({ content: `${e.toString()}`, color: 'danger', position: 'top' });
+        });
+
+        if (msg.data.flag == 'success') {
+            Message.create({ content: `${msg.data.msg}`, color: 'info', position: 'top' });
+            this.setState({
+                rejectToActivityShow: false,
+                signAddShow: false,
+                rejectlist: [],
+                selectedRow: [],
+                signAddList: [],
+                checkedArray: [],
+                checkedAll: false,
+                delegateShow: false
+            });
+        } else {
+            Message.create({ content: `${msg.data.msg}`, color: 'danger', position: 'top' });
+        }
+
+        console.log(msg);
+    }
+    handlerFlow = () => {
+        let onBpmFlowClick = this.props.onBpmFlowClick;
+        if (onBpmFlowClick) {
+            onBpmFlowClick();
+        }
+    }
     render() {
         let { processDefinitionId, processInstanceId, host } = this.props;
         return (
@@ -351,14 +405,14 @@ class BpmTaskApproval extends Component {
                         <Button style={{ "marginRight": "10px" }} >返回</Button>
                     </Col> */}
                     <Col mdOffset={10} md={2}>
-                        <Button style={{ "marginRight": "10px" }} colors="primary">流程图</Button>
+                        <Button onClick={this.handlerFlow} style={{ "marginRight": "10px" }} colors="primary">流程图</Button>
                         <Button onClick={this.handerSubmitBtn} style={{ "marginRight": "10px" }} colors="primary">提交</Button>
                     </Col>
                 </Row>
                 <div style={{ "background": "#eeeff1" }}>
                     <Row>
                         <Col md={12}>
-                            <Radio.RadioGroup
+                            {this.props.appType == "1" && <Radio.RadioGroup
                                 name="approvetype"
                                 selectedValue={this.state.approvetype}
                                 onChange={this.handleChange}>
@@ -368,8 +422,13 @@ class BpmTaskApproval extends Component {
                                 <Radio value="rejectToBillMaker">驳回到制单人</Radio>
                                 <Radio value="signAdd">加签</Radio>
                                 <Radio value="delegate">改派</Radio>
-                                {/* <Radio value="termination">终止</Radio> */}
-                            </Radio.RadioGroup>
+                            </Radio.RadioGroup>}
+                            {this.props.appType == "2" && <Radio.RadioGroup
+                                name="approvetype"
+                                selectedValue={this.state.approvetype}
+                                onChange={this.handleChange}>
+                                <Radio value="withdraw">弃审</Radio>
+                            </Radio.RadioGroup>}
                         </Col>
                     </Row>
                     <Row>
@@ -382,7 +441,7 @@ class BpmTaskApproval extends Component {
                                     "resize": "none",
                                     "border": "1px solid #ececec",
                                     "padding": "10px",
-                                    "margin": "20px 0px"
+                                    "marginBottom": "20px"
                                 }}
                                 onChange={this.handlerCommentChange}
                             />
@@ -448,6 +507,22 @@ class BpmTaskApproval extends Component {
                     </Modal.Header>
                     <Modal.Body>
                         <Table
+                            rowClassName={(record, index, indent) => {
+                                if (this.state.selectedRow[index]) {
+                                    return 'selected';
+                                } else {
+                                    return '';
+                                }
+                            }}
+                            onRowClick={(record, index, indent) => {
+                                let selectedRow = new Array(this.state.delegateList.length);
+                                selectedRow[index] = true;
+                                this.setState({
+                                    userId: record.id,
+                                    selectedRow: selectedRow
+                                });
+                                console.log(record.id)
+                            }}
                             scroll={{ y: 200 }}
                             columns={this.delegateCol} data={this.state.delegateList} />
                     </Modal.Body>
@@ -462,10 +537,9 @@ class BpmTaskApproval extends Component {
 }
 BpmTaskApproval.propTypes = propTypes;
 BpmTaskApproval.defaultProps = {
-    processDefinitionId: "eiap508870:4:c3bc57e8-631a-11e8-8d04-0686c4000fcf",
-    processInstanceId: "d5c3ab59-631a-11e8-8d04-0686c4000fcf",
-    host: "http://10.10.24.84:8080",
+    host: "",
     prefixCls: "bee-table",
+    appType: "1",
     multiSelect: {
         type: "checkbox",
         param: "key"
