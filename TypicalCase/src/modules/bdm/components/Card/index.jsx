@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button,FormControl,Label,Checkbox,InputNumber,Input,Col, Row,Icon,Select} from 'tinper-bee';
+import {Message,Button,FormControl,Label,Checkbox,InputNumber,Input,Col, Row,Icon,Select} from 'tinper-bee';
 import { BpmTaskApprovalWrap } from 'components/BpmWebSDK';
 import Form from 'bee-form';
 import { actions } from 'mirrorx';
@@ -154,51 +154,57 @@ class Card extends Component {
 
     render() {
         const { getFieldProps, getFieldError,getFieldDecorator} = this.props.form;
-        let {childPageFlag,cardPageChildData,count,childActivePage,btnFlag} = this.props;
-        let {code,name,type,content,status,applicant,remark,applyTime} = this.props.rowData;
+        let {childPageFlag,cardPageChildData,count,childActivePage,btnFlag,rowData} = this.props;
+        let {code,name,type,content,status,applicant,remark,applyTime} = rowData;
         // let code="",name="",type="",content="",status="",applicant="",remark="",applyTime;
-        
-        
+        let msg= function(btnFlag){
+            switch(btnFlag){
+                case 0:
+                    return "新增";
+                    break;
+                case 1:
+                    return "编辑";
+                    break;
+                case 2:
+                    return "详情";
+                    break;
+                default:
+                    return "新增";
+            }
+        }(btnFlag);
+        console.log("rowData",rowData);
+        let bpmClick = this.onClickToBPM
         return (
-            <div>
-                <div className="page">
+            <div >
+                <div className="card-page">
                     <div className="content">
                         <div className="topPart">
                             <Button size="sm" colors="primary" className="editable-add-btn backBtn" onClick={this.backClick}>返回</Button>
-                            <h1>
-                                {
-                                    function(btnFlag){
-                                        switch(btnFlag){
-                                            case 0:
-                                                return "新增";
-                                                break;
-                                            case 1:
-                                                return "编辑";
-                                                break;
-                                            case 2:
-                                                return "详情";
-                                                break;
-                                            default:
-                                                return "新增";
-                                        }
-                                    }(btnFlag)
-                                }
-                            </h1>
+                            <h1>{msg}</h1>
                             <Button size="sm" shape="border" colors="info" className={btnFlag==2? "hide":"cancelBtn"}>取消</Button>
                             <Button size="sm" colors="primary" className={btnFlag==2 ? "hide":"saveBtn"} onClick={this.saveClick}>保存</Button>
                         </div>
                     </div>
+                    {
+
+                        function (btnFlag) {
+                            if (btnFlag == 2) {
+                                return <BpmTaskApprovalWrap
+                                    id={rowData.id}
+                                    onBpmFlowClick={bpmClick}
+                                    appType={"1"}
+                                />;
+                            }
+
+                        }(btnFlag, rowData, bpmClick)
+                    }
                 </div>
                 
-                <BpmTaskApprovalWrap
-                        id={this.props.rowData.id}
-                        onBpmFlowClick={this.onClickToBPM}
-                        appType={"1"}
-                    />
                 
-                <div className="content">
+                
+                <div className="card-content">
             
-                    <div className="user-form" disabled={btnFlag==2?"disabled":false}>
+                    <div className={btnFlag==2?"user-form mt15":"user-form"} disabled={btnFlag==2?"disabled":false}>
                         <Form >
                             <Row>
                                 <Col md={4} xs={4} sm={4}>
@@ -238,7 +244,7 @@ class Card extends Component {
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
                         
-                                    <FormItem>
+                                    {/* <FormItem>
                                         <Label className="label_ajust">工单类型</Label>
                                         <span style={{color:"#ff0000"}}>*</span>
                                         <FormControl disabled={btnFlag==2?"disabled":false} className="input_adjust"  placeholder="" 
@@ -249,6 +255,28 @@ class Card extends Component {
                                                 type:'string',required: true, message: '请输入工单类型',
                                             }],
                                         }) } />
+                                        <span className='error'>
+                                            {getFieldError('type')}
+                                        </span>
+                                    </FormItem> */}
+                                    <FormItem >
+                                        <Label className="label_ajust">工单类型</Label>
+                                        <span style={{color:"#ff0000"}}>*</span>
+                                        <Select
+                                            disabled={btnFlag==2?true:false}
+                                            defaultValue={type?type:""}
+                                            searchPlaceholder="标签模式"
+                                            {
+                                                ...getFieldProps('type', {
+                                                    initialValue:type,
+                                                    validateTrigger: 'onBlur',
+                                                    rules: [{ required: true, message: '请选择工单类型!' }],
+                                                  })
+                                            }
+                                        >
+                                            <Option  value="投诉工单">投诉工单</Option>
+                                            <Option  value="对账工单">对账工单</Option>
+                                        </Select>
                                         <span className='error'>
                                             {getFieldError('type')}
                                         </span>
@@ -305,15 +333,15 @@ class Card extends Component {
                                         <Label className="label_ajust">工单状态</Label>
                                         <span style={{color:"#ff0000"}}>*</span>
                                         <Select
-                                            disabled={btnFlag==2?true:false}
+                                            disabled={true}
                                             searchPlaceholder="标签模式"
                                             {
                                                 ...getFieldProps('status', {
-                                                    initialValue: status? status+"":"0",
+                                                    initialValue:status? status+"":"0",
                                                     validateTrigger: 'onBlur',
-                                                    rules: [{ required: true,message:"工单状态"}]
-                                                }
-                                            )}
+                                                    rules: [{ required: true, message: '请选择工单状态!' }],
+                                                  })
+                                            }
                                         >
                                             <Option value="0">未提交</Option>
                                             <Option value="1">已提交</Option>
@@ -324,6 +352,22 @@ class Card extends Component {
                                             {getFieldError('status')}
                                         </span>
                                     </FormItem>
+                                    {/* <FormItem>
+                                        <Label className="label_ajust">工单状态</Label>
+                                        <span style={{color:"#ff0000"}}>*</span>
+                                        <FormControl  readOnly="readonly" className={"readonlyinput input_adjust "} 
+                                            
+                                            {...getFieldProps('status', {
+                                                initialValue : status||"未提交",
+                                                validateTrigger: 'onBlur',
+                                                rules: [{
+                                                    type:'string',required: false
+                                                }],
+                                            }) } />
+                                        <span className='error'>
+                                            {getFieldError('code')}
+                                        </span>
+                                    </FormItem> */}
                                 </Col>
                                 <Col md={12} xs={12} sm={12}>
                                     <FormItem className="content-adjust" >
