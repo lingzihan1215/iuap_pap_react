@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Message,Button,FormControl,Label,Checkbox,InputNumber,Input,Col, Row,Icon,Select} from 'tinper-bee';
 import { BpmTaskApprovalWrap } from 'components/BpmWebSDK';
 import Form from 'bee-form';
-import { actions } from 'mirrorx';
+import mirror, { actions, connect } from "mirrorx";
 import createModal from 'yyuap-ref';
 import DatePicker from 'bee-datepicker';
 import "bee-datepicker/build/DatePicker.css";
@@ -28,7 +28,7 @@ function disabledDate(current){
 }
 
 
-class Card extends Component {
+class BpmCard extends Component {
     constructor(props) {
         super(props);
     }
@@ -54,7 +54,7 @@ class Card extends Component {
                         {"title":"推荐","key":"recommed"}
                     ],// option中可增加defaultActiveKey作为默认tab标签
                     param:{//url请求参数
-                        refCode:'newuser',
+                        refCode:'bd_new_user',
                         tenantId:'',
                         sysId:'',
                     },
@@ -379,5 +379,6 @@ class Card extends Component {
         );
     }
 }
+// export default connect((state) => state.master)(BpmCard);
 
-export default Form.createForm()(Card);
+export default Form.createForm()(BpmCard);

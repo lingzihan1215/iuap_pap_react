@@ -84,9 +84,12 @@ export default {
                 // console.log("成功获取数据",content);
                 tempState.masterData = content;
                 actions.master.save(tempState);
+                
             }else{
                 Error('数据请求失败');
             }
+            // done表示数据加载完成，不管成功或者失败
+            return {"done":true};
         },
         clear(){
             actions.master.save({masterData:[]});
@@ -124,13 +127,6 @@ export default {
             } */
             actions.master.save(data);
         },
-        /* async createByPage(data,getState){
-            let { data : { success } } = await api.add(data);
-            if (success) {
-                Info("用户添加成功");
-                actions.routing.goBack();
-            }
-        }, */
         async edit(data,getState){
             let { data : { success } } = await api.edit(data);
             if (success) {
@@ -141,11 +137,12 @@ export default {
         async remove(data,getState){
             let { data : { success } } = await api.remove(data);
             if (success=="success") {
-                actions.master.load();
+                // removeFlag
+                return {"removeFlag":true};
             }
         },
 
-        async addMasterData(data,getState){
+        async onSave(data,getState){
             // 添加数据应该提交到服务器上
             console.log("addMasterData",data);
             let result = await api.save(data);
