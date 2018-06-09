@@ -28,7 +28,7 @@ class PaginationWrapper extends Component {
                 pageSize:this.state.pageSize
             }
         });
-        await actions.master.load();
+        this.onLoad();
     }
 
     onNumberChange = (value)=>{
@@ -49,7 +49,7 @@ class PaginationWrapper extends Component {
             }
         }
         actions.master.save(tempState);
-        actions.master.load();
+        this.onLoad();
     }
     onPageNumChange = (value)=>{
         console.log("pageNum",value);
@@ -58,6 +58,21 @@ class PaginationWrapper extends Component {
             pageNum:value
         })
     }
+
+    onLoad = ()=>{
+        this.setState({
+            showLine: true
+        },async ()=>{
+            // done表示是否加载完毕
+            let {done} = await actions.master.load();
+            if (done) {
+                this.setState({
+                    showLine: false
+                }) 
+            }
+        })
+    }
+
     render() {
         let {totalElements,totalPages} = this.props;
         let {activePage} = this.state;
