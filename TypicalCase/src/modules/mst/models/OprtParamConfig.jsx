@@ -10,6 +10,7 @@ export default {
   initialState: {
     data:{},
     listData: [],
+    delOk:false,
 
     bodyList: [],
     showDeleteModal: false,
@@ -47,67 +48,28 @@ export default {
   effects: {
     async load(data, getState) {//加载数据
       let listData = await api.getList(data);
-      listData=processData(listData).content;
-      listData.forEach(function (item, index) {
+      listData=processData(listData);
+      listData.content.forEach(function (item, index) {
         item.key = index;
       });
       actions.oprtparamconfig.save({listData:listData});
     },
   
     async del(data,getState){//单个删除
-
+      let res=await api.delItems(data);
+      processData(res,'删除成功');
+      actions.oprtparamconfig.load();
     },
 
     async batchDel(data,getState){//批量删除
-
+      let res=await api.delItems(data);
+      processData(res,'删除成功');
+      actions.oprtparamconfig.load();
     },
     
     
 
-    // add 表体checktable选中
-    addHandleSelect(data, getState) {
-      actions.oprtparamconfig.save({
-        addSelectedList: data
-      });
-    },
-    // add 表头字段编辑
-    handleHeadChange(data, getState) {
-      actions.oprtparamconfig.save(data);
-    },
-    // add 增行
-    handleAddRow(data, getState) {
-      let { id, addList, postAddList } = getState().oprtparamconfig;
-      let newRow = {
-        crowno: uuidv1(),
-        pk_parentid: id,
-        name: "",
-        code: "",
-        bodynote: "",
-        uplimit: "",
-        downlimit: "",
-        pk_instagno: "",
-        instnoname: "",
-        instnocode: "",
-        status: 2
-      };
-      let newAddList = [...addList, newRow],
-        newPostAddList = [...postAddList, newRow];
-      actions.oprtparamconfig.save({
-        addList: newAddList,
-        postAddList: newPostAddList
-      });
-    },
-    // add 删行
-    handleDelRow(data, getState) {
-      let { addSelectedList } = getState().oprtparamconfig;
-      if (addSelectedList.length == 0) {
-        Error("请选择要删除的行");
-      } else {
-        actions.oprtparamconfig.save({
-          addShowDeleteModal: true
-        });
-      }
-    },
+    
     addHandleDelConfirm(data, getState) {
       let addList = [...getState().oprtparamconfig.addList];
       let postAddList = [...getState().oprtparamconfig.postAddList];
