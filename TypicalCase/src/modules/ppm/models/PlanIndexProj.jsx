@@ -10,7 +10,8 @@ export default {
     showModul: false,
     showText: "新增",
     treeData: [],
-    currentNode: ""
+    currentNode: "",
+    tableData: []
   },
   reducers: {
     save(state, data) {
@@ -34,7 +35,16 @@ export default {
       }
     },
     // 获取树表数据
-    getTree() {},
+    async getTable(data) {
+      let {
+        data: { success, detailMsg }
+      } = await api.get_table(data);
+      if (success) {
+        actions.PlanIndexProj.save({ tableData: detailMsg.data });
+      } else {
+        Error("列表数据获取失败");
+      }
+    },
     // 展示模态框
     showModul(data) {
       actions.PlanIndexProj.save({ showModul: data });
