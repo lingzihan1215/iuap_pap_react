@@ -116,7 +116,11 @@ class orderList extends Component {
     }
     // 多选表格包装函数  结束
     onPageSelect =(value)=>{
-        console.log(value);
+        actions.orderList.load({
+            pageIndex:value-1,
+            searchName: decodeURIComponent(this.props.form.getFieldValue('searchName')),
+            searchCode: decodeURIComponent(this.props.form.getFieldValue('searchCode')),
+        })
     }
     dataNumSelect =(value)=>{
         let pageSize=(value+1)*5;//针对于5条/10条/15条/20条选项
@@ -158,8 +162,13 @@ class orderList extends Component {
                 dataIndex: "dept",
                 key: "dept",
             },
+            {
+                title: "订单状态",
+                dataIndex: "orderState",
+                key: "orderState",
+            },
         ];
-        let {form,list,pageSize,pageActive}=this.props;
+        let {form,list,pageSize,pageActive,totalPages}=this.props;
         const { getFieldProps, getFieldError } =form;
         let columns = this.renderColumnsMultiSelect(column);
         return (
@@ -223,7 +232,7 @@ class orderList extends Component {
                 />
                 <Pagination
                     boundaryLinks
-                    items={pageSize}
+                    items={totalPages}
                     activePage={pageActive}
                     onDataNumSelect={this.dataNumSelect}
                     onSelect={this.onPageSelect}

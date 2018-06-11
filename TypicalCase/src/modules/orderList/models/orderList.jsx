@@ -10,6 +10,7 @@ export default {
     list: [],
     pageActive:1,
     pageSize:10,
+    totalPages:1,
   },
   reducers: {
     save(state, data) {
