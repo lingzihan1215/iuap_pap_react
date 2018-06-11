@@ -1,7 +1,7 @@
 import request from "utils/request";
 
 const URL = {
-    "GET_LIST": process.env.IMS_PATH + "/oprtparamconfig/list",
+    "GET_LIST":  "/iuap-example/demo_order/list",
     "GET_BODYLIST": process.env.IMS_PATH + "/oprtparamconfig/queryBodyByParentid",    
     "ADD_SAVE": process.env.IMS_PATH + "/oprtparamconfig/add",
     "EDIT_SAVE": process.env.IMS_PATH + "/oprtparamconfig/update",
@@ -12,7 +12,7 @@ const URL = {
 
 export const getList = (params) => {
     return request(URL.GET_LIST, {
-        method: "post",
+        method: "get",
         data: params
     });
 }

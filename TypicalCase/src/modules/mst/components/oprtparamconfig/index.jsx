@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactDOM from 'react-dom';
 import { actions } from "mirrorx";
 import {
   Table,
@@ -9,238 +10,358 @@ import {
   InputGroup,
   FormControl,
   Checkbox,
-  Pagination,
-  Modal
+  Modal,
+  Panel,
+  PanelGroup,
+  Label,
+  Message
 } from "tinper-bee";
-import NoData from "components/NoData";
-import CheckTable from "components/CheckTable";
-import DeleteModal from "components/DeleteModal";
-import PageJump from "components/PageJump";
+import Pagination from 'bee-pagination';
+import '../../../../../node_modules/bee-pagination/build/Pagination.css';
+import Header from "components/Header";
+import multiSelect from "tinper-bee/lib/multiSelect.js";
+import './index.less';
+const MultiSelectTable = multiSelect(Table, Checkbox);
 
-const OprtParamConfig = props => {
-  const columns = [
-    {
-      title: "运行参数名称",
-      dataIndex: "name",
-      key: "name",
-      width: 200
-    },
-    {
-      title: "运行参数编码",
-      dataIndex: "code",
-      key: "code",
-      width: 200
-    },
-    {
-      title: "运行参数分类",
-      dataIndex: "oprtparamclsname",
-      key: "oprtparamclsname",
-      width: 200
-    },
-    {
-      title: "启用状态",
-      dataIndex: "enablestate",
-      key: "enablestate",
-      width: 200
-    },
-    {
-      title: "所属车间",
-      dataIndex: "pk_workshop_name",
-      key: "pk_workshop_name",
-      width: 200
-    },
-    {
-      title: "所属工段",
-      dataIndex: "pk_section_name",
-      key: "pk_section_name",
-      width: 200
-    },
-    {
-      title: "备注",
-      dataIndex: "note",
-      key: "note",
-      width: 200
+
+class OprtParamConfig extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchName: '',
+      searchCode: '',
+      pagetotalSize: 10,
+      pageActivePage: 1,
+      open: false,
+      checkedAll: false,
+      checkedArray: [],
+      selectData: [],
+      delModalShow: false,
+      delObj: {}
     }
-  ];
-  const childColumns = [
-    {
-      title: "行号",
-      dataIndex: "crowno",
-      key: "crowno",
-      width: 100,
-      render: (text, record, index) => {
-        return <div>{index + 1}</div>;
+  }
+
+  componentDidMount() {
+    console.log(this.props.data)
+  }
+  onHandChange = () => {//输入框编辑
+    this.setState({
+      searchCode: ReactDOM.findDOMNode(this.refs.searchCode).value,
+      searchName: ReactDOM.findDOMNode(this.refs.searchName).value
+    })
+  }
+  search = () => {//查询
+    actions.oprtparamconfig.load(
+      {
+        pageActivePage: 0,
+        pagetotalSize: this.state.pagetotalSize,
+        searchName: this.state.searchName,
+        searchCode: this.state.searchCode
       }
-    },
-    {
-      title: "监视单元名称",
-      dataIndex: "name",
-      key: "name",
-      width: 200
-    },
-    {
-      title: "监视单元编码",
-      dataIndex: "code",
-      key: "code",
-      width: 200
-    },
-    {
-      title: "仪表位号编码",
-      dataIndex: "instnocode",
-      key: "instnocode",
-      width: 200
-    },
-    {
-      title: "仪表位号名称",
-      dataIndex: "instnoname",
-      key: "instnoname",
-      width: 200
-    },
-    {
-      title: "工况上限",
-      dataIndex: "uplimit",
-      key: "uplimit",
-      width: 200
-    },
-    {
-      title: "工况下限",
-      dataIndex: "downlimit",
-      key: "downlimit",
-      width: 200
-    },
-    {
-      title: "备注",
-      dataIndex: "bodynote",
-      key: "bodynote",
-      width: 200
+    )
+  }
+  tableRowClick = (record, index, indent) => {//行点击
+
+  }
+  pageSizeChange = () => {//
+
+  }
+  pageIndexChange = () => {
+
+  }
+  onPageSelect = (pageIndex) => {
+    this.setState({
+      pageActivePage: pageIndex
+    });
+    actions.oprtparamconfig.load({
+      pageActivePage: pageIndex - 1,
+      pagetotalSize: this.state.pagetotalSize,
+      searchName: this.state.searchName,
+      searchCode: this.state.searchCode
+    });
+  }
+  rest = () => {//重置
+    this.setState({
+      searchCode: '',
+      searchName: ''
+    })
+    ReactDOM.findDOMNode(this.refs.searchCode).value = '';
+    ReactDOM.findDOMNode(this.refs.searchName).value = '';
+  }
+  tabelSelect = (data) => {//tabel选中数据
+    this.setState({
+      selectData: data
+    })
+  }
+
+  onAllCheckChange = () => {//全选
+    let self = this;
+    let checkedArray = [];
+    let listData = props.listData.concat();
+    let selIds = [];
+    for (var i = 0; i < self.state.checkedArray.length; i++) {
+      checkedArray[i] = !self.state.checkedAll;
     }
-  ];
-  let handleSearchChange = key => {
-    return e => {
-      actions.oprtparamconfig.handleSearchChange({ [key]: e });
-    };
+    self.setState({
+      checkedAll: !self.state.checkedAll,
+      checkedArray: checkedArray,
+    });
   };
-  return (
-    <div className="me-wraps">
-      <div className="me-header">
+  onCheckboxChange = (text, record, index) => {
+    let self = this;
+    let allFlag = false;
+    let checkedArray = self.state.checkedArray.concat();
+    checkedArray[index] = !self.state.checkedArray[index];
+    for (var i = 0; i < self.state.checkedArray.length; i++) {
+      if (!checkedArray[i]) {
+        allFlag = false;
+        break;
+      } else {
+        allFlag = true;
+      }
+    }
+    self.setState({
+      checkedAll: allFlag,
+      checkedArray: checkedArray,
+    });
+  };
+  renderColumnsMultiSelect(columns) {
+    const { data, checkedArray } = this.state;
+    const { multiSelect } = this.props;
+    let select_column = {};
+    let indeterminate_bool = false;
+    if (multiSelect && multiSelect.type === "checkbox") {
+      let i = checkedArray.length;
+      while (i--) {
+        if (checkedArray[i]) {
+          indeterminate_bool = true;
+          break;
+        }
+      }
+      let defaultColumns = [
+        {
+          title: (
+            <Checkbox
+              className="table-checkbox"
+              checked={this.state.checkedAll}
+              indeterminate={indeterminate_bool && !this.state.checkedAll}
+              onChange={this.onAllCheckChange}
+            />
+          ),
+          key: "checkbox",
+          dataIndex: "checkbox",
+          width: "5%",
+          render: (text, record, index) => {
+            return (
+              <Checkbox
+                className="table-checkbox"
+                checked={this.state.checkedArray[index]}
+                onChange={this.onCheckboxChange.bind(this, text, record, index)}
+              />
+            );
+          }
+        }
+      ];
+      columns = defaultColumns.concat(columns);
+    }
+    return columns;
+  }
+
+  addClick = () => {//新增
+    actions.routing.push({
+      pathname: "oprtparamconfig/add",
+      search: "?type=add"
+    });
+  }
+  editClick = (record) => {//编辑
+    actions.routing.push({
+      pathname: "oprtparamconfig/add",
+      search: "?type=edit",
+      state: record
+    });
+  }
+
+  delClick = (record) => {//删除
+    this.setState({
+      delModalShow: true,
+      delObj: record
+    })
+  }
+
+  delModalHide = () => {
+    this.setState({
+      delModalShow: false
+    })
+  }
+  delData = () => {
+    if (this.state.delObj) {
+      actions.oprtparamconfig.del(this.state.delObj);
+    } else {
+      actions.oprtparamconfig.batchDel(this.state.selectData);
+    }
+  }
+
+  batchDel = () => {//批量删除
+    if (this.state.selectData.length <= 0) {
+      return Message.create({ content: '请至少选择一条数据', color: 'warning', duration: 2 });
+    }
+    this.setState({
+      delObj: '',
+      delModalShow: true
+    })
+  }
+
+  render() {
+    const self = this;
+    const column = [
+      {
+        title: "订单编号",
+        dataIndex: "orderCode",
+        key: "orderCode",
+        width: 100
+      },
+      {
+        title: "订单名称",
+        dataIndex: "orderName",
+        key: "orderName",
+        width: 100
+      },
+      {
+        title: "客户",
+        dataIndex: "customer",
+        key: "customer",
+        width: 200
+      },
+      {
+        title: "业务员",
+        dataIndex: "busiman",
+        key: "busiman",
+      },
+      {
+        title: "所属单位",
+        dataIndex: "dept",
+        key: "dept",
+      },
+      {
+        title: "操作",
+        dataIndex: "e",
+        key: "e",
+        render(text, record, index) {
+          return (
+            <div>
+              <Button colors="primary" style={{ 'marginRight': '10px' }} onClick={(record) => { self.editClick(record) }}>
+                修改
+              </Button>
+              <Button colors="primary" onClick={(record) => { self.delClick(record) }}>
+                删除
+              </Button>
+            </div>
+          )
+        }
+      },
+    ];
+    let columns = this.renderColumnsMultiSelect(column);
+
+    const props = this.props;
+    return (
+      <div className="oprt">
+        <Header title='订单管理' />
+        <PanelGroup accordion>
+          <Panel header="查询与筛选" eventKey="1">
+            <Row className="search-panel">
+              <Col md={1} xs={2}>
+                <Label>
+                  编码：
+                </Label>
+              </Col>
+              <Col md={2} xs={4}>
+                <FormControl
+                  placeholder="请输入运行参数编码"
+                  ref='searchCode'
+                  onChange={this.onHandChange}
+                />
+              </Col>
+
+              <Col md={1} xs={2}>
+                <Label>
+                  名称：
+                </Label>
+              </Col>
+              <Col md={2} xs={4}>
+                <FormControl
+                  placeholder="请输入运行参数名称"
+                  ref='searchName'
+                  onChange={this.onHandChange}
+                />
+              </Col>
+
+
+              <Col md={3} xs={6}>
+                <Button
+                  colors="primary"
+                  onClick={this.search}
+                >
+                  查询
+              </Button>
+                <Button
+                  style={{ marginLeft: "10px" }}
+                  onClick={this.rest}
+                >
+                  重置
+              </Button>
+              </Col>
+            </Row>
+          </Panel>
+        </PanelGroup>
+
         <div className="header-btn">
           <Button
             colors="primary"
-            className="header-btn-item"
-            onClick={actions.oprtparamconfig.addHandler}
+            style={{ 'marginRight': '10px' }}
+            onClick={this.addClick}
           >
             新增
           </Button>
           <Button
             colors="primary"
-            className="header-btn-item"
-            onClick={actions.oprtparamconfig.editHandler}
-          >
-            编辑
-          </Button>
-          <Button
-            colors="primary"
-            className="header-btn-item"
-            onClick={actions.oprtparamconfig.enabledHandler}
-          >
-            启用
-          </Button>
-          <Button
-            shape="border"
-            colors="danger"
-            className="header-btn-item warning-btn"
-            onClick={actions.oprtparamconfig.disabledHandler}
-          >
-            停用
-          </Button>
-          <Button
-            shape="border"
-            colors="danger"
-            className="header-btn-item warning-btn"
-            onClick={actions.oprtparamconfig.delHandler}
-          >
+            onClick={this.batchDel}>
             删除
           </Button>
-        </div>
-        <div className="header-filter">
-          <div className="filter-item">
-            编码：<FormControl
-              placeholder="请输入运行参数编码"
-              value={props.scode}
-              onChange={param =>
-                actions.oprtparamconfig.handleSearchChange({
-                  param: param,
-                  key: "scode"
-                })
-              }
-            />
-          </div>
-          <div className="filter-item">
-            名称：<FormControl
-              placeholder="请输入运行参数名称"
-              value={props.sname}
-              onChange={param =>
-                actions.oprtparamconfig.handleSearchChange({
-                  param: param,
-                  key: "sname"
-                })
-              }
-            />
-          </div>
-          <Button
-            colors="primary"
-            className="header-btn-item"
-            onClick={actions.oprtparamconfig.handleQuery}
-          >
-            查询
-          </Button>
-          <Button
-            style={{ color: "black" }}
-            className="header-btn-item"
-            onClick={actions.oprtparamconfig.clearHandler}
-          >
-            重置
-          </Button>
-        </div>
-      </div>
-      <CheckTable
-        className="me-table"
-        columns={columns}
-        data={props.list}
-        rowClassName={(record, index, event) =>
-          actions.oprtparamconfig.rowClassNameHandler({ record, index, event })
-        }
-        onRowClick={(record, index, event) =>
-          actions.oprtparamconfig.handleRowClick({ record, index, event })
-        }
-        selectedList={actions.oprtparamconfig.handleSelect}
-        emptyText={NoData}
-        rowKey={record => record.id}
-      />
-      <PageJump
-        onChangePageSize={actions.oprtparamconfig.handleChangePageSize}
-        onChangePageIndex={actions.oprtparamconfig.handleChangePageIndex}
-        totalSize={props.totalSize}
-        activePage={props.activePage}
-        maxPage={Math.ceil(props.totalSize / props.pageSize)}
-        pageSize={props.pageSize}
-      />
-      <Table
-        className="me-table"
-        style={{ marginTop: 20 }}
-        columns={childColumns}
-        data={props.bodyList}
-        emptyText={NoData}
-        rowKey={record => record.id}
-      />
-      <DeleteModal
-        showDelModal={props.showDeleteModal}
-        content="确定要删除吗"
-        closeDelModal={actions.oprtparamconfig.handleDelCancel}
-        delData={actions.oprtparamconfig.handleDelConfirm}
-      />
-    </div>
-  );
-};
 
+        </div>
+        <MultiSelectTable
+          columns={columns}
+          data={props.listData}
+          multiSelect={{ type: "checkbox" }}
+          getSelectedDataFunc={this.tabelSelect}
+        />
+        <Pagination
+          boundaryLinks
+          items={this.state.pagetotalSize}
+          activePage={this.state.pageActivePage}
+          onSelect={this.onPageSelect}
+          showJump={true}
+        />
+        {/* <Pagination
+          onSelect={this.onPageSelect}
+          items={this.state.pagetotalSize}
+          activePage={this.state.pageActivePage}
+        /> */}
+
+        <Modal show={this.state.delModalShow} onHide={this.delModalHide} >
+          <Modal.Header>
+            <Modal.Title>操作</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            确认删除么？
+                    </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.delModalHide} style={{ 'marginRight': '10px' }}>取消</Button>
+            <Button onClick={this.delData} colors="primary">确认</Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
+    );
+  }
+}
 export default OprtParamConfig;

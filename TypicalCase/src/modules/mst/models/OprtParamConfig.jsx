@@ -2,18 +2,16 @@ import { actions } from "mirrorx";
 import queryString from "query-string";
 import uuidv1 from "uuid/v1";
 import * as api from "../services/OprtParamConfig";
-import { Info, Error } from "utils";
+import { Info, Error,processData } from "utils";
+
 
 export default {
   name: "oprtparamconfig",
   initialState: {
-    scode: "",
-    sname: "",
-    list: [],
+    data:{},
+    listData: [],
+
     bodyList: [],
-    activePage: 1,
-    totalSize: 0,
-    pageSize: 10,
     showDeleteModal: false,
     showSaveModel: false,
     selectedRow: [],
@@ -47,398 +45,25 @@ export default {
     }
   },
   effects: {
-    // data init
-    async load(data, getState) {
-      let searchMap = {};
-      let { pageSize, activePage, sname, scode } = getState().oprtparamconfig;
-      let searchMapParams = {};
-      if (data && data.type == "query") {
-        searchMap = {
-          name: sname,
-          code: scode
-        };
-      } else {
-        searchMap = {
-          searchParam: null
-        };
-      }
-      let params = {
-        page: activePage - 1,
-        size: pageSize,
-        searchParams: { searchMap: searchMap }
-      };
-      let {
-        data: { data: dat, success: status }
-      } = await api.getList(params);
-      if (status) {
-        let headData = [];
-        if (dat.head) {
-          let {
-            rows: rows,
-            pageinfo: { totalElements: totalSize, totalPages: maxPage }
-          } = dat.head;
-          rows.map(row => {
-            let headRow = {
-              id: row.values.id.value,
-              name: row.values.name.value,
-              code: row.values.code.value,
-              note: row.values.note.value,
-              enablestate:
-                row.values.enablestate.value == 0 ? "已停用" : "已启用",
-              pk_workshop: row.values.pk_workshop.value,
-              pk_workshop_name: row.values.pk_workshop_name.value,
-              pk_section: row.values.pk_section.value,
-              pk_section_name: row.values.pk_section_name.value,
-              oprtparamcls: row.values.oprtparamcls.value,
-              oprtparamclsname: row.values.oprtparamclsname.value,
-              period: row.values.period.value,
-              ts: row.values.ts.value,
-              tenantid: row.values.tenantid.value
-            };
-            headData.push(headRow);
-          });
-          actions.oprtparamconfig.save({
-            list: headData,
-            totalSize: totalSize,
-            maxPage: maxPage
-          });
-          actions.oprtparamconfig.handleRowClick({
-            index: 0,
-            record: { id: headData[0].id }
-          });
-        } else {
-          actions.oprtparamconfig.save({
-            list: headData,
-            totalSize: 0,
-            maxPage: 0
-          });
-        }
-      } else {
-        Error("数据加载失败");
-      }
-    },
-    // 行点击加载子表
-    async handleRowClick(data, getState) {
-      let { list } = getState().oprtparamconfig;
-      let selectedRow = new Array(list.length);
-      selectedRow[data.index] = true;
-      actions.oprtparamconfig.save({ selectedRow });
-      let parentId = { id: data.record.id };
-      let params = {
-        page: 0, // activePage - 1 ???,
-        size: 1000000000,
-        searchParams: {
-          searchMap: { pk_parentid: parentId.id }
-        }
-      };
-      let bodyData = await api.getBodyList(params);
-      if (bodyData.data.data.body == undefined) {
-        actions.oprtparamconfig.save({ bodyList: [] });
-        return;
-      }
-      let {
-        data: {
-          success,
-          data: {
-            body: { pageinfo, rows }
-          }
-        }
-      } = bodyData;
-      if (success) {
-        let bodyList = [];
-        rows.map(row => {
-          let bodyRow = {
-            crowno: uuidv1(),
-            code: row.values.code.value,
-            name: row.values.name.value,
-            bodynote: row.values.bodynote.value,
-            uplimit: row.values.uplimit.value,
-            downlimit: row.values.downlimit.value,
-            pk_instagno: row.values.pk_instagno.value,
-            instnoname: row.values.instnoname.value,
-            instnocode: row.values.instnocode.value,
-            id: row.values.id.value,
-            pk_parentid: row.values.pk_parentid.value,
-            ts: row.values.ts.value,
-            status: row.status,
-            tenantid: row.values.tenantid.value
-          };
-          bodyList.push(bodyRow);
-        });
-        actions.oprtparamconfig.save({ bodyList });
-      } else {
-        Error("子表加载失败");
-      }
-    },
-    rowClassNameHandler(data, getState) {
-      let { selectedRow } = getState().oprtparamconfig;
-      if (selectedRow[data.index]) {
-        return "selected";
-      } else {
-        return "";
-      }
-    },
-    // change每页显示条目数量
-    handleChangePageSize(data, getState) {
-      actions.oprtparamconfig.save({ pageSize: data, activePage: 1 });
-      actions.oprtparamconfig.load();
-    },
-    // change页码
-    handleChangePageIndex(data, getState) {
-      actions.oprtparamconfig.save({ activePage: data, bodyList: [] });
-      actions.oprtparamconfig.load();
-    },
-    // 新增按钮
-    addHandler() {
-      actions.oprtparamconfig.save({
-        id: "",
-        ts: "",
-        code: "",
-        name: "",
-        oprtparamcls: "",
-        oprtparamclsname: "",
-        pk_workshop_name: "",
-        period: "",
-        pk_workshop: "",
-        pk_section: "",
-        pk_section_name: "",
-        enablestate: "已启用",
-        note: "",
-        addList: [],
-        selectedList: [],
-        addSelectedList: []
+    async load(data, getState) {//加载数据
+      let listData = await api.getList(data);
+      listData=processData(listData).content;
+      listData.forEach(function (item, index) {
+        item.key = index;
       });
-      actions.routing.push({
-        pathname: "oprtparamconfig/add",
-        search: "?type=add"
-      });
+      actions.oprtparamconfig.save({listData:listData});
     },
-    // 编辑按钮
-    async editHandler(data, getState) {
-      if (getState().oprtparamconfig.selectedList.length == 0) {
-        Error("请选择要编辑的行");
-      } else if (getState().oprtparamconfig.selectedList.length > 1) {
-        Error("只能操作单行数据");
-      } else {
-        let bodyList = getState().oprtparamconfig.bodyList;
-        let {
-          id,
-          ts,
-          code,
-          name,
-          oprtparamcls,
-          oprtparamclsname,
-          period,
-          pk_workshop_name,
-          pk_workshop,
-          pk_section,
-          pk_section_name,
-          enablestate,
-          note,
-          tenantid
-        } = getState().oprtparamconfig.selectedList[0];
-        actions.routing.push({
-          pathname: "oprtparamconfig/add",
-          search: "?type=edit"
-        });
-        actions.oprtparamconfig.save({
-          id,
-          code,
-          name,
-          enablestate,
-          oprtparamcls,
-          oprtparamclsname,
-          period,
-          pk_workshop,
-          pk_workshop_name,
-          pk_section,
-          pk_section_name,
-          note,
-          ts,
-          tenantid,
-          addList: bodyList,
-          postAddList: bodyList
-        });
-      }
+  
+    async del(data,getState){//单个删除
+
     },
-    // 启用按钮
-    async enabledHandler(data, getState) {
-      let { selectedList } = getState().oprtparamconfig;
-      if (selectedList.length == 0) {
-        Error("请选择要启用的行");
-      } else {
-        let rows = [];
-        selectedList.forEach(item => {
-          let row = {
-            rowId: null,
-            values: {
-              id: {
-                display: null,
-                scale: -1,
-                value: item.id
-              },
-              ts: {
-                display: null,
-                scale: -1,
-                value: item.ts
-              }
-            }
-          };
-          rows.push(row);
-        });
-        let postData = {
-          data: {
-            head: {
-              rows: rows
-            }
-          }
-        };
-        let res = await api.enable(postData);
-        if (res.data.success) {
-          actions.oprtparamconfig.load();
-          Info("启用成功");
-        } else {
-          Error("启用失败");
-        }
-      }
+
+    async batchDel(data,getState){//批量删除
+
     },
-    // 停用按钮
-    async disabledHandler(data, getState) {
-      let { selectedList } = getState().oprtparamconfig;
-      if (selectedList.length == 0) {
-        Error("请选择要停用的行");
-      } else {
-        let rows = [];
-        selectedList.forEach(item => {
-          let row = {
-            rowId: null,
-            values: {
-              id: {
-                display: null,
-                scale: -1,
-                value: item.id
-              },
-              ts: {
-                display: null,
-                scale: -1,
-                value: item.ts
-              }
-            }
-          };
-          rows.push(row);
-        });
-        let postData = {
-          data: {
-            head: {
-              rows: rows
-            }
-          }
-        };
-        let res = await api.disable(postData);
-        console.log(res);
-        if (res.data.success) {
-          actions.oprtparamconfig.load();
-          Info("停用成功");
-        } else {
-          Error("停用失败");
-        }
-      }
-    },
-    // 删除按钮
-    delHandler(data, getState) {
-      let { selectedList } = getState().oprtparamconfig;
-      if (selectedList.length == 0) {
-        Error("请选择要删除的行");
-      } else {
-        actions.oprtparamconfig.save({
-          showDeleteModal: true,
-          tenantid: selectedList[0].tenantid
-        });
-      }
-    },
-    // checktable选中
-    async handleSelect(data, getState) {
-      actions.oprtparamconfig.save({
-        selectedList: data
-      });
-    },
-    // 确认删除
-    async handleDelConfirm(data, getState) {
-      let { selectedList, tenantid } = getState().oprtparamconfig;
-      let rows = [];
-      selectedList.map(item => {
-        let row = {
-          rowId: null,
-          values: {
-            id: {
-              display: null,
-              scale: -1,
-              value: item.id
-            },
-            ts: {
-              display: null,
-              scale: -1,
-              value: item.ts
-            },
-            tenantid: {
-              display: null,
-              scale: -1,
-              value: tenantid
-            }
-          }
-        };
-        rows.push(row);
-      });
-      let delData = {
-        data: {
-          head: {
-            rows: rows
-          }
-        }
-      };
-      let res = await api.delItems(delData);
-      if (res.data.success) {
-        actions.oprtparamconfig.save({
-          showDeleteModal: false,
-          bodyList: []
-        });
-        Info("删除成功");
-        actions.oprtparamconfig.load();
-      } else {
-        actions.oprtparamconfig.save({
-          showDeleteModal: false
-        });
-        Error("删除失败");
-      }
-    },
-    // 取消删除
-    handleDelCancel(data, getState) {
-      actions.oprtparamconfig.save({
-        showDeleteModal: false
-      });
-    },
-    // 搜索区域字段编辑
-    handleSearchChange(data, getState) {
-      if (data.key == "scode") {
-        actions.oprtparamconfig.save({ scode: data.param });
-      } else if (data.key == "sname") {
-        actions.oprtparamconfig.save({ sname: data.param });
-      }
-    },
-    handleSearchChecked(data, getState) {
-      actions.oprtparamconfig.save({ sshowEnable: data });
-    },
-    //重置查询
-    clearHandler(data, getState) {
-      actions.oprtparamconfig.save({ scode: "", sname: "" });
-      actions.oprtparamconfig.load();
-    },
-    // 查询按钮
-    handleQuery(data, getState) {
-      actions.oprtparamconfig.load({
-        type: "query"
-      });
-    },
+    
+    
+
     // add 表体checktable选中
     addHandleSelect(data, getState) {
       actions.oprtparamconfig.save({
@@ -546,9 +171,6 @@ export default {
     },
     // add 保存提交事件
     async handleSubmit(data, getState) {
-      console.log(getState().oprtparamconfig.checkFormNow, "checkform");
-      await actions.oprtparamconfig.save({ checkFormNow: true });
-      actions.oprtparamconfig.save({ checkFormNow: false });
       let {
         id,
         ts,
