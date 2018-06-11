@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Message,Button,FormControl,Label,Checkbox,InputNumber,Input,Col, Row,Icon,Select} from 'tinper-bee';
+import {Loading,Message,Button,FormControl,Label,Checkbox,InputNumber,Input,Col, Row,Icon,Select} from 'tinper-bee';
 import { BpmTaskApprovalWrap } from 'components/BpmWebSDK';
 import Form from 'bee-form';
 import mirror, { actions, connect } from "mirrorx";
@@ -9,7 +9,6 @@ import "bee-datepicker/build/DatePicker.css";
 import zhCN from "rc-calendar/lib/locale/zh_CN";
 import moment from "moment";
 import ChildTable from '../AddChildTable';
-import Test from '../Test/test';
 const format = 'YYYY-MM-DD HH:mm:ss';
 
 const dateInputPlaceholder = "选择日期";
@@ -27,16 +26,26 @@ function disabledDate(current){
     return current && current.valueOf() < Date.now();
 }
 
+//设置默认设置
+Message.config({
+    top: 20,  //顶上显示时距顶部的位置
+    duration: 1, //显示持续时间
+    width: 500, //左下左上右下右上显示时的宽度
+    size:"large"
+});
+
 
 class BpmCard extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            showLine:false
+        }
+        
     }
     // 返回按钮点击事件
-    onBack= async ()=>{
-        await actions.master.changePage({"showIndex":0})
-        
-        // actions.routing.goBack();
+    onBack=  ()=>{
+        actions.routing.goBack();
     }
     // 参照图标点击事件
     onRefClick=(inputid,propForm)=>{
@@ -54,7 +63,7 @@ class BpmCard extends Component {
                         {"title":"推荐","key":"recommed"}
                     ],// option中可增加defaultActiveKey作为默认tab标签
                     param:{//url请求参数
-                        refCode:'bd_new_user',
+                        refCode:'newuser',
                         tenantId:'',
                         sysId:'',
                     },
@@ -105,10 +114,19 @@ class BpmCard extends Component {
         },async (error,value)=>{
             console.log("error",error,value);
             if(!error){
-                
-                let {pomFlag} = await actions.master.onSave(value);
-                if(pomFlag) {
+                this.setState({
+                    showLine: true
+                })
+                // done表示是否加载完毕
+                let {done} = await actions.master.onSave(value);
+                if (done) {
+                    this.setState({
+                        showLine: false
+                    }) 
                     Message.create({content: '单据保存成功', color: 'success'});
+                    
+                }else {
+                    this.setState({showLine: false})
                 }
                 
             }
@@ -123,11 +141,24 @@ class BpmCard extends Component {
         })
     } 
 
+    /* onLoad = ()=>{
+        this.setState({
+            showLine: true
+        },async ()=>{
+            // done表示是否加载完毕
+            let {done} = await actions.master.load();
+            if (done) {
+                this.setState({
+                    showLine: false
+                }) 
+            }
+        })
+    } */
+
     render() {
         const { getFieldProps, getFieldError,getFieldDecorator} = this.props.form;
-        let {childPageFlag,cardPageChildData,count,childActivePage,btnFlag,rowData} = this.props;
+        let {btnFlag,rowData} = this.props;
         let {code,name,type,content,status,applicant,remark,applyTime} = rowData;
-        // let code="",name="",type="",content="",status="",applicant="",remark="",applyTime;
         let msg= function(btnFlag){
             switch(btnFlag){
                 case 0:
@@ -143,6 +174,7 @@ class BpmCard extends Component {
                     return "新增";
             }
         }(btnFlag);
+        console.log("BpmCard props",this.props);
         console.log("rowData",rowData);
         let bpmClick = this.onClickToBPM;
         return (
@@ -215,21 +247,6 @@ class BpmCard extends Component {
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
                         
-                                    {/* <FormItem>
-                                        <Label className="label_ajust">工单类型</Label>
-                                        <span style={{color:"#ff0000"}}>*</span>
-                                        <FormControl disabled={btnFlag==2?"disabled":false} className="input_adjust"  placeholder="" 
-                                        {...getFieldProps('type', {
-                                            initialValue : type,
-                                            validateTrigger: 'onBlur',
-                                            rules: [{
-                                                type:'string',required: true, message: '请输入工单类型',
-                                            }],
-                                        }) } />
-                                        <span className='error'>
-                                            {getFieldError('type')}
-                                        </span>
-                                    </FormItem> */}
                                     <FormItem >
                                         <Label className="label_ajust">工单类型</Label>
                                         <span style={{color:"#ff0000"}}>*</span>
@@ -323,22 +340,6 @@ class BpmCard extends Component {
                                             {getFieldError('status')}
                                         </span>
                                     </FormItem>
-                                    {/* <FormItem>
-                                        <Label className="label_ajust">工单状态</Label>
-                                        <span style={{color:"#ff0000"}}>*</span>
-                                        <FormControl  readOnly="readonly" className={"readonlyinput input_adjust "} 
-                                            
-                                            {...getFieldProps('status', {
-                                                initialValue : status||"未提交",
-                                                validateTrigger: 'onBlur',
-                                                rules: [{
-                                                    type:'string',required: false
-                                                }],
-                                            }) } />
-                                        <span className='error'>
-                                            {getFieldError('code')}
-                                        </span>
-                                    </FormItem> */}
                                 </Col>
                                 <Col md={12} xs={12} sm={12}>
                                     <FormItem className="content-adjust" >
@@ -373,7 +374,12 @@ class BpmCard extends Component {
                         
                     </div>
                 </div>
-                
+                <Loading
+                    fullScreen
+                    showBackDrop={true}
+                    loadingType="line"
+                    show={this.state.showLine}
+                />
                 
             </div>
         );

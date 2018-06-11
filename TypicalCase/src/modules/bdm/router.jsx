@@ -3,10 +3,8 @@
 * */
 import React from "react";
 import { Route,Link } from "mirrorx";
-import User from './containers/User';
-import UserAdd from './containers/UserAdd';
 import Master from './containers/Master';
-import BPM from './containers/BPM';
+import Bpm from './components/BPM/Bpm.jsx';
 import Card from './components/Card';
 import BpmCard  from './components/BpmCard';
 
@@ -17,10 +15,8 @@ const Routers = ({ match }) => (
 		<Route exact path={match.url} render={() => (
             <h3>请选择一个菜单</h3>
         )}/>
-        <Route exact path={`${match.url}/user`} component={User}/>
-        <Route exact path={`${match.url}/user/add`} component={UserAdd}/>
         <Route exact path={`${match.url}/Master`} component={Master}/>
-        <Route exact path={`${match.url}/bpm`} component={BPM}/>
+        <Route exact path={`${match.url}/bpm`} component={Bpm}/>
         <Route exact path={`${match.url}/bpmcard`} component={BpmCard}/>
 	</div>
 );
