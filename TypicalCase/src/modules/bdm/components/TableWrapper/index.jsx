@@ -138,9 +138,12 @@ class TableWrapper extends Component {
             let tempState = {
                 "btnFlag":1,
                 "rowData":record,
-                "showIndex":1
+                // "showIndex":1
             }
             actions.master.save(tempState);
+            actions.routing.push({
+                pathname:'/bdm/bpmcard'
+            })
         }
     }
 
@@ -152,11 +155,14 @@ class TableWrapper extends Component {
             this.setState({
                 showLine:true
             },async ()=>{
-                let {done} = await actions.master.remove([{"id":record["id"]}]);
+                let {done,message} = await actions.master.remove([{"id":record["id"]}]);
                 if(done){
                     this.setState({
                         showLine:false
-                    })
+                    });
+                    Message.create({content: '单据删除成功', color: 'success'});
+                }else {
+                    Message.create({content: message, color: 'danger'});
                 }
             })
         }
@@ -223,8 +229,12 @@ class TableWrapper extends Component {
                     render:(text, record, index)=> {
                         return (
                             <div>
-                                <span className="bcolor" onClick={this.onEdit(text, record, index)}>修改</span>
-                                <span className="span-adjust" onClick={this.onRowDel(text, record, index)} >删除</span>
+                                <span className="bcolor" onClick={this.onEdit(text, record, index)}>编辑</span>
+                                {/* <span className="span-adjust" onClick={this.onRowDel(text, record, index)} >删除</span> */}
+                                <Popconfirm content="确认删除?" id="aa" onClose={this.onRowDel(text, record, index)}>
+                                    {/* <Icon type="uf-del" className="tablewrapper-delicon"/> */}
+                                    <span className="span-adjust" >删除</span>
+                                </Popconfirm>
                             </div>
                         );
                     }
@@ -239,14 +249,14 @@ class TableWrapper extends Component {
     onAdd = () => {
         console.log("添加数据");
         let tempState = {
-            "showIndex": 1 ,
+            // "showIndex": 1 ,
             "btnFlag":0,
             "rowData":{}
         }
         actions.master.changePage(tempState);
-        /* actions.routing.push({
+        actions.routing.push({
             pathname:'/bdm/bpmcard'
-        }) */
+        })
     }
 
     // 查看方法
@@ -268,14 +278,14 @@ class TableWrapper extends Component {
             return;
         }else {
             let tempState = {
-                "showIndex":1,
+                // "showIndex":1,
                 "btnFlag":2,
                 "rowData":rowData
             }
             actions.master.save(tempState)
-            /* actions.routing.push({
-                pathname:'/bdm/card',
-            }) */
+            actions.routing.push({
+                pathname:'/bdm/bpmcard',
+            })
         }
         
     }
@@ -316,8 +326,6 @@ class TableWrapper extends Component {
                         showLine:false
                     });
                     Message.create({content: '单据提交操作成功', color: 'success'});
-                    
-                    
                     
                 }else {
                     this.setState({showLine:false});
@@ -404,6 +412,17 @@ class TableWrapper extends Component {
         
     }
 
+    onRowDoubleClick=(record, index, event)=>{
+        console.log("双击",record,event);
+        let tempState = {
+            "btnFlag":2,
+            "rowData":record
+        }
+        actions.master.save(tempState)
+        actions.routing.push({
+            pathname:'/bdm/bpmcard',
+        })
+    }
 
     render() {
         let columns = this.renderColumnsMultiSelect(masterCols);
@@ -421,6 +440,7 @@ class TableWrapper extends Component {
                     columns={columns} 
                     data={data} 
                     rowKey={(record)=>record.id}
+                    onRowDoubleClick={this.onRowDoubleClick}
                 />
                 <Loading
                     fullScreen

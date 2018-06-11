@@ -8,7 +8,6 @@ import "bee-datepicker/build/DatePicker.css";
 import zhCN from "rc-calendar/lib/locale/zh_CN";
 import moment from "moment";
 import ChildTable from '../AddChildTable';
-import Test from '../Test/test';
 const format = 'YYYY-MM-DD HH:mm:ss';
 
 const dateInputPlaceholder = "选择日期";

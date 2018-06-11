@@ -191,14 +191,14 @@ class MasterTable extends Component {
                         
                     </div>
                 );
-            case 1:
+            /* case 1:
                 return (
                     <div>
                         <Card masterData={masterData} childData={childData} refData={refData} childPageFlag={childPageFlag}
                             cardPageChildData={cardPageChildData} count={count} childActivePage={childActivePage} 
                             rowData={rowData} btnFlag={btnFlag} />
                     </div>
-                );
+                ); */
         }
     }
 }

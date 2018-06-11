@@ -74,6 +74,11 @@ class AlertConfigAdd extends Component {
     // actions.oprtparamconfig.handleSubmit
   }
 
+  commonrefFun = params => {
+    var option = commonref(params);
+    createModal(option);
+  };
+
   onCellChange = (index, key) => {
     return value => {
       const dataSource = [...this.state.dataSource];
@@ -113,6 +118,7 @@ class AlertConfigAdd extends Component {
       </Animate>
     );
   };
+
 
   render() {
     const props = this.props;
@@ -255,10 +261,31 @@ class AlertConfigAdd extends Component {
               </Col>
               <Col md={9} sm={6}>
                 <FormItem>
-                  <FormControl placeholder="所属组织" 
+                <RefControl
+                  name="depta" 
+                  placeholder="所属组织"
+                  {...getFieldProps('depta', {
+                    initialValue: props.depta,
+                  })}
+                  onSearch={() =>
+                    commonrefFun({
+                      title: "组织",
+                      refType: 1,
+                      isRadio: true,
+                      hasPage: true,
+                      refCode: "commontree",
+                      callback: HeadRefcallback,
+                      fieldName: { key: "pk_workshop" },
+                      queryparams: { ...docInfo("dept"), condition: { dr: "0" } }
+                    })
+                  }
+                />
+
+
+                  {/* <FormControl placeholder="所属组织" 
                     {...getFieldProps('depta', {
                       initialValue: props.depta,
-                    })} />
+                    })} /> */}
                   <span className='error'>
                     {getFieldError('depta')}
                   </span>

@@ -14,13 +14,16 @@ import {
   Panel,
   PanelGroup,
   Label,
-  Message
+  Message,
+  Select
 } from "tinper-bee";
 import Pagination from 'bee-pagination';
 import '../../../../../node_modules/bee-pagination/build/Pagination.css';
 import Header from "components/Header";
 import multiSelect from "tinper-bee/lib/multiSelect.js";
 import './index.less';
+
+
 const MultiSelectTable = multiSelect(Table, Checkbox);
 
 
@@ -28,11 +31,12 @@ class OprtParamConfig extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchName: '',
       searchCode: '',
+      searchName:'',
       pagetotalSize: 10,
       pageActivePage: 1,
       open: false,
+      orderState:'',
       checkedAll: false,
       checkedArray: [],
       selectData: [],
@@ -42,20 +46,27 @@ class OprtParamConfig extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.data)
+    let listData=this.props.listData;
+    if(listData){
+      this.setState({
+        pagetotalSize:listData.totalPages,
+        pageActivePage:listData.number
+      })
+    }
   }
   onHandChange = () => {//输入框编辑
     this.setState({
       searchCode: ReactDOM.findDOMNode(this.refs.searchCode).value,
       searchName: ReactDOM.findDOMNode(this.refs.searchName).value
-    })
+      })
   }
+
   search = () => {//查询
     actions.oprtparamconfig.load(
       {
         pageActivePage: 0,
-        pagetotalSize: this.state.pagetotalSize,
-        searchName: this.state.searchName,
+        pagetotalSize: this.state.pagetotalSize||10,
+        searchName: decodeURIComponent(this.state.searchName),
         searchCode: this.state.searchCode
       }
     )
@@ -182,6 +193,7 @@ class OprtParamConfig extends Component {
   }
 
   delClick = (record) => {//删除
+    console.log(record);
     this.setState({
       delModalShow: true,
       delObj: record
@@ -195,10 +207,19 @@ class OprtParamConfig extends Component {
   }
   delData = () => {
     if (this.state.delObj) {
-      actions.oprtparamconfig.del(this.state.delObj);
-    } else {
-      actions.oprtparamconfig.batchDel(this.state.selectData);
+      actions.oprtparamconfig.del([this.state.delObj.id]);
+    } else {alert('betch')
+      let delAry=[];
+      let selectData=this.state.selectData;
+      selectData.forEach((item,index)=>{
+        delAry.push(item.id)
+      })
+      actions.oprtparamconfig.batchDel(delAry);
     }
+    this.setState({
+      delModalShow: false,
+      delObj: {}
+    })
   }
 
   batchDel = () => {//批量删除
@@ -210,6 +231,27 @@ class OprtParamConfig extends Component {
       delModalShow: true
     })
   }
+
+  onStartChange = (value) => {
+    this.setState({
+        startValue: value[0],
+        startOpen: false,
+        endOpen: true,
+    });
+}
+
+remove=()=> {
+    this.setState({value: ''})
+}
+
+onChange =(d) =>{
+    this.setState({
+        value:d,
+    })
+}
+onSelect =()=>{
+
+}
 
   render() {
     const self = this;
@@ -249,10 +291,10 @@ class OprtParamConfig extends Component {
         render(text, record, index) {
           return (
             <div>
-              <Button colors="primary" style={{ 'marginRight': '10px' }} onClick={(record) => { self.editClick(record) }}>
+              <Button colors="primary" style={{ 'marginRight': '10px' }} onClick={() => { self.editClick(record) }}>
                 修改
               </Button>
-              <Button colors="primary" onClick={(record) => { self.delClick(record) }}>
+              <Button colors="primary" onClick={() => { self.delClick(record) }}>
                 删除
               </Button>
             </div>
@@ -276,7 +318,7 @@ class OprtParamConfig extends Component {
               </Col>
               <Col md={2} xs={4}>
                 <FormControl
-                  placeholder="请输入运行参数编码"
+                  placeholder="请输入编码"
                   ref='searchCode'
                   onChange={this.onHandChange}
                 />
@@ -288,8 +330,8 @@ class OprtParamConfig extends Component {
                 </Label>
               </Col>
               <Col md={2} xs={4}>
-                <FormControl
-                  placeholder="请输入运行参数名称"
+              <FormControl
+                  placeholder="请输入名称"
                   ref='searchName'
                   onChange={this.onHandChange}
                 />
@@ -331,7 +373,7 @@ class OprtParamConfig extends Component {
         </div>
         <MultiSelectTable
           columns={columns}
-          data={props.listData}
+          data={props.listData.content||[]}
           multiSelect={{ type: "checkbox" }}
           getSelectedDataFunc={this.tabelSelect}
         />

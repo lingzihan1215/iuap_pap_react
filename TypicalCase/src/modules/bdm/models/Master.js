@@ -139,6 +139,8 @@ export default {
             if (success=="success") {
                 await actions.master.load();
                 return {"done":true};
+            }else {
+                return {"done":false,"message":success||"删除异常"}
             }
         },
 
