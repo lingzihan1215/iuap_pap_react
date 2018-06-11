@@ -8,6 +8,7 @@ const loop = data =>
   data.map(item => {
     if (item.parent_id) {
       data.map(iitem => {
+        console.log('***')
         if(item.parent_id==iitem.institid){
           return(
             <TreeNode key={iitem.instit_name} title={iitem.instit_name}>
