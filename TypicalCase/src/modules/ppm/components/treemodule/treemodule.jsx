@@ -4,21 +4,37 @@ import PropTypes from "prop-types";
 import TreeForm from "../treeform/treeform";
 import { Table, Button, Col, Row, Tree, FormControl, Modal } from "tinper-bee";
 const TreeNode = Tree.TreeNode;
-const loop = data =>
-  data.map(item => {
-    if (item.parent_id) {
-      data.map(iitem => {
-        console.log('***')
-        if(item.parent_id==iitem.institid){
-          return(
-            <TreeNode key={iitem.instit_name} title={iitem.instit_name}>
-              <TreeNode key={item.instit_name } title={item.instit_name} />
-            </TreeNode>
-          )
+const setTreeData = data => {
+  let parentArr = [];
+  if (Array.isArray(data) && data.length) {
+    data.map(item => {
+      if (!item.parent_id) {
+        parentArr.push(item);
+        item.children = [];
+      }
+      parentArr.map(iitem => {
+        if (iitem.institid == item.parent_id) {
+          iitem.children.push(item);
         }
       });
+    });
+    return parentArr;
+  }
+};
+const loop = data =>
+  data.map(item => {
+    if (item.children && item.children.length) {
+      return (
+        <TreeNode key={item.institid} title={item.instit_name}>
+          {loop(item.children)}
+        </TreeNode>
+      );
+    } else {
+      if (item.parent_id) {
+        console.log("88");
+      }
+      return <TreeNode key={item.institid} title={item.instit_name} />;
     }
-    return <TreeNode key={item.instit_name} title={item.instit_name} />;
   });
 class TreeModule extends Component {
   constructor(props) {
@@ -47,6 +63,7 @@ class TreeModule extends Component {
   };
   render() {
     let { treeData } = this.props;
+    console.log(setTreeData(treeData));
     return (
       <Col md={4} xs={4} sm={4}>
         <Col md={4} xs={4} sm={4}>
@@ -61,18 +78,7 @@ class TreeModule extends Component {
         </Col>
         <Col md={12} xs={12} sm={12}>
           <Tree className="myCls" showLine onSelect={this.onSelectTree}>
-            {/* {treeData.map(item => {
-              if (item.parent_id) {
-                return (
-                  <TreeNode title={item.instit_name} key={item.instit_name} />
-                );
-              } else {
-                return (
-                  <TreeNode title={item.instit_name} key={item.instit_name} />
-                );
-              }
-            })} */}
-            {loop(treeData)}
+            {treeData ? loop(treeData) : ""}
           </Tree>
         </Col>
         <TreeForm />
