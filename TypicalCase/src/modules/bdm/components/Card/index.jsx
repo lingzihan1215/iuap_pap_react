@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Loading,Message,Button,FormControl,Label,Checkbox,InputNumber,Input,Col, Row,Icon,Select} from 'tinper-bee';
-import { BpmTaskApprovalWrap } from 'components/BpmWebSDK';
+import { BpmTaskApprovalWrap } from 'yyuap-bpm';
 import Form from 'bee-form';
 import { actions } from 'mirrorx';
 import createModal from 'yyuap-ref';

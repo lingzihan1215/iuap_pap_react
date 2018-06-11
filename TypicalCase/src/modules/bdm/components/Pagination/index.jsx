@@ -27,7 +27,6 @@ class PaginationWrapper extends Component {
     }
     onPageChange= async (eventKey)=>{
         // 切换显示的页数
-        alert(eventKey);
         this.setState({
             activePage:eventKey
         });

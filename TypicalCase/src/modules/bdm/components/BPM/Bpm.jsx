@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import queryString from 'query-string';
-import { BpmWrap } from 'components/BpmWebSDK';
+import { BpmWrap } from 'yyuap-bpm';
 import {Button} from 'tinper-bee';
 import {actions} from 'mirrorx';
 import './index.less';
