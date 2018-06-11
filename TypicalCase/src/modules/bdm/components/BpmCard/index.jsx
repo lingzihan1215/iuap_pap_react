@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import {Loading,Message,Button,FormControl,Label,Checkbox,InputNumber,Input,Col, Row,Icon,Select} from 'tinper-bee';
+import {Message,Button,FormControl,Label,Checkbox,InputNumber,Input,Col, Row,Icon,Select} from 'tinper-bee';
 import { BpmTaskApprovalWrap } from 'components/BpmWebSDK';
 import Form from 'bee-form';
-import { actions } from 'mirrorx';
+import mirror, { actions, connect } from "mirrorx";
 import createModal from 'yyuap-ref';
 import DatePicker from 'bee-datepicker';
 import "bee-datepicker/build/DatePicker.css";
@@ -27,27 +27,15 @@ function disabledDate(current){
     return current && current.valueOf() < Date.now();
 }
 
-//设置默认设置
-Message.config({
-    top: 20,  //顶上显示时距顶部的位置
-    duration: 1, //显示持续时间
-    width: 500, //左下左上右下右上显示时的宽度
-    size:"large"
-});
 
-
-class Card extends Component {
+class BpmCard extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            showLine:false
-        }
-        
     }
     // 返回按钮点击事件
-    onBack=  ()=>{
-        actions.master.changePage({"showIndex":0})
-        actions.master.load();
+    onBack= async ()=>{
+        await actions.master.changePage({"showIndex":0})
+        
         // actions.routing.goBack();
     }
     // 参照图标点击事件
@@ -66,7 +54,7 @@ class Card extends Component {
                         {"title":"推荐","key":"recommed"}
                     ],// option中可增加defaultActiveKey作为默认tab标签
                     param:{//url请求参数
-                        refCode:'newuser',
+                        refCode:'bd_new_user',
                         tenantId:'',
                         sysId:'',
                     },
@@ -117,21 +105,10 @@ class Card extends Component {
         },async (error,value)=>{
             console.log("error",error,value);
             if(!error){
-                this.setState({
-                    showLine: true
-                })
-                // done表示是否加载完毕
-                console.log("formdata",value);
-                let {done} = await actions.master.onSave(value);
-                console.log("成功执行保存");
-                if (done) {
-                    this.setState({
-                        showLine: false
-                    }) 
+                
+                let {pomFlag} = await actions.master.onSave(value);
+                if(pomFlag) {
                     Message.create({content: '单据保存成功', color: 'success'});
-                    
-                }else {
-                    this.setState({showLine: false})
                 }
                 
             }
@@ -145,20 +122,6 @@ class Card extends Component {
             search:`?id=${this.props.rowData.id}`
         })
     } 
-
-    /* onLoad = ()=>{
-        this.setState({
-            showLine: true
-        },async ()=>{
-            // done表示是否加载完毕
-            let {done} = await actions.master.load();
-            if (done) {
-                this.setState({
-                    showLine: false
-                }) 
-            }
-        })
-    } */
 
     render() {
         const { getFieldProps, getFieldError,getFieldDecorator} = this.props.form;
@@ -410,16 +373,11 @@ class Card extends Component {
                         
                     </div>
                 </div>
-                <Loading
-                    fullScreen
-                    showBackDrop={true}
-                    loadingType="line"
-                    show={this.state.showLine}
-                />
+                
                 
             </div>
         );
     }
 }
 
-export default Form.createForm()(Card);
+export default connect((state) => state.master)(Form.createForm()(BpmCard));

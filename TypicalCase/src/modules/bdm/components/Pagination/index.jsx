@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import { actions } from "mirrorx";
-import {Pagination,Select,FormControl,Button} from 'tinper-bee';
+import {Message,Loading,Pagination,Select,FormControl,Button} from 'tinper-bee';
 import './index.less';
 
 const Option = Select.Option;
 const pageSize =[5,10,20];
+
+//设置默认设置
+Message.config({
+    top: 20,  //顶上显示时距顶部的位置
+    duration: 1, //显示持续时间
+    width: 500, //左下左上右下右上显示时的宽度
+    size:"large"
+});
 
 class PaginationWrapper extends Component {
     constructor(props) {
@@ -13,7 +21,8 @@ class PaginationWrapper extends Component {
             pageIndex:0,
             pageSize:5,
             pageNum:1,
-            activePage:1
+            activePage:1,
+            showLine:false
         };
     }
     onPageChange= async (eventKey)=>{
@@ -28,7 +37,7 @@ class PaginationWrapper extends Component {
                 pageSize:this.state.pageSize
             }
         });
-        await actions.master.load();
+        this.onLoad();
     }
 
     onNumberChange = (value)=>{
@@ -49,7 +58,7 @@ class PaginationWrapper extends Component {
             }
         }
         actions.master.save(tempState);
-        actions.master.load();
+        this.onLoad();
     }
     onPageNumChange = (value)=>{
         console.log("pageNum",value);
@@ -58,6 +67,21 @@ class PaginationWrapper extends Component {
             pageNum:value
         })
     }
+
+    onLoad = ()=>{
+        this.setState({
+            showLine: true
+        },async ()=>{
+            // done表示是否加载完毕
+            let {done} = await actions.master.load();
+            if (done) {
+                this.setState({
+                    showLine: false
+                }) 
+            }
+        })
+    }
+
     render() {
         let {totalElements,totalPages} = this.props;
         let {activePage} = this.state;
@@ -99,6 +123,12 @@ class PaginationWrapper extends Component {
                     className="btn-adjust"
                     onClick={this.onConfirm}
                 >确定</Button>
+                <Loading
+                    fullScreen
+                    showBackDrop={true}
+                    loadingType="line"
+                    show={this.state.showLine}
+                />
             </div>
         );
     }

@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { Table, Checkbox,Button,Popconfirm,Icon } from 'tinper-bee';
+import {Loading,Message, Table, Checkbox,Button,Popconfirm,Icon } from 'tinper-bee';
 import {actions,routing} from 'mirrorx';
 import EnhancedPagination from '../EnhancedPagination'
 import './index.less'
@@ -54,6 +54,17 @@ const masterCols = [
 
 let isInitChecked = true;
 
+//设置默认设置
+Message.config({
+    top: 20,  //顶上显示时距顶部的位置
+    duration: 1, //显示持续时间
+    width: 500, //左下左上右下右上显示时的宽度
+    size:"large"
+});
+
+/*
+    showLine为是否显示加载提示
+*/
 
 class TableWrapper extends Component {
     constructor(props) {
@@ -61,7 +72,8 @@ class TableWrapper extends Component {
         this.state = {
             checkedAll: false,
             checkedArray: [],
-            commitFlag:0
+            commitFlag:0,
+            showLine:false
         };
     }
     
@@ -133,12 +145,36 @@ class TableWrapper extends Component {
     }
 
     // 行删除
-    onRowDel=(text, record, index)=>{
-        return ()=>{
+    onRowDel = (text, record, index)=>{
+        return async ()=>{
             console.log("点击删除",record,index);
-            actions.master.remove([{"id":record["id"]}]);
+            
+            this.setState({
+                showLine:true
+            },async ()=>{
+                let {done} = await actions.master.remove([{"id":record["id"]}]);
+                if(done){
+                    this.setState({
+                        showLine:false
+                    })
+                }
+            })
         }
         
+    }
+
+    onLoad = ()=>{
+        this.setState({
+            showLine: true
+        },async ()=>{
+            // done表示是否加载完毕
+            let {done} = await actions.master.load();
+            if (done) {
+                this.setState({
+                    showLine: false
+                }) 
+            }
+        })
     }
 
     renderColumnsMultiSelect(columns) {
@@ -209,8 +245,7 @@ class TableWrapper extends Component {
         }
         actions.master.changePage(tempState);
         /* actions.routing.push({
-            pathname:'/bdm/card',
-
+            pathname:'/bdm/bpmcard'
         }) */
     }
 
@@ -229,7 +264,7 @@ class TableWrapper extends Component {
         }
 
         if(!checkedFlag){
-            alert("请选择查看的数据");
+            Message.create({content: '请选择查看的数据', color: 'warning', duration: 1});
             return;
         }else {
             let tempState = {
@@ -258,7 +293,7 @@ class TableWrapper extends Component {
                 if(data[i]["status"]==0){
                     submitArray.push({ "id": data[i]["id"] });
                 }else {
-                    alert(`单据${data[i]["code"]}不能重复提交`);
+                    Message.create({content: `单据${data[i]["code"]}不能重复提交`, color: 'warning', duration: null});
                 }
                 
                 // submitArray.push(data[i]);
@@ -272,19 +307,28 @@ class TableWrapper extends Component {
                 "nodekey": "003",
                 "submitArray": submitArray
             }
-            let {pomFlag,message} = await actions.master.onCommit(tempState);
-            if(pomFlag){
-                alert("单据提交操作成功");
-                actions.master.load();
-            }else {
-                alert(message);
-            }
+            this.setState({
+                showLine:true
+            },async ()=>{
+                let {done,message} = await actions.master.onCommit(tempState);
+                if(done){
+                    this.setState({
+                        showLine:false
+                    });
+                    Message.create({content: '单据提交操作成功', color: 'success'});
+                    
+                    
+                    
+                }else {
+                    this.setState({showLine:false});
+                    Message.create({content: message, color: 'danger'});
+                }
+            })
+            
         } else {
             // 弹出提示请选择数据
-            alert("请重新选择提交数据");
+            Message.create({content: "请重新选择提交数据", color: 'warning'});
         }
-        
-
         
     }
 
@@ -300,27 +344,34 @@ class TableWrapper extends Component {
                 if(data[i]["status"]==1){
                     recallArray.push({"id":data[i]["id"]});
                 }else {
-                    alert(`单据${data[i]["code"]}未提交,不能执行撤回操作`);
+                    Message.create({content: `单据${data[i]["code"]}未提交,不能执行撤回操作`, color: 'warning'});
                 } 
             }
         }
         console.log("撤回",recallArray);
         if(recallArray.length>0){
-            let {pomFlag,message} = await actions.master.onRecall(recallArray);
-            if(pomFlag){
-                alert('单据撤回操作成功');
-                actions.master.load();
-            }else {
-                alert(message);
-            }
+            this.setState({
+                showLine:true
+            },async ()=>{
+                let {done,message} = await actions.master.onRecall(recallArray);
+                if(done){
+                    this.setState({
+                        showLine:false
+                    })
+                    Message.create({content: '单据收回操作成功', color: 'success'});
+                    
+                }else {
+                    Message.create({content: message, color: 'danger'});
+                }
+            }) 
         }else {
             // 弹出提示请选择数据
-            alert("请选择撤回");
+            Message.create({content: '请选择收回数据', color: 'warning'});
         }
     }
 
     // 多行删除
-    onMultiDel=()=>{
+    onMultiDel= async ()=>{
         let {checkedArray} = this.state;
         let data = this.props.data;
         console.log("data",data);
@@ -328,17 +379,31 @@ class TableWrapper extends Component {
         let delArray = [];
         for(var i=0;i<checkedArray.length;i++){
             if(checkedArray[i]){
-                delArray.push({"id":data[i][id]});
+                delArray.push({"id":data[i]["id"]});
             }
         }
         console.log("delArray",delArray);
         if(delArray.length>0){
-            actions.master.remove(delArray);
+            this.setState({
+                showLine:true
+            },async ()=>{
+                let {done} = await actions.master.remove(delArray);
+                if(done){
+                    this.setState({
+                        showLine:false
+                    });
+                    Message.create({content: '单据删除成功', color: 'success'});
+                }
+            })    
+                
+
         }else {
             // 弹出提示请选择数据
+            Message.create({content: '请选择删除数据', color: 'warning'});
         }
         
     }
+
 
     render() {
         let columns = this.renderColumnsMultiSelect(masterCols);
@@ -349,7 +414,7 @@ class TableWrapper extends Component {
                     <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onAdd} style={{ marginLeft: "5px" }} >新增</Button>
                     <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onCheck} style={{ marginLeft: "5px" }} >查看</Button>
                     <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onCommit} style={{ marginLeft: "5px" }}>提交</Button>
-                    <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onRecall} style={{ marginLeft: "5px" }}>撤回</Button>
+                    <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onRecall} style={{ marginLeft: "5px" }}>收回</Button>
                     <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onMultiDel} style={{ marginLeft: "5px" }}>删除</Button>
                 </div>
                 <Table 
@@ -357,7 +422,12 @@ class TableWrapper extends Component {
                     data={data} 
                     rowKey={(record)=>record.id}
                 />
-                
+                <Loading
+                    fullScreen
+                    showBackDrop={true}
+                    loadingType="line"
+                    show={this.state.showLine}
+                />
             </div>
         )
         

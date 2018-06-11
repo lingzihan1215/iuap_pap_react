@@ -62,6 +62,7 @@ export default {
             let reqParam = Object.assign({},data,paginationParam);
             console.log("reqParam",reqParam);
             let {data:{success,detailMsg:{data:{content,totalElements,totalPages}}}} = await api.get(reqParam);
+            console.log("content",content);
             if(content){
                 content = content.map((item,index)=>{
                     // console.log("applyTime",moment(item.applyTime).format('YYYY-MM-DD HH:mm:ss'));
@@ -83,9 +84,12 @@ export default {
                 // console.log("成功获取数据",content);
                 tempState.masterData = content;
                 actions.master.save(tempState);
+                
             }else{
                 Error('数据请求失败');
             }
+            // done表示数据加载完成，不管成功或者失败
+            return {"done":true};
         },
         clear(){
             actions.master.save({masterData:[]});
@@ -123,35 +127,22 @@ export default {
             } */
             actions.master.save(data);
         },
-        /* async createByPage(data,getState){
-            let { data : { success } } = await api.add(data);
-            if (success) {
-                Info("用户添加成功");
-                actions.routing.goBack();
-            }
-        }, */
         async edit(data,getState){
             let { data : { success } } = await api.edit(data);
             if (success) {
                 actions.master.load();
             }
         },
-        /* async editByPage(data,getState){
-            let { data : { success } } = await api.edit(data);
-            if (success) {
-                Info("用户修改成功");
-                actions.routing.goBack();
-            }
-        }, */
         
         async remove(data,getState){
             let { data : { success } } = await api.remove(data);
             if (success=="success") {
-                actions.master.load();
+                await actions.master.load();
+                return {"done":true};
             }
         },
 
-        async addMasterData(data,getState){
+        async onSave(data,getState){
             // 添加数据应该提交到服务器上
             console.log("addMasterData",data);
             let result = await api.save(data);
@@ -159,40 +150,10 @@ export default {
             let {data:{success}} = result;
             if(success=="success") {
                 // 添加成功后，提示保存成功
-                return {'pomFlag':true};
+                return {"done":true};
             }
             console.log("addMasterData",success)
         },
-
-        /* async taskSwitch(data,getState) {
-            console.log("taskSwitch",data);
-            actions.master.save(data);
-        }, */
-        // 改变卡片页面子页面数据
-        /* async changeCardList(data,getState){
-            console.log(data);
-            let tempState = {
-                cardPageChildData : data
-            }
-            actions.master.save(tempState);
-        }, */
-
-        // 卡片页面添加空行
-        /* async addEmptyRow(data,getState){
-            console.log("addEmptyRow",data);
-            actions.master.save(data);
-        }, */
-
-        // 删除卡片页面空行
-       /*  async deleteEmptyRow(data,getState){
-            actions.master.save({cardPageChildData:[]});
-            actions.master.save(data);
-        }, */
-
-        // 改变卡片页面任务分解功能中分页控件
-       /*  async changeChildPagination(data,getState) {
-            actions.master.save(data);
-        }, */
 
         // 提交数据
         async onCommit(data,getState) {
@@ -203,7 +164,6 @@ export default {
                 nodekey : nodekey
             }
             let { data : { success,detailMsg } } = await api.queryBpm(bpmParam);
-
             
             if (success=="success") {
                 let commitParam = {
@@ -216,12 +176,12 @@ export default {
                 let flag = result["data"]["success"];
                 console.log("flag",flag);
                 if(flag=="success"){
-                    // actions.master.load();
-                    return {'pomFlag':true};
+                    await actions.master.load();
+                    return {'done':true};
                 }
             }else if(success=="fail_global") {
                 let {data:{message}} = result
-                return {'pomFlag':false,"message":message};
+                return {'done':false,"message":message};
             }
         },
 
@@ -229,10 +189,11 @@ export default {
         async onRecall(data,getState) {
             let {data:{success,message}} = await api.onRecall(data);
             if(success=="success"){
-                return {'pomFlag':true};
+                await actions.master.load();
+                return {'done':true};
             }else if(success=="fail_global") {
                 return {
-                    'pomFlag':false,
+                    'done':false,
                     'message':message
                 }
             }
