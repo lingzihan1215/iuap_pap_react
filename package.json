@@ -1,13 +1,13 @@
 {
   "name": "typicalcase",
   "version": "1.0.0",
-  "description": "typical case",
+  "description": "iuap 应用平台前端典型示例工程",
   "private": true,
   "scripts": {
     "dev": "uba server",
     "build": "uba build"
   },
-  "author": "liuzhpc@yonyou.com",
+  "author": "yonyou fed team",
   "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^8.0.0",
