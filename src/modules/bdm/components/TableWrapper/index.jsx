@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 import {Loading,Message, Table, Checkbox,Button,Popconfirm,Icon } from 'tinper-bee';
 import {actions,routing} from 'mirrorx';
-import EnhancedPagination from '../EnhancedPagination'
-import './index.less'
+import EnhancedPagination from '../EnhancedPagination';
+import './index.less';
 
 const defaultPropsSelf = {
     prefixCls: "bee-table",

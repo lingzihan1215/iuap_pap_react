@@ -178,7 +178,7 @@ class BpmCard extends Component {
         console.log("rowData",rowData);
         let bpmClick = this.onClickToBPM;
         return (
-            <div >
+            <div  className="bpmcard">
                 <div className="card-page">
                     <div className="content">
                         <div className="topPart">
@@ -251,6 +251,7 @@ class BpmCard extends Component {
                                         <Label className="label_ajust">工单类型</Label>
                                         <span style={{color:"#ff0000"}}>*</span>
                                         <Select
+                                            className="bpmcard-sel"
                                             disabled={btnFlag==2?true:false}
                                             defaultValue={type?type:""}
                                             searchPlaceholder="标签模式"
@@ -321,6 +322,7 @@ class BpmCard extends Component {
                                         <Label className="label_ajust">工单状态</Label>
                                         <span style={{color:"#ff0000"}}>*</span>
                                         <Select
+                                            className="bpmcard-sel"
                                             disabled={true}
                                             searchPlaceholder="标签模式"
                                             {
