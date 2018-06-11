@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import { actions } from "mirrorx";
-import {Pagination,Select,FormControl,Button} from 'tinper-bee';
+import {Message,Loading,Pagination,Select,FormControl,Button} from 'tinper-bee';
 import './index.less';
 
 const Option = Select.Option;
 const pageSize =[5,10,20];
+
+//设置默认设置
+Message.config({
+    top: 20,  //顶上显示时距顶部的位置
+    duration: 1, //显示持续时间
+    width: 500, //左下左上右下右上显示时的宽度
+    size:"large"
+});
 
 class PaginationWrapper extends Component {
     constructor(props) {
@@ -13,7 +21,8 @@ class PaginationWrapper extends Component {
             pageIndex:0,
             pageSize:5,
             pageNum:1,
-            activePage:1
+            activePage:1,
+            showLine:false
         };
     }
     onPageChange= async (eventKey)=>{
@@ -114,6 +123,12 @@ class PaginationWrapper extends Component {
                     className="btn-adjust"
                     onClick={this.onConfirm}
                 >确定</Button>
+                <Loading
+                    fullScreen
+                    showBackDrop={true}
+                    loadingType="line"
+                    show={this.state.showLine}
+                />
             </div>
         );
     }

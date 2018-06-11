@@ -379,6 +379,5 @@ class BpmCard extends Component {
         );
     }
 }
-// export default connect((state) => state.master)(BpmCard);
 
-export default Form.createForm()(BpmCard);
+export default connect((state) => state.master)(Form.createForm()(BpmCard));
