@@ -7,13 +7,17 @@ const TreeNode = Tree.TreeNode;
 const loop = data =>
   data.map(item => {
     if (item.parent_id) {
-      return (
-        <TreeNode key={item.parent_id} title={item.parent_id}>
-          {loop(item)}
-        </TreeNode>
-      );
+      data.map(iitem => {
+        if(item.parent_id==iitem.institid){
+          return(
+            <TreeNode key={iitem.instit_name} title={iitem.instit_name}>
+              <TreeNode key={item.instit_name } title={item.instit_name} />
+            </TreeNode>
+          )
+        }
+      });
     }
-    return <TreeNode key={item.parent_id} title={item.parent_id} />;
+    return <TreeNode key={item.instit_name} title={item.instit_name} />;
   });
 class TreeModule extends Component {
   constructor(props) {
@@ -56,7 +60,7 @@ class TreeModule extends Component {
         </Col>
         <Col md={12} xs={12} sm={12}>
           <Tree className="myCls" showLine onSelect={this.onSelectTree}>
-            {treeData.map(item => {
+            {/* {treeData.map(item => {
               if (item.parent_id) {
                 return (
                   <TreeNode title={item.instit_name} key={item.instit_name} />
@@ -66,8 +70,8 @@ class TreeModule extends Component {
                   <TreeNode title={item.instit_name} key={item.instit_name} />
                 );
               }
-            })}
-            {/* {loop(treeData)} */}
+            })} */}
+            {loop(treeData)}
           </Tree>
         </Col>
         <TreeForm />

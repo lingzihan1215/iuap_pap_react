@@ -10,7 +10,6 @@ class PlanIndexProj extends Component {
   }
 
   componentWillMount() {
-    console.log(actions.PlanIndexProj.load);
     actions.PlanIndexProj.load()
     // actions.PlanIndexProj.load();
   }
