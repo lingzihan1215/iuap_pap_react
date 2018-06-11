@@ -36,6 +36,7 @@ export default {
     },
     // 获取树表数据
     async getTable(data) {
+      console.log('getTable'+data)
       let {
         data: { success, detailMsg }
       } = await api.get_table(data);

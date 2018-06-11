@@ -12,7 +12,8 @@ export const get_tree = param => {
 };
 //获取 table 数据
 export const get_table = param => {
-  return request(URL.GET_TABLE, {
+  console.log(param);
+  return request(URL.GET_TABLE + param, {
     method: "get",
     data: param
   });

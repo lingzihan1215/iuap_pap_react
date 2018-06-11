@@ -11,29 +11,29 @@ const z = 1;
 const gData = [];
 
 const generateData = (_level, _preKey, _tns) => {
-    const preKey = _preKey || '0';
-    const tns = _tns || gData;
+  const preKey = _preKey || "0";
+  const tns = _tns || gData;
 
-    const children = [];
-    for (let i = 0; i < x; i++) {
-        const key = `${preKey}-${i}`;
-        tns.push({ title: key, key });
-        if (i < y) {
-            children.push(key);
-        }
+  const children = [];
+  for (let i = 0; i < x; i++) {
+    const key = `${preKey}-${i}`;
+    tns.push({ title: key, key });
+    if (i < y) {
+      children.push(key);
     }
-    if (_level < 0) {
-        return tns;
-    }
-    const level = _level - 1;
-    children.forEach((key, index) => {
-        tns[index].children = [];
-        return generateData(level, key, tns[index].children);
-    });
+  }
+  if (_level < 0) {
+    return tns;
+  }
+  const level = _level - 1;
+  children.forEach((key, index) => {
+    tns[index].children = [];
+    return generateData(level, key, tns[index].children);
+  });
 };
 generateData(z);
 
-console.log( JSON.stringify(gData))
+console.log(JSON.stringify(gData));
 
 const setTreeData = data => {
   let parentArr = [];
@@ -75,15 +75,15 @@ class TreeModule extends Component {
 
   componentWillMount() {}
 
-  componentDidMount() {
-
-  }
+  componentDidMount() {}
 
   componentWillReceiveProps(nextProps) {}
   // 选择树节点
   onSelectTree(info) {
     console.log(info);
-    actions.PlanIndexProj.getTable('?pageIndex=0&pageSize=5&sortField=peocode&sortDirection=asc&institid=536aab12-819f-48b4-93f5-5ac8f76b1f4b&_=1528706592935')
+    actions.PlanIndexProj.getTable(
+      `?pageIndex=0&pageSize=5&sortField=peocode&sortDirection=asc&institid=${info}`
+    );
   }
   onAddTable = () => {
     actions.PlanIndexProj.showModul(true);
