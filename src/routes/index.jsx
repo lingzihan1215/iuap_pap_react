@@ -10,9 +10,12 @@ import PPM from "modules/ppm/router";
 import OL from 'modules/orderList/router';
 import OE from 'modules/orderEdit/router';
 
+import MainLayout from '../layout'
+
 const App = () => (
   <Router>
     <div>
+      <MainLayout />
       {/* 单表路由 */}
       <Route path="/bdm" component={BDM} />
       {/* 主子表路由 */}

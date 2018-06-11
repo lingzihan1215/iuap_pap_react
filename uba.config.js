@@ -7,9 +7,11 @@ const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 const svrConfig = {
   historyApiFallback: false
 };
+
 //远程代理访问，可以配置多个代理服务
 //pathRewrite规则参考https://www.npmjs.com/package/http-proxy-middleware
 const proxyConfig = [
