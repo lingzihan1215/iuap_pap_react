@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Link } from "mirrorx";
-import PlanIndexProj from "./person_manage/containers/PersonManage";
+import PlanIndexProj from "./person-manage/containers/PersonManage";
 
 const Routers = ({ match }) => (
   <div>
