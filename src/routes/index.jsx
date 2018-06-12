@@ -7,9 +7,10 @@ import Layout from "layout";
 import BDM from "modules/bdm/router";
 import MST from "modules/mst/router";
 import PPM from "modules/ppm/router";
-import order from 'modules/order/router';
+import order from "modules/order/router";
+import contracts from "modules/contract/router";
 
-import MainLayout from '../layout'
+import MainLayout from "../layout";
 
 const App = () => (
   <Router>
@@ -23,6 +24,8 @@ const App = () => (
       <Route path="/ppm" component={PPM} />
       {/* 订单管理 */}
       <Route path="/order" component={order} />
+      {/* 合同管理 */}
+      <Route path="/contract" component={contracts} />
     </div>
   </Router>
 );

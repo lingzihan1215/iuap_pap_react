@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import TreeModule from "../treemodule/treemodule";
-import TreeTableModule from "../treetable/treetablemodule";
+import TreeModule from "../tree-module/TreeModule";
+import TreeTableModule from "../tree-table/TreeTableModule";
 import { actions } from "mirrorx";
 import "./index.less";
 

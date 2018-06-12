@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { actions, connect } from "mirrorx";
-import PropTypes from "prop-types";
-import TreeForm from "../treeform/treeform";
-import { Table, Button, Col, Row, Tree, FormControl, Modal } from "tinper-bee";
+import TreeForm from "../tree-form/TreeForm";
+import { Button, Col, Row, Tree, FormControl, Modal } from "tinper-bee";
 const TreeNode = Tree.TreeNode;
 const setTreeData = data => {
   let parentArr = [];
