@@ -55,7 +55,7 @@ class List extends Component {
 
     }
     delItem=(record)=>{
-        
+        console.log(record);
     }
     detail=(record)=>{
 
@@ -85,9 +85,9 @@ class List extends Component {
                 render(record,text,index){
                     return (
                         <div className='operation-btn'>
-                            <Button size='sm' className='edit-btn' onClick={()=>{this.edit(record)}}>编辑</Button>
-                            <Button size='sm' className='del-btn' onClick={()=>{this.delItem(record)}}>删除</Button>
-                            <Button size='sm' className='detail-btn' onClick={()=>{this.detail(record)}}>查看</Button>
+                            <Button size='sm' className='edit-btn' onClick={()=>{self.edit(record)}}>编辑</Button>
+                            <Button size='sm' className='del-btn' onClick={()=>{self.delItem(record)}}>删除</Button>
+                            <Button size='sm' className='detail-btn' onClick={()=>{self.detail(record)}}>查看</Button>
                         </div>
                     )
                 }
