@@ -37,12 +37,21 @@ export default {
     },
 
     async getOrderType(param,getState){//订单类型
-      let { data: { data, success } } = await api.getOrderType(param);
-      if (success) {
-        actions.order.updateState({ 
-          orderTypes: data
-        });
-      }
+        actions.order.updateState({
+          orderTypes:[{
+            code:'D001',
+            name:'D001'
+          },{
+            code:'D002',
+            name:'D002'
+          },{
+            code:'D003',
+            name:'D003'
+          },{
+            code:'D004',
+            name:'D004'
+          }]
+        })
     }
 
   }

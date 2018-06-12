@@ -9,7 +9,7 @@ if(__MODE__ == "development"){
 }
 
 const URL = {
-    "GET_LIST":  "/system/user/list"
+    "GET_LIST":  "/order/manage/list"
 }
 
 export const getList = (params) => {

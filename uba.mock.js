@@ -7,10 +7,12 @@ module.exports = {
     "/local/user/get": "./mock/user/get.json"
   }, {
     "/order/delivery/list": "./mock/order/delivery/list.json"
+  }, {
+    "/order/manage/orderType": "./mock/order/manage/orderType.json",
   }],
   "POST": [{
     "/system/user/list": "./mock/sys-manage/user-manage/list.json",
-  },{
+  }, {
     "/order/manage/list": "./mock/order/manage/list.json",
   }]
 }
