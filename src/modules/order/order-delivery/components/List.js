@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { actions } from "mirrorx";
-import { Table, Button, Col, Row, FormControl, InputNumber } from "tinper-bee";
+import { Table, Button, Col, Row, FormControl, InputNumber, Popconfirm } from "tinper-bee";
 import Pagination from 'bee-pagination';
 import NoData from 'components/NoData';
 import Form from 'bee-form';
@@ -76,16 +76,32 @@ class List extends Component {
                 dataIndex: "op",
                 key: "op",
                 width: 100,
-                render: (text, record) => {
-                    return <div>
-                        <Button style={{ 'marginRight': '4px' }} onClick={() => this.edit(record.id)} size="sm" colors="primary" >编辑</Button>
-                    </div>
+                render: (text, record, index) => {
+                    const { editable } = record;
+                    return (<span>
+                        {editable ? <span>
+                            <Button colors="primary" style={{ 'marginRight': '4px' }} onClick={() => this.save(record.id)} size="sm">保存</Button>
+                            <Button onClick={() => this.cancel(record.id, index)} size="sm">取消</Button>
+                        </span>
+                            : <span><Button style={{ 'marginRight': '4px' }} onClick={() => this.edit(record.id)} size="sm" colors="primary" >编辑</Button>
+                                <Popconfirm placement="left" content="是否确认删除?" onClose={() => this.remove(index)} >
+                                    <Button colors="danger" size="sm">删除</Button>
+                                </Popconfirm></span>
+                        }
+                    </span>)
+                    // return <div>
+                    //     <Button style={{ 'marginRight': '4px' }} onClick={() => this.edit(record.id)} size="sm" colors="primary" >编辑</Button>
+                    // </div>
                 }
             }
         ];
     }
-    componentDidMount() {
-        actions.delivery.getList();
+    componentDidMount = () => {
+        this.loadList();
+    }
+    loadList = async () => {
+        let data = await actions.delivery.getList();
+        this.cacheData = data.map(item => ({ ...item }));
     }
     EditableCell = ({ editable, value, onChange }) => (
         <div>
@@ -151,6 +167,24 @@ class List extends Component {
         } else {
             if (target) {
                 target.editable = true;
+                actions.delivery.updateState({
+                    list: newData
+                });
+            }
+        }
+    }
+    cancel = (id, index) => {
+        const newData = [...this.props.list];
+        const target = newData.filter(item => id === item.id)[0];
+        if (target.isNew) {
+            newData.splice(index, 1);
+            actions.delivery.updateState({
+                list: newData
+            });
+        } else {
+            if (target) {
+                Object.assign(target, this.cacheData.filter(item => id === item.id)[0]);
+                delete target.editable;
                 actions.delivery.updateState({
                     list: newData
                 });

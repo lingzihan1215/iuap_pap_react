@@ -23,6 +23,7 @@ export default {
       let { data: { data, success } } = await api.getList();
       if (success) {
         actions.delivery.updateState({ list: data });
+        return data;
       }
     }
   }
