@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { actions } from "mirrorx";
-import { Table, Button, Col, Row, Con } from "tinper-bee";
+import { Table, Button, Col, Row, FormControl, InputNumber } from "tinper-bee";
+import Pagination from 'bee-pagination';
 import NoData from 'components/NoData';
 import Form from 'bee-form';
 import './list.less';
@@ -30,7 +31,8 @@ class List extends Component {
                 title: "生产批次",
                 dataIndex: "prodbatch",
                 key: "prodbatch",
-                width: 100
+                width: 100,
+                render: (text, record) => this.renderColumns(text, record, 'prodbatch')
             },
             {
                 title: "物料编码",
@@ -60,7 +62,8 @@ class List extends Component {
                 title: "发货数量",
                 dataIndex: "deliveNumber",
                 key: "deliveNumber",
-                width: 60
+                width: 60,
+                render: (text, record) => this.renderColumnsInputNumber(text, record, 'deliveNumber')
             },
             {
                 title: "单位",
@@ -72,12 +75,95 @@ class List extends Component {
                 title: "操作",
                 dataIndex: "op",
                 key: "op",
-                width: 100
+                width: 100,
+                render: (text, record) => {
+                    return <div>
+                        <Button style={{ 'marginRight': '4px' }} onClick={() => this.edit(record.id)} size="sm" colors="primary" >编辑</Button>
+                    </div>
+                }
             }
         ];
     }
     componentDidMount() {
         actions.delivery.getList();
+    }
+    EditableCell = ({ editable, value, onChange }) => (
+        <div>
+            {editable
+                ? <FormControl value={value} onChange={value => onChange(value)} />
+                : value
+            }
+        </div>
+    );
+    EditableCellInputNumber = ({ editable, value, onChange }) => (
+        <div>
+            {editable
+                ? <InputNumber
+                    iconStyle="one"
+                    max={9999}
+                    min={0}
+                    step={1}
+                    value={parseInt(value)}
+                    onChange={value => onChange(value)}
+                />
+                : value
+            }
+        </div>
+    );
+
+    renderColumns = (text, record, column) => {
+        return (
+            <this.EditableCell
+                editable={record.editable}
+                value={text}
+                onChange={value => this.handleChange(value, record.id, column)}
+            />
+        );
+    }
+    renderColumnsInputNumber = (text, record, column) => {
+        return (
+            <this.EditableCellInputNumber
+                editable={record.editable}
+                value={text}
+                onChange={value => this.handleChange(value, record.id, column)}
+            />
+        );
+    }
+    handleChange = (value, id, column) => {
+        const newData = [...this.props.list];
+        const target = newData.filter(item => id === item.id)[0];
+        if (target) {
+            target[column] = value;
+            actions.delivery.updateState({
+                list: newData
+            });
+        }
+    }
+    edit = (id) => {
+        const newData = [...this.props.list];
+        const target = newData.filter(item => id === item.id)[0];
+        if (target.isNew) {
+            delete target.isNew;
+            target.editable = true;
+            actions.delivery.updateState({
+                list: newData
+            });
+        } else {
+            if (target) {
+                target.editable = true;
+                actions.delivery.updateState({
+                    list: newData
+                });
+            }
+        }
+    }
+    handleSelect = (eventKey) => {
+        
+    }
+
+    dataNumSelect = (index, value) => {
+        alert('下拉的index=' + index);
+        alert('值=' + value)
     }
     render() {
         let { list } = this.props;
@@ -93,6 +179,18 @@ class List extends Component {
                             rowKey={r => r.id}
                             columns={this.columns}
                             scroll={{ y: 400 }}
+                            footer={() => <Pagination
+                                first
+                                last
+                                prev
+                                next
+                                boundaryLinks
+                                items={11}
+                                activePage={1}
+                                onSelect={this.handleSelect}
+                                onDataNumSelect={this.dataNumSelect}
+                                showJump={true}
+                            />}
                         />
                     </Col>
                 </Row>
