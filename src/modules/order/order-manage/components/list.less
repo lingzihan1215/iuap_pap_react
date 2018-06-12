@@ -1,4 +1,5 @@
 .order-list {
+    background: #fff;
     .head {
         text-align: center
     }
@@ -11,20 +12,48 @@
         padding-bottom: 30px !important;
     }
     .search-panel {
+        border-bottom: 1px solid;
         >div {
-            padding-top: 0
+            padding-top: 0;
+            >div{
+                height: 50px;
+            }
+        }
+        .u-form-item{
+            .u-label + *{
+                min-width: 200px;
+            }
         }
         .u-form-control {
             width: auto;
         }
         .calendar-picker{
-            display: inline-block
+            display: inline-block;
+            input{
+                width: 100%;
+            }
+        }
+        .btn-group{
+            .u-button{
+                border-radius: 0;
+            }
+        }
+        .u-select {
+            width: auto;
+        }
+        .time{
+            position: relative;
+            bottom: 10px;
         }
     }
-    .header-btn{
-        margin-bottom: 10px;
-        .header-btn-item{
-            margin-right: 10px;
+    .table-header{
+        position: relative;
+        height: 30px;
+        line-height: 30px;
+        margin-top: 10px;
+        .u-button{
+            position: absolute;
+            right: 0;
         }
     }
 }
