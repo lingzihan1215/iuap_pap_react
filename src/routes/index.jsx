@@ -5,7 +5,6 @@ import React from "react";
 import { Router, Route } from "mirrorx";
 import Layout from "layout";
 
-import MST from "modules/mst/router";
 import PPM from "modules/ppm/router";
 import order from "modules/order/router";
 import Supplier from "../modules/supplier/router";
@@ -19,8 +18,6 @@ const App = () => (
     <div>
       <MainLayout />
       <div className="layout-content">
-        {/* 主子表路由 */}
-        <Route path="/mst" component={MST} />
         {/* 树表路由 */}
         <Route path="/ppm" component={PPM} />
         {/* 订单管理 */}
