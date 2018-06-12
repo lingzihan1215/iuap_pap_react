@@ -12,8 +12,8 @@ const urlListPreview = [
 	{ "url": "/mst/oprtparamconfig", "name": "oprtparamconfig" },
 	{ "url": "/bdm/oprtparamconfig/add", "name": "oprtparamconfig/add" },
 	// 绍振：查询表单+表格+分页
-	{ "url": "/oe/orderEdit", "name": "orderEdit" },
-	{ "url": "/ol/OrderList", "name": "OrderList" },
+	{ "url": "/order/list", "name": "orderList" },
+	{ "url": "/order/edit", "name": "orderEdit" },
 	// 帅中：左树右表
 	{ "url": "/ppm/PlanIndexProj", "name": "PlanIndexProj" }
 ]
