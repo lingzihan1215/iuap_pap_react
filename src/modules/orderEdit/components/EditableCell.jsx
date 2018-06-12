@@ -1,11 +1,11 @@
 import React,{Component} from 'react';
-import { Input, Icon } from 'tinper-bee';
+import { Input, Icon,FormControl } from 'tinper-bee';
 class EditableCell extends Component {
     constructor(props){
         super(props);
         this.state={
             value: this.props.value,
-            editable: false
+            editable: this.props.editable
         }
     }
     handleChange = e => {
@@ -32,7 +32,7 @@ class EditableCell extends Component {
         <div className="editable-cell">
           {editable ? (
             <div className="editable-cell-input-wrapper">
-              <Input
+              <FormControl
                 value={value}
                 onChange={this.handleChange}
                 onKeyDown={this.handleKeydown}

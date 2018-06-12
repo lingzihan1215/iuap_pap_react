@@ -19,7 +19,7 @@ import {
 } from "tinper-bee";
 import Form from 'bee-form';
 import Header from "components/Header";
-import EditableInput from './EditableCell';
+import EditableCell from './EditableCell';
 import RefControl from "components/RefControl";
 import createModal from "yyuap-ref";
 import DeleteModal from "components/DeleteModal";
@@ -43,34 +43,46 @@ class OrderEdit extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataSource: [{
-                id:'',
-                key:0,
-                detailCode:'明细编号',
-                goodsCode:'商品编号',
-                goodsName:'商品名称',
-                price:100,
-                total:1,
-                amount:'',
-                manufacturer:'',
-                manufacturer_name:'',
-                operate:''
-            }],
-            count: 1,
+            dataSource: [
+                {
+                    key: "0",
+                    name: "沉鱼",
+                    age: "18",
+                    address: "96, 77, 89"
+                },
+                {
+                    key: "1",
+                    name: "落雁",
+                    age: "16",
+                    address: "90, 70, 80"
+                },
+                {
+                    key: "2",
+                    name: "闭月",
+                    age: "17",
+                    address: "80, 60, 80"
+                },
+                {
+                    key: "3",
+                    name: "羞花",
+                    age: "20",
+                    address: "120, 60, 90"
+                }
+            ],
+            count: 4,
             value:''
         }
     }
-    handleSubmit = () => {
-        var self=this;
+    handleSubmit = (e) => {
+        e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (err) {
                 console.log('校验失败', values);
             } else {
-                values.orderDetails=self.state.dataSource;
-                actions.orderEdit.saveData(values);
                 console.log('校验成功', values);
             }
         });
+        // actions.orderEdit.handleSubmit
     }
 
     commonrefFun = params => {
@@ -95,17 +107,10 @@ class OrderEdit extends Component {
     handleAdd = () => {
         const { count, dataSource } = this.state;
         const newData = {
-            id:'1',
-            key:count,
-            detailCode:'明细编号1',
-            goodsCode:'商品编号1',
-            goodsName:'商品名称1',
-            price:100,
-            total:1,
-            amount:'',
-            manufacturer:'',
-            manufacturer_name:'',
-            operate:''
+            key: count,
+            name: `凤姐 ${count}`,
+            age: 32,
+            address: `100 100 100`
         };
         this.setState({
             dataSource: [...dataSource, newData],
@@ -125,97 +130,56 @@ class OrderEdit extends Component {
         );
     };
 
+    onChange  = d => {
+        console.log(d.format(format));
+        this.setState({
+            value:d
+        })
+    };
+    clear = d => {
+        this.setState({
+            value:''
+        })
+    }
+    onSelect = d =>{
+
+    }
 
     render() {
         const { form, itemData } = this.props;
         const columns = [
             {
-                title: "明细编号",
-                dataIndex: "detailCode",
-                key: "detailCode",
+                title: "姓名",
+                dataIndex: "name",
+                key: "name",
+                width: "30%",
                 render: (text, record, index) => (
-                    <EditableInput
+                    <EditableCell
                         value={text}
-                        onChange={this.onCellChange(index, "detailCode")}
+                        onChange={this.onCellChange(index, "name")}
                     />
                 )
             },
             {
-                title: "商品编号",
-                dataIndex: "goodsCode",
-                key: "goodsCode",
-                render: (text, record, index) => (
-                    <EditableInput
-                        value={text}
-                        onChange={this.onCellChange(index, "detailCode")}
-                    />
-                )
+                title: "年龄",
+                dataIndex: "age",
+                key: "age"
             },
             {
-                title: "商品名称",
-                dataIndex: "goodsName",
-                key: "goodsName",
-                render: (text, record, index) => (
-                    <EditableInput
-                        value={text}
-                        onChange={this.onCellChange(index, "detailCode")}
-                    />
-                )
-            },
-            {
-                title: "制造商",
-                dataIndex: "manufacturer_name",
-                key: "manufacturer_name",
-                render: (text, record, index) => (
-                    <EditableInput
-                        value={text}
-                        onChange={this.onCellChange(index, "detailCode")}
-                    />
-                )
-            },
-            {
-                title: "单价",
-                dataIndex: "price",
-                key: "price",
-                render: (text, record, index) => (
-                    <EditableInput
-                        value={text}
-                        onChange={this.onCellChange(index, "detailCode")}
-                    />
-                )
-            },
-            {
-                title: "数量",
-                dataIndex: "total",
-                key: "total",
-                render: (text, record, index) => (
-                    <EditableInput
-                        value={text}
-                        onChange={this.onCellChange(index, "detailCode")}
-                    />
-                )
-            },
-            {
-                title: "金额",
-                dataIndex: "amount",
-                key: "amount",
-                render: (text, record, index) => (
-                    <EditableInput
-                        value={text}
-                        onChange={this.onCellChange(index, "detailCode")}
-                    />
-                )
+                title: "你懂的",
+                dataIndex: "address",
+                key: "address"
             },
             {
                 title: "操作",
                 dataIndex: "operation",
                 key: "operation",
                 render: (text, record, index) => {
-                    return  (
+                    return this.state.dataSource.length > 1 ? (
                         <Popconfirm content="确认删除?" id="aa" onClose={this.onDelete(index)}>
                             <Icon type="uf-del" />
                         </Popconfirm>
-                    ) ;
+                    ) : null;
                 }
             }
         ];
@@ -229,7 +193,7 @@ class OrderEdit extends Component {
         const { getFieldProps, getFieldError } = form;
         return (
             <div className="order-edit">
-                <Header title='订单编辑'>
+                <Header title='订单管理' back={true}>
                     <Button
                         colors="primary"
                         onClick={this.handleSubmit}
@@ -333,29 +297,25 @@ class OrderEdit extends Component {
                             </Col>
                             <Col md={9} sm={6}>
                                 <FormItem>
-                                <InputGroup simple>
-                                    <FormControl placeholder="所属组织" type="text"
-                                     {...getFieldProps('depta', {
-                                        initialValue: itemData.depta,
-                                    })}
-                                    onClick={() =>
-                                        commonrefFun({
-                                            title: "组织",
-                                            refType: 1,
-                                            isRadio: true,
-                                            hasPage: true,
-                                            refCode: "commontree",
-                                            callback: HeadRefcallback,
-                                            fieldName: { key: "pk_workshop" },
-                                            queryparams: { ...docInfo("dept"), condition: { dr: "0" } }
-                                        })
-                                    }
-                                     />
-                                    <InputGroup.Button shape="border">
-                                        <span className="uf iconfont icon-canzhao"> </span>
-                                    </InputGroup.Button>
-                                </InputGroup>
-                                    
+                                    <RefControl
+                                        name="depta"
+                                        placeholder="所属组织"
+                                        {...getFieldProps('depta', {
+                                            initialValue: itemData.depta,
+                                        })}
+                                        onSearch={() =>
+                                            commonrefFun({
+                                                title: "组织",
+                                                refType: 1,
+                                                isRadio: true,
+                                                hasPage: true,
+                                                refCode: "commontree",
+                                                callback: HeadRefcallback,
+                                                fieldName: { key: "pk_workshop" },
+                                                queryparams: { ...docInfo("dept"), condition: { dr: "0" } }
+                                            })
+                                        }
+                                    />
                                     <span className='error'>
                                         {getFieldError('depta')}
                                     </span>
@@ -390,6 +350,7 @@ class OrderEdit extends Component {
                                             })
                                         }
                                     />
+                                   
                                     <span className='error'>
                                         {getFieldError('busiman')}
                                     </span>

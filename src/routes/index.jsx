@@ -7,8 +7,7 @@ import Layout from "layout";
 import BDM from "modules/bdm/router";
 import MST from "modules/mst/router";
 import PPM from "modules/ppm/router";
-import OL from 'modules/orderList/router';
-import OE from 'modules/orderEdit/router';
+import order from 'modules/order/router';
 
 const App = () => (
   <Router>
@@ -20,9 +19,7 @@ const App = () => (
       {/* 树表路由 */}
       <Route path="/ppm" component={PPM} />
       {/* 订单管理 */}
-      <Route path="/ol" component={OL} />
-      {/* 订单编辑 */}
-      <Route path="/oe" component={OE} />
+      <Route path="/order" component={order} />
     </div>
   </Router>
 );

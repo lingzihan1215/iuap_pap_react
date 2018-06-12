@@ -1,12 +1,16 @@
+
 import { actions } from "mirrorx";
-import * as api from "../services/orderEdit";
+import * as api from "./services";
 import { processData } from "utils";
 
 
 export default {
-  name: "orderEdit",
+  name: "order",
   initialState: {
-    itemData:{}
+    list: [],
+    pageActive:1,
+    pageSize:10,
+    totalPages:1,
   },
   reducers: {
     updateState(state, data) {
@@ -17,12 +21,8 @@ export default {
     }
   },
   effects: {
-    async loadData(param, getState) {//加载数据
-     
-    },
-
-    async saveData(param,getState){//保存数据
+    async loadList(param, getState) {//加载数据
       
-    }
+    },
   }
 };

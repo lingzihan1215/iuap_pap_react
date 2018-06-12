@@ -131,7 +131,6 @@ class AlertConfigAdd extends Component {
         render: (text, record, index) => (
           <EditableCell
             value={text}
-            onChange={this.onCellChange(index, "name")}
           />
         )
       },
