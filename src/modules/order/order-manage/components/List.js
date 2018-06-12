@@ -375,8 +375,7 @@ class List extends Component {
                         multiSelect={{ type: "checkbox" }}
                         getSelectedDataFunc={this.tabelSelect}
                     />
-                </div>
-                <div className='pagination'>
+                    <div className='pagination'>
                     <Pagination
                         first
                         last
@@ -390,7 +389,7 @@ class List extends Component {
                         showJump={true}
                     />
                 </div>
-
+                </div>
             </div>
         )
     }

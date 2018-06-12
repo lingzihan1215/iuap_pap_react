@@ -3,7 +3,6 @@ import { Link } from "mirrorx";
 import "./index.less";
 
 const urlListPreview = [
-  // 贵冶项目，原框架默认（岳明）
   // 志鹏：
   { url: "/mst/oprtparamconfig", name: "oprtparamconfig" },
   { url: "/bdm/oprtparamconfig/add", name: "oprtparamconfig/add" },
@@ -15,7 +14,7 @@ const urlListPreview = [
   { url: "/system/person-manage", name: "人员管理" },
   { url: "/contract/manage", name: "合同管理" },
   // 供应商管理
-  { url: "/supplier/register", name: "供应商管理" },
+  { url: "/supplier/register", name: "供应商管理" }
 ];
 
 const getURLList = () => {
