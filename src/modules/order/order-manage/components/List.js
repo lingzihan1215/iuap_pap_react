@@ -124,6 +124,15 @@ class List extends Component {
         return columns;
     }
     // 多选表格包装函数  结束
+
+    cellClick=(record)=>{
+        actions.routing.push(
+            {
+                pathname: 'detail',
+                detailObj: record
+            }
+        )
+    }
     onPageSelect = (value) => {
         actions.order.loadList({
             pageActive: value ,
@@ -149,7 +158,8 @@ class List extends Component {
                 title: "订单编号",
                 dataIndex: "orderCode",
                 key: "orderCode",
-                width: 100
+                width: 100,
+                onCellClick:this.cellClick
             },
             {
                 title: "供应商",
@@ -233,7 +243,7 @@ class List extends Component {
                         </Col>
                         <Col md={4} xs={6}>
                             <FormItem>
-                                <Label className='time'>凭证日期：&nbsp;&nbsp;&nbsp;</Label>
+                                <Label className='time'>凭证日期：</Label>
                                 <RangePicker
                                     defaultValue={this.state.voucherDate}
                                     placeholder={'开始 ~ 结束'}
@@ -252,7 +262,7 @@ class List extends Component {
                         </Col>
                         <Col md={4} xs={6}>
                             <FormItem>
-                                <Label>订单类型：&nbsp;&nbsp;&nbsp;</Label>
+                                <Label>订单类型：</Label>
                                 <Select {
                                     ...getFieldProps('orderType', {
                                         initialValue: '',
@@ -271,7 +281,7 @@ class List extends Component {
                         </Col>
                         <Col md={4} xs={6}>
                             <FormItem>
-                                <Label>采购组：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Label>
+                                <Label>采购组：</Label>
                                 <FormControl
                                     {
                                     ...getFieldProps('purchasingGroup', {
@@ -283,7 +293,7 @@ class List extends Component {
                         </Col>
                         <Col md={4} xs={6}>
                             <FormItem>
-                                <Label>审批状态：&nbsp;&nbsp;&nbsp;</Label>
+                                <Label>审批状态：</Label>
                                 <Radio.RadioGroup
                                 selectedValue={this.state.approvalState}
                                     {
@@ -303,7 +313,7 @@ class List extends Component {
                         </Col>
                         <Col md={4} xs={6}>
                             <FormItem>
-                                <Label>关闭状态：&nbsp;&nbsp;&nbsp;</Label>
+                                <Label>关闭状态：</Label>
                                 <Radio.RadioGroup
                                 selectedValue={this.state.closeState}
                                     {
@@ -323,7 +333,7 @@ class List extends Component {
                         </Col>
                         <Col md={4} xs={6}>
                             <FormItem>
-                                <Label>确认状态：&nbsp;&nbsp;&nbsp;</Label>
+                                <Label>确认状态：</Label>
                                 <Radio.RadioGroup
                                     selectedValue={this.state.confirmState}
                                     {

@@ -12,6 +12,7 @@ export default {
     pageActive:1,
     pageSize:10,
     totalPages:1,
+    detail:{}
   },
   reducers: {
     updateState(state, data) {
