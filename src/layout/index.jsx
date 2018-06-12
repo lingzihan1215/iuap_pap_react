@@ -12,7 +12,7 @@ const urlListPreview = [
   { url: "/order/edit", name: "订单编辑" },
   // 帅中：左树右表
   { url: "/ppm/PlanIndexProj", name: "PlanIndexProj" },
-  { url: "/contract/manage", name: "contract" }
+  { url: "/contract/manage", name: "合同管理" }
 ];
 
 const getURLList = () => {
