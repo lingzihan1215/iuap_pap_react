@@ -125,14 +125,14 @@ class List extends Component {
     }
     // 多选表格包装函数  结束
 
-    cellClick=(record)=>{
-        actions.routing.push(
-            {
-                pathname: 'detail',
-                detailObj: record
-            }
-        )
-    }
+    // cellClick=(record)=>{
+    //     actions.routing.push(
+    //         {
+    //             pathname: 'detail',
+    //             detailObj: record
+    //         }
+    //     )
+    // }
     onPageSelect = (value) => {
         actions.order.loadList({
             pageActive: value ,
