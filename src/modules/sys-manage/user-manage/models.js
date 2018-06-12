@@ -1,14 +1,18 @@
-/**
- * 送货单业务Model
- */
+
 import { actions } from "mirrorx";
 import * as api from "./services";
+import { processData } from "utils";
 
 
 export default {
-  name: "delivery",
+  name: "user",
   initialState: {
-    list: []
+    list: [],
+    orderTypes:[],
+    pageActive:1,
+    pageSize:10,
+    totalPages:1,
+    detail:{}
   },
   reducers: {
     updateState(state, data) {
@@ -19,11 +23,8 @@ export default {
     }
   },
   effects: {
-    async getList(param, getState) {
-      let { data: { data, success } } = await api.getList();
-      if (success) {
-        actions.delivery.updateState({ list: data });
-      }
+    async loadList(param, getState) {//加载数据
+      
     }
   }
 };

@@ -11,6 +11,7 @@ import order from "modules/order/router";
 import Supplier from "../modules/supplier/router";
 import contracts from "modules/contract/router";
 import MainLayout from "../layout";
+import system from 'modules/sys-manage/router';
 import "./index.less";
 
 const App = () => (
@@ -28,6 +29,8 @@ const App = () => (
         <Route path="/supplier" component={Supplier} />
         {/* 合同管理 */}
         <Route path="/contract" component={contracts} />
+        {/* 系统管理 */}
+        <Route path="/system" component={system} />
       </div>
     </div>
   </Router>
