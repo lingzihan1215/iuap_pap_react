@@ -185,7 +185,7 @@ class BpmCard extends Component {
                             <Button size="sm" colors="primary" className="editable-add-btn backBtn" onClick={this.onBack}>返回</Button>
                             <h1>{msg}</h1>
                             <Button size="sm" shape="border" colors="info" className={btnFlag==2? "hide":"cancelBtn"}>取消</Button>
-                            <Button size="sm" colors="primary" className={btnFlag==2 ? "hide":"saveBtn"} onClick={this.onSave}>保存</Button>
+                            <Button size="sm" colors="primary" className={btnFlag==2 ? "hide":"saveBtn"} onClick={this.onSave}>确定</Button>
                         </div>
                     </div>
                     {

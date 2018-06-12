@@ -137,7 +137,15 @@ export default {
         async remove(data,getState){
             let { data : { success } } = await api.remove(data);
             if (success=="success") {
-                await actions.master.load();
+                // await actions.master.load();
+                data.splice(index, 1);
+                console.log("删除后数组",data);
+                let tempState = {
+                    masterData:Object.assign({},data)
+                }
+                actions.master.save({
+                    masterData:masterData
+                })
                 return {"done":true};
             }else {
                 return {"done":false,"message":success||"删除异常"}

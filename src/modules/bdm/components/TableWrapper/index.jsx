@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {Loading,Message, Table, Checkbox,Button,Popconfirm,Icon } from 'tinper-bee';
 import {actions,routing} from 'mirrorx';
 import EnhancedPagination from '../EnhancedPagination';
+import {BpmButtonSubmit,BpmButtonRecall} from 'yyuap-bpm';
 import './index.less';
 
 const defaultPropsSelf = {
@@ -151,7 +152,6 @@ class TableWrapper extends Component {
     onRowDel = (text, record, index)=>{
         return async ()=>{
             console.log("点击删除",record,index);
-            
             this.setState({
                 showLine:true
             },async ()=>{
@@ -159,12 +159,15 @@ class TableWrapper extends Component {
                 if(done){
                     this.setState({
                         showLine:false
-                    });
+                    })
                     Message.create({content: '单据删除成功', color: 'success'});
                 }else {
                     Message.create({content: message, color: 'danger'});
                 }
             })
+            
+            
+            
         }
         
     }
@@ -424,16 +427,75 @@ class TableWrapper extends Component {
         })
     }
 
+    onSubmitSuc = async ()=>{
+        let {done} = await actions.master.load();
+        if(done){
+            this.setState({showLine:false }) 
+        }
+    }
+    // 提交成功失败回调
+    onSubmitStart = ()=>{
+        this.setState({showLine:true});
+    }
+
+    onSubmitFail = ()=>{
+        this.setState({showLine:false});
+    }
+
+    // 撤回成功，失败，开始回调函数
+    onRecallSuc = async ()=>{
+        let {done} = await actions.master.load();
+        if(done){
+            this.setState({showLine:false }) 
+        }
+    }
+    onRecallFail = ()=>{
+        this.setState({showLine:false});
+    }
+    onRecallStart = ()=>{
+        this.setState({showLine:true});
+    }
+
+
     render() {
         let columns = this.renderColumnsMultiSelect(masterCols);
-        let {data,checkedArray} = this.props;
+        let {data} = this.props,
+            {checkedArray} = this.state;
+        console.log("选中数组",data,checkedArray);
+        let submitParam = {
+            data:data,
+            checkedArray:checkedArray,
+            funccode: "react",
+            nodekey: "003",
+            url:"/iuap-example/example_workorder/submit",
+        }
         return (
             <div>
                 <div style={{ margin:" 6px 15px 0 15px" }}>
                     <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onAdd} style={{ marginLeft: "5px" }} >新增</Button>
                     <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onCheck} style={{ marginLeft: "5px" }} >查看</Button>
-                    <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onCommit} style={{ marginLeft: "5px" }}>提交</Button>
-                    <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onRecall} style={{ marginLeft: "5px" }}>收回</Button>
+                    {/* <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onCommit} style={{ marginLeft: "5px" }}>提交</Button> */}
+                    <BpmButtonSubmit 
+                        className="editable-add-btn ml5"
+                        data = {data}
+                        checkedArray = {checkedArray}
+                        funccode = "react"
+                        nodekey = "003"
+                        url = "/iuap-example/example_workorder/submit"
+                        onSuccess = {this.onSubmitSuc}
+                        onError = {this.onSubmitFail}
+                        onStart={this.onSubmitStart}
+                    />
+                    {/* <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onRecall} style={{ marginLeft: "5px" }}>收回</Button> */}
+                    <BpmButtonRecall 
+                        className="editable-add-btn ml5"
+                        data = {data}
+                        checkedArray = {checkedArray}
+                        url = "/iuap-example/example_workorder/recall"
+                        onSuccess = {this.onRecallSuc}
+                        onError = {this.onRecallFail}
+                        onStart = {this.onRecallStart}
+                    />
                     <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onMultiDel} style={{ marginLeft: "5px" }}>删除</Button>
                 </div>
                 <Table 
