@@ -5,7 +5,7 @@ const Routers = ({ match }) => (
   <div>
     <Route
       exact
-      path={`${match.url}/list`}
+      path={`${match.url}/userlist`}
       component={userList}
     />
   </div>
