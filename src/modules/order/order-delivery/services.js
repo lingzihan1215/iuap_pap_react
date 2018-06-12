@@ -1,12 +1,15 @@
+/**
+ * 送货单请求
+ */
+
 import request from "utils/request";
 
 const URL = {
-    "GET_LIST": "/iuap-example/demo_order/list"
+    "GET_LIST": "/order/delivery/list"
 }
 
-export const getList = (data) => {
-    return request(url, {
-        method: "get",
-        data
+export const getList = () => {
+    return request(URL.GET_LIST, {
+        method: "get"
     });
 }

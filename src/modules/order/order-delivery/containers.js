@@ -9,4 +9,4 @@ import model from './models'
 //注入Model
 mirror.model(model);
 
-export const orderDeliveryList = connect((state) => state.order)(List);
+export const orderDeliveryList = connect((state) => state.delivery)(List);
