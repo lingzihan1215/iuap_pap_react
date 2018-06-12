@@ -8,7 +8,6 @@ const FormItem = Form.FormItem;
 class TreeForm extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
   }
 
   componentWillMount() {}
@@ -20,7 +19,11 @@ class TreeForm extends Component {
   submit = () => {
     this.props.form.validateFields((error, value) => {
       if (!error) {
-        actions.PlanIndexProj.addTreeData(value);
+        value.institid = null;
+        console.log(this.props.currentId)
+        value.parent_id = this.props.currentId[0];
+        actions.PlanIndexProj.addTreeData([value]);
+        actions.PlanIndexProj.onTreeSelect(value);
       }
     });
   };
@@ -48,7 +51,7 @@ class TreeForm extends Component {
                   <FormControl
                     initialValue=""
                     placeholder="编码"
-                    {...getFieldProps("code", {
+                    {...getFieldProps("instit_code", {
                       validateTrigger: "onBlur",
                       initialValue: "",
                       rules: [
@@ -59,7 +62,7 @@ class TreeForm extends Component {
                       ]
                     })}
                   />
-                  <span className="error">{getFieldError("code")}</span>
+                  <span className="error">{getFieldError("instit_code")}</span>
                 </Col>
               </Col>
               <Col md={6} xs={6} sm={6}>
@@ -69,7 +72,7 @@ class TreeForm extends Component {
                 <Col md={8} xs={8} sm={8}>
                   <FormControl
                     placeholder="组织名称"
-                    {...getFieldProps("username", {
+                    {...getFieldProps("instit_name", {
                       validateTrigger: "onBlur",
                       initialValue: "",
                       rules: [
@@ -80,7 +83,49 @@ class TreeForm extends Component {
                       ]
                     })}
                   />
-                  <span className="error">{getFieldError("username")}</span>
+                  <span className="error">{getFieldError("instit_code")}</span>
+                </Col>
+              </Col>
+              <Col md={6} xs={6} sm={6}>
+                <Col md={4} xs={4} sm={4}>
+                  <Label>上级:</Label>
+                </Col>
+                <Col md={8} xs={8} sm={8}>
+                  <FormControl
+                    placeholder="上级"
+                    {...getFieldProps("parent_id", {
+                      validateTrigger: "onBlur",
+                      initialValue: "",
+                      rules: [
+                        {
+                          required: false,
+                          message: "请输入组织名称"
+                        }
+                      ]
+                    })}
+                  />
+                  <span className="error">{getFieldError("parent_id")}</span>
+                </Col>
+              </Col>
+              <Col md={6} xs={6} sm={6}>
+                <Col md={4} xs={4} sm={4}>
+                  <Label>名称缩写:</Label>
+                </Col>
+                <Col md={8} xs={8} sm={8}>
+                  <FormControl
+                    placeholder="名称缩写"
+                    {...getFieldProps("short_name", {
+                      validateTrigger: "onBlur",
+                      initialValue: "",
+                      rules: [
+                        {
+                          required: false,
+                          message: "请输入组织名称"
+                        }
+                      ]
+                    })}
+                  />
+                  <span className="error">{getFieldError("short_name")}</span>
                 </Col>
               </Col>
             </Form>

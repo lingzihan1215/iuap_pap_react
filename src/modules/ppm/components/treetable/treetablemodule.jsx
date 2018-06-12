@@ -10,6 +10,7 @@ import {
   FormControl,
   Pagination
 } from "tinper-bee";
+import { connect } from "mirrorx";
 const columns = [
   {
     title: "姓名",
@@ -51,52 +52,6 @@ const columns = [
     }
   }
 ];
-const TD = [
-  {
-    id: "cde88da4-756d-40af-8acc-7aed6473861a",
-    dr: 0,
-    ts: null,
-    version: 0,
-    lastModified: null,
-    lastModifyUser: null,
-    createTime: null,
-    createUser: null,
-    peoname: "小芳",
-    peocode: "01_02",
-    institid: "536aab12-819f-48b4-93f5-5ac8f76b1f4b",
-    institname: "用友财务_01",
-    worktel: "18701517173",
-    email: null,
-    sex: null,
-    tel: null,
-    office: null,
-    countryzone: null,
-    operate: null,
-    key: 1
-  },
-  {
-    id: "d3fd49d7-cb90-4640-8464-7c2e0d9cabb1",
-    dr: 0,
-    ts: null,
-    version: 0,
-    lastModified: null,
-    lastModifyUser: null,
-    createTime: null,
-    createUser: null,
-    peoname: "小帅(请勿删除哦)",
-    peocode: "0203",
-    institid: "536aab12-819f-48b4-93f5-5ac8f76b1f4b",
-    institname: "用友财务_01",
-    worktel: "18701517173",
-    email: null,
-    sex: null,
-    tel: null,
-    office: null,
-    countryzone: null,
-    operate: null,
-    key: 2
-  }
-];
 class TreeTableModule extends Component {
   constructor(props) {
     super(props);
@@ -111,12 +66,8 @@ class TreeTableModule extends Component {
 
   componentWillReceiveProps(nextProps) {}
   //分页
-  handleSelect = e => {
-    console.log(e);
-  };
-  dataNumSelect = e => {
-    console.log(e);
-  };
+  handleSelect = e => {};
+  dataNumSelect = e => {};
   render() {
     return (
       <div>
@@ -125,7 +76,7 @@ class TreeTableModule extends Component {
             <Button colors="primary">新增人员</Button>
           </Col>
           <Col md={4} xs={4} sm={4}>
-            节点名称
+            {this.props.currentNode}
           </Col>
           <Col md={4} xs={4} sm={4}>
             <FormControl
@@ -136,7 +87,11 @@ class TreeTableModule extends Component {
           </Col>
           <div>
             <Col md={12} xs={12} sm={12}>
-              <Table columns={columns} data={TD} />
+              <Table
+                columns={columns}
+                data={this.props.tableData}
+                rowKey={recode => recode.id}
+              />
             </Col>
             <Col md={12} xs={12} sm={12}>
               <Pagination
@@ -145,9 +100,8 @@ class TreeTableModule extends Component {
                 prev
                 next
                 boundaryLinks
-                items={11}
+                items={this.props.totalPages}
                 maxButtons={5}
-                activePage={this.state.activePage}
                 onSelect={this.handleSelect.bind(this)}
               />
             </Col>
@@ -160,4 +114,4 @@ class TreeTableModule extends Component {
 
 TreeTableModule.propTypes = {};
 
-export default TreeTableModule;
+export default connect(state => state.PlanIndexProj)(TreeTableModule);
