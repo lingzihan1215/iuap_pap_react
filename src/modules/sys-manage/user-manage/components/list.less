@@ -1,4 +1,4 @@
-.order-list {
+.user-list {
     background: #fff;
     .head {
         text-align: center
@@ -12,7 +12,8 @@
         padding-bottom: 30px !important;
     }
     .search-panel {
-        border-bottom: 1px solid;
+        padding: 15px;
+        background: #F7F9FB;
         >div {
             padding-top: 0;
             >div{
@@ -31,16 +32,18 @@
         .u-form-control {
             width: auto;
         }
-        .calendar-picker{
-            display: inline-block;
-            input{
-                width: 100%;
-            }
-        }
         .btn-group{
-            .u-button{
-                border-radius: 0;
+            text-align: right;
+            .reset-btn{
+                background: #ECEFF1;
+                color: #424242;
+                margin-right: 15px;
             }
+            .submit-btn{
+                background: #1E7BE2;
+                color: #fff;
+            }
+
         }
         .u-select {
             width: auto;
@@ -50,27 +53,37 @@
             bottom: 10px;
         }
     }
-    .table-header{
-        position: relative;
-        height: 30px;
-        line-height: 30px;
-        margin-top: 10px;
-        .u-button{
-            position: absolute;
-            right: 0;
+    .table-list{
+        .table-header{
+            height: 40px;
+            line-height: 40px;
+            padding: 0 20px;
+            .u-button{
+               border-color: #1E7BE2;
+               color: #1E7BE2;
+            }
         }
-    }
-    .u-table{
-        .u-table-body{
-            tbody{
-                tr{
-                    td:nth-of-type(3){
-                        color: blue;
-                        cursor: pointer;
-                    }
+        .u-table{
+            .u-table-thead{
+                background: #eeeeee;
+            }
+            .operation-btn{
+                .u-button{
+                    background:none;
+                    color: #1E7BE2;
+                }
+                .del-btn{
+                    background: #1E7BE2;
+                    color: #fff;
                 }
             }
         }
     }
-
+    .pagination{
+        text-align: center;
+        .u-pagination{
+            text-align: center;
+            display: inline-block;
+        }
+    }
 }

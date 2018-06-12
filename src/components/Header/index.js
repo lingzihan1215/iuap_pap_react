@@ -39,9 +39,9 @@ class Header extends Component {
                             返回
                         </span>):''
                     }
-                    <h4>
+                    <span>
                         {title}
-                    </h4>
+                    </span>
                     {children}
                 </Col>
             </Row>

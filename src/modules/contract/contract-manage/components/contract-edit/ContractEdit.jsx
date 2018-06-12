@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Col } from "tinper-bee";
-import PropTypes from "prop-types";
-
+import ContractTitle from "./ContractTitle";
 class ContractEdit extends Component {
   constructor(props) {
     super(props);
@@ -16,6 +15,8 @@ class ContractEdit extends Component {
   render() {
     return (
       <Col md={10} xs={10} sm={10}>
+        {/* title */}
+        <ContractTitle />
         Form 部分
       </Col>
     );
