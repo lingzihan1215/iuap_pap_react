@@ -17,7 +17,6 @@ class ContractEdit extends Component {
       <Col md={10} xs={10} sm={10}>
         {/* title */}
         <ContractTitle />
-        Form 部分
       </Col>
     );
   }
