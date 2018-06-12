@@ -10,6 +10,7 @@ const urlListPreview = [
   // 绍振：查询表单+表格+分页
   { url: "/order/list", name: "订单列表" },
   { url: "/order/edit", name: "订单编辑" },
+  { url: "/order/delivery", name: "送货单" },
   // 帅中：左树右表
   { url: "/ppm/PlanIndexProj", name: "PlanIndexProj" },
   { url: "/contract/manage", name: "合同管理" }

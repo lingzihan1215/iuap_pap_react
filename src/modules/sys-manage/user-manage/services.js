@@ -9,7 +9,7 @@ if(__MODE__ == "development"){
 }
 
 const URL = {
-    "GET_LIST":  "/iuap-example/demo_order/list",
+    "GET_LIST":  "/system/user/list",
     "GET_BODYLIST": BASE_URL_PATH + "/oprtparamconfig/queryBodyByParentid",    
     "ADD_SAVE": BASE_URL_PATH + "/oprtparamconfig/add",
     "EDIT_SAVE": BASE_URL_PATH + "/oprtparamconfig/update",
@@ -19,7 +19,7 @@ const URL = {
 }
 
 export const getList = (params) => {
-    return request(url, {
+    return request(URL.GET_LIST, {
         method: "post",
         data: params
     });

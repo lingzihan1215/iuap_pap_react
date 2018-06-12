@@ -10,4 +10,4 @@ import model from './models'
 mirror.model(model);
 
 
-export const userList= connect((state) => state.order)(List);
+export const userList= connect((state) => state.user)(List);

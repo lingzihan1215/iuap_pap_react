@@ -158,7 +158,7 @@ class List extends Component {
         }
     }
     handleSelect = (eventKey) => {
-        
+        console.log(eventKey);
     }
 
     dataNumSelect = (index, value) => {

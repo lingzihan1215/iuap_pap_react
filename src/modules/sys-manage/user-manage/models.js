@@ -24,7 +24,16 @@ export default {
   },
   effects: {
     async loadList(param, getState) {//加载数据
-      
+      if(!param)param={};
+      let { data: { data, success } } = await api.getList(param);
+      if (success) {
+        actions.user.updateState({ 
+          list: data,
+          pageActive:param.pageActive==undefined?1:param.pageActive,
+          pageSize:param.pageSize||10,
+          totalPages:10,
+        });
+      }
     }
   }
 };
