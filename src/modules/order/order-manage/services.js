@@ -1,13 +1,21 @@
 import request from "utils/request";
 
+let BASE_URL_PATH = '';
+
+if(__MODE__ == "development"){
+    BASE_URL_PATH = ""
+} else {
+    BASE_URL_PATH = ""
+}
+
 const URL = {
     "GET_LIST":  "/iuap-example/demo_order/list",
-    "GET_BODYLIST": process.env.IMS_PATH + "/oprtparamconfig/queryBodyByParentid",    
-    "ADD_SAVE": process.env.IMS_PATH + "/oprtparamconfig/add",
-    "EDIT_SAVE": process.env.IMS_PATH + "/oprtparamconfig/update",
+    "GET_BODYLIST": BASE_URL_PATH + "/oprtparamconfig/queryBodyByParentid",    
+    "ADD_SAVE": BASE_URL_PATH + "/oprtparamconfig/add",
+    "EDIT_SAVE": BASE_URL_PATH + "/oprtparamconfig/update",
     "DELETE_ITEMS": "/iuap-example/demo_order/delete",
-    "ENABLE": process.env.IMS_PATH + "/oprtparamconfig/enable",
-    "DISABLE": process.env.IMS_PATH + "/oprtparamconfig/disable"    
+    "ENABLE": BASE_URL_PATH + "/oprtparamconfig/enable",
+    "DISABLE": BASE_URL_PATH + "/oprtparamconfig/disable"    
 }
 
 export const getList = (params) => {

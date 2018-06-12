@@ -4,16 +4,16 @@ import './index.less';
 
 const urlListPreview = [
 	// 贵冶项目，原框架默认（岳明）
-	{ "url": "/bdm/user", "name": "user" },
-	{ "url": "/bdm/Master", "name": "Master" },
-	{ "url": "/bdm/bpm", "name": "bpm" },
-	{ "url": "/bdm/bpmcard", "name": "bpmcard" },
-	// 志鹏：流程
+	// { "url": "/bdm/user", "name": "user" },
+	// { "url": "/bdm/Master", "name": "Master" },
+	// { "url": "/bdm/bpm", "name": "bpm" },
+	// { "url": "/bdm/bpmcard", "name": "bpmcard" },
+	// 志鹏：
 	{ "url": "/mst/oprtparamconfig", "name": "oprtparamconfig" },
 	{ "url": "/bdm/oprtparamconfig/add", "name": "oprtparamconfig/add" },
 	// 绍振：查询表单+表格+分页
-	{ "url": "/order/list", "name": "orderList" },
-	{ "url": "/order/edit", "name": "orderEdit" },
+	{ "url": "/order/list", "name": "订单列表" },
+	{ "url": "/order/edit", "name": "订单编辑" },
 	// 帅中：左树右表
 	{ "url": "/ppm/PlanIndexProj", "name": "PlanIndexProj" }
 ]

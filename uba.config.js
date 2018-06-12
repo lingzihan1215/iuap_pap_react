@@ -127,6 +127,9 @@ const devConfig = {
     new ExtractTextPlugin({
       filename: '[name].[hash:8].css'
     }),
+    new webpack.DefinePlugin({
+      "__MODE__": JSON.stringify("development")
+    }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
@@ -166,9 +169,7 @@ const prodConfig = {
       filename: '[name].css'
     }),
     new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production')
-      }
+      "__MODE__": JSON.stringify("production")
     }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
