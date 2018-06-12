@@ -4,7 +4,6 @@
 import React from "react";
 import { Router, Route } from "mirrorx";
 import Layout from "layout";
-import MST from "modules/mst/router";
 import order from "modules/order/router";
 import Supplier from "../modules/supplier/router";
 import contracts from "modules/contract/router";
@@ -17,8 +16,6 @@ const App = () => (
     <div>
       <MainLayout />
       <div className="layout-content">
-        {/* 主子表路由 */}
-        <Route path="/mst" component={MST} />
         {/* 订单管理 */}
         <Route path="/order" component={order} />
         {/* 供应商 */}

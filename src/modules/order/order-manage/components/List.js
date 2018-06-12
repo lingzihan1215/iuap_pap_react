@@ -152,7 +152,10 @@ class List extends Component {
                 title: "序号",
                 dataIndex: "index",
                 key: "index",
-                width: 100
+                width: 100,
+                render(record,text,index){
+                    return index;
+                }
             },
             {
                 title: "订单编号",
@@ -352,17 +355,14 @@ class List extends Component {
                                 </Radio.RadioGroup>
                             </FormItem>
                         </Col>
-                        <Col md={4} xs={6} className='btn-group'>
-                            <Button onClick={this.search}>查询</Button>
-                            <Button onClick={this.reset}>重置</Button>
+                        <Col md={12} xs={12} className='btn-group'>
+                            <Button size='sm' className='reset-btn' onClick={this.reset}>清空</Button>
+                            <Button size='sm' className='submit-btn' onClick={this.search}>查询</Button>
                         </Col>
                     </Row>
                 </div>
                 <div className='table-list'>
                     <div className='table-header'>
-                        <span className='table-title'>
-                               采购订单列表             
-                        </span>
                         <Button size='sm' shape="border">
                            导出
                         </Button>
@@ -376,6 +376,10 @@ class List extends Component {
                 </div>
                 <div className='pagination'>
                     <Pagination
+                        first
+                        last
+                        prev
+                        next
                         boundaryLinks
                         items={totalPages}
                         activePage={pageActive}

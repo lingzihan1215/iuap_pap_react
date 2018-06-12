@@ -13,7 +13,9 @@ const urlListPreview = [
   { url: "/order/delivery", name: "送货单" },
   // 帅中：左树右表
   { url: "/system/person-manage", name: "人员管理" },
-  { url: "/contract/manage", name: "合同管理" }
+  { url: "/contract/manage", name: "合同管理" },
+  // 供应商管理
+  { url: "/supplier/register", name: "供应商管理" },
 ];
 
 const getURLList = () => {
