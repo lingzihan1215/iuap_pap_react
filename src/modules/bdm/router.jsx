@@ -8,8 +8,6 @@ import Bpm from './components/BPM/Bpm.jsx';
 import Card from './components/Card';
 import BpmCard  from './components/BpmCard';
 
-
-
 const Routers = ({ match }) => (
 	<div>
 		<Route exact path={match.url} render={() => (

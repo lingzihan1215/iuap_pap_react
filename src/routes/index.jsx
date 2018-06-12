@@ -9,9 +9,12 @@ import MST from "modules/mst/router";
 import PPM from "modules/ppm/router";
 import order from 'modules/order/router';
 
+import MainLayout from '../layout'
+
 const App = () => (
   <Router>
     <div>
+      <MainLayout />
       {/* 单表路由 */}
       <Route path="/bdm" component={BDM} />
       {/* 主子表路由 */}
