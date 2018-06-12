@@ -8,6 +8,7 @@ import Layout from "layout";
 import MST from "modules/mst/router";
 import PPM from "modules/ppm/router";
 import order from 'modules/order/router';
+import Supplier from '../modules/supplier/router'
 
 import MainLayout from '../layout'
 import './index.less'
@@ -23,6 +24,8 @@ const App = () => (
         <Route path="/ppm" component={PPM} />
         {/* 订单管理 */}
         <Route path="/order" component={order} />
+        {/* 供应商 */}
+        <Route path="/supplier" component={Supplier} />
       </div>
     </div>
   </Router>

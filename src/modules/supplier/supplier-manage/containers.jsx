@@ -12,7 +12,7 @@ import RegisterInfo from './components/RegisterInfo';
 //注入Model
 mirror.model(model);
 
-export const UserInfo= connect((state) => state.suppliermanager)(UserInfo);
-export const EnterpriseInfo= connect((state) => state.suppliermanager)(EnterpriseInfo);
-export const ContactInfo= connect((state) => state.suppliermanager)(ContactInfo);
-export const RegisterInfo= connect((state) => state.suppliermanager)(RegisterInfo);
+export const userinfo = connect((state) => state.suppliermanager)(UserInfo);
+export const enterpriseinfo= connect((state) => state.suppliermanager)(EnterpriseInfo);
+export const contactinfo= connect((state) => state.suppliermanager)(ContactInfo);
+export const registerInfo= connect((state) => state.suppliermanager)(RegisterInfo);
