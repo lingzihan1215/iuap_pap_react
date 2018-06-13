@@ -7,8 +7,7 @@ const urlListPreview = [
   { url: "/mst/oprtparamconfig", name: "oprtparamconfig" },
   { url: "/bdm/oprtparamconfig/add", name: "oprtparamconfig/add" },
   // 绍振：查询表单+表格+分页
-  { url: "/order/list", name: "订单列表" },
-  { url: "/order/edit", name: "订单编辑" },
+  { url: "/order/managelist", name: "订单列表" },
   { url: "/order/delivery", name: "送货单" },
   // 帅中：左树右表
   { url: "/system/person-manage", name: "人员管理" },
