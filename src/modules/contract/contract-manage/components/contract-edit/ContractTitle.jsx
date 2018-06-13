@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import Form from "bee-form";
-import { FormControl, Label, Row, Col } from "tinper-bee";
+import { FormControl, Label, Row, Col ,Icon} from "tinper-bee";
+import DatePicker from "bee-datepicker";
 import "./contracttitle.less";
+const format = "YYYY-MM-DD HH:mm:ss";
+const dateInputPlaceholder = "选择日期";
 const FormItem = Form.FormItem;
 class ContractTitle extends Component {
   constructor(props) {
@@ -13,7 +16,7 @@ class ContractTitle extends Component {
     const { getFieldProps, getFieldError } = this.props.form;
     return (
       <div className="contract_title">
-        <div>合同抬头</div>
+        <div><Icon className="uf-files-o"></Icon>合同抬头</div>
         <Form>
           <Row>
             <Col md={6} xs={6} sm={6}>
@@ -24,7 +27,7 @@ class ContractTitle extends Component {
                 <Col md={9} xs={9} sm={9}>
                   <FormControl
                     placeholder=""
-                    {...getFieldProps("username", {
+                    {...getFieldProps("buy", {
                       validateTrigger: "onBlur",
                       rules: [
                         {
@@ -34,19 +37,19 @@ class ContractTitle extends Component {
                       ]
                     })}
                   />
-                  <span className="error">{getFieldError("username")}</span>
+                  <span className="error">{getFieldError("buy")}</span>
                 </Col>
               </FormItem>
             </Col>
             <Col md={6} xs={6} sm={6}>
               <FormItem>
                 <Col md={3} xs={3} sm={3}>
-                  <Label>卖方</Label>
+                  <Label>卖方:</Label>
                 </Col>
                 <Col md={9} xs={9} sm={9}>
                   <FormControl
                     placeholder=""
-                    {...getFieldProps("username", {
+                    {...getFieldProps("sell", {
                       validateTrigger: "onBlur",
                       rules: [
                         {
@@ -56,12 +59,10 @@ class ContractTitle extends Component {
                       ]
                     })}
                   />
-                  <span className="error">{getFieldError("username")}</span>
+                  <span className="error">{getFieldError("sell")}</span>
                 </Col>
               </FormItem>
             </Col>
-          </Row>
-          <Row>
             <Col md={6} xs={6} sm={6}>
               <FormItem>
                 <Col md={3} xs={3} sm={3}>
@@ -69,8 +70,8 @@ class ContractTitle extends Component {
                 </Col>
                 <Col md={9} xs={9} sm={9}>
                   <FormControl
-                    placeholder="买方名称"
-                    {...getFieldProps("username", {
+                    placeholder=""
+                    {...getFieldProps("buyname", {
                       validateTrigger: "onBlur",
                       rules: [
                         {
@@ -80,19 +81,21 @@ class ContractTitle extends Component {
                       ]
                     })}
                   />
-                  <span className="error">{getFieldError("username")}</span>
+                  <span className="error">{getFieldError("buyname")}</span>
                 </Col>
               </FormItem>
             </Col>
             <Col md={6} xs={6} sm={6}>
               <FormItem>
                 <Col md={3} xs={3} sm={3}>
-                  <Label>卖方名称</Label>
+                  <Label>
+                    卖方名称: <span>*</span>{" "}
+                  </Label>
                 </Col>
                 <Col md={9} xs={9} sm={9}>
                   <FormControl
                     placeholder=""
-                    {...getFieldProps("username", {
+                    {...getFieldProps("sellname", {
                       validateTrigger: "onBlur",
                       rules: [
                         {
@@ -102,99 +105,50 @@ class ContractTitle extends Component {
                       ]
                     })}
                   />
-                  <span className="error">{getFieldError("username")}</span>
-                </Col>
-              </FormItem>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={6} xs={6} sm={6}>
-              <FormItem>
-                <Col md={3} xs={3} sm={3}>
-                  <Label>卖家:</Label>
-                </Col>
-                <Col md={9} xs={9} sm={9}>
-                  <FormControl
-                    placeholder="卖家"
-                    {...getFieldProps("username", {
-                      validateTrigger: "onBlur",
-                      rules: [
-                        {
-                          required: true,
-                          message: "请输入用户名"
-                        }
-                      ]
-                    })}
-                  />
-                  <span className="error">{getFieldError("username")}</span>
+                  <span className="error">{getFieldError("sellname")}</span>
                 </Col>
               </FormItem>
             </Col>
             <Col md={6} xs={6} sm={6}>
               <FormItem>
                 <Col md={3} xs={3} sm={3}>
-                  <Label>用户名：</Label>
+                  <Label>
+                    合同开始日期: <span>*</span>
+                  </Label>
                 </Col>
                 <Col md={9} xs={9} sm={9}>
-                  <FormControl
-                    placeholder="请输入用户名(包含数字和字母，8-15位)"
-                    {...getFieldProps("username", {
-                      validateTrigger: "onBlur",
-                      rules: [
-                        {
-                          required: true,
-                          message: "请输入用户名"
-                        }
-                      ]
-                    })}
+                  <DatePicker
+                    {...getFieldProps("contractstart", {})}
+                    format={format}
+                    placeholder={dateInputPlaceholder}
                   />
-                  <span className="error">{getFieldError("username")}</span>
-                </Col>
-              </FormItem>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={6} xs={6} sm={6}>
-              <FormItem>
-                <Col md={3} xs={3} sm={3}>
-                  <Label>卖家:</Label>
-                </Col>
-                <Col md={9} xs={9} sm={9}>
-                  <FormControl
-                    placeholder="卖家"
-                    {...getFieldProps("username", {
-                      validateTrigger: "onBlur",
-                      rules: [
-                        {
-                          required: true,
-                          message: "请输入用户名"
-                        }
-                      ]
-                    })}
-                  />
-                  <span className="error">{getFieldError("username")}</span>
+                  <span className="error">
+                    {getFieldError("contractstart")}
+                  </span>
                 </Col>
               </FormItem>
             </Col>
             <Col md={6} xs={6} sm={6}>
               <FormItem>
                 <Col md={3} xs={3} sm={3}>
-                  <Label>用户名：</Label>
+                  <Label>
+                    供应商状态: <span>*</span>{" "}
+                  </Label>
                 </Col>
                 <Col md={9} xs={9} sm={9}>
                   <FormControl
-                    placeholder="请输入用户名(包含数字和字母，8-15位)"
-                    {...getFieldProps("username", {
+                    placeholder=""
+                    {...getFieldProps("supplystate", {
                       validateTrigger: "onBlur",
                       rules: [
                         {
                           required: true,
-                          message: "请输入用户名"
+                          message: "请输入供应商状态"
                         }
                       ]
                     })}
                   />
-                  <span className="error">{getFieldError("username")}</span>
+                  <span className="error">{getFieldError("supplystate")}</span>
                 </Col>
               </FormItem>
             </Col>
