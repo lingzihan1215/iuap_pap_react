@@ -8,7 +8,10 @@ import * as api from "./services";
 export default {
   name: "delivery",
   initialState: {
-    list: []
+    list: [],
+    total: 0,
+    activePage: 1,
+    pageSize: 10
   },
   reducers: {
     updateState(state, data) {
@@ -20,11 +23,21 @@ export default {
   },
   effects: {
     async getList(param, getState) {
-      let { data: { data, success } } = await api.getList();
+      let { activePage, pageSize } = getState().delivery;
+      let { data: { data, success, total } } = await api.getList({
+        activePage,
+        pageSize
+      });
       if (success) {
-        actions.delivery.updateState({ list: data });
+        actions.delivery.updateState({ list: data, total });
         return data;
       }
+    },
+    async removeList(id, getState) {
+      let result = await api.deleteList({
+        id
+      });
+      return result;
     }
   }
 };

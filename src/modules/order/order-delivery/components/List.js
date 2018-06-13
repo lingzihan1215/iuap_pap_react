@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { actions } from "mirrorx";
-import { Table, Button, Col, Row, FormControl, InputNumber, Popconfirm } from "tinper-bee";
+import { Table, Button, Col, Row, FormControl, InputNumber, Popconfirm, Message } from "tinper-bee";
 import Pagination from 'bee-pagination';
 import NoData from 'components/NoData';
 import Form from 'bee-form';
@@ -12,86 +12,83 @@ class List extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            loading: false
         }
         this.columns = [
             {
                 title: "订单号",
                 dataIndex: "orderCode",
                 key: "orderCode",
-                width: 100
+                width: "8%"
             },
             {
                 title: "序号",
                 dataIndex: "id",
                 key: "id",
-                width: 100
+                width: "5%"
             },
             {
                 title: "生产批次",
                 dataIndex: "prodbatch",
                 key: "prodbatch",
-                width: 100,
+                width: "5%",
                 render: (text, record) => this.renderColumns(text, record, 'prodbatch')
             },
             {
                 title: "物料编码",
                 dataIndex: "code",
                 key: "code",
-                width: 100
+                width: "10%"
             },
             {
                 title: "物料名称",
                 dataIndex: "name",
                 key: "name",
-                width: 100
+                width: "12%"
             },
             {
                 title: "订单数量",
                 dataIndex: "orderNumber",
                 key: "orderNumber",
-                width: 60
+                width: "5%"
             },
             {
                 title: "已收数量",
                 dataIndex: "receNumber",
                 key: "receNumber",
-                width: 60
+                width: "5%"
             },
             {
                 title: "发货数量",
                 dataIndex: "deliveNumber",
                 key: "deliveNumber",
-                width: 60,
+                width: "5%",
                 render: (text, record) => this.renderColumnsInputNumber(text, record, 'deliveNumber')
             },
             {
                 title: "单位",
                 dataIndex: "unit",
                 key: "unit",
-                width: 100
+                width: "5%"
             },
             {
                 title: "操作",
                 dataIndex: "op",
                 key: "op",
-                width: 100,
+                width: "10%",
                 render: (text, record, index) => {
                     const { editable } = record;
                     return (<span>
                         {editable ? <span>
-                            <Button colors="primary" style={{ 'marginRight': '4px' }} onClick={() => this.save(record.id)} size="sm">保存</Button>
-                            <Button onClick={() => this.cancel(record.id, index)} size="sm">取消</Button>
+                            <span className="table-op-span-btn" onClick={() => this.save(record.id)} >保存</span>
+                            <span className="table-op-span-btn" onClick={() => this.cancel(record.id, index)} >取消</span>
                         </span>
-                            : <span><Button style={{ 'marginRight': '4px' }} onClick={() => this.edit(record.id)} size="sm" colors="primary" >编辑</Button>
-                                <Popconfirm placement="left" content="是否确认删除?" onClose={() => this.remove(index)} >
-                                    <Button colors="danger" size="sm">删除</Button>
+                            : <span><span className="table-op-span-btn" onClick={() => this.edit(record.id)}>编辑</span>
+                                <Popconfirm placement="left" content="是否确认删除?" onClose={() => this.remove(record.id)} >
+                                    <Button className="table-op-btn" colors="primary" size="sm">删除</Button>
                                 </Popconfirm></span>
                         }
                     </span>)
-                    // return <div>
-                    //     <Button style={{ 'marginRight': '4px' }} onClick={() => this.edit(record.id)} size="sm" colors="primary" >编辑</Button>
-                    // </div>
                 }
             }
         ];
@@ -100,8 +97,10 @@ class List extends Component {
         this.loadList();
     }
     loadList = async () => {
+        this.setState({ loading: true });
         let data = await actions.delivery.getList();
         this.cacheData = data.map(item => ({ ...item }));
+        this.setState({ loading: false });
     }
     EditableCell = ({ editable, value, onChange }) => (
         <div>
@@ -173,6 +172,18 @@ class List extends Component {
             }
         }
     }
+    save = (id) => {
+        const newData = [...this.props.list];
+        const target = newData.filter(item => id === item.id)[0];
+        if (target) {
+            delete target.editable;
+            actions.delivery.updateState({
+                list: newData
+            });
+            this.cacheData = newData.map(item => ({ ...item }));
+            console.log(this.cacheData);
+        }
+    }
     cancel = (id, index) => {
         const newData = [...this.props.list];
         const target = newData.filter(item => id === item.id)[0];
@@ -191,13 +202,42 @@ class List extends Component {
             }
         }
     }
+    remove = async (id) => {
+        this.setState({ loading: true });
+        console.log('删除ID：', id);
+        let result = await actions.delivery.removeList(id);
+        if (result.data.success) {
+            Message.create({ content: '删除成功', color: 'success' });
+        }
+        this.setState({ loading: false });
+    }
     handleSelect = (eventKey) => {
-        console.log(eventKey);
+        actions.delivery.updateState({ activePage: eventKey });
+        this.loadList();
     }
 
     dataNumSelect = (index, value) => {
-        alert('下拉的index=' + index);
-        alert('值=' + value)
+        actions.delivery.updateState({ pageSize: value });
+    }
+    handlerAddClick = () => {
+        const newData = [...this.props.list];
+        const item = {
+            editable: true,
+            isNew: true,
+            orderCode: "",
+            id: "011",
+            prodbatch: "",
+            code: "",
+            name: "",
+            orderNumber: "1",
+            receNumber: "1",
+            deliveNumber: "1",
+            unit: "PC"
+        };
+        newData.push(item);
+        actions.delivery.updateState({
+            list: newData
+        });
     }
     render() {
         let { list } = this.props;
@@ -206,21 +246,22 @@ class List extends Component {
                 <Row>
                     <Col md={12}>
                         <Table
+                            loading={{ show: this.state.loading, loadingType: "line" }}
                             bordered
-                            title={() => <Button onClick={() => actions.delivery.getList()} colors="primary">添加明细</Button>}
+                            title={() => <Button size="sm" shape="border" onClick={this.handlerAddClick} colors="primary">添加明细</Button>}
                             emptyText={() => <NoData />}
                             data={list}
                             rowKey={r => r.id}
                             columns={this.columns}
-                            scroll={{ y: 400 }}
+                            scroll={{ y: 520 }}
                             footer={() => <Pagination
                                 first
                                 last
                                 prev
                                 next
                                 boundaryLinks
-                                items={11}
-                                activePage={1}
+                                items={this.props.total}
+                                activePage={this.props.activePage}
                                 onSelect={this.handleSelect}
                                 onDataNumSelect={this.dataNumSelect}
                                 showJump={true}

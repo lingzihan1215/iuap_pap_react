@@ -14,5 +14,7 @@ module.exports = {
     "/system/user/list": "./mock/sys-manage/user-manage/list.json",
   }, {
     "/order/manage/list": "./mock/order/manage/list.json",
+  }, {
+    "/order/delivery/removelist": "./mock/order/delivery/removeList.json",
   }]
 }
