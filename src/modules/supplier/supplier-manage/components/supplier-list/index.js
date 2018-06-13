@@ -5,22 +5,15 @@ import { Loading,Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbo
 import Form from 'bee-form';
 import Pagination from 'bee-pagination';
 import 'bee-pagination/build/Pagination.css';
-import DatePicker from 'bee-datepicker';
 import Header from "components/Header";
-import multiSelect from "tinper-bee/lib/multiSelect.js";
-import 'bee-datepicker/build/DatePicker.css';
-import './list.less';
-const MultiSelectTable = multiSelect(Table, Checkbox);
+import './index.less';
 const FormItem = Form.FormItem;
-const {RangePicker} = DatePicker;
-import moment from "moment/moment";
 
 
 class List extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectData: [],
             approvalState:'',
             closeState:'',
             confirmState:'',
@@ -28,17 +21,12 @@ class List extends Component {
         }
     }
     componentDidMount() {
-        actions.order.loadList();
-        actions.order.getOrderType();
+        actions.supplier.loadList();
+        actions.supplier.getOrderType();
     }
     search = () => {//查询
         this.props.form.validateFields((err, values) => {
-            let voucherDate=values.voucherDate;
-            if(voucherDate&&voucherDate.length){
-                voucherDate[0]=voucherDate[0].format('YYYY-MM-DD');
-                voucherDate[1]=voucherDate[1].format('YYYY-MM-DD');
-            }
-            actions.order.loadList(values);
+            actions.supplier.loadList(values);
         });
     }
     reset = () => {
@@ -50,89 +38,8 @@ class List extends Component {
             voucherDate:[]
         })
     }
-    tabelSelect = (data) => {//tabel选中数据
-        this.setState({
-            selectData: data
-        })
-    }
-
-    // 多选表格包装函数  开始
-    onAllCheckChange = () => {//全选
-        let self = this;
-        let checkedArray = [];
-        let listData = props.listData.concat();
-        let selIds = [];
-        for (var i = 0; i < self.state.checkedArray.length; i++) {
-            checkedArray[i] = !self.state.checkedAll;
-        }
-        self.setState({
-            checkedAll: !self.state.checkedAll,
-            checkedArray: checkedArray,
-        });
-    };
-    onCheckboxChange = (text, record, index) => {
-        let self = this;
-        let allFlag = false;
-        let checkedArray = self.state.checkedArray.concat();
-        checkedArray[index] = !self.state.checkedArray[index];
-        for (var i = 0; i < self.state.checkedArray.length; i++) {
-            if (!checkedArray[i]) {
-                allFlag = false;
-                break;
-            } else {
-                allFlag = true;
-            }
-        }
-        self.setState({
-            checkedAll: allFlag,
-            checkedArray: checkedArray,
-        });
-    };
-    renderColumnsMultiSelect(columns) {
-        const { data, checkedArray } = this.state;
-        const { multiSelect } = this.props;
-        let select_column = {};
-        let indeterminate_bool = false;
-        if (multiSelect && multiSelect.type === "checkbox") {
-            let i = checkedArray.length;
-            while (i--) {
-                if (checkedArray[i]) {
-                    indeterminate_bool = true;
-                    break;
-                }
-            }
-            let defaultColumns = [
-                {
-                    title: (
-                        <Checkbox
-                            className="table-checkbox"
-                            checked={this.state.checkedAll}
-                            indeterminate={indeterminate_bool && !this.state.checkedAll}
-                            onChange={this.onAllCheckChange}
-                        />
-                    ),
-                    key: "checkbox",
-                    dataIndex: "checkbox",
-                    width: 50,
-                    render: (text, record, index) => {
-                        return (
-                            <Checkbox
-                                className="table-checkbox"
-                                checked={this.state.checkedArray[index]}
-                                onChange={this.onCheckboxChange.bind(this, text, record, index)}
-                            />
-                        );
-                    }
-                }
-            ];
-            columns = defaultColumns.concat(columns);
-        }
-        return columns;
-    }
-    // 多选表格包装函数  结束
 
     cellClick=(record)=>{
-        console.log('正在开发。。。');
         actions.routing.push(
             {
                 pathname: 'managedetail',
@@ -141,14 +48,14 @@ class List extends Component {
         )
     }
     onPageSelect = (value) => {
-        actions.order.loadList({
+        actions.supplier.loadList({
             pageActive: value ,
             pageSize: this.props.pageSize,
         })
     }
     dataNumSelect = (value) => {
         let pageSize = (value + 1) * 5;//针对于5条/10条/15条/20条选项
-        actions.order.loadList({
+        actions.supplier.loadList({
             pageSize: pageSize,
             pageActive: 1
         })
@@ -166,17 +73,11 @@ class List extends Component {
                 }
             },
             {
-                title: "订单编号",
-                dataIndex: "orderCode",
-                key: "orderCode",
+                title: "供应商编码",
+                dataIndex: "supplierCode",
+                key: "supplierCode",
                 width: 100,
                 onCellClick:this.cellClick
-            },
-            {
-                title: "供应商",
-                dataIndex: "supplier",
-                key: "supplier",
-                width: 100
             },
             {
                 title: "供应商名称",
@@ -185,60 +86,71 @@ class List extends Component {
                 width: 300
             },
             {
-                title: "类型",
-                dataIndex: "type",
-                key: "type",
+                title: "注册资金",
+                dataIndex: "registeredCapital",
+                key: "registeredCapital",
                 width: 100
             },
             {
-                title: "采购组织",
-                dataIndex: "purchasing",
-                key: "purchasing",
+                title: "近一年营业额",
+                dataIndex: "turnover",
+                key: "turnover",
                 width: 100
             },
             {
-                title: "采购组",
-                dataIndex: "purchasingGroup",
-                key: "purchasingGroup",
+                title: "联系人",
+                dataIndex: "contacts",
+                key: "contacts",
                 width: 100
             },
             {
-                title: "凭证日期",
-                dataIndex: "voucherDate",
-                key: "voucherDate",
+                title: "手机号码",
+                dataIndex: "phone",
+                key: "phone",
                 width: 100
             },
             {
-                title: "审批状态",
-                dataIndex: "approvalState",
-                key: "approvalState",
+                title: "主要产品",
+                dataIndex: "mainProducts",
+                key: "mainProducts",
                 width: 100
             },
             {
-                title: "确认状态",
-                dataIndex: "confirmState",
-                key: "confirmState",
+                title: "供应商类别",
+                dataIndex: "supplierCategory",
+                key: "supplierCategory",
                 width: 100
             },
             {
-                title: "关闭状态",
-                dataIndex: "closeState",
-                key: "closeState",
+                title: "供应商类型",
+                dataIndex: "supplierType",
+                key: "supplierType",
+                width: 100
+            },
+            {
+                title: "主供货品类",
+                dataIndex: "mainGoods",
+                key: "mainGoods",
+                width: 100
+            },
+            {
+                title: "可供货品类",
+                dataIndex: "usableGoods",
+                key: "usableGoods",
                 width: 100
             },
         ];
         let { form, list, pageSize, pageActive, totalPages,orderTypes,showLoading } = this.props;
         const { getFieldProps, getFieldError } = form;
-        let columns = this.renderColumnsMultiSelect(column);
         return (
-            <div className='order-list'>
+            <div className='supplier-list'>
             <Loading
-            showBackDrop={true}
-            loadingType="line"
-            show={showLoading}
+                showBackDrop={true}
+                loadingType="line"
+                show={showLoading}
             />
 
-                <Header title='采购订单管理' />
+                <Header title='供应商管理' />
                 <div className='search-panel'>
                     <Row>
                         <Col md={4} xs={6}>
@@ -246,7 +158,7 @@ class List extends Component {
                                 <Label>采购订单号：</Label>
                                 <FormControl
                                     {
-                                    ...getFieldProps('orderCode', {
+                                    ...getFieldProps('supplierCode', {
                                         initialValue: '',
                                     })
                                     }
@@ -294,7 +206,7 @@ class List extends Component {
                                     ) }>
                                     <Option value="">请选择</Option>
                                     {
-                                        orderTypes.map((item,index)=>{
+                                        supplierTypes.map((item,index)=>{
                                             return (
                                                 <Option key={index} value={item.code}>{item.name}</Option>
                                             )
@@ -388,13 +300,11 @@ class List extends Component {
                            导出
                         </Button>
                     </div>
-                    <MultiSelectTable
+                    <Table
                         rowKey={(r,i)=>i}
                         scroll={{x : true,y: 500 }}
                         columns={columns}
                         data={list}
-                        multiSelect={{ type: "checkbox" }}
-                        getSelectedDataFunc={this.tabelSelect}
                     />
                     <div className='pagination'>
                     <Pagination
