@@ -19,10 +19,13 @@ class Edit extends Component {
 
             }else{
                 console.log(values);
+                actions.role.saveRole(values);
             }
         })
     }
-
+    cancel=()=>{
+        window.history.go(-1);
+    }
     render (){
         let {form,showLoading} = this.props;
         let {editFlag,editObj}=this.props.location;
@@ -39,17 +42,20 @@ class Edit extends Component {
                     {editFlag?(
                         <div className='head-btn'>
                             <Button className='head-cancel'>取消</Button>
-                            <Button className='head-save' >保存</Button>
+                            <Button className='head-save' onClick={this.save}>保存</Button>
                         </div>
                     ):''}
                 </Header>
                 <Row className='edit-body'>
-                    <Col md={4} xs={6}>
+
+                    <Col lg={1} md={2} sm={3} xs={6}>
                         <Label>
                             角色编码：
                         </Label>
+                    </Col>
+                    <Col lg={11} md={10} sm={9} xs={6}>
                         <FormItem><span className='mast'>*</span>
-                            <FormControl disabled={!editFlag}
+                        <FormControl disabled={!editFlag}
                                     placeholder="请输入角色编码"
                                     {
                                         ...getFieldProps('roleCode', {
@@ -61,15 +67,17 @@ class Edit extends Component {
                                         }
                                     ) }
                                 />
-                         <span className='error'>
+                        <span className='error'>
                             {getFieldError('roleCode')}
                         </span>
                         </FormItem>
                     </Col>
-                    <Col md={4} xs={6}>
+                    <Col lg={1} md={2} sm={3} xs={6}>
                         <Label>
-                            角色名称：
+                        角色名称：
                         </Label>
+                    </Col>
+                    <Col lg={11} md={10} sm={9} xs={6}>
                         <FormItem><span className='mast'>*</span>
                         <FormControl disabled={!editFlag}
                                     placeholder="请输入角色名称"
@@ -88,12 +96,15 @@ class Edit extends Component {
                         </span>
                         </FormItem>
                     </Col>
-                    <Col md={4} xs={6}>
+                    <Col lg={1} md={2} sm={3} xs={6}>
                         <Label>
-                            角色描述：
+                        角色描述：
                         </Label>
+                    </Col>
+                    <Col lg={11} md={10} sm={9} xs={6}>
                         <FormItem>
-                            <FormControl disabled={!editFlag}
+                        <FormItem>
+                            <textarea disabled={!editFlag}
                                     placeholder="请输入角色描述"
                                     {
                                         ...getFieldProps('roleDescribe', {
@@ -101,6 +112,7 @@ class Edit extends Component {
                                         }
                                     ) }
                                 />
+                        </FormItem>
                         </FormItem>
                     </Col>
                 </Row>

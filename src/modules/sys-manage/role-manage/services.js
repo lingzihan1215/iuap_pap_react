@@ -19,7 +19,7 @@ export const getList = (params) => {
     for(let attr in params){
         url+='&'+attr+'='+params[attr];
     }
-    return request(URL.GET_LIST, {
+    return request(url, {
         method: "get",
         data: params
     });

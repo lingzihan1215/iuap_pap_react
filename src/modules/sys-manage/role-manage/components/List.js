@@ -19,9 +19,10 @@ class List extends Component {
     componentDidMount() {
         actions.role.loadList();
     }
-    search = () => {//查询
+    search = (pageObj) => {//查询
         this.props.form.validateFields((err, values) => {
-            console.log(values);
+            values.pageActive=pageObj.pageActive||props.pageActive||1,
+            values.pageSize=pageObj.pageSize||props.pageSize||10,
             actions.role.loadList(values);
         });
     }
@@ -42,6 +43,7 @@ class List extends Component {
     onPageSelect = (value) => {
         actions.role.loadList({
             pageActive: value ,
+            pageSize:this.props.pageSize
         })
     }
     dataNumSelect = (value) => {
@@ -58,11 +60,11 @@ class List extends Component {
             editFlag:editFlag
         })
     }
-    delItem=(record)=>{
-        
-    }
-    detail=(record)=>{
-        
+    delItem=(record,index)=>{
+        actions.role.delItem({
+            param:[{id:record.id}],
+            index:index
+        });
     }
     toGroupM=(record)=>{
         console.log('角色组管理。。。');
@@ -116,7 +118,7 @@ class List extends Component {
                     return (
                         <div className='operation-btn'>
                             <Button size='sm' className='edit-btn' onClick={()=>{self.edit(true,record)}}>编辑</Button>
-                            <Button size='sm' className='del-btn' onClick={()=>{self.delItem(record)}}>删除</Button>
+                            <Button size='sm' className='del-btn' onClick={()=>{self.delItem(record,index)}}>删除</Button>
                             <Button size='sm' className='detail-btn' onClick={()=>{self.edit(false,record)}}>查看</Button>
                         </div>
                     )
@@ -181,11 +183,12 @@ class List extends Component {
                 </div>
                 <div className='table-list'>
                     <div className='table-header'>
-                        <Button size='sm' shape="border">
+                        <Button size='sm' shape="border" onClick={()=>{this.edit(true,{})}}>
                            新增
                         </Button>
                     </div>
                     <Table
+                    rowKey={(r,i)=>i}
                         columns={column}
                         data={list}
                     />
