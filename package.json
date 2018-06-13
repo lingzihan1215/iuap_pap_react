@@ -4,8 +4,9 @@
   "description": "iuap 应用平台前端典型示例工程",
   "private": true,
   "scripts": {
-    "dev": "uba server --chunks --env.NODE_ENV=development",
-    "build": "uba build --env.NODE_ENV=production"
+    "dev": "cross-env NODE_ENV=development uba server --chunks ",
+    "start": "cross-env NODE_ENV=production uba server --chunks",
+    "build": "cross-env NODE_ENV=development uba build"
   },
   "author": "yonyou fed team",
   "license": "MIT",
@@ -20,6 +21,7 @@
     "bee-datepicker": "^1.0.22",
     "clean-webpack-plugin": "^0.1.18",
     "copy-webpack-plugin": "^4.4.2",
+    "cross-env": "^5.1.6",
     "css-loader": "^0.28.10",
     "cssnano": "^3.10.0",
     "extract-text-webpack-plugin": "^2.1.2",

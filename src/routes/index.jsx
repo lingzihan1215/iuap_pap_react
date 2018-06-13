@@ -3,13 +3,14 @@
 * */
 import React from "react";
 import { Router, Route } from "mirrorx";
-import Layout from "layout";
 import order from "modules/order/router";
-import Supplier from "../modules/supplier/router";
+import Supplier from "modules/supplier/router";
 import contracts from "modules/contract/router";
-import MainLayout from "../layout";
+import MainLayout from "layout";
 import system from 'modules/sys-manage/router';
 import "./index.less";
+
+console.log(__MODE__)
 
 const App = () => (
   <Router>
