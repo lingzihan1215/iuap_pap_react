@@ -6,12 +6,12 @@ const Routers = ({ match }) => (
   <div>
     <Route
       exact
-      path={`${match.url}/detail`}
+      path={`${match.url}/managedetail`}
       component={orderDetail}
     />
     <Route
       exact
-      path={`${match.url}/list`}
+      path={`${match.url}/managelist`}
       component={orderList}
     />
     <Route

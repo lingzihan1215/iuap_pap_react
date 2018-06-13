@@ -42,7 +42,8 @@ class List extends Component {
         this.setState({
             approvalState:'',
             closeState:'',
-            confirmState:''
+            confirmState:'',
+            voucherDate:[]
         })
     }
     tabelSelect = (data) => {//tabel选中数据
@@ -108,7 +109,7 @@ class List extends Component {
                     ),
                     key: "checkbox",
                     dataIndex: "checkbox",
-                    width: "5%",
+                    width: 50,
                     render: (text, record, index) => {
                         return (
                             <Checkbox
@@ -154,7 +155,7 @@ class List extends Component {
                 title: "序号",
                 dataIndex: "index",
                 key: "index",
-                width: 100,
+                width: 50,
                 render(record,text,index){
                     return index;
                 }
@@ -176,42 +177,49 @@ class List extends Component {
                 title: "供应商名称",
                 dataIndex: "supplierName",
                 key: "supplierName",
-                width: 200
+                width: 300
             },
             {
                 title: "类型",
                 dataIndex: "type",
                 key: "type",
+                width: 200
             },
             {
                 title: "采购组织",
                 dataIndex: "purchasing",
                 key: "purchasing",
+                width: 200
             },
             {
                 title: "采购组",
                 dataIndex: "purchasingGroup",
                 key: "purchasingGroup",
+                width: 200
             },
             {
                 title: "凭证日期",
                 dataIndex: "voucherDate",
                 key: "voucherDate",
+                width: 200
             },
             {
                 title: "审批状态",
                 dataIndex: "approvalState",
                 key: "approvalState",
+                width: 200
             },
             {
                 title: "确认状态",
                 dataIndex: "confirmState",
                 key: "confirmState",
+                width: 200
             },
             {
                 title: "关闭状态",
                 dataIndex: "closeState",
                 key: "closeState",
+                width: 200
             },
         ];
         let { form, list, pageSize, pageActive, totalPages,orderTypes } = this.props;
@@ -370,6 +378,7 @@ class List extends Component {
                         </Button>
                     </div>
                     <MultiSelectTable
+                        scroll={{x : true,y: 500 }}
                         columns={columns}
                         data={list}
                         multiSelect={{ type: "checkbox" }}
