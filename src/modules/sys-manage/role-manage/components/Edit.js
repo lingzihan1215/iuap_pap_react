@@ -15,10 +15,10 @@ class Edit extends Component {
     }
     save=()=>{
         this.props.form.validateFields((error,values)=>{
-            if(error){
-
-            }else{
-                console.log(values);
+            if(!error){
+                if(this.props.location.editObj&&this.props.location.editObj.id){
+                    values.id=this.props.location.editObj.id;
+                }
                 actions.role.saveRole(values);
             }
         })
@@ -29,7 +29,7 @@ class Edit extends Component {
     render (){
         let {form,showLoading} = this.props;
         let {editFlag,editObj}=this.props.location;
-        let {roleCode,roleName,roleDescribe}=editObj;
+        let {roleCode,roleName,roleDescribe,id}=editObj;
         const { getFieldProps, getFieldError } =form;
         return (
             <div className='role-edit'>
