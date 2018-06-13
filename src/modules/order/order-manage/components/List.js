@@ -32,8 +32,12 @@ class List extends Component {
         actions.order.getOrderType();
     }
     search = () => {//查询
-        this.props.form.validateFields((err, values) => {
-            console.log(values);
+        this.props.form.validateFields((err, values) => {debugger
+            let voucherDate=values.voucherDate;
+            if(voucherDate&&voucherDate.length){
+                voucherDate[0]=voucherDate[0].format('YYYY-MM-DD');
+                voucherDate[1]=voucherDate[1].format('YYYY-MM-DD');
+            }
             actions.order.loadList(values);
         });
     }
@@ -139,6 +143,7 @@ class List extends Component {
     onPageSelect = (value) => {
         actions.order.loadList({
             pageActive: value ,
+            pageSize: this.props.pageSize,
         })
     }
     dataNumSelect = (value) => {
@@ -250,10 +255,10 @@ class List extends Component {
                         </Col>
                         <Col md={4} xs={6}>
                             <FormItem>
-                                <Label>供应商编码：</Label>
+                                <Label>供应商名称：</Label>
                                 <FormControl
                                     {
-                                    ...getFieldProps('supplierCode', {
+                                    ...getFieldProps('supplierName', {
                                         initialValue: '',
                                     })
                                     }
@@ -283,7 +288,7 @@ class List extends Component {
                             <FormItem>
                                 <Label>订单类型：</Label>
                                 <Select {
-                                    ...getFieldProps('orderType', {
+                                    ...getFieldProps('type', {
                                         initialValue: '',
                                     }
                                     ) }>
@@ -384,6 +389,7 @@ class List extends Component {
                         </Button>
                     </div>
                     <MultiSelectTable
+                        rowKey={(r,i)=>i}
                         scroll={{x : true,y: 500 }}
                         columns={columns}
                         data={list}

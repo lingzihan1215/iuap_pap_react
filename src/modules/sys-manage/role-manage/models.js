@@ -5,7 +5,7 @@ import { processData } from "utils";
 
 
 export default {
-  name: "user",
+  name: "role",
   initialState: {
     showLoading:false,
     list: [],
@@ -23,29 +23,29 @@ export default {
   },
   effects: {
     async loadList(param, getState) {//加载数据
-      actions.user.updateState({
+      actions.role.updateState({
         showLoading:true
       })
       if(!param)param={};
-      let { data: { data, success } } = await api.getList(param);
-      actions.user.updateState({
+      let res= processData(await api.getList(param));
+      actions.role.updateState({
         showLoading:false
       })
-      if (success) {
-        actions.user.updateState({ 
-          list: data,
-          pageActive:param.pageActive==undefined?1:param.pageActive,
-          pageSize:param.pageSize||10,
-          totalPages:10,
+      if (res) {
+        actions.order.updateState({ 
+          list: res.content,
+          pageActive:res.number+1,
+          pageSize:res.size,
+          totalPages:res.totalPages,
         });
       }
     },
-    async saveUser(param,getState){//保存
-      actions.user.updateState({
+    async saveRole(param,getState){//保存
+      actions.role.updateState({
         showLoading:true
       })
-      await api.saveUser(param);
-      actions.user.updateState({
+      await api.saveRole(param);
+      actions.role.updateState({
         showLoading:false
       })
     },

@@ -17,12 +17,12 @@ class List extends Component {
         }
     }
     componentDidMount() {
-        actions.user.loadList();
+        actions.role.loadList();
     }
     search = () => {//查询
         this.props.form.validateFields((err, values) => {
             console.log(values);
-            actions.user.loadList(values);
+            actions.role.loadList(values);
         });
     }
     reset = () => {
@@ -40,20 +40,20 @@ class List extends Component {
     }
 
     onPageSelect = (value) => {
-        actions.user.loadList({
+        actions.role.loadList({
             pageActive: value ,
         })
     }
     dataNumSelect = (value) => {
         let pageSize = (value + 1) * 5;//针对于5条/10条/15条/20条选项
-        actions.user.loadList({
+        actions.role.loadList({
             pageSize: pageSize,
             pageActive: 1
         })
     }
     edit(editFlag,record){
         actions.routing.push({
-            pathname:'useredit',
+            pathname:'roleedit',
             editObj:record||{},
             editFlag:editFlag
         })
@@ -64,23 +64,49 @@ class List extends Component {
     detail=(record)=>{
         
     }
+    toGroupM=(record)=>{
+        console.log('角色组管理。。。');
+    }
+    toGroupP=(record)=>{
+        console.log('角色权限管理。。。');
+    }
     render() {
         const self = this;
         const column = [
             {
+                title: "角色组管理",
+                dataIndex: "groupM",
+                key: "groupM",
+                render(text,record,index){
+                    return (
+                        <a onClick={()=>{self.toGroupM(record)}}>角色组管理</a>
+                    )
+                }
+            },
+            {
+                title: "角色权限管理",
+                dataIndex: "groupP",
+                key: "groupP",
+                render(text,record,index){
+                    return (
+                        <a onClick={()=>{self.toGroupP(record)}}>角色权限管理</a>
+                    )
+                }
+            },
+            {
                 title: "角色编码",
-                dataIndex: "userCode",
-                key: "userCode",
+                dataIndex: "roleCode",
+                key: "roleCode",
             },
             {
                 title: "角色名称",
-                dataIndex: "userName",
-                key: "userName",
+                dataIndex: "roleName",
+                key: "roleName",
             },
             {
                 title: "角色描述",
-                dataIndex: "userDescribe",
-                key: "userDescribe",
+                dataIndex: "roleDescribe",
+                key: "roleDescribe",
             },
             {
                 title: "操作",
@@ -101,7 +127,7 @@ class List extends Component {
         let { form, list, pageSize, pageActive, totalPages,orderTypes,showLoading } = this.props;
         const { getFieldProps, getFieldError } = form;
         return (
-            <div className='user-list'>
+            <div className='role-list'>
             <Loading
                 showBackDrop={true}
                 loadingType="line"
@@ -115,7 +141,7 @@ class List extends Component {
                                 <Label>角色编码：</Label>
                                 <FormControl
                                     {
-                                    ...getFieldProps('userCode', {
+                                    ...getFieldProps('roleCode', {
                                         initialValue: '',
                                     })
                                     }
@@ -127,7 +153,7 @@ class List extends Component {
                                 <Label>角色名称：</Label>
                                 <FormControl
                                     {
-                                    ...getFieldProps('userName', {
+                                    ...getFieldProps('roleName', {
                                         initialValue: '',
                                     })
                                     }
@@ -139,7 +165,7 @@ class List extends Component {
                                 <Label>角色描述：</Label>
                                 <FormControl
                                     {
-                                    ...getFieldProps('userDescribe', {
+                                    ...getFieldProps('roleDescribe', {
                                         initialValue: '',
                                     })
                                     }

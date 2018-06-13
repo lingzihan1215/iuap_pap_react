@@ -26,10 +26,10 @@ class Edit extends Component {
     render (){
         let {form,showLoading} = this.props;
         let {editFlag,editObj}=this.props.location;
-        let {userCode,userName,userDescribe}=editObj;
+        let {roleCode,roleName,roleDescribe}=editObj;
         const { getFieldProps, getFieldError } =form;
         return (
-            <div className='user-edit'>
+            <div className='role-edit'>
                 <Loading
                     showBackDrop={true}
                     loadingType="line"
@@ -49,11 +49,11 @@ class Edit extends Component {
                             角色编码：
                         </Label>
                         <FormItem><span className='mast'>*</span>
-                            <FormControl disabled={editFlag}
+                            <FormControl disabled={!editFlag}
                                     placeholder="请输入角色编码"
                                     {
-                                        ...getFieldProps('userCode', {
-                                            initialValue: userCode,
+                                        ...getFieldProps('roleCode', {
+                                            initialValue: roleCode,
                                             validateTrigger: 'onBlur',
                                             rules: [{
                                                 required: true, message: '请输入角色编码',
@@ -62,7 +62,7 @@ class Edit extends Component {
                                     ) }
                                 />
                          <span className='error'>
-                            {getFieldError('userCode')}
+                            {getFieldError('roleCode')}
                         </span>
                         </FormItem>
                     </Col>
@@ -71,11 +71,11 @@ class Edit extends Component {
                             角色名称：
                         </Label>
                         <FormItem><span className='mast'>*</span>
-                        <FormControl disabled={editFlag}
+                        <FormControl disabled={!editFlag}
                                     placeholder="请输入角色名称"
                                     {
-                                        ...getFieldProps('userName', {
-                                            initialValue: userName,
+                                        ...getFieldProps('roleName', {
+                                            initialValue: roleName,
                                             validateTrigger: 'onBlur',
                                             rules: [{
                                                 required: true, message: '请输入角色名称',
@@ -84,20 +84,20 @@ class Edit extends Component {
                                     ) }
                                 />
                         <span className='error'>
-                            {getFieldError('userName')}
+                            {getFieldError('roleName')}
                         </span>
                         </FormItem>
                     </Col>
-                    <Col md={12} xs={12}>
+                    <Col md={4} xs={6}>
                         <Label>
                             角色描述：
                         </Label>
                         <FormItem>
-                            <textarea disabled={editFlag}
+                            <FormControl disabled={!editFlag}
                                     placeholder="请输入角色描述"
                                     {
-                                        ...getFieldProps('userDescribe', {
-                                            initialValue: userDescribe,
+                                        ...getFieldProps('roleDescribe', {
+                                            initialValue: roleDescribe,
                                         }
                                     ) }
                                 />

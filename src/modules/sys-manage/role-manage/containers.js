@@ -11,5 +11,5 @@ import model from './models'
 mirror.model(model);
 
 
-export const userList= connect((state) => state.user)(List);
-export const userEdit= connect((state) => state.user)(Edit);
+export const roleList= connect((state) => state.role)(List);
+export const roleEdit= connect((state) => state.role)(Edit);

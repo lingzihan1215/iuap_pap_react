@@ -9,13 +9,18 @@ if(__MODE__ == "development"){
 }
 
 const URL = {
-    "GET_LIST":  "/order/manage/list",
+    "GET_LIST":  "/iuap-example/sany_order/list",
     "GET_ORDER_TYPE": "/order/manage/orderType"
 }
 
 export const getList = (params) => {
-    return request(URL.GET_LIST, {
-        method: "post",
+    console.log(params);
+    let url =URL.GET_LIST+'?1=1';
+    for(let attr in params){
+        url+='&'+attr+'='+params[attr];
+    }
+    return request(url, {
+        method: "get",
         data: params
     });
 }

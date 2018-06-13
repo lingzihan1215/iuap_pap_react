@@ -11,7 +11,7 @@ module.exports = {
     "/order/manage/orderType": "./mock/order/manage/orderType.json",
   }],
   "POST": [{
-    "/system/user/list": "./mock/sys-manage/user-manage/list.json",
+    "/system/role/list": "./mock/sys-manage/role-manage/list.json",
   }, {
     "/order/manage/list": "./mock/order/manage/list.json",
   }, {

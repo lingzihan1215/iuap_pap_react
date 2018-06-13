@@ -28,17 +28,22 @@ export default {
       actions.order.updateState({
         showLoading:true
       })
-      if(!param)param={};
-      let { data: { data, success } } = await api.getList(param);
+      if(param){
+        param.pageIndex=param.pageActive-1;
+        param.pageSize=param.pageSize;
+      }else{
+        param={}
+      }
+      let res= processData(await api.getList(param));
       actions.order.updateState({
         showLoading:false
       })
-      if (success) {
+      if (res) {
         actions.order.updateState({ 
-          list: data,
-          pageActive:param.pageActive==undefined?1:param.pageActive,
-          pageSize:param.pageSize||10,
-          totalPages:10,
+          list: res.content,
+          pageActive:res.number+1,
+          pageSize:res.size,
+          totalPages:res.totalPages,
         });
       }
     },
