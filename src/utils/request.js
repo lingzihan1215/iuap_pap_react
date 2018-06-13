@@ -6,5 +6,7 @@ export default (url, options) => {
         url: url,
         data: options.data,
         params: options.param
+    }).catch(function (err) {
+        console.log(err);
     });
 }

@@ -13,6 +13,7 @@ export const Error = (msg) => {
 export const Warning = (msg) => {
     Message.create({ content: msg, color : 'warning' });
 }
+
 export const processData = (response,successMsg) => {
     if(response.status=='200'){
         let data=response.data;

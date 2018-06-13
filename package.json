@@ -40,7 +40,7 @@
     "axios": "^0.18.0",
     "bee-datepicker": "^1.0.22",
     "bee-form": "^2.0.0",
-    "bee-pagination": "^1.1.0",
+    "bee-pagination": "^1.1.1",
     "bee-search-panel": "^0.1.4",
     "bee-tooltip": "^1.0.2",
     "classnames": "^2.2.5",
