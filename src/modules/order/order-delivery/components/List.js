@@ -12,20 +12,23 @@ class List extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading: false
+            loading: false//内部使用加载数据loading
         }
+        //表格列
         this.columns = [
             {
                 title: "订单号",
                 dataIndex: "orderCode",
                 key: "orderCode",
-                width: "8%"
+                width: "8%",
+                render: (text, record) => this.renderColumns(text, record, 'orderCode')
             },
             {
                 title: "序号",
                 dataIndex: "id",
                 key: "id",
-                width: "5%"
+                width: "5%",
+                render: (text, record) => this.renderColumns(text, record, 'id')
             },
             {
                 title: "生产批次",
@@ -38,25 +41,29 @@ class List extends Component {
                 title: "物料编码",
                 dataIndex: "code",
                 key: "code",
-                width: "10%"
+                width: "10%",
+                render: (text, record) => this.renderColumns(text, record, 'code')
             },
             {
                 title: "物料名称",
                 dataIndex: "name",
                 key: "name",
-                width: "12%"
+                width: "12%",
+                render: (text, record) => this.renderColumns(text, record, 'name')
             },
             {
                 title: "订单数量",
                 dataIndex: "orderNumber",
                 key: "orderNumber",
-                width: "5%"
+                width: "5%",
+                render: (text, record) => this.renderColumnsInputNumber(text, record, 'orderNumber')
             },
             {
                 title: "已收数量",
                 dataIndex: "receNumber",
                 key: "receNumber",
-                width: "5%"
+                width: "5%",
+                render: (text, record) => this.renderColumnsInputNumber(text, record, 'receNumber')
             },
             {
                 title: "发货数量",
@@ -69,7 +76,8 @@ class List extends Component {
                 title: "单位",
                 dataIndex: "unit",
                 key: "unit",
-                width: "5%"
+                width: "5%",
+                render: (text, record) => this.renderColumns(text, record, 'unit')
             },
             {
                 title: "操作",
@@ -94,14 +102,16 @@ class List extends Component {
         ];
     }
     componentDidMount = () => {
-        this.loadList();
+        this.loadList();//加载表格
     }
+    //加载表格
     loadList = async () => {
         this.setState({ loading: true });
         let data = await actions.delivery.getList();
         this.cacheData = data.map(item => ({ ...item }));
         this.setState({ loading: false });
     }
+    //行编辑列Input
     EditableCell = ({ editable, value, onChange }) => (
         <div>
             {editable
@@ -110,6 +120,7 @@ class List extends Component {
             }
         </div>
     );
+    //行编辑InputNumber
     EditableCellInputNumber = ({ editable, value, onChange }) => (
         <div>
             {editable
@@ -125,7 +136,7 @@ class List extends Component {
             }
         </div>
     );
-
+    //渲染列
     renderColumns = (text, record, column) => {
         return (
             <this.EditableCell
@@ -135,6 +146,7 @@ class List extends Component {
             />
         );
     }
+    //渲染列
     renderColumnsInputNumber = (text, record, column) => {
         return (
             <this.EditableCellInputNumber
@@ -144,6 +156,7 @@ class List extends Component {
             />
         );
     }
+    //修改行指定数据key
     handleChange = (value, id, column) => {
         const newData = [...this.props.list];
         const target = newData.filter(item => id === item.id)[0];
@@ -154,6 +167,7 @@ class List extends Component {
             });
         }
     }
+
     edit = (id) => {
         const newData = [...this.props.list];
         const target = newData.filter(item => id === item.id)[0];
@@ -181,7 +195,16 @@ class List extends Component {
                 list: newData
             });
             this.cacheData = newData.map(item => ({ ...item }));
-            console.log(this.cacheData);
+            let newRow = this.cacheData.filter(item => id === item.id)[0];
+            console.log(newRow);
+            if (newRow.isNew) {
+                //判断是否新增还是编辑区别是是否存在id
+                delete newRow.isNew;
+                delete newRow.id;
+            }
+            console.log(newRow);
+            //TO DO : Save Data
+            actions.delivery.saveList(newRow);
         }
     }
     cancel = (id, index) => {
@@ -257,8 +280,6 @@ class List extends Component {
                             footer={() => <Pagination
                                 first
                                 last
-                                prev
-                                next
                                 boundaryLinks
                                 items={this.props.total}
                                 activePage={this.props.activePage}
