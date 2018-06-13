@@ -38,6 +38,10 @@ export default {
         id
       });
       return result;
+    },
+    async saveList(form, getState) {
+      let result = await api.saveList(form);
+      return result;
     }
   }
 };
