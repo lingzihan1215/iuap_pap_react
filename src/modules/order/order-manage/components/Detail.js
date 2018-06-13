@@ -16,86 +16,66 @@ class Detail extends Component {
         return (
             <div className='order-detail'>
                 <Header title='订单详情' back={true}/>
-                <Row>
+                <Row className='detail-body'>
                     <Col md={4} xs={6}>
                         <Label>
                             订单编号：
                         </Label>
-                        <span>
-                            {orderCode}
-                        </span>
+                        <FormControl disabled value={orderCode}/>
                     </Col>
                     <Col md={4} xs={6}>
                         <Label>
                         供应商：
                         </Label>
-                        <span>
-                            {supplier}
-                        </span>
+                        <FormControl disabled value={supplier}/>
                     </Col>
                     <Col md={4} xs={6}>
                         <Label>
                         供应商名称：
                         </Label>
-                        <span>
-                            {supplierName}
-                        </span>
+                        <FormControl disabled value={supplierName}/>
                     </Col>
                     <Col md={4} xs={6}>
                         <Label>
                         类型：
                         </Label>
-                        <span>
-                            {type}
-                        </span>
+                        <FormControl disabled value={type}/>
                     </Col>
                     <Col md={4} xs={6}>
                         <Label>
                             采购组织：
                         </Label>
-                        <span>
-                            {purchasing}
-                        </span>
+                        <FormControl disabled value={purchasing}/>
                     </Col>
                     <Col md={4} xs={6}>
                         <Label>
                             采购组：
                         </Label>
-                        <span>
-                            {purchasingGroup}
-                        </span>
+                        <FormControl disabled value={purchasingGroup}/>
                     </Col>
                     <Col md={4} xs={6}>
                         <Label>
                             凭证日期：
                         </Label>
-                        <span>
-                            {voucherDate}
-                        </span>
+                        <FormControl disabled value={voucherDate}/>
                     </Col>
                     <Col md={4} xs={6}>
                         <Label>
                             审批状态：
                         </Label>
-                        <span>
-                            {approvalState}
-                        </span>
+                        <FormControl disabled value={approvalState}/>
                     </Col>
                     <Col md={4} xs={6}>
                         <Label>
                             确认状态：
                         </Label>
-                        <span>
-                            {confirmState}
-                        </span>
+                        <FormControl disabled value={confirmState}/>
                     </Col>
                     <Col md={4} xs={6}>
                         <Label>
                             关闭状态：
                         </Label>
-                        <span>
-                            {closeState}
-                        </span>
+                        <FormControl disabled value={closeState}/>
                     </Col>
                 </Row>
             </div>

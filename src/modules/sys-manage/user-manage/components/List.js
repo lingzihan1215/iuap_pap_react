@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { actions } from "mirrorx";
-import { Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Select,Radio } from "tinper-bee";
+import { Loading,Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Select,Radio } from "tinper-bee";
 import Form from 'bee-form';
 import Pagination from 'bee-pagination';
 import 'bee-pagination/build/Pagination.css';
@@ -51,14 +51,18 @@ class List extends Component {
             pageActive: 1
         })
     }
-    edit=(record)=>{
-
+    edit(editFlag,record){
+        actions.routing.push({
+            pathname:'useredit',
+            editObj:record||{},
+            editFlag:editFlag
+        })
     }
     delItem=(record)=>{
-        console.log(record);
+        
     }
     detail=(record)=>{
-
+        
     }
     render() {
         const self = this;
@@ -82,22 +86,27 @@ class List extends Component {
                 title: "操作",
                 dataIndex: "e",
                 key: "e",
-                render(record,text,index){
+                render(text,record,index){
                     return (
                         <div className='operation-btn'>
-                            <Button size='sm' className='edit-btn' onClick={()=>{self.edit(record)}}>编辑</Button>
+                            <Button size='sm' className='edit-btn' onClick={()=>{self.edit(true,record)}}>编辑</Button>
                             <Button size='sm' className='del-btn' onClick={()=>{self.delItem(record)}}>删除</Button>
-                            <Button size='sm' className='detail-btn' onClick={()=>{self.detail(record)}}>查看</Button>
+                            <Button size='sm' className='detail-btn' onClick={()=>{self.edit(false,record)}}>查看</Button>
                         </div>
                     )
                 }
             },
 
         ];
-        let { form, list, pageSize, pageActive, totalPages,orderTypes } = this.props;
+        let { form, list, pageSize, pageActive, totalPages,orderTypes,showLoading } = this.props;
         const { getFieldProps, getFieldError } = form;
         return (
             <div className='user-list'>
+            <Loading
+                showBackDrop={true}
+                loadingType="line"
+                show={showLoading}
+            />
                 <Header title='角色管理' />
                 <div className='search-panel'>
                     <Row>

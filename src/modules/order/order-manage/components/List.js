@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { actions } from "mirrorx";
-import { Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Select,Radio } from "tinper-bee";
+import { Loading,Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Select,Radio } from "tinper-bee";
 import Form from 'bee-form';
 import Pagination from 'bee-pagination';
 import 'bee-pagination/build/Pagination.css';
@@ -129,12 +129,12 @@ class List extends Component {
 
     cellClick=(record)=>{
         console.log('正在开发。。。');
-        // actions.routing.push(
-        //     {
-        //         pathname: 'detail',
-        //         detailObj: record
-        //     }
-        // )
+        actions.routing.push(
+            {
+                pathname: 'managedetail',
+                detailObj: record
+            }
+        )
     }
     onPageSelect = (value) => {
         actions.order.loadList({
@@ -222,11 +222,17 @@ class List extends Component {
                 width: 200
             },
         ];
-        let { form, list, pageSize, pageActive, totalPages,orderTypes } = this.props;
+        let { form, list, pageSize, pageActive, totalPages,orderTypes,showLoading } = this.props;
         const { getFieldProps, getFieldError } = form;
         let columns = this.renderColumnsMultiSelect(column);
         return (
             <div className='order-list'>
+            <Loading
+            showBackDrop={true}
+            loadingType="line"
+            show={showLoading}
+            />
+
                 <Header title='采购订单管理' />
                 <div className='search-panel'>
                     <Row>

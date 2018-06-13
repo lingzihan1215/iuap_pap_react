@@ -7,6 +7,7 @@ import { processData } from "utils";
 export default {
   name: "order",
   initialState: {
+    showLoading:false,
     list: [],
     orderTypes:[],
     pageActive:1,
@@ -24,8 +25,14 @@ export default {
   },
   effects: {
     async loadList(param, getState) {//加载数据
+      actions.order.updateState({
+        showLoading:true
+      })
       if(!param)param={};
       let { data: { data, success } } = await api.getList(param);
+      actions.order.updateState({
+        showLoading:false
+      })
       if (success) {
         actions.order.updateState({ 
           list: data,
