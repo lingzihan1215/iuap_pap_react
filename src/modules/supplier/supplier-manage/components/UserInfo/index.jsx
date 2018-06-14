@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import {Row,Col,FormControl,Select,Button,Icon} from 'tinper-bee';
+import {Row,Col,FormControl,Button,Icon} from 'tinper-bee';
 import Form from 'bee-form';
+import Select from 'bee-select';
 import './index.less';
 
 const Option = Select.Option;
@@ -70,7 +71,6 @@ class UserInfo extends Component {
                                             <span className="supplier-icon-adjust">*</span>
                                             <Select
                                                 className = "supplier-sel-adjust"
-                                                defaultValue={"私营企业"}
                                                 searchPlaceholder="标签模式"
                                                 {
                                                 ...getFieldProps('firmnature', {
@@ -91,10 +91,10 @@ class UserInfo extends Component {
                                         </FormItem>
                                     </Col>
                                     <Col className="height40" md={4} mdOffset={1} xs={4} xsOffset={1} sm={4} smOffset={1}>
-                                        <FormItem>
-                                            <span className="supplier-label-adjust">统一社会信用代码&nbsp;:&nbsp; </span>
-                                            <span className="supplier-icon-adjust">*</span>
-                                            <FormControl className = "supplier-input-adjust"
+                                        <FormItem className="pos-relative">
+                                            <span className="supplier-label-adjust user-label-adjust">统一社会信用代码:&nbsp; </span>
+                                            <span className="supplier-icon-adjust user-icon-adjust">*</span>
+                                            <FormControl className = "supplier-input-adjust user-input-adjust"
                                                 {
                                                 ...getFieldProps('unisocialcode', {
                                                     initialValue: "统一社会信用代码",
@@ -103,7 +103,7 @@ class UserInfo extends Component {
                                                 })
                                                 }
                                             />
-                                            <span className='error'>
+                                            <span className='error error-input-adjust'>
                                                 {getFieldError('unisocialcode')}
                                             </span>
                                         </FormItem>
@@ -201,4 +201,4 @@ class UserInfo extends Component {
     }
 }
 
-export default Form.createForm()(UserInfo);
+export default UserInfo;

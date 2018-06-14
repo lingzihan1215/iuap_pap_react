@@ -8,15 +8,13 @@ import createModal from 'yyuap-ref';
 import DatePicker from 'bee-datepicker';
 import "bee-datepicker/build/DatePicker.css";
 import moment from "moment";
+import zhCN from "rc-calendar/lib/locale/zh_CN";
 import './index.less';
 
 const Option = Select.Option;
 const FormItem = Form.FormItem;
-const format = 'YYYY-MM-DD';
+const format = 'YYYY-MM-DD HH:mm:ss';
 const fieldArray = [
-    "engname","componyurl","companyphone","createtime",
-    "country", "province","city","addressdetail",
-    "entrepresent","totalemplyee",
     "amount","regmeasure","fixedassets","fixedmeasure",
     "trancur","annualsales","annualmeasure",
     "supplycategory","mainproduct",
@@ -24,10 +22,6 @@ const fieldArray = [
     "totalfunds","totalmeasure",
     "totalfunds","agengcyqualify",
     "maincustomer","secmaincus","thirdmaincus",
-    "banktype","bankpro","bankcity",
-    "bankname","bankconnum",
-    "accountnum","accountname",
-    "detection","businesslicense"
 ];
 
 class EnterpriseInfo extends Component {
@@ -134,6 +128,7 @@ class EnterpriseInfo extends Component {
     }
     render() {
         const { getFieldProps, getFieldError,getFieldDecorator} = this.props.form;
+        console.log(this.props.form);
         return (
             <div className="supplier-enterprise-page">
                 <div className="supplier-user-head"><Icon type="uf-2collayout" />企业信息:</div>
@@ -148,6 +143,7 @@ class EnterpriseInfo extends Component {
                                         <FormControl  className="supplier-input-adjust"
 
                                             {...getFieldProps('engname', {
+                                                initialValue: "apple",
                                                 validateTrigger: 'onBlur',
                                                 rules: [{
                                                     type: 'string', required: true, message: '请输入公司英文名称',
@@ -159,19 +155,25 @@ class EnterpriseInfo extends Component {
                                     </FormItem>
                                 </Col>
                                 <Col className="height40" md={4} mdOffset={1} xs={4} xsOffset={1} sm={4} smOffset={1}>
-                                    <FormItem>
-                                        <span className="supplier-label-adjust">创立日期&nbsp;:&nbsp; </span>
-                                        <span className="supplier-icon-adjust">*</span>
-                                        <FormControl  className="supplier-input-adjust"
-
-                                            {...getFieldProps('createtime', {
-                                                initialValue:   "",
-                                                validateTrigger: 'onBlur',
-                                                rules: [{
-                                                    type: 'string', required: true, message: '请输入创立日期',
-                                                }],
-                                            })} />
-                                        <span className='error'>
+                                    <FormItem className="pos-relative">
+                                        <span className="supplier-label-adjust create-date-adjust">创立日期&nbsp;:&nbsp; </span>
+                                        <span className="supplier-icon-adjust date-icon-adjust">*</span>
+                                        <div className="date_adjust ">
+                                            <DatePicker 
+                                                name="time"
+                                                format={format}
+                                                defaultValue={moment()}
+                                                locale={zhCN}
+                                                {...getFieldProps('createtime', {
+                                                    validateTrigger: 'onBlur',
+                                                    rules: [{
+                                                        required: true, type: 'object',message: '请选择开始时间',
+                                                    }],
+                                                }) }
+                                            />
+                                            
+                                        </div>
+                                        <span className='error error-input-adjust'>
                                             {getFieldError('createtime')}
                                         </span>
                                     </FormItem>
@@ -185,7 +187,7 @@ class EnterpriseInfo extends Component {
                                         <FormControl  className="supplier-input-adjust"
 
                                             {...getFieldProps('companyphone', {
-                                                initialValue:   "",
+                                                initialValue:   "1234-3214521",
                                                 validateTrigger: 'onBlur',
                                                 rules: [{
                                                     type: 'string', required: true, message: '请输入公司电话',
@@ -207,7 +209,7 @@ class EnterpriseInfo extends Component {
                                         <FormControl  className="supplier-input-adjust"
 
                                             {...getFieldProps('componyurl', {
-                                                initialValue:   "",
+                                                initialValue:   "www.baidu.com",
                                                 validateTrigger: 'onBlur',
                                                 rules: [{
                                                     type: 'string', required: true, message: '请输入公司网址',
@@ -261,12 +263,13 @@ class EnterpriseInfo extends Component {
                                             searchPlaceholder="标签模式"
                                             {
                                             ...getFieldProps('city', {
-                                                initialValue: "shijiaz",
+                                                initialValue: "beijing",
                                                 validateTrigger: 'onBlur',
                                                 rules: [{ required: true, message: '请选择市!' }],
                                             })
                                             }
                                         >
+                                            <Option value="beijing">北京</Option>
                                             <Option value="shijiaz">石家庄</Option>
                                             <Option value="jinan">济南</Option>
                                             <Option value="taiyuan">太原</Option>
@@ -274,7 +277,7 @@ class EnterpriseInfo extends Component {
                                         <FormControl  className="special-input"
 
                                             {...getFieldProps('addressdetail', {
-                                                initialValue:   "",
+                                                initialValue:   "海淀区北清路",
                                                 validateTrigger: 'onBlur',
                                                 rules: [{
                                                     type: 'string', required: true, message: '请输入公司地址',
@@ -295,7 +298,7 @@ class EnterpriseInfo extends Component {
                                         <FormControl  className="supplier-input-adjust"
 
                                             {...getFieldProps('entrepresent', {
-                                                initialValue:   "",
+                                                initialValue:   "某某某",
                                                 validateTrigger: 'onBlur',
                                                 rules: [{
                                                     type: 'string', required: true, message: '法人代表',
@@ -313,7 +316,7 @@ class EnterpriseInfo extends Component {
                                         <FormControl  className="supplier-input-adjust"
 
                                             {...getFieldProps('totalemplyee', {
-                                                initialValue:   "",
+                                                initialValue:   "123",
                                                 validateTrigger: 'onBlur',
                                                 rules: [{
                                                     type: 'string', required: true, message: '请输入员工总人数',
@@ -325,7 +328,7 @@ class EnterpriseInfo extends Component {
                                     </FormItem>
                                 </Col>
                             </div>
-                            <div className="clearfix mt20">
+                            {/* <div className="clearfix mt20">
                                 <Col className="height40" md={4} mdOffset={1} xs={4} xsOffset={1} sm={4} smOffset={1}>
                                     <FormItem>
                                         <span className="supplier-label-adjust">注册资金&nbsp;:&nbsp; </span>
@@ -513,23 +516,6 @@ class EnterpriseInfo extends Component {
                                         <span className='error'>
                                             {getFieldError('agency')}
                                         </span>
-                                        {/* <Radio.RadioGroup
-                                            className="supplier-radio"
-                                            name="isagency"
-                                            selectedValue={this.state.selectedValue}
-                                            onChange = {this.onHandleChange}
-                                            {
-                                                ...getFieldProps('agency', {
-                                                    // initialValue: "0",
-                                                    validateTrigger: 'onBlur',
-                                                    rules: [{ required: true, message: '请选择是否为代理商!' }],
-                                                })
-                                            }
-                                            >
-
-                                            <Radio value="0" >是</Radio>
-                                            <Radio value="1" >否</Radio>
-                                        </Radio.RadioGroup> */}
                                         
                                     </FormItem>
                                 </Col>
@@ -668,7 +654,7 @@ class EnterpriseInfo extends Component {
                                     <FormItem>
                                         <span className="supplier-label-adjust">省、市&nbsp;:&nbsp; </span>
                                         <span className="supplier-icon-adjust">*</span>
-                                        {/* <Select
+                                        <Select
                                             className = "width32"
                                             searchPlaceholder="标签模式"
                                             {
@@ -697,15 +683,9 @@ class EnterpriseInfo extends Component {
                                             <Option value="beijing">北京</Option>
                                             <Option value="jinan">济南</Option>
                                             <Option value="taiyuan">太原</Option>
-                                        </Select> */}
+                                        </Select>
                                         <CitySelect 
                                             onChange = {this.onCitySelect}
-                                            /* {
-                                                ...getFieldProps('bankpro', {
-                                                    validateTrigger: 'onBlur',
-                                                    rules: [{ required: true, message: '请选择省、市!' }],
-                                                })
-                                            } */
                                         />
                                         <span className='error'>
                                             {getFieldError('bankpro')}
@@ -829,8 +809,7 @@ class EnterpriseInfo extends Component {
                                         </span>
                                     </FormItem>
                                 </Col>
-                            </div>
-                            {/* <Button colors="primary" onClick={this.onVerifyClick}>保存</Button> */}
+                            </div> */}
                         </Row>
                     </Form>
                 </div>
@@ -840,4 +819,4 @@ class EnterpriseInfo extends Component {
     }
 }
 
-export default Form.createForm()(EnterpriseInfo);
+export default EnterpriseInfo;

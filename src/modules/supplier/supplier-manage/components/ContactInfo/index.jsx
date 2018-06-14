@@ -57,4 +57,4 @@ class ContactInfo extends Component {
     }
 }
 
-export default Form.createForm()(ContactInfo);
+export default ContactInfo;
