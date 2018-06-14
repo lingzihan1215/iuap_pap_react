@@ -1,12 +1,16 @@
-.supplier-page {
+.supplier-enterprise-page {
+    background-color: #fff;
+    border: 1px solid #d5d5d5;
+    margin-top: 30px;
     .supplier-user-head {
         width: 100%;
         height: 40px;
         font-size: 16px;
         font-weight: bold;
         line-height: 40px;
-        background-color: #d8d8d8;
-        padding-left: 1.5%;
+        /* background-color: #db3333; */
+        /* padding-left: 1.5%; */
+        margin: 20px 3%;
     }
     .company-info-form {
         background-color: #ffffff;
@@ -50,10 +54,12 @@
         .special-input {
             width: 52%;
             margin-left: 10px;
+            position: absolute
         }
         .supplier-special-sel {
             width: 20%;
             margin-left: 3%;
+            position: absolute;
         } 
 
         .supplier-spec-input {
@@ -99,19 +105,30 @@
         .span-pos-adjust {
             position: absolute;
             font-size: 14px;
-            top: 10px;
+            top: 2%;
         }
 
         .icon-pos-adjust {
             position: absolute;
             left: 29%;
-            top: 25%;
+            top: 18%;
         }
 
         .input-pos {
             position: absolute;
-            top: 16px;
+            top: 10%;
             left: 31%;
+        }
+
+        .u-city-select {
+            width: 68%;
+            display: inline-block;
+            .province,.city,.area {
+                width: 30%;
+            }
+            .province,.city {
+                margin-right: 5%;
+            }
         }
     }
 }

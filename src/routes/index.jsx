@@ -4,6 +4,7 @@
 import React, { Component } from "react";
 import { Router, Route } from "mirrorx";
 import order from "modules/order/router";
+import interimplan from "modules/interimplan/router";
 import Supplier from "modules/supplier/router";
 import contracts from "modules/contract/router";
 import MainLayout from "layout";
@@ -16,6 +17,7 @@ const MainRoutes = () => (
     <Route path="/supplier" component={Supplier} />
     <Route path="/contract" component={contracts} />
     <Route path="/system" component={system} />
+    <Route path="/interimplan" component={interimplan} />
   </div>
 )
 

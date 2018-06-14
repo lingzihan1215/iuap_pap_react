@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Row,Col,FormControl,Select,Label,Button} from 'tinper-bee';
+import {Row,Col,FormControl,Select,Button,Icon} from 'tinper-bee';
 import Form from 'bee-form';
 import './index.less';
 
@@ -22,9 +22,9 @@ class UserInfo extends Component {
     render() {
         const { getFieldProps, getFieldError,getFieldDecorator} = this.props.form;
         return (
-            <div className="supplier-page">
+            <div className="supplier-user-page">
                 <div >
-                    <div className="supplier-user-head">用户信息:</div>
+                    <div className="supplier-user-head"><Icon type="uf-2collayout" />用户信息:</div>
                     <div className="supplier-user-form">
                         <Form>
                             <Row>
@@ -147,7 +147,7 @@ class UserInfo extends Component {
                                         </FormItem>
                                     </Col>
                                 </div>
-                                <div className="clearfix mt20">
+                                {/* <div className="clearfix mt20">
                                     <Col className="height40" md={4} mdOffset={1} xs={4} xsOffset={1} sm={4} smOffset={1}>
                                         <FormItem>
                                             <span className="supplier-label-adjust">电子邮箱&nbsp;:&nbsp; </span>
@@ -188,7 +188,7 @@ class UserInfo extends Component {
                                             </span>
                                         </FormItem>
                                     </Col>
-                                </div>
+                                </div> */}
                                
                                 
                             </Row>

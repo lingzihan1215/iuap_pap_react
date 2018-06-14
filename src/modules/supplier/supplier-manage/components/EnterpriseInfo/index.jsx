@@ -2,12 +2,17 @@ import React, { Component } from 'react';
 import {Radio,Row,Col,FormControl,Label,Button,Icon} from 'tinper-bee';
 import mirror, { actions, connect } from "mirrorx";
 import Form from 'bee-form';
+import CitySelect from 'bee-city-select';
 import Select from 'bee-select';
 import createModal from 'yyuap-ref';
-
+import DatePicker from 'bee-datepicker';
+import "bee-datepicker/build/DatePicker.css";
+import moment from "moment";
 import './index.less';
+
 const Option = Select.Option;
 const FormItem = Form.FormItem;
+const format = 'YYYY-MM-DD';
 const fieldArray = [
     "engname","componyurl","companyphone","createtime",
     "country", "province","city","addressdetail",
@@ -29,7 +34,8 @@ class EnterpriseInfo extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            selectedValue:"0"
+            selectedValue:"0",
+            bankpro :{ province:'北京',city:'北京',area:'东城区'}
         };
     }
 
@@ -87,15 +93,50 @@ class EnterpriseInfo extends Component {
         })
     }
 
+    // 上传证书
     onUpAgency = ()=>{
         // 上传证书
     }
+
+    // 获取城市数据
+    onCitySelect = (value)=>{
+        console.log(value);
+        this.setState({
+            bankpro:value
+        })
+    }
+
+    // 验证表单数据
+    onVerifyClick = ()=>{
+        this.props.form.validateFields(fieldArray,{
+            first:false,
+            force:true
+        },async (error,value)=>{
+            console.log("error",error,value);
+            if(!error){
+                this.setState({
+                    showLine: true
+                })
+                // done表示是否加载完毕
+                let {done} = await actions.master.onSave(value);
+                if (done) {
+                    this.setState({
+                        showLine: false
+                    }) 
+                    Message.create({content: '单据保存成功', color: 'success'});
+                    
+                }else {
+                    this.setState({showLine: false})
+                }
+                
+            }
+        });
+    }
     render() {
         const { getFieldProps, getFieldError,getFieldDecorator} = this.props.form;
-        console.log("this.props.form",this.props.form);
         return (
-            <div className="supplier-page">
-                <div className="supplier-user-head">企业信息:</div>
+            <div className="supplier-enterprise-page">
+                <div className="supplier-user-head"><Icon type="uf-2collayout" />企业信息:</div>
                 <div className="company-info-form">
                     <Form>
                         <Row>
@@ -107,7 +148,6 @@ class EnterpriseInfo extends Component {
                                         <FormControl  className="supplier-input-adjust"
 
                                             {...getFieldProps('engname', {
-                                                initialValue:   "",
                                                 validateTrigger: 'onBlur',
                                                 rules: [{
                                                     type: 'string', required: true, message: '请输入公司英文名称',
@@ -456,7 +496,7 @@ class EnterpriseInfo extends Component {
                                     <FormItem>
                                         <span className="supplier-label-adjust">是否为代理商&nbsp;:&nbsp; </span>
                                         <span className="supplier-icon-adjust">*</span>
-                                        {/* <Select
+                                        <Select
                                             className="supplier-sel-adjust"
                                             searchPlaceholder="标签模式"
                                             {
@@ -472,8 +512,8 @@ class EnterpriseInfo extends Component {
                                         </Select>
                                         <span className='error'>
                                             {getFieldError('agency')}
-                                        </span> */}
-                                        <Radio.RadioGroup
+                                        </span>
+                                        {/* <Radio.RadioGroup
                                             className="supplier-radio"
                                             name="isagency"
                                             selectedValue={this.state.selectedValue}
@@ -489,7 +529,7 @@ class EnterpriseInfo extends Component {
 
                                             <Radio value="0" >是</Radio>
                                             <Radio value="1" >否</Radio>
-                                        </Radio.RadioGroup>
+                                        </Radio.RadioGroup> */}
                                         
                                     </FormItem>
                                 </Col>
@@ -628,7 +668,7 @@ class EnterpriseInfo extends Component {
                                     <FormItem>
                                         <span className="supplier-label-adjust">省、市&nbsp;:&nbsp; </span>
                                         <span className="supplier-icon-adjust">*</span>
-                                        <Select
+                                        {/* <Select
                                             className = "width32"
                                             searchPlaceholder="标签模式"
                                             {
@@ -657,9 +697,18 @@ class EnterpriseInfo extends Component {
                                             <Option value="beijing">北京</Option>
                                             <Option value="jinan">济南</Option>
                                             <Option value="taiyuan">太原</Option>
-                                        </Select>
+                                        </Select> */}
+                                        <CitySelect 
+                                            onChange = {this.onCitySelect}
+                                            /* {
+                                                ...getFieldProps('bankpro', {
+                                                    validateTrigger: 'onBlur',
+                                                    rules: [{ required: true, message: '请选择省、市!' }],
+                                                })
+                                            } */
+                                        />
                                         <span className='error'>
-                                            {getFieldError('mainproduct')}
+                                            {getFieldError('bankpro')}
                                         </span>
                                     </FormItem>
                                 </Col>
@@ -710,10 +759,9 @@ class EnterpriseInfo extends Component {
                                         <FormControl  className="supplier-input-adjust"
 
                                             {...getFieldProps('accountnum', {
-                                                initialValue:   "",
                                                 validateTrigger: 'onBlur',
                                                 rules: [{
-                                                    type: 'number', required: true, message: '请输入开户行账号',
+                                                    type: 'string', required: true, message: '请输入开户行账号',
                                                 }],
                                             })} />
                                         <span className='error'>
@@ -728,10 +776,9 @@ class EnterpriseInfo extends Component {
                                         <FormControl  className="supplier-input-adjust"
 
                                             {...getFieldProps('accountname', {
-                                                initialValue:   "",
                                                 validateTrigger: 'onBlur',
                                                 rules: [{
-                                                    type: 'number', required: true, message: '请输入银行账户名称',
+                                                    type: 'string', required: true, message: '请输入银行账户名称',
                                                 }],
                                             })} />
                                         <span className='error'>
@@ -783,6 +830,7 @@ class EnterpriseInfo extends Component {
                                     </FormItem>
                                 </Col>
                             </div>
+                            {/* <Button colors="primary" onClick={this.onVerifyClick}>保存</Button> */}
                         </Row>
                     </Form>
                 </div>
