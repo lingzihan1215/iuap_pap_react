@@ -282,11 +282,15 @@ class List extends Component {
         return (
             <div className='order-delivery-wrap'>
                 <Row>
+                    <Col className="op-btn" md={12}>
+                        <Button size="sm" shape="border" onClick={this.handlerAddClick} colors="primary">添加明细</Button>
+                    </Col>
+                </Row>
+                <Row>
                     <Col md={12}>
                         <FilterColumnTable
                             loading={{ show: this.state.loading, loadingType: "line" }}
                             bordered
-                            title={() => <Button size="sm" shape="border" onClick={this.handlerAddClick} colors="primary">添加明细</Button>}
                             emptyText={() => <NoData />}
                             data={list}
                             rowKey={r => r.id}
