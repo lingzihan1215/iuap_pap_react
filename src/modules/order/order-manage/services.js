@@ -16,7 +16,11 @@ const URL = {
 export const getList = (params) => {
     let url =URL.GET_LIST+'?1=1';
     for(let attr in params){
-        url+='&search_'+attr+'='+params[attr];
+        if((attr!='pageIndex')&&(attr!='pageSize')){
+            url+='&search_'+attr+'='+params[attr];
+        }else{
+            url+='&'+attr+'='+params[attr];
+        }
     }
     return request(url, {
         method: "get",

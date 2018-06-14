@@ -21,7 +21,7 @@ class List extends Component {
     }
     search = (pageObj) => {//查询
         this.props.form.validateFields((err, values) => {
-            values.pageActive=pageObj.pageActive||this.props.pageActive||1,
+            values.pageIndex=pageObj.pageIndex||this.props.pageIndex||1,
             values.pageSize=pageObj.pageSize||this.props.pageSize||10,
             actions.supplier.loadList(values);
         });
@@ -40,7 +40,7 @@ class List extends Component {
     }
     onPageSelect = (value) => {
         actions.supplier.loadList({
-            pageActive: value ,
+            pageIndex: value ,
             pageSize: this.props.pageSize,
         })
     }
@@ -48,7 +48,7 @@ class List extends Component {
         let pageSize = (value + 1) * 5;//针对于5条/10条/15条/20条选项
         actions.supplier.loadList({
             pageSize: pageSize,
-            pageActive: 1
+            pageIndex: 1
         })
     }
     render() {
@@ -131,7 +131,7 @@ class List extends Component {
                 width: 100
             },
         ];
-        let { form, list, pageSize, pageActive, totalPages,orderTypes,showLoading } = this.props;
+        let { form, list, pageSize, pageIndex, totalPages,orderTypes,showLoading } = this.props;
         const { getFieldProps, getFieldError } = form;
         return (
             <div className='supplier-list'>
@@ -266,7 +266,7 @@ class List extends Component {
                         next
                         boundaryLinks
                         items={totalPages}
-                        activePage={pageActive}
+                        activePage={pageIndex}
                         onDataNumSelect={this.dataNumSelect}
                         onSelect={this.onPageSelect}
                         showJump={true}

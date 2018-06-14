@@ -11,7 +11,7 @@ const urlListPreview = [
   { url: "/system/person-manage", name: "人员管理" },
   { url: "/contract/manage", name: "合同管理" },
   // 供应商管理
-  { url: "/supplier/register", name: "供应商管理" },
+  { url: "/supplier/register", name: "供应商注册" },
   { url: "/supplier/list", name: "供应商管理" }
 ];
 

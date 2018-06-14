@@ -54,16 +54,12 @@ class Edit extends Component {
                         </Label>
                     </Col>
                     <Col lg={11} md={10} sm={9} xs={6}>
-                        <FormItem><span className='mast'>*</span>
-                        <FormControl disabled={!editFlag}
-                                    placeholder="请输入角色编码"
+                        <FormItem>
+                        <FormControl disabled={true}
+                                    placeholder="使用编码规则生成"
                                     {
                                         ...getFieldProps('roleCode', {
-                                            initialValue: roleCode,
-                                            validateTrigger: 'onBlur',
-                                            rules: [{
-                                                required: true, message: '请输入角色编码',
-                                            }],
+                                            initialValue: roleCode
                                         }
                                     ) }
                                 />

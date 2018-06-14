@@ -28,8 +28,8 @@ class List extends Component {
         }
     }
     componentDidMount() {
-        actions.order.loadList();
-        actions.order.getOrderType();
+        actions.order.loadList();//table数据
+        actions.order.getOrderType();//订单类型下拉框
     }
     search = (pageObj) => {//查询
         this.props.form.validateFields((err, values) => {
@@ -42,12 +42,12 @@ class List extends Component {
                 values.endTime='';
             }
             delete values.voucherDate;
-            values.pageActive=pageObj.pageActive||this.props.pageActive||1,
+            values.pageIndex=pageObj.pageIndex||this.props.pageIndex||1,
             values.pageSize=pageObj.pageSize||this.props.pageSize||10,
             actions.order.loadList(values);
         });
     }
-    reset = () => {
+    reset = () => {//重置
         this.props.form.resetFields();
         this.setState({
             approvalState:'',
@@ -137,7 +137,7 @@ class List extends Component {
     }
     // 多选表格包装函数  结束
 
-    cellClick=(record)=>{
+    cellClick=(record)=>{//进入详情
         actions.routing.push(
             {
                 pathname: 'managedetail',
@@ -146,16 +146,16 @@ class List extends Component {
         )
     }
     onPageSelect = (value) => {
-        actions.role.loadList({
-            pageActive: value ,
+        this.search({
+            pageIndex: value ,
             pageSize:this.props.pageSize
         })
     }
     dataNumSelect = (value) => {
         let pageSize = (value + 1) * 5;//针对于5条/10条/15条/20条选项
-        actions.role.loadList({
+        this.search({
             pageSize: pageSize,
-            pageActive: 1
+            pageIndex: 1
         })
     }
     render() {
@@ -232,7 +232,7 @@ class List extends Component {
                 width: 100
             },
         ];
-        let { form, list, pageSize, pageActive, totalPages,orderTypes,showLoading } = this.props;
+        let { form, list, pageSize, pageIndex, totalPages,orderTypes,showLoading } = this.props;
         const { getFieldProps, getFieldError } = form;
         let columns = this.renderColumnsMultiSelect(column);
         return (
@@ -404,7 +404,7 @@ class List extends Component {
                         next
                         boundaryLinks
                         items={totalPages}
-                        activePage={pageActive}
+                        activePage={pageIndex}
                         onDataNumSelect={this.dataNumSelect}
                         onSelect={this.onPageSelect}
                         showJump={true}

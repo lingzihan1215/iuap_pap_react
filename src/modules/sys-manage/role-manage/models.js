@@ -9,7 +9,7 @@ export default {
   initialState: {
     showLoading:false,
     list: [],
-    pageActive:1,
+    pageIndex:1,
     pageSize:10,
     totalPages:1
   },
@@ -27,7 +27,7 @@ export default {
         showLoading:true
       })
       if(param){
-        param.pageIndex=param.pageActive?param.pageActive-1:1;
+        param.pageIndex=param.pageIndex?param.pageIndex-1:1;
         param.pageSize=param.pageSize?param.pageSize:10;
       }else{
         param={}
@@ -39,7 +39,7 @@ export default {
       if (res) {
         actions.role.updateState({ 
           list: res.content,
-          pageActive:res.number+1,
+          pageIndex:res.number+1,
           pageSize:res.size,
           totalPages:res.totalPages,
         });
@@ -68,6 +68,9 @@ export default {
       if(res){
         let list=getState().role.list;
         list.splice(param.index,1);
+        actions.role.updateState({ 
+          list:list
+        });
       }
     }
   }

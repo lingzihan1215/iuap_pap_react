@@ -10,7 +10,7 @@ export default {
     showLoading:false,
     list: [],
     orderTypes:[],
-    pageActive:1,
+    pageIndex:1,
     pageSize:10,
     totalPages:1,
     detail:{}
@@ -24,12 +24,12 @@ export default {
     }
   },
   effects: {
-    async loadList(param, getState) {//加载数据
+    async loadList(param, getState) {//加载数据 
       actions.order.updateState({
         showLoading:true
       })
       if(param){
-        param.pageIndex=param.pageActive-1;
+        param.pageIndex=param.pageIndex-1;
         param.pageSize=param.pageSize;
       }else{
         param={}
@@ -41,7 +41,7 @@ export default {
       if (res) {
         actions.order.updateState({ 
           list: res.content,
-          pageActive:res.number+1,
+          pageIndex:res.number+1,
           pageSize:res.size,
           totalPages:res.totalPages,
         });
