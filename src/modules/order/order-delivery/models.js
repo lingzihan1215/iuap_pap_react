@@ -42,6 +42,10 @@ export default {
     async saveList(form, getState) {
       let result = await api.saveList(form);
       return result;
+    },
+
+    async saveForm(param,getState){
+      console.log(param);
     }
   }
 };

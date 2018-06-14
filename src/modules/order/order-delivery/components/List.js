@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { actions } from "mirrorx";
-import { Table, Button, Col, Row, FormControl, InputNumber, Popconfirm, Message, Popover, Checkbox, Icon } from "tinper-bee";
+import { Table, Button, Col, Row, FormControl, InputNumber, Popconfirm, Message, Popover, Checkbox, Icon,Label,Select } from "tinper-bee";
 import filterColumn from "tinper-bee/lib/filterColumn";
 import Pagination from 'bee-pagination';
 import NoData from 'components/NoData';
 import Form from 'bee-form';
+import DatePicker from 'bee-datepicker';
 import './list.less';
+const Option = Select.Option;
 const FormItem = Form.FormItem;
 
 const FilterColumnTable = filterColumn(Table, Checkbox, Popover, Icon);
@@ -277,10 +279,220 @@ class List extends Component {
             list: newData
         });
     }
+
+    saveForm = () => {//保存
+        this.props.form.validateFields((err, values) => {
+            if(err){
+                Message.create({ content: '数据填写错误', color : 'danger'  });
+            }else{
+                actions.delivery.saveForm(values);
+            }
+        });
+    }
     render() {
-        let { list } = this.props;
+        let { list,deliveryCode,form } = this.props;
+        const { getFieldProps, getFieldError } = form;
         return (
             <div className='order-delivery-wrap'>
+                <div className='edit-panel'>
+                    <Row className='edit-body'>
+                        <Col md={4} xs={6}>
+                                <FormItem>
+                                    <Label>送货单号：</Label>
+                                    <FormControl className='form-item' disabled
+                                        {
+                                        ...getFieldProps('deliveryCode', {
+                                            initialValue: deliveryCode||'测试单号',
+                                        })
+                                        }
+                                    />
+                                </FormItem>
+                            </Col>
+                            <Col md={4} xs={6}>
+                                <FormItem>
+                                    <Label className='time'>凭证日期：</Label>
+                                    <DatePicker className='form-item' format={'YYYY-MM-DD'} 
+                                        {
+                                        ...getFieldProps('voucherDate', {
+                                            initialValue: '',
+                                        })
+                                        }
+                                    />
+                                </FormItem>
+                            </Col>
+                            <Col md={4} xs={6}>
+                                <FormItem>
+                                    <Label className='time'>送货日期：</Label>
+                                    <DatePicker className='form-item' format={'YYYY-MM-DD'}
+                                        {
+                                        ...getFieldProps('deliveryDate ', {
+                                            initialValue: '',
+                                        })
+                                        }
+                                    />
+                                </FormItem>
+                            </Col>
+                            <Col md={4} xs={6}>
+                                <FormItem>
+                                    <Label className='time'>到达日期：</Label>
+                                    <DatePicker className='form-item' format={'YYYY-MM-DD'}
+                                        {
+                                        ...getFieldProps('arrivalDate', {
+                                            initialValue: '',
+                                        })
+                                        }
+                                    />
+                                </FormItem>
+                            </Col>
+                            <Col md={4} xs={6}>
+                                <FormItem>
+                                    <Label>运输公司：</Label><span className='mast'>*</span>
+                                    <FormControl className='form-item'
+                                        {
+                                        ...getFieldProps('transportCompany', {
+                                            initialValue: '',
+                                            validateTrigger: 'onBlur',
+                                            rules: [{
+                                                required: true, message: '请输入运输公司',
+                                            }],
+                                        })
+                                        }
+                                    />
+                                    <span className='error'>
+                                        {getFieldError('transportCompany')}
+                                    </span>
+                                </FormItem>
+                            </Col>
+                            <Col md={4} xs={6}>
+                                <FormItem>
+                                    <Label>运发件数：</Label><span className='mast'>*</span>
+                                    <FormControl className='form-item' type='number'
+                                        {
+                                        ...getFieldProps('transportNumber', {
+                                            initialValue: '',
+                                            validateTrigger: 'onBlur',
+                                            rules: [{
+                                                required: true, message: '请输入运发件数',
+                                            }],
+                                        })
+                                        }
+                                    />
+                                     <span className='error'>
+                                        {getFieldError('transportNumber')}
+                                    </span>
+                                </FormItem>
+                            </Col>
+                            <Col md={4} xs={6}>
+                                <FormItem>
+                                    <Label>送货员：</Label><span className='mast'>*</span>
+                                    <FormControl className='form-item'
+                                        {
+                                        ...getFieldProps('deliveryman', {
+                                            initialValue: '',
+                                            validateFirst: true,
+                                            validateTrigger: 'onBlur',
+                                            rules: [{
+                                                required: true, message: '请输入送货员',
+                                            }],
+                                        })
+                                        }
+                                    />
+                                    <span className='error'>
+                                        {getFieldError('deliveryman')}
+                                    </span>
+                                </FormItem>
+                            </Col>
+                            <Col md={4} xs={6}>
+                                <FormItem>
+                                    <Label>联系电话：</Label><span className='mast'>*</span>
+                                    <FormControl className='form-item'
+                                        {
+                                        ...getFieldProps('phone', {
+                                            initialValue: '',
+                                            validateTrigger: 'onBlur',
+                                            rules: [{
+                                                required: true, message: '请输入手机号',
+                                            }, {
+                                                pattern: /^\d{11}$/, message: '手机号格式不正确'
+                                            }],
+                                        })
+                                        }
+                                    />
+                                    <span className='error'>
+                                        {getFieldError('phone')}
+                                    </span>
+                                </FormItem>
+                            </Col>
+                            <Col md={4} xs={6}>
+                                <FormItem>
+                                    <Label>提单号：</Label>
+                                    <FormControl className='form-item'
+                                        {
+                                        ...getFieldProps('ladingId', {
+                                            initialValue: '',
+                                        })
+                                        }
+                                    />
+                                </FormItem>
+                            </Col>
+                            <Col md={4} xs={6}>
+                                <FormItem>
+                                    <Label>运输方式：</Label>
+                                    <Select className='form-item' {
+                                            ...getFieldProps('transportation', {
+                                                initialValue: '0',
+                                            }
+                                            ) }>
+                                        <Option value="0">公路</Option>
+                                        <Option value="1">水路</Option>
+                                        <Option value="2">铁路</Option>
+                                        <Option value="3">航空</Option>
+                                    </Select>
+                                </FormItem>
+                            </Col>
+                            <Col md={4} xs={6}>
+                                <FormItem>
+                                    <Label>车牌号：</Label>
+                                    <FormControl className='form-item'
+                                        {
+                                        ...getFieldProps('licenseNumber', {
+                                            initialValue: '',
+                                        })
+                                        }
+                                    />
+                                </FormItem>
+                            </Col>
+                            <Col md={4} xs={6}>
+                                <FormItem>
+                                    <Label>站名：</Label>
+                                    <FormControl className='form-item'
+                                        {
+                                        ...getFieldProps('station', {
+                                            initialValue: '',
+                                        })
+                                        }
+                                    />
+                                </FormItem>
+                            </Col>
+                            <Col md={4} xs={6}>
+                                <FormItem>
+                                    <Label>收货人地址：</Label>
+                                    <FormControl className='form-item'
+                                        {
+                                        ...getFieldProps('consigneeAddress', {
+                                            initialValue: '',
+                                        })
+                                        }
+                                    />
+                                </FormItem>
+                            </Col>
+                            <Col md={12} xs={12} className='btn-group'>
+                            <Button size='sm' className='submit-btn' onClick={this.saveForm}>保存</Button>
+                        </Col>
+                    </Row>
+                </div>
+                
+
                 <Row>
                     <Col md={12}>
                         <FilterColumnTable
