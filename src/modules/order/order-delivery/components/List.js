@@ -20,15 +20,14 @@ class List extends Component {
                 title: "订单号",
                 dataIndex: "orderCode",
                 key: "orderCode",
-                width: "8%",
-                render: (text, record) => this.renderColumns(text, record, 'orderCode')
+                width: "8%"
             },
             {
                 title: "序号",
-                dataIndex: "id",
-                key: "id",
+                dataIndex: "orderId",
+                key: "orderId",
                 width: "5%",
-                render: (text, record) => this.renderColumns(text, record, 'id')
+                render: (text, record) => this.renderColumns(text, record, 'orderId')
             },
             {
                 title: "生产批次",
@@ -39,17 +38,17 @@ class List extends Component {
             },
             {
                 title: "物料编码",
-                dataIndex: "code",
-                key: "code",
+                dataIndex: "materialCode",
+                key: "materialCode",
                 width: "10%",
-                render: (text, record) => this.renderColumns(text, record, 'code')
+                render: (text, record) => this.renderColumns(text, record, 'materialCode')
             },
             {
                 title: "物料名称",
-                dataIndex: "name",
-                key: "name",
+                dataIndex: "materialName",
+                key: "materialName",
                 width: "12%",
-                render: (text, record) => this.renderColumns(text, record, 'name')
+                render: (text, record) => this.renderColumns(text, record, 'materialName')
             },
             {
                 title: "订单数量",
@@ -152,11 +151,21 @@ class List extends Component {
             <this.EditableCellInputNumber
                 editable={record.editable}
                 value={text}
-                onChange={value => this.handleChange(value, record.id, column)}
+                onChange={value => this.handleChangeNumber(value, record.id, column)}
             />
         );
     }
     //修改行指定数据key
+    handleChangeNumber = (value, id, column) => {
+        const newData = [...this.props.list];
+        const target = newData.filter(item => id === item.id)[0];
+        if (target) {
+            target[column] = parseInt(value);
+            actions.delivery.updateState({
+                list: newData
+            });
+        }
+    }
     handleChange = (value, id, column) => {
         const newData = [...this.props.list];
         const target = newData.filter(item => id === item.id)[0];
@@ -186,7 +195,8 @@ class List extends Component {
             }
         }
     }
-    save = (id) => {
+    save = async (id) => {
+        this.setState({ loading: true });
         const newData = [...this.props.list];
         const target = newData.filter(item => id === item.id)[0];
         if (target) {
@@ -196,15 +206,17 @@ class List extends Component {
             });
             this.cacheData = newData.map(item => ({ ...item }));
             let newRow = this.cacheData.filter(item => id === item.id)[0];
-            console.log(newRow);
             if (newRow.isNew) {
                 //判断是否新增还是编辑区别是是否存在id
                 delete newRow.isNew;
                 delete newRow.id;
             }
-            console.log(newRow);
             //TO DO : Save Data
-            actions.delivery.saveList(newRow);
+            let result = await actions.delivery.saveList(newRow);
+            if (result.data.success) {
+                this.setState({ loading: false });
+                this.loadList();
+            }
         }
     }
     cancel = (id, index) => {
@@ -230,12 +242,12 @@ class List extends Component {
         console.log('删除ID：', id);
         let result = await actions.delivery.removeList(id);
         if (result.data.success) {
-            Message.create({ content: '删除成功', color: 'success' });
+            this.setState({ loading: false });
+            this.loadList();
         }
-        this.setState({ loading: false });
     }
     handleSelect = (eventKey) => {
-        actions.delivery.updateState({ activePage: eventKey });
+        actions.delivery.updateState({ pageIndex: eventKey });
         this.loadList();
     }
 
@@ -247,15 +259,16 @@ class List extends Component {
         const item = {
             editable: true,
             isNew: true,
-            orderCode: "",
-            id: "011",
+            id: this.props.list.length + 1,
+            orderCode: "自动生成",
+            orderId: "",
             prodbatch: "",
-            code: "",
-            name: "",
-            orderNumber: "1",
-            receNumber: "1",
-            deliveNumber: "1",
-            unit: "PC"
+            materialCode: "",
+            materialName: "",
+            orderNumber: 1,
+            receNumber: 1,
+            deliveNumber: 1,
+            unit: ""
         };
         newData.push(item);
         actions.delivery.updateState({
@@ -282,7 +295,7 @@ class List extends Component {
                                 last
                                 boundaryLinks
                                 items={this.props.total}
-                                activePage={this.props.activePage}
+                                activePage={this.props.pageIndex}
                                 onSelect={this.handleSelect}
                                 onDataNumSelect={this.dataNumSelect}
                                 showJump={true}

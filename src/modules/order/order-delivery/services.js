@@ -5,9 +5,9 @@
 import request from "utils/request";
 
 const URL = {
-    "GET_LIST": "/order/delivery/list",
-    "DELETE": "/order/delivery/removelist",
-    "SAVE": "/order/delivery/save"
+    "GET_LIST": "/iuap-example/sany_delivery/list",
+    "DELETE": "/iuap-example/sany_delivery/delete",
+    "SAVE": "/iuap-example/sany_delivery/save"
 }
 
 export const getList = (param) => {

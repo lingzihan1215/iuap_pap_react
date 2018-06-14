@@ -10,7 +10,7 @@ export default {
   initialState: {
     list: [],
     total: 0,
-    activePage: 1,
+    pageIndex: 1,
     pageSize: 10
   },
   reducers: {
@@ -23,20 +23,20 @@ export default {
   },
   effects: {
     async getList(param, getState) {
-      let { activePage, pageSize } = getState().delivery;
-      let { data: { data, success, total } } = await api.getList({
-        activePage,
+      let { pageIndex, pageSize } = getState().delivery;
+      let { data: { detailMsg, success } } = await api.getList({
+        pageIndex: pageIndex - 1,
         pageSize
       });
       if (success) {
-        actions.delivery.updateState({ list: data, total });
-        return data;
+        actions.delivery.updateState({ list: detailMsg.data.content, total: detailMsg.data.totalPages });
+        return detailMsg.data.content;
       }
     },
     async removeList(id, getState) {
-      let result = await api.deleteList({
+      let result = await api.deleteList([{
         id
-      });
+      }]);
       return result;
     },
     async saveList(form, getState) {
