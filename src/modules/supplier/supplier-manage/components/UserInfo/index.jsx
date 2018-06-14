@@ -15,6 +15,10 @@ class UserInfo extends Component {
         super(props);
         this.state = {  };
     }
+
+    onGetVerifyCode = ()=>{
+        
+    }
     render() {
         const { getFieldProps, getFieldError,getFieldDecorator} = this.props.form;
         return (
@@ -28,7 +32,7 @@ class UserInfo extends Component {
                                     <Col className="height40" md={4} mdOffset={1} xs={4} xsOffset={1} sm={4} smOffset={1}>
                                         <FormItem>
                                             <span className="supplier-label-adjust">审核意见: </span>
-                                            <span className="supplier-head-label supplier-width-adjust">[信息变更:]审批通过</span>
+                                            <span className="supplier-head-label supplier-width-adjust pd3">[信息变更:]审批通过</span>
                                         </FormItem>
                                     </Col>
                                 </div>
@@ -37,7 +41,7 @@ class UserInfo extends Component {
                                     <Col className="height40" md={4} mdOffset={1} xs={4} xsOffset={1} sm={4} smOffset={1}>
                                         <FormItem>
                                             <span className="supplier-label-adjust">用户名&nbsp;:&nbsp; </span>
-                                            <span className="supplier-head-label">327464</span>
+                                            <span className="supplier-head-label pd3">327464</span>
                                         </FormItem>
                                     </Col>
                                     <Col className="height40" md={4} mdOffset={1} xs={4} xsOffset={1} sm={4} smOffset={1}>
@@ -164,7 +168,7 @@ class UserInfo extends Component {
                                         </FormItem>
                                     </Col>
                                     <Col md={1} xs={1} sm={1}>
-                                        <Button className="editable-add-btn supplier-btn" size="sm" colors="primary">获取验证码</Button>
+                                        <Button className="editable-add-btn supplier-btn" size="sm" colors="primary" onClick={this.onGetVerifyCode}>获取验证码</Button>
                                     </Col>
                                     <Col className="height40" md={4}  xs={4}  sm={4} >
                                         <FormItem>

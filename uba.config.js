@@ -128,7 +128,7 @@ const devConfig = {
       filename: '[name].[hash:8].css'
     }),
     new webpack.DefinePlugin({
-      "__MODE__": JSON.stringify("development")
+      __MODE__: JSON.stringify(process.env.NODE_ENV)
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
@@ -169,7 +169,7 @@ const prodConfig = {
       filename: '[name].css'
     }),
     new webpack.DefinePlugin({
-      "__MODE__": JSON.stringify("production")
+      __MODE__: JSON.stringify(process.env.NODE_ENV)
     }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
