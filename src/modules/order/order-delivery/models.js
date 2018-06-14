@@ -43,10 +43,13 @@ export default {
       let result = await api.saveList(form);
       return result;
     },
-
-    async saveForm(param,getState){
+    async saveAllList(form, getState) {
+      let result = await api.saveAllList(form);
+      return result;
+    },
+    async saveForm(param, getState) {
       console.log(param);
-      
+
     }
   }
 };
