@@ -8,6 +8,7 @@ const urlListPreview = [
   { url: "/order/delivery", name: "送货单" },
   { url: "/system/rolelist", name: "角色管理" },
   { url: "/interimplan/planapply", name: "计划申请" },
+  { url: "/resource/research", name: "资源调查表" },
   // 帅中：左树右表
   { url: "/system/person-manage", name: "人员管理" },
   { url: "/contract/manage", name: "合同管理" },
