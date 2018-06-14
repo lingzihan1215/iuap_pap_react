@@ -49,13 +49,42 @@ export default {
     },
 
     async getOrderType(param,getState){//订单类型
-      let { data: { data, success } } = await api.getOrderType(param);
-      if (success) {
-        actions.order.updateState({ 
-          orderTypes: data
-        });
+      actions.order.updateState({ 
+        orderTypes:  [{
+          "code":"0",
+          "name":"D001"
+        },{
+          "code":"1",
+          "name":"D002"
+        },{
+          "code":"2",
+          "name":"D003"
+        },{
+          "code":"3",
+          "name":"D004"
+        }]
+      });
+    },
+    
+    async delItem(param,getState){
+      actions.order.updateState({
+        showLoading:true
+      })
+      let res=processData(await api.delOrder(param.param),'删除成功');
+      actions.order.loadList();
+    },
+    async save(param,getState){//保存
+      actions.order.updateState({
+        showLoading:true
+      })
+      let res=processData(await api.saveOrder(param),'保存成功');
+      if(res){
+         window.history.go(-1);
       }
-    }
+      actions.order.updateState({
+        showLoading:false
+      });
+    },
 
   }
 };

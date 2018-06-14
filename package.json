@@ -41,7 +41,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bee-city-select": "^1.0.6",
-    "bee-datepicker": "^1.0.22",
+    "bee-datepicker": "^1.0.23",
     "bee-form": "^2.0.0",
     "bee-pagination": "^1.1.1",
     "bee-search-panel": "^0.1.4",

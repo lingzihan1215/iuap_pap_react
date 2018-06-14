@@ -47,7 +47,7 @@ class List extends Component {
             pageIndex: 1
         })
     }
-    edit(editFlag,record){
+    edit=(editFlag,record)=>{
         actions.routing.push({
             pathname:'roleedit',
             editObj:record||{},
@@ -121,8 +121,6 @@ class List extends Component {
 
         ];
         let { form, list, pageSize, pageIndex, totalPages,orderTypes,showLoading } = this.props;
-        console.log('**********');
-        console.log(list);
         const { getFieldProps, getFieldError } = form;
         return (
             <div className='role-list'>

@@ -10,6 +10,8 @@ if(__MODE__ == "development"){
 
 const URL = {
     "GET_LIST":  "/iuap-example/sany_order/list",
+    "SAVE_ORDER":  "/iuap-example/sany_order/save",
+    "DEL_ORDER":  "/iuap-example/sany_order/delete",
     "GET_ORDER_TYPE": "/order/manage/orderType"
 }
 
@@ -30,6 +32,18 @@ export const getList = (params) => {
 export const getOrderType = (params) => {
     return request(URL.GET_ORDER_TYPE, {
         method: "get",
+        data: params
+    });
+}
+export const saveOrder = (params) => {
+    return request(URL.SAVE_ORDER, {
+        method: "post",
+        data: params
+    });
+}
+export const delOrder = (params) => {
+    return request(URL.DEL_ORDER, {
+        method: "post",
         data: params
     });
 }

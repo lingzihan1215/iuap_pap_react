@@ -137,11 +137,12 @@ class List extends Component {
     }
     // 多选表格包装函数  结束
 
-    cellClick=(record)=>{//进入详情
+    cellClick=(record,editFlag)=>{//进入详情
         actions.routing.push(
             {
                 pathname: 'managedetail',
-                detailObj: record
+                detailObj: record,
+                editFlag:!!editFlag
             }
         )
     }
@@ -157,6 +158,12 @@ class List extends Component {
             pageSize: pageSize,
             pageIndex: 1
         })
+    }
+    delItem=(record,index)=>{
+        actions.order.delItem({
+            param:[{id:record.id}],
+            index:index
+        });
     }
     render() {
         const self = this;
@@ -174,14 +181,8 @@ class List extends Component {
                 title: "订单编号",
                 dataIndex: "orderCode",
                 key: "orderCode",
-                width: 100,
-                onCellClick:this.cellClick
-            },
-            {
-                title: "供应商",
-                dataIndex: "supplier",
-                key: "supplier",
-                width: 100
+                width: 200,
+                onCellClick:(record)=>this.cellClick(record,false)
             },
             {
                 title: "供应商名称",
@@ -191,8 +192,8 @@ class List extends Component {
             },
             {
                 title: "类型",
-                dataIndex: "type",
-                key: "type",
+                dataIndex: "type_name",
+                key: "type_name",
                 width: 100
             },
             {
@@ -211,26 +212,42 @@ class List extends Component {
                 title: "凭证日期",
                 dataIndex: "voucherDate",
                 key: "voucherDate",
-                width: 100
+                width: 100,
+                render(record,text,index){
+                    return moment(text).format('YYYY-MM-DD')
+                }
             },
             {
                 title: "审批状态",
-                dataIndex: "approvalState",
-                key: "approvalState",
+                dataIndex: "approvalState_name",
+                key: "approvalState_name",
                 width: 100
             },
             {
                 title: "确认状态",
-                dataIndex: "confirmState",
-                key: "confirmState",
+                dataIndex: "confirmState_name",
+                key: "confirmState_name",
                 width: 100
             },
             {
                 title: "关闭状态",
-                dataIndex: "closeState",
-                key: "closeState",
+                dataIndex: "closeState_name",
+                key: "closeState_name",
                 width: 100
             },
+            {
+                title: "操作",
+                dataIndex: "e",
+                key: "e",
+                render(text,record,index){
+                    return (
+                        <div className='operation-btn'>
+                            <Button size='sm' className='edit-btn' onClick={()=>{self.cellClick(record,true)}}>编辑</Button>
+                            <Button size='sm' className='del-btn' onClick={()=>{self.delItem(record,index)}}>删除</Button>
+                        </div>
+                    )
+                }
+            }
         ];
         let { form, list, pageSize, pageIndex, totalPages,orderTypes,showLoading } = this.props;
         const { getFieldProps, getFieldError } = form;
@@ -242,7 +259,7 @@ class List extends Component {
                     <Row>
                         <Col md={4} xs={6}>
                             <FormItem>
-                                <Label>采购订单号：</Label>
+                                <Label>订单编号：</Label>
                                 <FormControl
                                     {
                                     ...getFieldProps('orderCode', {
@@ -383,8 +400,8 @@ class List extends Component {
                 </div>
                 <div className='table-list'>
                     <div className='table-header'>
-                        <Button size='sm' shape="border">
-                           导出
+                        <Button size='sm' shape="border" onClick={()=>{self.cellClick({},true)}}>
+                           新增
                         </Button>
                     </div>
                     <MultiSelectTable
