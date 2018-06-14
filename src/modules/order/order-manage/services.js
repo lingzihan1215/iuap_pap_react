@@ -14,10 +14,9 @@ const URL = {
 }
 
 export const getList = (params) => {
-    console.log(params);
     let url =URL.GET_LIST+'?1=1';
     for(let attr in params){
-        url+='&'+attr+'='+params[attr];
+        url+='&search_'+attr+'='+params[attr];
     }
     return request(url, {
         method: "get",

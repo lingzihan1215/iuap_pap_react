@@ -14,35 +14,26 @@ class List extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            approvalState:'',
-            closeState:'',
-            confirmState:'',
-            voucherDate:[]
         }
     }
     componentDidMount() {
         actions.supplier.loadList();
-        actions.supplier.getOrderType();
     }
-    search = () => {//查询
+    search = (pageObj) => {//查询
         this.props.form.validateFields((err, values) => {
+            values.pageActive=pageObj.pageActive||this.props.pageActive||1,
+            values.pageSize=pageObj.pageSize||this.props.pageSize||10,
             actions.supplier.loadList(values);
         });
     }
     reset = () => {
         this.props.form.resetFields();
-        this.setState({
-            approvalState:'',
-            closeState:'',
-            confirmState:'',
-            voucherDate:[]
-        })
     }
 
     cellClick=(record)=>{
         actions.routing.push(
             {
-                pathname: 'managedetail',
+                pathname: 'detail',
                 detailObj: record
             }
         )
@@ -69,7 +60,7 @@ class List extends Component {
                 key: "index",
                 width: 50,
                 render(record,text,index){
-                    return index;
+                    return index+1;
                 }
             },
             {
@@ -144,18 +135,12 @@ class List extends Component {
         const { getFieldProps, getFieldError } = form;
         return (
             <div className='supplier-list'>
-            <Loading
-                showBackDrop={true}
-                loadingType="line"
-                show={showLoading}
-            />
-
                 <Header title='供应商管理' />
                 <div className='search-panel'>
                     <Row>
                         <Col md={4} xs={6}>
                             <FormItem>
-                                <Label>采购订单号：</Label>
+                                <Label>供应商编码：</Label>
                                 <FormControl
                                     {
                                     ...getFieldProps('supplierCode', {
@@ -179,18 +164,11 @@ class List extends Component {
                         </Col>
                         <Col md={4} xs={6}>
                             <FormItem>
-                                <Label className='time'>凭证日期：</Label>
-                                <RangePicker
-                                    defaultValue={this.state.voucherDate}
-                                    placeholder={'开始 ~ 结束'}
-                                    dateInputPlaceholder={['开始', '结束']}
+                                <Label>关联设备名称：</Label>
+                                <FormControl
                                     {
-                                    ...getFieldProps('voucherDate', {
-                                        onChange:function(v){
-                                            self.setState({
-                                                voucherDate:v
-                                            })
-                                        }
+                                    ...getFieldProps('equipmentName', {
+                                        initialValue: '',
                                     })
                                     }
                                 />
@@ -198,96 +176,69 @@ class List extends Component {
                         </Col>
                         <Col md={4} xs={6}>
                             <FormItem>
-                                <Label>订单类型：</Label>
+                                <Label>可供货品类：</Label>
                                 <Select {
-                                    ...getFieldProps('type', {
+                                    ...getFieldProps('usableGoods', {
                                         initialValue: '',
                                     }
                                     ) }>
                                     <Option value="">请选择</Option>
-                                    {
-                                        supplierTypes.map((item,index)=>{
-                                            return (
-                                                <Option key={index} value={item.code}>{item.name}</Option>
-                                            )
-                                        })
-                                    }
+                                    <Option value="1">品类一</Option>
+                                    <Option value="2">品类二</Option>
+                                    <Option value="3">品类三</Option>
+                                    <Option value="4">品类四</Option>
                                 </Select>
                             </FormItem>
                         </Col>
                         <Col md={4} xs={6}>
                             <FormItem>
-                                <Label>采购组：</Label>
-                                <FormControl
-                                    {
-                                    ...getFieldProps('purchasingGroup', {
+                                <Label>供应商类别：</Label>
+                                <Select {
+                                    ...getFieldProps('supplierCategory', {
                                         initialValue: '',
-                                    })
                                     }
-                                />
+                                    ) }>
+                                    <Option value="">请选择</Option>
+                                    <Option value="1">类别一</Option>
+                                    <Option value="2">类别二</Option>
+                                    <Option value="3">类别三</Option>
+                                    <Option value="4">类别四</Option>
+                                </Select>
                             </FormItem>
                         </Col>
                         <Col md={4} xs={6}>
                             <FormItem>
-                                <Label>审批状态：</Label>
-                                <Radio.RadioGroup
-                                selectedValue={this.state.approvalState}
-                                    {
-                                        ...getFieldProps('approvalState', {
-                                            initialValue: '',
-                                            onChange(value) {
-                                                self.setState({ approvalState: value });
-                                            },
-                                        }
-                                        ) }
-                                    >
-                                    <Radio value="todo" >未审批</Radio>
-                                    <Radio value="done" >已审批</Radio>
-                                    <Radio value="" >全部</Radio>
-                                </Radio.RadioGroup>
+                                <Label>供应商类型：</Label>
+                                <Select {
+                                    ...getFieldProps('supplierType', {
+                                        initialValue: '',
+                                    }
+                                    ) }>
+                                    <Option value="">请选择</Option>
+                                    <Option value="1">类型一</Option>
+                                    <Option value="2">类型二</Option>
+                                    <Option value="3">类型三</Option>
+                                    <Option value="4">类型四</Option>
+                                </Select>
                             </FormItem>
                         </Col>
                         <Col md={4} xs={6}>
-                            <FormItem>
-                                <Label>关闭状态：</Label>
-                                <Radio.RadioGroup
-                                selectedValue={this.state.closeState}
-                                    {
-                                        ...getFieldProps('closeState', {
-                                            initialValue: '',
-                                            onChange(value) {
-                                                self.setState({ closeState: value });
-                                            },
-                                        }
-                                        ) }
-                                    >
-                                    <Radio value="notclose" >未关闭</Radio>
-                                    <Radio value="closed" >已关闭</Radio>
-                                    <Radio value="" >全部</Radio>
-                                </Radio.RadioGroup>
+                        <FormItem>
+                                <Label>主供货品类：</Label>
+                                <Select {
+                                    ...getFieldProps('mainGoods', {
+                                        initialValue: '',
+                                    }
+                                    ) }>
+                                    <Option value="">请选择</Option>
+                                    <Option value="1">类别一</Option>
+                                    <Option value="2">类别二</Option>
+                                    <Option value="3">类别三</Option>
+                                    <Option value="4">类别四</Option>
+                                </Select>
                             </FormItem>
                         </Col>
-                        <Col md={4} xs={6}>
-                            <FormItem>
-                                <Label>确认状态：</Label>
-                                <Radio.RadioGroup
-                                    selectedValue={this.state.confirmState}
-                                    {
-                                        ...getFieldProps('confirmState', {
-                                            initialValue: '',
-                                            onChange(value) {
-                                                self.setState({ confirmState: value });
-                                            },
-                                        }
-                                        ) }
-                                    >
-                                    <Radio value="unconfirmed" >未确认</Radio>
-                                    <Radio value="confirmed" >已确认</Radio>
-                                    <Radio value="refuse" >拒绝</Radio>
-                                    <Radio value="" >全部</Radio>
-                                </Radio.RadioGroup>
-                            </FormItem>
-                        </Col>
+                        
                         <Col md={12} xs={12} className='btn-group'>
                             <Button size='sm' className='reset-btn' onClick={this.reset}>清空</Button>
                             <Button size='sm' className='submit-btn' onClick={this.search}>查询</Button>
@@ -301,9 +252,10 @@ class List extends Component {
                         </Button>
                     </div>
                     <Table
+                        loading={{show:showLoading,loadingType:"line"}}
                         rowKey={(r,i)=>i}
                         scroll={{x : true,y: 500 }}
-                        columns={columns}
+                        columns={column}
                         data={list}
                     />
                     <div className='pagination'>

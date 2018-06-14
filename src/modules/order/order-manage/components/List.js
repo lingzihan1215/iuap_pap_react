@@ -31,13 +31,19 @@ class List extends Component {
         actions.order.loadList();
         actions.order.getOrderType();
     }
-    search = () => {//查询
+    search = (pageObj) => {//查询
         this.props.form.validateFields((err, values) => {
             let voucherDate=values.voucherDate;
             if(voucherDate&&voucherDate.length){
-                voucherDate[0]=voucherDate[0].format('YYYY-MM-DD');
-                voucherDate[1]=voucherDate[1].format('YYYY-MM-DD');
+                values.starTime=voucherDate[0].format('YYYY-MM-DD');
+                values.endTime=voucherDate[1].format('YYYY-MM-DD');
+            }else{
+                values.starTime='';
+                values.endTime='';
             }
+            delete values.voucherDate;
+            values.pageActive=pageObj.pageActive||this.props.pageActive||1,
+            values.pageSize=pageObj.pageSize||this.props.pageSize||10,
             actions.order.loadList(values);
         });
     }
@@ -132,7 +138,6 @@ class List extends Component {
     // 多选表格包装函数  结束
 
     cellClick=(record)=>{
-        console.log('正在开发。。。');
         actions.routing.push(
             {
                 pathname: 'managedetail',
@@ -141,14 +146,14 @@ class List extends Component {
         )
     }
     onPageSelect = (value) => {
-        actions.order.loadList({
+        actions.role.loadList({
             pageActive: value ,
-            pageSize: this.props.pageSize,
+            pageSize:this.props.pageSize
         })
     }
     dataNumSelect = (value) => {
         let pageSize = (value + 1) * 5;//针对于5条/10条/15条/20条选项
-        actions.order.loadList({
+        actions.role.loadList({
             pageSize: pageSize,
             pageActive: 1
         })
@@ -162,7 +167,7 @@ class List extends Component {
                 key: "index",
                 width: 50,
                 render(record,text,index){
-                    return index;
+                    return index+1;
                 }
             },
             {
@@ -232,12 +237,6 @@ class List extends Component {
         let columns = this.renderColumnsMultiSelect(column);
         return (
             <div className='order-list'>
-            <Loading
-            showBackDrop={true}
-            loadingType="line"
-            show={showLoading}
-            />
-
                 <Header title='采购订单管理' />
                 <div className='search-panel'>
                     <Row>
@@ -329,8 +328,8 @@ class List extends Component {
                                         }
                                         ) }
                                     >
-                                    <Radio value="todo" >未审批</Radio>
-                                    <Radio value="done" >已审批</Radio>
+                                    <Radio value="0" >未审批</Radio>
+                                    <Radio value="1" >已审批</Radio>
                                     <Radio value="" >全部</Radio>
                                 </Radio.RadioGroup>
                             </FormItem>
@@ -349,8 +348,8 @@ class List extends Component {
                                         }
                                         ) }
                                     >
-                                    <Radio value="notclose" >未关闭</Radio>
-                                    <Radio value="closed" >已关闭</Radio>
+                                    <Radio value="0" >未关闭</Radio>
+                                    <Radio value="1" >已关闭</Radio>
                                     <Radio value="" >全部</Radio>
                                 </Radio.RadioGroup>
                             </FormItem>
@@ -369,9 +368,9 @@ class List extends Component {
                                         }
                                         ) }
                                     >
-                                    <Radio value="unconfirmed" >未确认</Radio>
-                                    <Radio value="confirmed" >已确认</Radio>
-                                    <Radio value="refuse" >拒绝</Radio>
+                                    <Radio value="0" >未确认</Radio>
+                                    <Radio value="1" >已确认</Radio>
+                                    <Radio value="2" >拒绝</Radio>
                                     <Radio value="" >全部</Radio>
                                 </Radio.RadioGroup>
                             </FormItem>
@@ -389,6 +388,7 @@ class List extends Component {
                         </Button>
                     </div>
                     <MultiSelectTable
+                        loading={{show:showLoading,loadingType:"line"}}
                         rowKey={(r,i)=>i}
                         scroll={{x : true,y: 500 }}
                         columns={columns}

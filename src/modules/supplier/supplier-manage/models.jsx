@@ -25,7 +25,7 @@ export default {
 
   effects: {
     async loadList(param, getState) {//加载数据
-      actions.order.updateState({
+      actions.supplier.updateState({
         showLoading:true
       })
       if(param){
@@ -35,11 +35,11 @@ export default {
         param={}
       }
       let res= processData(await api.getList(param));
-      actions.order.updateState({
+      actions.supplier.updateState({
         showLoading:false
       })
       if (res) {
-        actions.order.updateState({ 
+        actions.supplier.updateState({ 
           list: res.content,
           pageActive:res.number+1,
           pageSize:res.size,

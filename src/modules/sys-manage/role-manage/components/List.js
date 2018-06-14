@@ -21,8 +21,8 @@ class List extends Component {
     }
     search = (pageObj) => {//查询
         this.props.form.validateFields((err, values) => {
-            values.pageActive=pageObj.pageActive||props.pageActive||1,
-            values.pageSize=pageObj.pageSize||props.pageSize||10,
+            values.pageActive=pageObj.pageActive||this.props.pageActive||1,
+            values.pageSize=pageObj.pageSize||this.props.pageSize||10,
             actions.role.loadList(values);
         });
     }
@@ -130,11 +130,6 @@ class List extends Component {
         const { getFieldProps, getFieldError } = form;
         return (
             <div className='role-list'>
-            <Loading
-                showBackDrop={true}
-                loadingType="line"
-                show={showLoading}
-            />
                 <Header title='角色管理' />
                 <div className='search-panel'>
                     <Row>
@@ -188,7 +183,8 @@ class List extends Component {
                         </Button>
                     </div>
                     <Table
-                    rowKey={(r,i)=>i}
+                        loading={{show:showLoading,loadingType:"line"}}
+                        rowKey={(r,i)=>i}
                         columns={column}
                         data={list}
                     />

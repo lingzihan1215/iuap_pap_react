@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Link } from "mirrorx";
-import {registerInfo,supplierList} from "./supplier-manage/containers";
+import {registerInfo,supplierList,supplierDetail} from "./supplier-manage/containers";
 const Routers = ({ match }) => (
   <div>
     <Route
@@ -12,6 +12,11 @@ const Routers = ({ match }) => (
       exact
       path={`${match.url}/list`}
       component={supplierList}
+    />
+    <Route
+      exact
+      path={`${match.url}/detail`}
+      component={supplierDetail}
     />
   </div>
 );
