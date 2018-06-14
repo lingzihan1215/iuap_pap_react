@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { actions } from "mirrorx";
-import { Table, Button, Col, Row, FormControl, InputNumber, Popconfirm, Message } from "tinper-bee";
+import { Table, Button, Col, Row, FormControl, InputNumber, Popconfirm, Message, Popover, Checkbox, Icon } from "tinper-bee";
+import filterColumn from "tinper-bee/lib/filterColumn";
 import Pagination from 'bee-pagination';
 import NoData from 'components/NoData';
 import Form from 'bee-form';
 import './list.less';
 const FormItem = Form.FormItem;
 
+const FilterColumnTable = filterColumn(Table, Checkbox, Popover, Icon);
 
 class List extends Component {
     constructor(props) {
@@ -281,9 +283,10 @@ class List extends Component {
             <div className='order-delivery-wrap'>
                 <Row>
                     <Col md={12}>
-                        <Table
+                        <FilterColumnTable
                             loading={{ show: this.state.loading, loadingType: "line" }}
                             bordered
+                            draggable={true}
                             title={() => <Button size="sm" shape="border" onClick={this.handlerAddClick} colors="primary">添加明细</Button>}
                             emptyText={() => <NoData />}
                             data={list}
