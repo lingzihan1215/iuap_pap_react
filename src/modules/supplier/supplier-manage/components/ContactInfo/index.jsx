@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Row,Col,FormControl,Button} from 'tinper-bee';
+import {Row,Col,FormControl,Button,Icon} from 'tinper-bee';
 import Form from 'bee-form';
 import './index.less';
 
@@ -14,8 +14,8 @@ class ContactInfo extends Component {
     render() {
         const { getFieldProps, getFieldError,getFieldDecorator} = this.props.form;
         return (
-            <div className="supplier-page">
-                <div className="supplier-user-head">联系人信息:</div>
+            <div className="supplier-contact-page">
+                <div className="supplier-user-head"><Icon type="uf-2collayout" />联系人信息:</div>
                 <div className="contact-info-form">
                     <Form>
                         <Row>

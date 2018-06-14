@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import UserInfo from '../UserInfo';
 import EnterpriseInfo from '../EnterpriseInfo';
 import ContactInfo from '../ContactInfo';
+import Form from 'bee-form';
 
 import './index.less';
 
@@ -11,6 +12,8 @@ class RegisterInfo extends Component {
         this.state = {  };
     }
     render() {
+        const { getFieldProps, getFieldError,getFieldDecorator} = this.props.form;
+        console.log(this.props);
         return (
             <div>
                 <UserInfo />
@@ -21,4 +24,4 @@ class RegisterInfo extends Component {
     }
 }
 
-export default RegisterInfo;
+export default Form.createForm()(RegisterInfo);
