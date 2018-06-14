@@ -1,6 +1,17 @@
 .plan-apply-wrap {
-    background: #fff;
-    padding: 15px;
+    .head-btn{
+        display: inline-block;
+        float: right;  
+        .head-save{
+            background: #1E7BE2;
+            color:#fff;
+            margin-left: 15px;
+        }  
+    }
+    .table-ctn{
+        background: #fff;
+        margin-top: 10px;
+    }
     .op-btn {
         text-align: right;
         padding-bottom: 15px;
@@ -22,6 +33,85 @@
         text-align: center;
         .u-pagination {
             display: inline-block;
+        }
+    }
+    .common-form{
+        padding: 15px;
+        background: #fff;
+        >div {
+            padding-top: 0;
+            >div{
+                min-height: 50px;
+            }
+        }
+        .error{
+            margin-left: 90px;
+            color: red;
+            display: block;
+        }
+        
+        .u-form-item{
+            min-height: unset;
+            position: relative;
+            .mast{
+                color: red;
+                position: absolute;
+                left: 80px;
+                line-height: 30px;
+            }
+            .u-label{
+                min-width: 90px;
+                display: inline-block;
+            }
+            .time + div{
+                display: inline-block;
+                min-width: 200px!important;
+            }
+            .form-item{
+                display: inline-block;
+                min-width: 200px!important;
+                .u-form-control{
+                    width: 100%;
+                }
+            }
+            .textarea{
+                position: absolute;
+            }
+            textarea.form-item{
+                min-width: 500px!important;
+                min-height: 100px;
+                resize: none;
+                border: 1px solid #bdbdbd;
+                margin-left: 90px;
+            }
+        }
+        .u-form-control {
+            width: auto;
+        }
+        .calendar-picker{
+            display: inline-block;
+            input{
+                width: 100%;
+            }
+        }
+        .btn-group{
+            text-align: right;
+            .reset-btn{
+                background: #ECEFF1;
+                color: #424242;
+                margin-right: 15px;
+            }
+            .submit-btn{
+                background: #1E7BE2;
+                color: #fff;
+            }
+        }
+        .u-select {
+            width: auto;
+        }
+        .time{
+            position: relative;
+            bottom: 10px;
         }
     }
 }

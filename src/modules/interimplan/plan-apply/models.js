@@ -11,7 +11,8 @@ export default {
     list: [],
     total: 0,
     pageIndex: 1,
-    pageSize: 10
+    pageSize: 10,
+    factory:[]
   },
   reducers: {
     updateState(state, data) {
@@ -42,6 +43,27 @@ export default {
     async saveList(form, getState) {
       let result = await api.saveList(form);
       return result;
+    },
+    async getFactory(param,getState){
+      actions.planapply.updateState({
+        factory:[
+          {
+              name:'工厂A',code:'a'
+          },
+          {
+              name:'工厂B',code:'b'
+          },
+          {
+              name:'工厂C',code:'c'
+          },
+          {
+              name:'工厂D',code:'d'
+          },
+          {
+              name:'工厂E',code:'e'
+          },
+      ]
+      })
     }
   }
 };

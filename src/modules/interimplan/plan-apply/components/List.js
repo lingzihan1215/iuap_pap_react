@@ -1,20 +1,22 @@
 import React, { Component } from "react";
 import { actions } from "mirrorx";
-import { Table, Button, Col, Row, FormControl, InputNumber, Popconfirm, Message, Popover, Checkbox, Icon } from "tinper-bee";
+import {Select,Label, Table, Button, Col, Row, FormControl, InputNumber, Popconfirm, Message, Popover, Checkbox, Icon } from "tinper-bee";
 import filterColumn from "tinper-bee/lib/filterColumn";
 import Pagination from 'bee-pagination';
 import NoData from 'components/NoData';
 import Form from 'bee-form';
+// import Select from 'bee-select';
+import Header from "components/Header";
 import './list.less';
 const FormItem = Form.FormItem;
-
+const Option = Select.Option;
 const FilterColumnTable = filterColumn(Table, Checkbox, Popover, Icon);
 
 class List extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading: false//内部使用加载数据loading
+            loading: false,//内部使用加载数据loading
         }
         //表格列
         this.columns = [
@@ -97,6 +99,7 @@ class List extends Component {
     }
     componentDidMount = () => {
         this.loadList();//加载表格
+        actions.planapply.getFactory();//加载工厂列表
     }
     //加载表格
     loadList = async () => {
@@ -270,11 +273,196 @@ class List extends Component {
             list: newData
         });
     }
+
+    saveForm = () => {//保存
+        this.props.form.validateFields((err, values) => {
+            if(err){
+                Message.create({ content: '数据填写错误', color : 'danger'  });
+            }else{
+                // actions.delivery.saveForm(values);
+                Message.create({ content: '保存成功', color : 'success'  });
+            }
+        });
+    }
     render() {
-        let { list } = this.props;
+        let { list,form,planCode,factory } = this.props;
+        const { getFieldProps, getFieldError } = form;
         return (
             <div className='plan-apply-wrap'>
-                <Row>
+                <Header title='计划申请' >
+                    <div className='head-btn'>
+                            <Button className='head-save' onClick={this.saveForm}>保存</Button>
+                        </div>
+                </Header>
+                <div className='common-form'>
+                    <Row >
+                        <Col md={4} xs={6}>
+                            <FormItem>
+                                <Label>计划单号：</Label>
+                                <FormControl className='form-item' disabled
+                                    {
+                                    ...getFieldProps('planCode', {
+                                        initialValue: planCode||'测试单号',
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={6}>
+                            <FormItem>
+                                <Label>流程主题：</Label> <span className='mast'>*</span>
+                                <FormControl className='form-item' 
+                                    {
+                                    ...getFieldProps('flow', {
+                                        initialValue: '',
+                                        validateFirst: true,
+                                        validateTrigger: 'onBlur',
+                                        rules: [{
+                                            required: true, message: '请输入流程主题',
+                                        }],
+                                    })
+                                    }
+                                />
+                                <span className='error'>
+                                    {getFieldError('flow')}
+                                </span>
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={6}>
+                            <FormItem>
+                                <Label>申请人：</Label>
+                                <FormControl className='form-item' 
+                                    {
+                                    ...getFieldProps('proposer', {
+                                        initialValue: '',
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={6}>
+                            <FormItem>
+                                <Label>计划类型：</Label>
+                                <FormControl className='form-item' 
+                                    {
+                                    ...getFieldProps('planType', {
+                                        initialValue: '',
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={6}>
+                            <FormItem>
+                                <Label>联系方式：</Label>
+                                <FormControl className='form-item' 
+                                    {
+                                    ...getFieldProps('phone', {
+                                        initialValue: '',
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={6}>
+                            <FormItem>
+                                <Label>公司：</Label>
+                                <FormControl className='form-item' 
+                                    {
+                                    ...getFieldProps('company', {
+                                        initialValue: '',
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        
+                        <Col md={4} xs={6}>
+                            <FormItem>
+                                <Label>所属部门：</Label>
+                                <FormControl className='form-item' 
+                                    {
+                                    ...getFieldProps('department', {
+                                        initialValue: '',
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        
+                        <Col md={4} xs={6}>
+                            <FormItem>
+                                <Label>申请人工号：</Label>
+                                <FormControl className='form-item' 
+                                    {
+                                    ...getFieldProps('cardId', {
+                                        initialValue: '',
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={6}>
+                            <FormItem>
+                                <Label>工厂：</Label><span className='mast'>*</span>
+                                <Select className='form-item' {
+                                    ...getFieldProps('transportation', {
+                                        initialValue: '',
+                                        validateFirst: true,
+                                        rules: [{
+                                            required: true, message: '请选择工厂',
+                                        }],
+                                    }
+                                    ) }>
+                                    <Option value=''>请选择</Option>
+                                    {  
+                                        factory.map((item,index)=>(
+                                            <Option key={index} value={item.code}>{item.name}</Option>
+                                        ))
+                                    }
+                                </Select>
+                                <span className='error'>
+                                    {getFieldError('transportation')}
+                                </span>
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={6}>
+                            <FormItem>
+                                <Label>需要审批：</Label><span className='mast'>*</span>
+                                <Select className='form-item' {
+                                    ...getFieldProps('approveFlag', {
+                                        initialValue: '0',
+                                        validateFirst: true,
+                                        rules: [{
+                                            required: true, message: '请选择是否需要审批',
+                                        }],
+                                    }
+                                    ) }>
+                                    <Option value='0'>是</Option>
+                                    <Option value='1'>否</Option>
+                                </Select>
+                                <span className='error'>
+                                    {getFieldError('approveFlag')}
+                                </span>
+                            </FormItem>
+                        </Col>
+                        <Col md={12}  >
+                            <FormItem>
+                                <Label className='textarea'>备注：</Label>
+                                <textarea className='form-item' 
+                                    {
+                                    ...getFieldProps('remark', {
+                                        initialValue: '',
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        
+                    </Row>
+                </div>
+
+                <Row className='table-ctn'>
                     <Col md={12}>
                         <Table
                             loading={{ show: this.state.loading, loadingType: "line" }}
