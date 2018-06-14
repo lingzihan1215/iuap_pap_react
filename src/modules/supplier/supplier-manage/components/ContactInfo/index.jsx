@@ -4,7 +4,7 @@ import Form from 'bee-form';
 import './index.less';
 
 const FormItem = Form.FormItem;
-const fieldArray = ["busincontact",];
+const fieldArray = ["busincontact","contactinfo"];
 
 class ContactInfo extends Component {
     constructor(props) {
