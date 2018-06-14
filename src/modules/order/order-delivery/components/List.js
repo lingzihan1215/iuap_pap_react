@@ -6,6 +6,7 @@ import Pagination from 'bee-pagination';
 import NoData from 'components/NoData';
 import Form from 'bee-form';
 import DatePicker from 'bee-datepicker';
+import Header from "components/Header";
 import './list.less';
 const Option = Select.Option;
 const FormItem = Form.FormItem;
@@ -286,6 +287,7 @@ class List extends Component {
                 Message.create({ content: '数据填写错误', color : 'danger'  });
             }else{
                 actions.delivery.saveForm(values);
+                Message.create({ content: '保存成功', color : 'success'  });
             }
         });
     }
@@ -294,6 +296,11 @@ class List extends Component {
         const { getFieldProps, getFieldError } = form;
         return (
             <div className='order-delivery-wrap'>
+                <Header title='创建送货单' >
+                    <div className='head-btn'>
+                            <Button className='head-save' onClick={this.saveForm}>保存</Button>
+                        </div>
+                </Header>
                 <div className='edit-panel'>
                     <Row className='edit-body'>
                         <Col md={4} xs={6}>
@@ -486,14 +493,12 @@ class List extends Component {
                                     />
                                 </FormItem>
                             </Col>
-                            <Col md={12} xs={12} className='btn-group'>
-                            <Button size='sm' className='submit-btn' onClick={this.saveForm}>保存</Button>
-                        </Col>
+                            
                     </Row>
                 </div>
                 
 
-                <Row>
+                <Row className='table-ctn'>
                     <Col md={12}>
                         <Table
                             loading={{ show: this.state.loading, loadingType: "line" }}
