@@ -286,7 +286,6 @@ class List extends Component {
                         <FilterColumnTable
                             loading={{ show: this.state.loading, loadingType: "line" }}
                             bordered
-                            draggable={true}
                             title={() => <Button size="sm" shape="border" onClick={this.handlerAddClick} colors="primary">添加明细</Button>}
                             emptyText={() => <NoData />}
                             data={list}
