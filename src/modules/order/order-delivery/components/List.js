@@ -548,7 +548,7 @@ class List extends Component {
                 </div>
 
 
-                <Row className='table-ctn'>
+                <Row className='table-list'>
                     <Col md={12}>
                         <Table
                             loading={{ show: this.state.loading, loadingType: "line" }}
