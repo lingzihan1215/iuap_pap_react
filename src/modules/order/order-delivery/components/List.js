@@ -269,6 +269,7 @@ class List extends Component {
 
     dataNumSelect = (index, value) => {
         actions.delivery.updateState({ pageSize: value });
+        this.loadList();
     }
     handlerAddClick = () => {
         const newData = [...this.props.list];
@@ -547,7 +548,7 @@ class List extends Component {
                                 onSelect={this.handleSelect}
                                 onDataNumSelect={this.dataNumSelect}
                                 showJump={true}
-                                dataNum={3}
+                                dataNum={0}
                             />}
                         />
                     </Col>
