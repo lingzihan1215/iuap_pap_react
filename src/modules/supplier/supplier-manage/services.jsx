@@ -1,7 +1,7 @@
 import request from "utils/request";
 
 const URL = {
-    "GET_LIST":  "/supplier/manage/list" ,
+    "GET_LIST":  "/iuap-example/sany_supplier/list" ,
     "SAVE_REGISTER_INFO":"" 
 }
 

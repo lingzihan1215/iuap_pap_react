@@ -9,8 +9,6 @@ module.exports = {
     "/order/delivery/list": "./mock/order/delivery/list.json"
   }, {
     "/order/manage/orderType": "./mock/order/manage/orderType.json",
-  }, {
-    "/supplier/manage/list": "./mock/supplier/supplier-manage/supplier-list.json",
   }],
   "POST": [{
     "/system/role/list": "./mock/sys-manage/role-manage/list.json",
