@@ -11,7 +11,7 @@ export default {
     list: [],
     total: 0,
     pageIndex: 1,
-    pageSize: 5
+    pageSize: 10
   },
   reducers: {
     updateState(state, data) {
