@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Radio,Row,Col,FormControl,Label,Button,Icon} from 'tinper-bee';
 import mirror, { actions, connect } from "mirrorx";
 import Form from 'bee-form';
+import Upload from 'bee-upload';
 import CitySelect from 'bee-city-select';
 import Select from 'bee-select';
 import createModal from 'yyuap-ref';
@@ -25,6 +26,24 @@ const provinceData = ["Zhejiang", "Jiangsu"];
 const cityData = {
   Zhejiang: ["Hangzhou", "Ningbo", "Wenzhou"],
   Jiangsu: ["Nanjing", "Suzhou", "Zhenjiang"]
+};
+
+const upProps = {
+  name: 'file',
+  action: '/wbalone/userMGT//fastDfs/imgUpload',
+  headers: {
+    // authorization: 'authorization-text',
+  },
+  onChange(info) {
+    if (info.file.status !== 'uploading') {
+      console.log(info.file, info.fileList);
+    }
+    if (info.file.status === 'done') {
+      console.log(`${info.file.name} file uploaded successfully`);
+    } else if (info.file.status === 'error') {
+      console.log(`${info.file.name} file upload failed.`);
+    }
+  },
 };
 
 class BankInfo extends Component {
@@ -314,11 +333,13 @@ class BankInfo extends Component {
                                     </FormItem>
                                 </Col>
                                 <Col className="height40" md={4} mdOffset={1} xs={4} xsOffset={1} sm={4} smOffset={1}>
-                                    <FormItem>
-                                        <span className="supplier-label-adjust">营业执照&nbsp;:&nbsp; </span>
-                                        <span className="supplier-icon-adjust">*</span>
-                                        <Button shape="border" colors="info">+&nbsp;证书上传</Button>
-                                        <FormControl className="supplier-upinput"
+                                    <FormItem className="pos-relative">
+                                        <span className="supplier-label-adjust bank-label-adjust">营业执照&nbsp;:&nbsp; </span>
+                                        <span className="supplier-icon-adjust bank-icon-adjust">*</span>
+                                        <Upload {...upProps} className="bank-upload" >
+                                            <Button shape="border" colors="info" >证书上传</Button>
+                                        </Upload>
+                                        <FormControl className="bank-upinput"
                                             {
                                                 ...getFieldProps('businesslicense', {
                                                     validateTrigger: 'onBlur',

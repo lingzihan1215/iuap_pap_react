@@ -47,6 +47,7 @@
     "bee-search-panel": "^0.1.4",
     "bee-select": "^1.0.9",
     "bee-tooltip": "^1.0.2",
+    "bee-upload": "^1.0.0",
     "classnames": "^2.2.5",
     "mirrorx": "^0.2.10",
     "moment": "^2.21.0",
