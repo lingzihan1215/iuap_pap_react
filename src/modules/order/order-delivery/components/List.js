@@ -325,7 +325,7 @@ class List extends Component {
         const { getFieldProps, getFieldError } = form;
         return (
             <div className='order-delivery-wrap'>
-                <Header title='创建送货单' >
+                <Header title='创建送货单' back={true} >
                     <div className='head-btn'>
                         <Button className='head-save' onClick={this.saveForm}>保存</Button>
                     </div>
