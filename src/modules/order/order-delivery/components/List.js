@@ -105,7 +105,7 @@ class List extends Component {
                 width: "3%",
                 render: (text, record, index) => {
                     return (<span>
-                        <Popconfirm placement="left" content="是否确认删除?" onClose={() => this.remove(record.id)} >
+                        <Popconfirm placement="left" content="是否确认删除?" onClose={() => this.remove(record.id, index)} >
                             <Button className="table-op-btn" colors="primary" size="sm">删除</Button>
                         </Popconfirm>
                     </span>)
@@ -275,13 +275,23 @@ class List extends Component {
             }
         }
     }
-    remove = async (id) => {
-        this.setState({ loading: true });
+    remove = async (id, index) => {
         console.log('删除ID：', id);
-        let result = await actions.delivery.removeList(id);
-        if (result.data.success) {
-            this.setState({ loading: false });
-            this.loadList();
+
+        if (typeof id == 'number') {
+            const newData = [...this.props.list];
+            const target = newData.filter(item => id === item.id)[0];
+            newData.splice(index, 1);
+            actions.delivery.updateState({
+                list: newData
+            });
+        } else {
+            this.setState({ loading: true });
+            let result = await actions.delivery.removeList(id);
+            if (result.data.success) {
+                this.setState({ loading: false });
+                this.loadList();
+            }
         }
     }
     handleSelect = (eventKey) => {
