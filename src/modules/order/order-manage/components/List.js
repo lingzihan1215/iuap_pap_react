@@ -9,6 +9,7 @@ import DatePicker from 'bee-datepicker';
 import Header from "components/Header";
 import multiSelect from "tinper-bee/lib/multiSelect.js";
 import 'bee-datepicker/build/DatePicker.css';
+import { Scrollbars } from 'react-custom-scrollbars';
 import './list.less';
 const MultiSelectTable = multiSelect(Table, Checkbox);
 const FormItem = Form.FormItem;
@@ -404,15 +405,18 @@ class List extends Component {
                            新增
                         </Button>
                     </div>
-                    <MultiSelectTable
-                        loading={{show:showLoading,loadingType:"line"}}
-                        rowKey={(r,i)=>i}
-                        scroll={{x : true,y: 500 }}
-                        columns={columns}
-                        data={list}
-                        multiSelect={{ type: "checkbox" }}
-                        getSelectedDataFunc={this.tabelSelect}
-                    />
+                    <div className="scroll-height">
+                        <Scrollbars>
+                            <MultiSelectTable
+                                loading={{show:showLoading,loadingType:"line"}}
+                                rowKey={(r,i)=>i}
+                                columns={columns}
+                                data={list}
+                                multiSelect={{ type: "checkbox" }}
+                                getSelectedDataFunc={this.tabelSelect}
+                            />
+                        </Scrollbars>
+                    </div>
                     <div className='pagination'>
                     <Pagination
                         first

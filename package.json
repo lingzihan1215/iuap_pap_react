@@ -61,6 +61,7 @@
     "redux-logger": "^3.0.6",
     "tinper-bee": "^1.5.0",
     "yyuap-bpm": "0.0.7",
-    "yyuap-ref": "^1.0.57"
+    "yyuap-ref": "^1.0.57",
+    "react-custom-scrollbars": "^4.2.1"
   }
 }
