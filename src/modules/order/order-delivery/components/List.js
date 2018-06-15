@@ -554,7 +554,7 @@ class List extends Component {
                             loading={{ show: this.state.loading, loadingType: "line" }}
                             bordered
                             title={() => <span>
-                                <span className="table-short-tip">新增一行：ctrl + alt + n,快速保存：alt + s</span>
+                                {/* <span className="table-short-tip">新增一行：ctrl + alt + n,快速保存：alt + s</span> */}
                                 <Hotkeys
                                     keyName="alt+s"
                                     onKeyDown={this.saveForm}
@@ -563,9 +563,9 @@ class List extends Component {
                                     keyName="ctrl+alt+n,control+alt+n"
                                     onKeyDown={this.handlerAddClick}
                                 >
-                                    {/* <Tooltip defaultOverlayShown placement="left" inverse overlay={<div>快捷键：control + alt + N</div>}>
+                                    <Tooltip placement="left" inverse overlay={<div>快捷键：<br />新增一行：ctrl + alt + n<br />快速保存：alt + s</div>}>
                                         <Icon type="uf-exc-c-o" />
-                                    </Tooltip> */}
+                                    </Tooltip>
                                     <Button size="sm" shape="border" onClick={this.handlerAddClick} colors="primary">添加明细</Button>
                                 </Hotkeys>
                             </span>}
