@@ -4,9 +4,10 @@
 import React, { Component } from "react";
 import mirror, { actions, connect } from "mirrorx";
 import model from './models';
-import RegisterInfo from './components/RegisterInfo';
+
+import SupplierDetail from './components/detail';
 
 //注入Model
 mirror.model(model);
 
-export const registerInfo= connect((state) => state.supplier)(RegisterInfo);
+export const supplierDetail= connect((state) => state.supplier)(SupplierDetail);

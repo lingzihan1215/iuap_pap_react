@@ -1,6 +1,10 @@
 import React from "react";
 import { Route, Link } from "mirrorx";
-import {registerInfo,supplierList,supplierDetail} from "./supplier-manage/containers";
+
+import { registerInfo } from "./supplier-manage/containers";
+import { supplierList } from "./supplier-list/containers";
+import { supplierDetail } from "./supplier-detail/containers";
+
 const Routers = ({ match }) => (
   <div>
     <Route

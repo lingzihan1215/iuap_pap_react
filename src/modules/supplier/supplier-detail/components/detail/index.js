@@ -1,18 +1,36 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { actions } from "mirrorx";
-import { Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Select,Radio } from "tinper-bee";
+import { 
+    Col, Row, FormControl, Checkbox, Label
+} from "tinper-bee";
 import Header from "components/Header";
-import './detail.less';
+import './index.less';
 class Detail extends Component {
     constructor(props){
         super(props);
-        this.state={
-
-        }
+        this.state = { }
+    }
+    static defaultProps = {
+        supplierCode: "",
+        supplierName: "",
+        registeredCapital: "",
+        turnover: "",
+        contacts: "",
+        phone: "",
+        mainProducts: "",
+        supplierCategory: "",
+        supplierType: "",
+        mainGoods: "",
+        usableGoods: ""
     }
     render (){
-        let {supplierCode,supplierName,registeredCapital,turnover,contacts,phone,mainProducts,supplierCategory,supplierType,mainGoods,usableGoods} = this.props.location.detailObj;
+      
+        // mock data
+        let { supplierCode, supplierName, registeredCapital, turnover,
+                contacts, phone, mainProducts, supplierCategory, supplierType,
+                mainGoods, usableGoods} = this.props;
+
         return (
             <div className='supplier-detail'>
                 <Header title='供应商详情' back={true}/>
