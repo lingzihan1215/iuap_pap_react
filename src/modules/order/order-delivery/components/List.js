@@ -37,72 +37,11 @@ class List extends Component {
         //表格列
         this.columns = [
             {
-                title: "订单号",
-                dataIndex: "orderCode",
-                key: "orderCode",
-                width: "8%"
-            },
-            {
-                title: "序号",
-                dataIndex: "orderId",
-                key: "orderId",
-                width: "5%",
-                render: (text, record) => this.renderColumns(text, record, 'orderId')
-            },
-            {
-                title: "生产批次",
-                dataIndex: "prodbatch",
-                key: "prodbatch",
-                width: "5%",
-                render: (text, record) => this.renderColumns(text, record, 'prodbatch')
-            },
-            {
-                title: "物料编码",
-                dataIndex: "materialCode",
-                key: "materialCode",
-                width: "10%",
-                render: (text, record) => this.renderColumns(text, record, 'materialCode')
-            },
-            {
-                title: "物料名称",
-                dataIndex: "materialName",
-                key: "materialName",
-                width: "12%",
-                render: (text, record) => this.renderColumns(text, record, 'materialName')
-            },
-            {
-                title: "订单数量",
-                dataIndex: "orderNumber",
-                key: "orderNumber",
-                width: 70,
-                render: (text, record) => this.renderColumnsInputNumber(text, record, 'orderNumber')
-            },
-            {
-                title: "已收数量",
-                dataIndex: "receNumber",
-                key: "receNumber",
-                width: 70,
-                render: (text, record) => this.renderColumnsInputNumber(text, record, 'receNumber')
-            },
-            {
-                title: "发货数量",
-                dataIndex: "deliveNumber",
-                key: "deliveNumber",
-                width: 70,
-                render: (text, record) => this.renderColumnsInputNumber(text, record, 'deliveNumber')
-            },
-            {
-                title: "单位",
-                dataIndex: "unit",
-                key: "unit",
-                width: "5%",
-                render: (text, record) => this.renderColumns(text, record, 'unit')
-            },
-            {
                 title: "操作",
                 dataIndex: "op",
                 key: "op",
-                width: "3%",
+                width: 80,
+                fixed: "left",
                 render: (text, record, index) => {
                     return (<span>
                         <Popconfirm placement="left" content="是否确认删除?" onClose={() => this.remove(record.id, index)} >
@@ -110,6 +49,67 @@ class List extends Component {
                         </Popconfirm>
                     </span>)
                 }
+            },
+            {
+                title: "订单号",
+                dataIndex: "orderCode",
+                key: "orderCode",
+                width: 200
+            },
+            {
+                title: "序号",
+                dataIndex: "orderId",
+                key: "orderId",
+                width: 220,
+                render: (text, record) => this.renderColumns(text, record, 'orderId')
+            },
+            {
+                title: "生产批次",
+                dataIndex: "prodbatch",
+                key: "prodbatch",
+                width: 220,
+                render: (text, record) => this.renderColumns(text, record, 'prodbatch')
+            },
+            {
+                title: "物料编码",
+                dataIndex: "materialCode",
+                key: "materialCode",
+                width: 220,
+                render: (text, record) => this.renderColumns(text, record, 'materialCode')
+            },
+            {
+                title: "物料名称",
+                dataIndex: "materialName",
+                key: "materialName",
+                width: 220,
+                render: (text, record) => this.renderColumns(text, record, 'materialName')
+            },
+            {
+                title: "订单数量",
+                dataIndex: "orderNumber",
+                key: "orderNumber",
+                width: 110,
+                render: (text, record) => this.renderColumnsInputNumber(text, record, 'orderNumber')
+            },
+            {
+                title: "已收数量",
+                dataIndex: "receNumber",
+                key: "receNumber",
+                width: 110,
+                render: (text, record) => this.renderColumnsInputNumber(text, record, 'receNumber')
+            },
+            {
+                title: "发货数量",
+                dataIndex: "deliveNumber",
+                key: "deliveNumber",
+                width: 110,
+                render: (text, record) => this.renderColumnsInputNumber(text, record, 'deliveNumber')
+            },
+            {
+                title: "单位",
+                dataIndex: "unit",
+                key: "unit",
+                render: (text, record) => this.renderColumns(text, record, 'unit')
             }
         ];
     }
@@ -583,7 +583,7 @@ class List extends Component {
                             data={list}
                             rowKey={r => r.id}
                             columns={this.columns}
-                            scroll={{ x: "120%", y: 520 }}
+                            scroll={{ x: 1800, y: 520 }}
                             footer={() => <Pagination
                                 first
                                 last

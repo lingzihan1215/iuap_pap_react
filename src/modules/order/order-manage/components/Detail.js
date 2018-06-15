@@ -53,7 +53,6 @@ class Detail extends Component {
         let {orderTypes,orderCode,supplier,supplierName,type,purchasing,purchasingGroup,voucherDate,approvalState,confirmState,closeState} = this.props.location.detailObj;
         const editFlag = this.props.location.editFlag;
         const { getFieldProps, getFieldError } = this.props.form;
-        debugger
         return (
             <div className='order-detail'>
             <Loading
