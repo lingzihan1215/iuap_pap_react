@@ -1,5 +1,5 @@
 
-# Tinper-React 前端开发框架
+# iuap 前端开发框架（React)
 
 ## 一分钟快速上手
 
