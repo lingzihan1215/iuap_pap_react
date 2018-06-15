@@ -18,8 +18,7 @@ const fieldArray = [
     "trancur","annualsales","annualmeasure",
     "supplycategory","mainproduct",
     "agency","brand",
-    "totalfunds","totalmeasure",
-    "totalfunds","agengcyqualify",
+    "totalfunds","totalmeasure","agengcyqualify",
     "maincustomer","secmaincus","thirdmaincus",
 ];
 

@@ -11,6 +11,19 @@ const fieldArray = [
     "contactname","phonenum","email","identifycode"
 ]
 
+const countryData = ["china","American"];
+const provinceData = {
+    "china":["beijing","Zhejiang"],
+    "American":["Hawaii","New York"]
+}
+
+const cityData = {
+    "beijing":["beijing"],
+    "Zhejiang":["Hangzhou", "Ningbo", "Wenzhou"],
+    "Hawaii":["Honolulu"],
+    "New York":["Albany"]
+}
+
 class UserInfo extends Component {
     constructor(props) {
         super(props);

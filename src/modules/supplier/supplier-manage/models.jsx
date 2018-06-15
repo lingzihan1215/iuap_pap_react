@@ -46,8 +46,21 @@ export default {
           totalPages:res.totalPages,
         });
       }
+    },
+
+    async onSave(param,getState) {
+        let result = await api.onSave();
+        let {data:{success}} = result;
+        if(success=="success") {
+          return {"done":true};
+        }else {
+          let {message} = result 
+          return {"done":false,"message":message};
+        }
     }
+
+
   }
 
-
+    
 };
