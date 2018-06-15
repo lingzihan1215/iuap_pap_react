@@ -49,13 +49,13 @@ export default {
     },
 
     async onSave(param,getState) {
-        let result = await api.onSave();
-        let {data:{success}} = result;
+        let result = await api.onSave(param);
+        console.log("result",result);
+        let {data:{success,detailMsg:{msg}}} = result;
         if(success=="success") {
           return {"done":true};
         }else {
-          let {message} = result 
-          return {"done":false,"message":message};
+          return {"done":false,"message":msg};
         }
     }
 

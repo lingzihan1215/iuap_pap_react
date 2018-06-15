@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Button,Loading} from 'tinper-bee';
+import mirror, { actions, connect } from "mirrorx";
 import Form from 'bee-form';
 
 import UserInfo from '../UserInfo';
@@ -51,7 +52,7 @@ class RegisterInfo extends Component {
                     showLine: true
                 })
                 // done表示是否加载完毕
-                let {done} = await actions.master.onSave(value);
+                let {done} = await actions.supplier.onSave(value);
                 if (done) {
                     this.setState({
                         showLine: false
@@ -70,23 +71,28 @@ class RegisterInfo extends Component {
         console.log(this.props);
         return (
             <div>
-                <div className="register-head">
+                {/* <div className="register-head">
                     <div className="top-part">
                         <Button size="sm" colors="primary" className="cancel-btn">取消</Button>
                         <Button size="sm" colors="primary" className="save-btn" onClick={this.onSave}>保存</Button>
                     </div>
-                </div>
+                </div> */}
 
-                {/* <Header title="新增" back={true} >
+                <Header title="新增" back={true} >
                     <div className='head-btn'>
-                        <Button size="sm" colors="primary" onClick={this.saveForm}>保存</Button>
+                        <Button className='head-save' onClick={this.onSave}>保存</Button>
                     </div>
-                </Header> */}
+                </Header>
                 <UserInfo form ={this.props.form} />
                 <EnterpriseInfo form ={this.props.form}/>
                 <AssetsInfo form ={this.props.form}/>
                 <BankInfo form ={this.props.form}/>
                 <ContactInfo form ={this.props.form}/>
+                <Loading
+                    showBackDrop={true}
+                    loadingType="line"
+                    show={this.state.showLine}
+                />
             </div>
         );
     }
