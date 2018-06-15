@@ -1,16 +1,14 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Form from "bee-form";
-import {
-  Table,
-  Button,
-  Col,
-  Row,
-  Modal,
-  FormControl,
-  Pagination
-} from "tinper-bee";
 import { connect } from "mirrorx";
+
+import Form from "bee-form";
+import { Table,Button,Col,Row,Modal,FormControl} from "tinper-bee";
+import Pagination from 'bee-pagination'
+import 'bee-pagination/build/Pagination.css'
+
+import './index.less'
+
 const columns = [
   {
     title: "姓名",
@@ -66,47 +64,48 @@ class TreeTableModule extends Component {
 
   componentWillReceiveProps(nextProps) {}
   //分页
-  handleSelect = e => {};
-  dataNumSelect = e => {};
+  handleSelect = e => {
+
+  }
+  dataNumSelect = e => {
+
+  }
+  onAddTable = () => {
+    actions.PlanIndexProj.showModul(true);
+  };
   render() {
     return (
-      <div>
-        <Col md={8} xs={8} sm={8}>
-          <Col md={4} xs={4} sm={4}>
-            <Button colors="primary">新增人员</Button>
-          </Col>
-          <Col md={4} xs={4} sm={4}>
-            {this.props.currentNode}
-          </Col>
-          <Col md={4} xs={4} sm={4}>
-            <FormControl
-              className="demo5-input"
-              onSearch={this.onSearch}
-              type="search"
-            />
-          </Col>
-          <div>
-            <Col md={12} xs={12} sm={12}>
-              <Table
-                columns={columns}
-                data={this.props.tableData}
-                rowKey={recode => recode.id}
-              />
-            </Col>
-            <Col md={12} xs={12} sm={12}>
-              <Pagination
-                first
-                last
-                prev
-                next
-                boundaryLinks
-                items={this.props.totalPages}
-                maxButtons={5}
-                onSelect={this.handleSelect.bind(this)}
-              />
-            </Col>
-          </div>
-        </Col>
+      <div className="person-table-list">
+        <div className="action-panel">
+          <Button colors="primary">新增人员</Button>
+          <Button colors="primary" onClick={this.onAddTable}>
+            增加
+          </Button>
+          <Button colors="primary">修改</Button>
+          <Button colors="danger">删除</Button>
+          {this.props.currentNode}
+          <FormControl
+            className="demo5-input"
+            onSearch={this.onSearch}
+            type="search"
+          />
+        </div>
+        <Table
+          className="role-table"
+          columns={columns}
+          data={this.props.tableData}
+          rowKey={recode => recode.id}
+        />
+        <Pagination
+          first
+          last
+          prev
+          next
+          boundaryLinks
+          items={this.props.totalPages}
+          maxButtons={5}
+          onSelect={this.handleSelect.bind(this)}
+        />
       </div>
     );
   }

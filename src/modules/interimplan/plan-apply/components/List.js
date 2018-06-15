@@ -294,7 +294,7 @@ class List extends Component {
                             <Button className='head-save' onClick={this.saveForm}>保存</Button>
                         </div>
                 </Header>
-                <div className='common-form'>
+                <div className='common-form edit-panel'>
                     <Row >
                         <Col md={4} xs={6}>
                             <FormItem>
@@ -462,7 +462,7 @@ class List extends Component {
                     </Row>
                 </div>
 
-                <Row className='table-ctn'>
+                <Row className='table-list'>
                     <Col md={12}>
                         <Table
                             loading={{ show: this.state.loading, loadingType: "line" }}
