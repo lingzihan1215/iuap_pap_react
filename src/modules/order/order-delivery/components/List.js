@@ -572,11 +572,12 @@ class List extends Component {
                                 <Hotkeys
                                     keyName="ctrl+alt+n,control+alt+n"
                                     onKeyDown={this.handlerAddClick}
-                                >快捷键
-                                    <Tooltip placement="left" inverse overlay={<div>快捷键：<br />新增一行：ctrl + alt + n<br />快速保存：alt + s</div>}>
+                                >
+                                    <Button size="sm" shape="border" onClick={this.handlerAddClick} colors="primary">添加明细</Button>
+                                    <Tooltip placement="right" inverse overlay={<div>快捷键：<br />新增一行：ctrl + alt + n<br />快速保存：alt + s</div>}>
                                         <Icon type="uf-exc-c-o" />
                                     </Tooltip>
-                                    <Button size="sm" shape="border" onClick={this.handlerAddClick} colors="primary">添加明细</Button>
+                                    快捷键
                                 </Hotkeys>
                             </span>}
                             emptyText={() => <NoData />}
