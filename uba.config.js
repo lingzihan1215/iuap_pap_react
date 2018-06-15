@@ -20,7 +20,7 @@ const proxyConfig = [
     headers: {
       "Referer": "http://10.10.24.43:8080/wbalone/index-view.html"
     },
-    router: ['/iuap-saas-filesystem-service/','/newref/' ,'/wbalone/', '/example/', '/iuap-saas-message-center/', '/iuap-example/','/eiap-plus/', '/uitemplate_web/','/iuap-saas-billcode-service/'],
+    router: ['/iuap-saas-filesystem-service/', '/newref/', '/wbalone/', '/example/', '/iuap-saas-message-center/', '/iuap-example/', '/eiap-plus/', '/uitemplate_web/', '/iuap-saas-billcode-service/'],
     url: 'http://10.10.24.43:8080'
   }
 ];
@@ -108,7 +108,7 @@ const devConfig = {
   devtool: 'cheap-module-eval-source-map',
   entry: {
     vendors: getVendors(),
-    app: ['./src/app.jsx', hotMiddlewareScript]
+    app: ['babel-polyfill', './src/app.jsx', hotMiddlewareScript]
   },
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -139,7 +139,7 @@ const devConfig = {
       hash: false,
       favicon: './src/static/images/favicon.png'
     })
-    
+
   ],
   resolve: resolve
 }
@@ -150,7 +150,7 @@ const prodConfig = {
   devtool: 'source-map',
   entry: {
     vendors: getVendors(),
-    app: './src/app.jsx'
+    app: ['babel-polyfill', './src/app.jsx']
   },
   output: {
     path: path.resolve(__dirname, './dist'),
