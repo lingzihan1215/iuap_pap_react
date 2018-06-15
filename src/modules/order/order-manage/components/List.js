@@ -254,7 +254,7 @@ class List extends Component {
         let columns = this.renderColumnsMultiSelect(column);
         return (
             <div className='order-list'>
-                <Header title='采购订单管理' />
+                <Header title='采购订单管理' back={true} />
                 <div className='search-panel'>
                     <Row>
                         <Col md={4} xs={6}>

@@ -3,18 +3,20 @@ import { Link } from "mirrorx";
 import "./index.less";
 
 const urlListPreview = [
-  // 绍振：查询表单+表格+分页
+  // 订单管理
   { url: "/order/managelist", name: "订单列表" },
   { url: "/order/delivery", name: "送货单" },
   { url: "/system/rolelist", name: "角色管理" },
   { url: "/interimplan/planapply", name: "计划申请" },
   { url: "/resource/research", name: "资源调查表" },
-  // 帅中：左树右表
+
   { url: "/system/person-manage", name: "人员管理" },
   { url: "/contract/manage", name: "合同管理" },
+  
   // 供应商管理
   { url: "/supplier/register", name: "供应商注册" },
-  { url: "/supplier/list", name: "供应商管理" }
+  { url: "/supplier/list", name: "供应商管理" },
+  { url: "/supplier/detail", name: "供应商详情" }
 ];
 
 const getURLList = () => {

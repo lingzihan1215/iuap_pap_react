@@ -27,9 +27,11 @@ class App extends Component {
   render(){
     return (
       <Router>
-        <div className="route-content">
+        <div>
           { (__MODE__ == "development") ? <MainLayout /> : "" }
-          { (__MODE__ == "development") ? <div className="layout-content"><MainRoutes /></div> : <MainRoutes/> }
+          <div className="route-content">
+            { (__MODE__ == "development") ? <div className="layout-content"><MainRoutes /></div> : <MainRoutes/> }
+          </div>
         </div>
       </Router>
     )

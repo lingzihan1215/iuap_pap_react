@@ -124,7 +124,7 @@ class List extends Component {
         const { getFieldProps, getFieldError } = form;
         return (
             <div className='role-list'>
-                <Header title='角色管理' />
+                <Header title='角色管理' back={true} />
                 <div className='search-panel'>
                     <Row>
                         <Col md={4} xs={6}>
