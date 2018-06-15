@@ -2,7 +2,7 @@ import request from "utils/request";
 
 const URL = {
     "GET_LIST":  "/iuap-example/sany_supplier/list" ,
-    "SAVE_REGISTER_INFO":"" 
+    "SAVE_REGISTER_INFO":"/iuap-example/sany_supplier/save" 
 }
 
 export const getList = (params) => {
@@ -21,7 +21,7 @@ export const getList = (params) => {
 }
 
 export const onSave = (data)=>{
-    request(URL.SAVE_REGISTER_INFO, {
+    return request(URL.SAVE_REGISTER_INFO, {
         method: "post",
         data: data
     })

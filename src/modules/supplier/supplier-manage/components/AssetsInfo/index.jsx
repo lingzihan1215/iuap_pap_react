@@ -29,6 +29,7 @@ const upProps = {
   headers: {
     // authorization: 'authorization-text',
   },
+  listType:'picture',
   onChange(info) {
     if (info.file.status !== 'uploading') {
       console.log(info.file, info.fileList);
@@ -411,7 +412,7 @@ class AssetsInfo extends Component {
                                         </span>
                                     </FormItem>
                                 </Col>
-                                <Col className="height40" md={4} mdOffset={1} xs={4} xsOffset={1} sm={4} smOffset={1}>
+                                {/* <Col className="height40" md={4} mdOffset={1} xs={4} xsOffset={1} sm={4} smOffset={1}>
                                     <FormItem className="pos-relative">
                                         <span className="supplier-label-adjust assets-label-adjust">代理资质证书&nbsp;:&nbsp; </span>
                                         <span className="supplier-icon-adjust assets-icon-adjust">*</span>
@@ -430,8 +431,22 @@ class AssetsInfo extends Component {
                                             {getFieldError('agengcyqualify')}
                                         </span>
                                     </FormItem>
+                                </Col> */}
+                            </div>
+
+                            <div className="clearfix mt20">
+                                <Col className="height40" md={4} mdOffset={1} xs={4} xsOffset={1} sm={4} smOffset={1}>
+                                    <FormItem className="pos-relative">
+                                        <span className="supplier-label-adjust assets-label-adjust">代理资质证书&nbsp;:&nbsp; </span>
+                                        <span className="supplier-icon-adjust assets-icon-adjust">*</span>
+                                        <Upload {...upProps} className="assets-upload">
+                                            <Button shape="border" colors="info" >证书上传</Button>
+                                        </Upload>
+                                        
+                                    </FormItem>
                                 </Col>
                             </div>
+
                             <div className="clearfix mt20">
                                 <Col className="height40" md={9} mdOffset={1} xs={9} xsOffset={1} sm={9} smOffset={1}>
                                     <FormItem>

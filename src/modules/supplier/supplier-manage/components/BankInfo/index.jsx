@@ -339,7 +339,7 @@ class BankInfo extends Component {
                                         <Upload {...upProps} className="bank-upload" >
                                             <Button shape="border" colors="info" >证书上传</Button>
                                         </Upload>
-                                        <FormControl className="bank-upinput"
+                                        {/* <FormControl className="bank-upinput"
                                             {
                                                 ...getFieldProps('businesslicense', {
                                                     validateTrigger: 'onBlur',
@@ -349,7 +349,7 @@ class BankInfo extends Component {
                                         />
                                         <span className='error'>
                                             {getFieldError('businesslicense')}
-                                        </span>
+                                        </span> */}
                                     </FormItem>
                                 </Col>
                             </div>
