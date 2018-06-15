@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { actions } from "mirrorx";
 import { Loading, Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Select, Radio } from "tinper-bee";
 import Form from 'bee-form';
+import NoData from 'components/NoData';
 import Pagination from 'bee-pagination';
 import 'bee-pagination/build/Pagination.css';
 import Header from "components/Header";
@@ -237,8 +238,10 @@ class List extends Component {
                         </Button>
                     </div>
                     <Table
+                        bordered
                         loading={{ show: showLoading, loadingType: "line" }}
                         rowKey={(r, i) => i}
+                        emptyText={() => <NoData />}
                         scroll={{ x: true, y: 500 }}
                         columns={column}
                         data={list}
