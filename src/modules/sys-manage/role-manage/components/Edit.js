@@ -32,7 +32,7 @@ class Edit extends Component {
         let {roleCode,roleName,roleDescribe,id}=editObj;
         const { getFieldProps, getFieldError } =form;
         return (
-            <div className='role-edit'>
+            <div className='role-edit edit-panel'>
                 <Loading
                     showBackDrop={true}
                     loadingType="line"
