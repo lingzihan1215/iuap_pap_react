@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { actions } from "mirrorx";
-import { Loading,Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Select,Radio } from "tinper-bee";
+import { Loading, Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Select, Radio } from "tinper-bee";
 import Form from 'bee-form';
 import Pagination from 'bee-pagination';
+import NoData from 'components/NoData';
 import 'bee-pagination/build/Pagination.css';
 import DatePicker from 'bee-datepicker';
 import Header from "components/Header";
@@ -13,7 +14,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import './list.less';
 const MultiSelectTable = multiSelect(Table, Checkbox);
 const FormItem = Form.FormItem;
-const {RangePicker} = DatePicker;
+const { RangePicker } = DatePicker;
 import moment from "moment/moment";
 
 
@@ -22,10 +23,10 @@ class List extends Component {
         super(props);
         this.state = {
             selectData: [],
-            approvalState:'',
-            closeState:'',
-            confirmState:'',
-            voucherDate:[]
+            approvalState: '',
+            closeState: '',
+            confirmState: '',
+            voucherDate: []
         }
     }
     componentDidMount() {
@@ -34,27 +35,27 @@ class List extends Component {
     }
     search = (pageObj) => {//查询
         this.props.form.validateFields((err, values) => {
-            let voucherDate=values.voucherDate;
-            if(voucherDate&&voucherDate.length){
-                values.starTime=voucherDate[0].format('YYYY-MM-DD');
-                values.endTime=voucherDate[1].format('YYYY-MM-DD');
-            }else{
-                values.starTime='';
-                values.endTime='';
+            let voucherDate = values.voucherDate;
+            if (voucherDate && voucherDate.length) {
+                values.starTime = voucherDate[0].format('YYYY-MM-DD');
+                values.endTime = voucherDate[1].format('YYYY-MM-DD');
+            } else {
+                values.starTime = '';
+                values.endTime = '';
             }
             delete values.voucherDate;
-            values.pageIndex=pageObj.pageIndex||this.props.pageIndex||1,
-            values.pageSize=pageObj.pageSize||this.props.pageSize||10,
-            actions.order.loadList(values);
+            values.pageIndex = pageObj.pageIndex || this.props.pageIndex || 1,
+                values.pageSize = pageObj.pageSize || this.props.pageSize || 10,
+                actions.order.loadList(values);
         });
     }
     reset = () => {//重置
         this.props.form.resetFields();
         this.setState({
-            approvalState:'',
-            closeState:'',
-            confirmState:'',
-            voucherDate:[]
+            approvalState: '',
+            closeState: '',
+            confirmState: '',
+            voucherDate: []
         })
     }
     tabelSelect = (data) => {//tabel选中数据
@@ -138,19 +139,19 @@ class List extends Component {
     }
     // 多选表格包装函数  结束
 
-    cellClick=(record,editFlag)=>{//进入详情
+    cellClick = (record, editFlag) => {//进入详情
         actions.routing.push(
             {
                 pathname: 'managedetail',
                 detailObj: record,
-                editFlag:!!editFlag
+                editFlag: !!editFlag
             }
         )
     }
     onPageSelect = (value) => {
         this.search({
-            pageIndex: value ,
-            pageSize:this.props.pageSize
+            pageIndex: value,
+            pageSize: this.props.pageSize
         })
     }
     dataNumSelect = (value) => {
@@ -160,10 +161,10 @@ class List extends Component {
             pageIndex: 1
         })
     }
-    delItem=(record,index)=>{
+    delItem = (record, index) => {
         actions.order.delItem({
-            param:[{id:record.id}],
-            index:index
+            param: [{ id: record.id }],
+            index: index
         });
     }
     render() {
@@ -174,8 +175,8 @@ class List extends Component {
                 dataIndex: "index",
                 key: "index",
                 width: 50,
-                render(record,text,index){
-                    return index+1;
+                render(record, text, index) {
+                    return index + 1;
                 }
             },
             {
@@ -183,7 +184,7 @@ class List extends Component {
                 dataIndex: "orderCode",
                 key: "orderCode",
                 width: 200,
-                onCellClick:(record)=>this.cellClick(record,false)
+                onCellClick: (record) => this.cellClick(record, false)
             },
             {
                 title: "供应商名称",
@@ -214,7 +215,7 @@ class List extends Component {
                 dataIndex: "voucherDate",
                 key: "voucherDate",
                 width: 100,
-                render(record,text,index){
+                render(record, text, index) {
                     return moment(text).format('YYYY-MM-DD')
                 }
             },
@@ -240,17 +241,17 @@ class List extends Component {
                 title: "操作",
                 dataIndex: "e",
                 key: "e",
-                render(text,record,index){
+                render(text, record, index) {
                     return (
                         <div className='operation-btn'>
-                            <Button size='sm' className='edit-btn' onClick={()=>{self.cellClick(record,true)}}>编辑</Button>
-                            <Button size='sm' className='del-btn' onClick={()=>{self.delItem(record,index)}}>删除</Button>
+                            <Button size='sm' className='edit-btn' onClick={() => { self.cellClick(record, true) }}>编辑</Button>
+                            <Button size='sm' className='del-btn' onClick={() => { self.delItem(record, index) }}>删除</Button>
                         </div>
                     )
                 }
             }
         ];
-        let { form, list, pageSize, pageIndex, totalPages,orderTypes,showLoading } = this.props;
+        let { form, list, pageSize, pageIndex, totalPages, orderTypes, showLoading } = this.props;
         const { getFieldProps, getFieldError } = form;
         let columns = this.renderColumnsMultiSelect(column);
         return (
@@ -282,7 +283,7 @@ class List extends Component {
                                 />
                             </FormItem>
                         </Col>
-                        <Col md={4} xs={6}>
+                        <Col md={4} xs={4}>
                             <FormItem>
                                 <Label className='time'>凭证日期：</Label>
                                 <RangePicker
@@ -291,9 +292,9 @@ class List extends Component {
                                     dateInputPlaceholder={['开始', '结束']}
                                     {
                                     ...getFieldProps('voucherDate', {
-                                        onChange:function(v){
+                                        onChange: function (v) {
                                             self.setState({
-                                                voucherDate:v
+                                                voucherDate: v
                                             })
                                         }
                                     })
@@ -308,10 +309,10 @@ class List extends Component {
                                     ...getFieldProps('type', {
                                         initialValue: '',
                                     }
-                                    ) }>
+                                    )}>
                                     <Option value="">请选择</Option>
                                     {
-                                        orderTypes.map((item,index)=>{
+                                        orderTypes.map((item, index) => {
                                             return (
                                                 <Option key={index} value={item.code}>{item.name}</Option>
                                             )
@@ -336,16 +337,16 @@ class List extends Component {
                             <FormItem>
                                 <Label>审批状态：</Label>
                                 <Radio.RadioGroup
-                                selectedValue={this.state.approvalState}
+                                    selectedValue={this.state.approvalState}
                                     {
-                                        ...getFieldProps('approvalState', {
-                                            initialValue: '',
-                                            onChange(value) {
-                                                self.setState({ approvalState: value });
-                                            },
-                                        }
-                                        ) }
-                                    >
+                                    ...getFieldProps('approvalState', {
+                                        initialValue: '',
+                                        onChange(value) {
+                                            self.setState({ approvalState: value });
+                                        },
+                                    }
+                                    )}
+                                >
                                     <Radio value="0" >未审批</Radio>
                                     <Radio value="1" >已审批</Radio>
                                     <Radio value="" >全部</Radio>
@@ -356,16 +357,16 @@ class List extends Component {
                             <FormItem>
                                 <Label>关闭状态：</Label>
                                 <Radio.RadioGroup
-                                selectedValue={this.state.closeState}
+                                    selectedValue={this.state.closeState}
                                     {
-                                        ...getFieldProps('closeState', {
-                                            initialValue: '',
-                                            onChange(value) {
-                                                self.setState({ closeState: value });
-                                            },
-                                        }
-                                        ) }
-                                    >
+                                    ...getFieldProps('closeState', {
+                                        initialValue: '',
+                                        onChange(value) {
+                                            self.setState({ closeState: value });
+                                        },
+                                    }
+                                    )}
+                                >
                                     <Radio value="0" >未关闭</Radio>
                                     <Radio value="1" >已关闭</Radio>
                                     <Radio value="" >全部</Radio>
@@ -378,14 +379,14 @@ class List extends Component {
                                 <Radio.RadioGroup
                                     selectedValue={this.state.confirmState}
                                     {
-                                        ...getFieldProps('confirmState', {
-                                            initialValue: '',
-                                            onChange(value) {
-                                                self.setState({ confirmState: value });
-                                            },
-                                        }
-                                        ) }
-                                    >
+                                    ...getFieldProps('confirmState', {
+                                        initialValue: '',
+                                        onChange(value) {
+                                            self.setState({ confirmState: value });
+                                        },
+                                    }
+                                    )}
+                                >
                                     <Radio value="0" >未确认</Radio>
                                     <Radio value="1" >已确认</Radio>
                                     <Radio value="2" >拒绝</Radio>
@@ -401,15 +402,16 @@ class List extends Component {
                 </div>
                 <div className='table-list'>
                     <div className='table-header'>
-                        <Button size='sm' shape="border" onClick={()=>{self.cellClick({},true)}}>
-                           新增
+                        <Button size='sm' shape="border" onClick={() => { self.cellClick({}, true) }}>
+                            新增
                         </Button>
                     </div>
                     <div className="scroll-height">
                         <Scrollbars>
                             <MultiSelectTable
-                                loading={{show:showLoading,loadingType:"line"}}
-                                rowKey={(r,i)=>i}
+                                loading={{ show: showLoading, loadingType: "line" }}
+                                rowKey={(r, i) => i}
+                                emptyText={() => <NoData />}
                                 columns={columns}
                                 data={list}
                                 multiSelect={{ type: "checkbox" }}
@@ -418,19 +420,19 @@ class List extends Component {
                         </Scrollbars>
                     </div>
                     <div className='pagination'>
-                    <Pagination
-                        first
-                        last
-                        prev
-                        next
-                        boundaryLinks
-                        items={totalPages}
-                        activePage={pageIndex}
-                        onDataNumSelect={this.dataNumSelect}
-                        onSelect={this.onPageSelect}
-                        showJump={true}
-                    />
-                </div>
+                        <Pagination
+                            first
+                            last
+                            prev
+                            next
+                            boundaryLinks
+                            items={totalPages}
+                            activePage={pageIndex}
+                            onDataNumSelect={this.dataNumSelect}
+                            onSelect={this.onPageSelect}
+                            showJump={true}
+                        />
+                    </div>
                 </div>
             </div>
         )
