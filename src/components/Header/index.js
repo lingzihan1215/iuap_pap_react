@@ -1,7 +1,7 @@
-import React,{Component} from 'react';
-import {Col,Row} from 'tinper-bee';
+import React, { Component } from 'react';
+import { Col, Row } from 'tinper-bee';
 import PropTypes from 'prop-types';
-import  './index.less';
+import './index.less';
 import classnames from 'classnames';
 
 const propTypes = {
@@ -10,11 +10,11 @@ const propTypes = {
     title: PropTypes.string
 };
 const defaultProps = {
-    back:false,
-    backFn:()=>{
+    back: false,
+    backFn: () => {
         window.history.go(-1);
     },
-    title:''
+    title: ''
 };
 class Header extends Component {
     constructor(props) {
@@ -28,18 +28,18 @@ class Header extends Component {
     }
 
     render() {
-        const {backFn,title,back,children}=this.props;
+        const { backFn, title, back, children } = this.props;
         return (
             <Row className='title'>
                 <Col xs={12}>
                     {
-                        back?(
-                        <span onClick={backFn} className="back-icon">
-                            <i className={classnames({'uf uf-arrow-left pull-left':true,'hide':!back})} />
-                            返回
-                        </span>):''
+                        back ? (
+                            <span onClick={backFn} className="back-icon">
+                                <i className={classnames({ 'uf uf-arrow-left pull-left': true, 'hide': !back })} />
+                                返回
+                        </span>) : ''
                     }
-                    <span>
+                    <span className="main-title">
                         {title}
                     </span>
                     {children}
