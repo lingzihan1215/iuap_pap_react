@@ -29,8 +29,7 @@ class Detail extends Component {
         // mock data
         let { supplierCode, supplierName, registeredCapital, turnover,
                 contacts, phone, mainProducts, supplierCategory, supplierType,
-                mainGoods, usableGoods} = this.props;
-
+                mainGoods, usableGoods} = this.props.location.detailObj;
         return (
             <div className='supplier-detail'>
                 <Header title='供应商详情' back={true}/>
