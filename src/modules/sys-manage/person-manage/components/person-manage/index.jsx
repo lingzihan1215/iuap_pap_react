@@ -1,7 +1,10 @@
 import React, { Component } from "react";
+import { actions } from "mirrorx";
+
+import Header from 'components/Header'
 import TreeModule from "../tree-module/TreeModule";
 import TreeTableModule from "../tree-table/TreeTableModule";
-import { actions } from "mirrorx";
+
 import "./index.less";
 
 class PlanIndexProj extends Component {
@@ -21,6 +24,9 @@ class PlanIndexProj extends Component {
   render() {
     return (
       <div className="clearfix tree_content">
+        <Header title={'角色管理'} back={true}>
+          
+        </Header>
         <TreeModule />
         <TreeTableModule />
       </div>

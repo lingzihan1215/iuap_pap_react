@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import { actions, connect } from "mirrorx";
 import TreeForm from "../tree-form/TreeForm";
 import { Button, Col, Row, Tree, FormControl, Modal } from "tinper-bee";
+
+import './index.less'
+
 const TreeNode = Tree.TreeNode;
+
 const setTreeData = data => {
   let parentArr = [];
   if (Array.isArray(data) && data.length) {
@@ -20,6 +24,7 @@ const setTreeData = data => {
     return parentArr;
   }
 };
+
 const loop = data =>
   data.map(item => {
     if (item.children) {
@@ -52,31 +57,18 @@ class TreeModule extends Component {
       `?pageIndex=0&pageSize=5&sortField=peocode&sortDirection=asc&institid=${info}`
     );
   }
-  onAddTable = () => {
-    actions.PlanIndexProj.showModul(true);
-  };
+  
   render() {
     let { treeData } = this.props;
     treeData.length ? (treeData = setTreeData(treeData)) : treeData;
     return (
-      <Col md={4} xs={4} sm={4}>
-        <Col md={4} xs={4} sm={4}>
-          <span className="tree_heard"> 组织结构</span>
-        </Col>
-        <Col md={8} xs={8} sm={8}>
-          <Button colors="primary" onClick={this.onAddTable}>
-            增加
-          </Button>
-          <Button colors="primary">修改</Button>
-          <Button colors="danger">删除</Button>
-        </Col>
-        <Col md={12} xs={12} sm={12}>
-          <Tree className="myCls" showLine onSelect={this.onSelectTree}>
-            {treeData ? loop(treeData) : ""}
-          </Tree>
-        </Col>
+      <div className="org-tree">
+        <span className="tree_heard"> 组织结构</span>
+        <Tree className="myCls" showLine onSelect={this.onSelectTree}>
+          {treeData ? loop(treeData) : ""}
+        </Tree>
         <TreeForm />
-      </Col>
+      </div>
     );
   }
 }

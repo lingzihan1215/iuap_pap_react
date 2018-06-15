@@ -182,22 +182,21 @@ class List extends Component {
                         columns={column}
                         data={list}
                     />
+                    <div className='pagination'>
+                        <Pagination
+                            first
+                            last
+                            prev
+                            next
+                            boundaryLinks
+                            items={totalPages}
+                            activePage={pageIndex}
+                            onDataNumSelect={this.dataNumSelect}
+                            onSelect={this.onPageSelect}
+                            showJump={true}
+                        />
+                    </div>
                 </div>
-                <div className='pagination'>
-                    <Pagination
-                        first
-                        last
-                        prev
-                        next
-                        boundaryLinks
-                        items={totalPages}
-                        activePage={pageIndex}
-                        onDataNumSelect={this.dataNumSelect}
-                        onSelect={this.onPageSelect}
-                        showJump={true}
-                    />
-                </div>
-
             </div>
         )
     }
