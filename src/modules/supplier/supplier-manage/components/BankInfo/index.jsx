@@ -20,12 +20,21 @@ const fieldArray = [
     "detection","businesslicense"
 ];
 
+// 国家、省、市级联
+const provinceData = ["Zhejiang", "Jiangsu"];
+const cityData = {
+  Zhejiang: ["Hangzhou", "Ningbo", "Wenzhou"],
+  Jiangsu: ["Nanjing", "Suzhou", "Zhenjiang"]
+};
+
 class BankInfo extends Component {
     constructor(props) {
         super(props);
         this.state = { 
             selectedValue:"0",
-            bankpro :{ province:'北京',city:'北京',area:'东城区'}
+            cities:[],
+            bankpro:"",
+            bankcity:""
         };
     }
 
@@ -92,10 +101,18 @@ class BankInfo extends Component {
     onCitySelect = (value)=>{
         console.log(value);
         this.setState({
-            bankpro:value
+            bankcity:value
         })
     }
 
+    onProSelect = (value)=>{
+        console.log("cityData[value]",value);
+        this.setState({
+            bankpro:value,
+            cities:cityData[value],
+            bankcity:""
+        })
+    }
     // 验证表单数据
     onVerifyClick = ()=>{
         this.props.form.validateFields(fieldArray,{
@@ -123,7 +140,14 @@ class BankInfo extends Component {
         });
     }
     render() {
-        const { getFieldProps, getFieldError,getFieldDecorator} = this.props.form;
+        let { getFieldProps, getFieldError,getFieldDecorator} = this.props.form;
+        let provinceOptions = provinceData.map((province,index) => {
+            return <Option key={province}>{province}</Option>
+        });
+        let cityOptions = this.state.cities.map((city,index) => {
+            return <Option key={city}>{city}</Option>
+        });
+        let {bankpro,bankcity} = this.state;
         return (
             <div className="supplier-enterprise-page">
                 <div className="bank-info-form">
@@ -156,33 +180,29 @@ class BankInfo extends Component {
                                         <span className="supplier-icon-adjust">*</span>
                                         <Select
                                             className = "width32"
+                                            onSelect = {this.onProSelect}
                                             searchPlaceholder="标签模式"
                                             {
                                             ...getFieldProps('bankpro', {
-                                                initialValue: "beijing",
                                                 validateTrigger: 'onBlur',
                                                 rules: [{ required: true, message: '请选择省、市!' }],
                                             })
                                             }
                                         >
-                                            <Option value="beijing">北京</Option>
-                                            <Option value="hebei">河北</Option>
-                                            
+                                            {provinceOptions}
                                         </Select>
                                         <Select
+                                            onSelect = {this.onCitySelect}
                                             className = "width32 ml4"
                                             searchPlaceholder="标签模式"
                                             {
                                             ...getFieldProps('bankcity', {
-                                                initialValue: "beijing",
                                                 validateTrigger: 'onBlur',
                                                 rules: [{ required: true, message: '请选择省、市!' }],
                                             })
                                             }
                                         >
-                                            <Option value="beijing">北京</Option>
-                                            <Option value="jinan">济南</Option>
-                                            <Option value="taiyuan">太原</Option>
+                                            {cityOptions}
                                         </Select>
                                         {/* <CitySelect 
                                             onChange = {this.onCitySelect}

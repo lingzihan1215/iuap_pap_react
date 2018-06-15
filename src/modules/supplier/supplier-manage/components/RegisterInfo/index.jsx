@@ -1,27 +1,27 @@
 import React, { Component } from 'react';
-import {Button} from 'tinper-bee';
+import {Button,Loading} from 'tinper-bee';
+import Form from 'bee-form';
+
 import UserInfo from '../UserInfo';
 import EnterpriseInfo from '../EnterpriseInfo';
 import AssetsInfo from '../AssetsInfo';
 import BankInfo from '../BankInfo';
-
 import ContactInfo from '../ContactInfo';
-import Form from 'bee-form';
+import Header from 'components/Header';
 
 import './index.less';
 
 const fieldArray = [
     "suppliername","firmnature","unisocialcode",
     "contactname","phonenum","email","identifycode",
-    "engname","componyurl","companyphone","createtime",
+    "engname","componyurl","companyphone","establishtime",
     "country", "province","city","addressdetail",
     "entrepresent","totalemplyee",
     "amount","regmeasure","fixedassets","fixedmeasure",
     "trancur","annualsales","annualmeasure",
     "supplycategory","mainproduct",
     "agency","brand",
-    "totalfunds","totalmeasure",
-    "totalfunds","agengcyqualify",
+    "totalfunds","totalmeasure","agengcyqualify",
     "maincustomer","secmaincus","thirdmaincus",
     "banktype","bankpro","bankcity",
     "bankname","bankconnum",
@@ -33,7 +33,9 @@ const fieldArray = [
 class RegisterInfo extends Component {
     constructor(props) {
         super(props);
-        this.state = {  };
+        this.state = { 
+            showLine:false
+        };
     }
 
     onSave = ()=>{
@@ -45,7 +47,7 @@ class RegisterInfo extends Component {
             // console.log("error",error,value);
             if(!error){
                 console.log("value",value);
-                /* this.setState({
+                this.setState({
                     showLine: true
                 })
                 // done表示是否加载完毕
@@ -58,7 +60,7 @@ class RegisterInfo extends Component {
                     
                 }else {
                     this.setState({showLine: false})
-                } */
+                }
                 
             }
         });
@@ -74,6 +76,12 @@ class RegisterInfo extends Component {
                         <Button size="sm" colors="primary" className="save-btn" onClick={this.onSave}>保存</Button>
                     </div>
                 </div>
+
+                {/* <Header title="新增" back={true} >
+                    <div className='head-btn'>
+                        <Button size="sm" colors="primary" onClick={this.saveForm}>保存</Button>
+                    </div>
+                </Header> */}
                 <UserInfo form ={this.props.form} />
                 <EnterpriseInfo form ={this.props.form}/>
                 <AssetsInfo form ={this.props.form}/>

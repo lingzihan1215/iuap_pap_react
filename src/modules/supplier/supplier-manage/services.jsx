@@ -1,7 +1,8 @@
 import request from "utils/request";
 
 const URL = {
-    "GET_LIST":  "/supplier/manage/list"  
+    "GET_LIST":  "/supplier/manage/list" ,
+    "SAVE_REGISTER_INFO":"" 
 }
 
 export const getList = (params) => {
@@ -17,4 +18,11 @@ export const getList = (params) => {
         method: "get",
         data: params
     });
+}
+
+export const onSave = (data)=>{
+    request(URL.SAVE_REGISTER_INFO, {
+        method: "post",
+        data: data
+    })
 }

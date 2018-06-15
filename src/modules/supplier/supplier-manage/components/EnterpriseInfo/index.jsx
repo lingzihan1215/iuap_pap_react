@@ -24,12 +24,35 @@ const fieldArray = [
     "maincustomer","secmaincus","thirdmaincus",
 ];
 
+// 国家、省、市级联
+const countryData = ["china","American"];
+const provinceData = {
+    "china":["beijing","Zhejiang"],
+    "American":["Hawaii","New York"]
+}
+
+const cityData1 = {
+    "beijing":["beijing"],
+    "Zhejiang":["Hangzhou", "Ningbo", "Wenzhou"],
+
+}
+
+const cityData2 = {
+    "Hawaii":["Honolulu"],
+    "New York":["Albany"]
+}
+
 class EnterpriseInfo extends Component {
     constructor(props) {
         super(props);
         this.state = { 
             selectedValue:"0",
-            bankpro :{ province:'北京',city:'北京',area:'东城区'}
+            bankpro :{ province:'北京',city:'北京',area:'东城区'},
+            country:countryData[0],
+            provinces:[],
+            province:"",
+            cities:cityData1["beijing"],
+            city:""
         };
     }
 
@@ -126,9 +149,56 @@ class EnterpriseInfo extends Component {
             }
         });
     }
+
+    onCountryChange = (value)=>{
+        console.log("provinceData[value]",provinceData[value]);
+        this.setState({
+            country:value,
+            provinces:provinceData[value],
+            province:"",
+            city:""
+        });
+    }
+
+    onProvinceChange = (value)=>{
+        let {country} = this.state,cities = [];
+        switch (country) {
+            case "china":
+                cities = cityData1[value];
+                break;
+            case  "American": 
+                cities = cityData2[value];
+            default:
+                break;
+        }
+        this.setState({
+            province:value,
+            cities:cities,
+            city:""
+        })
+    }
+
+    onCityChange = (value)=>{
+        
+        this.setState({
+            city:value
+        })
+    }
+
     render() {
         const { getFieldProps, getFieldError,getFieldDecorator} = this.props.form;
+        let countryOptions = countryData.map((country,index)=>{
+            return <Option key={country}>{country}</Option>
+        })
+        let provinceOptions = this.state.provinces.map(province => {
+            return <Option key={province}>{province}</Option>
+        });
+        let cityOptions = this.state.cities.map(city => {
+            return <Option key={city}>{city}</Option>
+        });
         console.log(this.props.form);
+
+        let {country,province,city} = this.state;
         return (
             <div className="supplier-enterprise-page">
                 <div className="supplier-user-head"><Icon type="uf-2collayout" />企业信息:</div>
@@ -164,7 +234,7 @@ class EnterpriseInfo extends Component {
                                                 format={format}
                                                 defaultValue={moment()}
                                                 locale={zhCN}
-                                                {...getFieldProps('createtime', {
+                                                {...getFieldProps('establishtime', {
                                                     validateTrigger: 'onBlur',
                                                     rules: [{
                                                         required: true, type: 'object',message: '请选择开始时间',
@@ -174,7 +244,7 @@ class EnterpriseInfo extends Component {
                                             
                                         </div>
                                         <span className='error error-input-adjust'>
-                                            {getFieldError('createtime')}
+                                            {getFieldError('establishtime')}
                                         </span>
                                     </FormItem>
                                 </Col>
@@ -229,50 +299,44 @@ class EnterpriseInfo extends Component {
                                         <Select
                                             className = "special-sel"
                                             searchPlaceholder="标签模式"
+                                            onSelect = {this.onCountryChange}
                                             {
                                             ...getFieldProps('country', {
-                                                initialValue: "cn",
+                                                // initialValue: country,
                                                 validateTrigger: 'onBlur',
                                                 rules: [{ required: true, message: '请选择国家!' }],
                                             })
                                             }
                                         >
-                                            <Option value="cn">中国</Option>
-                                            <Option value="en">英国</Option>
-                                            <Option value="usa">美国</Option>
-                                            <Option value="rus">俄罗斯</Option>
-                                            <Option value="other">其他</Option>
+                                            {countryOptions}
                                         </Select>
                                         <Select
                                             className = "special-sel ml1"
                                             searchPlaceholder="标签模式"
+                                            onSelect = {this.onProvinceChange}
                                             {
                                             ...getFieldProps('province', {
-                                                initialValue: "beijing",
+                                                // initialValue: province,
                                                 validateTrigger: 'onBlur',
                                                 rules: [{ required: true, message: '请选择省份!' }],
                                             })
                                             }
                                         >
-                                            <Option value="beijing">北京</Option>
-                                            <Option value="tianjin">天津</Option>
-                                            <Option value="hebei">河北</Option>
+                                            {provinceOptions}
                                         </Select>
                                         <Select
+                                            onSelect = {this.onCityChange}
                                             className = "special-sel ml1"
                                             searchPlaceholder="标签模式"
                                             {
                                             ...getFieldProps('city', {
-                                                initialValue: "beijing",
+                                                // initialValue: city,
                                                 validateTrigger: 'onBlur',
                                                 rules: [{ required: true, message: '请选择市!' }],
                                             })
                                             }
                                         >
-                                            <Option value="beijing">北京</Option>
-                                            <Option value="shijiaz">石家庄</Option>
-                                            <Option value="jinan">济南</Option>
-                                            <Option value="taiyuan">太原</Option>
+                                            {cityOptions}
                                         </Select>
                                         <FormControl  className="special-input"
 
