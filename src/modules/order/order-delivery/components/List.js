@@ -1,10 +1,26 @@
 import React, { Component } from "react";
 import { actions } from "mirrorx";
-import { Table, Button, Col, Row, FormControl, InputNumber, Popconfirm, Message, Popover, Checkbox, Icon, Label, Select } from "tinper-bee";
+import {
+    Table,
+    Button,
+    Col,
+    Row,
+    FormControl,
+    InputNumber,
+    Popconfirm,
+    Message,
+    Popover,
+    Checkbox,
+    Icon,
+    Label,
+    Select,
+    Tooltip
+} from "tinper-bee";
 import Pagination from 'bee-pagination';
 import NoData from 'components/NoData';
 import Form from 'bee-form';
 import moment from 'moment';
+import Hotkeys from 'react-hot-keys';
 import DatePicker from 'bee-datepicker';
 import Header from "components/Header";
 import './list.less';
@@ -16,7 +32,7 @@ class List extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading: false//内部使用加载数据loading
+            loading: false
         }
         //表格列
         this.columns = [
@@ -58,21 +74,21 @@ class List extends Component {
                 title: "订单数量",
                 dataIndex: "orderNumber",
                 key: "orderNumber",
-                width: "5%",
+                width: 70,
                 render: (text, record) => this.renderColumnsInputNumber(text, record, 'orderNumber')
             },
             {
                 title: "已收数量",
                 dataIndex: "receNumber",
                 key: "receNumber",
-                width: "5%",
+                width: 70,
                 render: (text, record) => this.renderColumnsInputNumber(text, record, 'receNumber')
             },
             {
                 title: "发货数量",
                 dataIndex: "deliveNumber",
                 key: "deliveNumber",
-                width: "5%",
+                width: 70,
                 render: (text, record) => this.renderColumnsInputNumber(text, record, 'deliveNumber')
             },
             {
@@ -86,7 +102,7 @@ class List extends Component {
                 title: "操作",
                 dataIndex: "op",
                 key: "op",
-                width: "10%",
+                width: "3%",
                 render: (text, record, index) => {
                     return (<span>
                         <Popconfirm placement="left" content="是否确认删除?" onClose={() => this.remove(record.id)} >
@@ -99,6 +115,12 @@ class List extends Component {
     }
     componentDidMount = () => {
         this.loadList();//加载表格
+    }
+    onKeyUp(keyName, e, handle) {
+
+    }
+    onKeyDown(keyName, e, handle) {
+
     }
     //加载表格
     loadList = async () => {
@@ -314,10 +336,8 @@ class List extends Component {
                 if (result.data.success) {
                     this.setState({ loading: false });
                     this.loadList();
+                    Message.create({ content: '保存成功', color: 'success' });
                 }
-                //actions.delivery.saveForm(values);
-
-                // Message.create({ content: '保存成功', color: 'success' });
             }
         });
     }
@@ -533,12 +553,22 @@ class List extends Component {
                         <Table
                             loading={{ show: this.state.loading, loadingType: "line" }}
                             bordered
-                            title={() => <span><Button size="sm" shape="border" onClick={this.handlerAddClick} colors="primary">添加明细</Button></span>}
+                            title={() => <span>
+                                <Hotkeys
+                                    keyName="ctrl+alt+n,control+alt+n"
+                                    onKeyDown={this.handlerAddClick}
+                                >
+                                    <Tooltip defaultOverlayShown placement="left" trigger={'hover'} inverse overlay={<div>快捷键：control + alt + N</div>}>
+                                        <Icon type="uf-exc-c-o" />
+                                    </Tooltip>
+                                    <Button size="sm" shape="border" onClick={this.handlerAddClick} colors="primary">添加明细</Button>
+                                </Hotkeys>
+                            </span>}
                             emptyText={() => <NoData />}
                             data={list}
                             rowKey={r => r.id}
                             columns={this.columns}
-                            scroll={{ y: 520 }}
+                            scroll={{ x: "120%", y: 520 }}
                             footer={() => <Pagination
                                 first
                                 last
