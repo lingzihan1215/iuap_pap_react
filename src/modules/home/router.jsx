@@ -5,8 +5,6 @@ import Home from './dashboard'
 
 export default (routesInfo) => {
     let url = routesInfo.match.url
-    console.log(routesInfo)
-
     return (
         <div>
             <Route exact 
