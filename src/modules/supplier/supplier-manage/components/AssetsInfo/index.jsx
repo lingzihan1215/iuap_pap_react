@@ -10,7 +10,7 @@ import DatePicker from 'bee-datepicker';
 import "bee-datepicker/build/DatePicker.css";
 import moment from "moment";
 import './index.less';
-console.log(Upload);
+
 const Option = Select.Option;
 const FormItem = Form.FormItem;
 const format = 'YYYY-MM-DD';

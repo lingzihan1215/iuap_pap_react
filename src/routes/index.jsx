@@ -3,13 +3,17 @@
 * */
 import React, { Component } from "react";
 import { Router, Route } from "mirrorx";
+
+// Routers
 import order from "modules/order/router";
 import interimplan from "modules/interimplan/router";
 import resource from "modules/resource/router";
 import Supplier from "modules/supplier/router";
 import contracts from "modules/contract/router";
-import MainLayout from "layout";
 import system from 'modules/sys-manage/router';
+import home from 'modules/home/router'
+
+import MainLayout from "layout";
 import "./index.less";
 
 const MainRoutes = () => (
@@ -20,6 +24,7 @@ const MainRoutes = () => (
     <Route path="/system" component={system} />
     <Route path="/interimplan" component={interimplan} />
     <Route path="/resource" component={resource} />
+    <Route path="/home" component={home} />
   </div>
 )
 
