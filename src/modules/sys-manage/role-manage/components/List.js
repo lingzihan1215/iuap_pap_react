@@ -28,11 +28,6 @@ class List extends Component {
     }
     reset = () => {
         this.props.form.resetFields();
-        this.setState({
-            approvalState:'',
-            closeState:'',
-            confirmState:''
-        })
     }
     onPageSelect = (value) => {
         this.search({
