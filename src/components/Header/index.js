@@ -7,7 +7,7 @@ import classnames from 'classnames';
 const propTypes = {
     back: PropTypes.bool,
     backFn: PropTypes.func,
-    title: PropTypes.string
+    title: PropTypes.string.isRequired
 };
 
 const defaultProps = {

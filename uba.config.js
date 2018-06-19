@@ -16,7 +16,7 @@ const svrConfig = {
 //pathRewrite规则参考https://www.npmjs.com/package/http-proxy-middleware
 const proxyConfig = [
   {
-    enable: true,
+    enable: false,
     headers: {
       "Referer": "http://10.10.24.43:8080/wbalone/index-view.html"
     },
@@ -26,10 +26,10 @@ const proxyConfig = [
   {
     enable: true,
     headers: {
-      "Referer": "http://1172.20.10.13:8080/wbalone/index-view.html"
+      "Referer": "http://172.20.10.13:8088/wbalone/index-view.html"
     },
     router: ['/iuap-saas-filesystem-service/', '/newref/', '/wbalone/', '/example/', '/iuap-saas-message-center/', '/iuap-example/', '/eiap-plus/', '/uitemplate_web/', '/iuap-saas-billcode-service/'],
-    url: 'http://172.20.10.13:8080'
+    url: 'http://172.20.10.13:8088'
   }
 ];
 

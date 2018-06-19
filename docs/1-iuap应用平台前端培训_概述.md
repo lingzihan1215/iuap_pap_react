@@ -17,8 +17,8 @@ iuap 应用平台前端开发框架采用 React + Redux + Webpack 的技术栈�
 
 ### 2、技术栈说明
 
-- `react`、`mirrorx`、`react-router v4`、`webpack`.
-- `babel`、`ES6/7`、`Postcss`、`Less`
+- `react & react-dom`、`mirrorx`、`axios`、`uba`.
+- `babel`、`ES6/7 新语法`、`PostCSS 及相关插件`、`Less`
 - 框架中默认使用 tinper-bee 组件库，配套的文档请访问：[bee.tinper.org](bee.tinper.org)
 
 ### 3、基础构建能力
