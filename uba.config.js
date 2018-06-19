@@ -22,8 +22,18 @@ const proxyConfig = [
     },
     router: ['/iuap-saas-filesystem-service/', '/newref/', '/wbalone/', '/example/', '/iuap-saas-message-center/', '/iuap-example/', '/eiap-plus/', '/uitemplate_web/', '/iuap-saas-billcode-service/'],
     url: 'http://10.10.24.43:8080'
+  },
+  {
+    enable: true,
+    headers: {
+      "Referer": "http://1172.20.10.13:8080/wbalone/index-view.html"
+    },
+    router: ['/iuap-saas-filesystem-service/', '/newref/', '/wbalone/', '/example/', '/iuap-saas-message-center/', '/iuap-example/', '/eiap-plus/', '/uitemplate_web/', '/iuap-saas-billcode-service/'],
+    url: 'http://172.20.10.13:8080'
   }
 ];
+
+
 //提取package里的包
 function getVendors() {
   let pkg = require("./package.json");

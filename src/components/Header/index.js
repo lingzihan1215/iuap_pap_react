@@ -9,6 +9,7 @@ const propTypes = {
     backFn: PropTypes.func,
     title: PropTypes.string
 };
+
 const defaultProps = {
     back: false,
     backFn: () => {
@@ -16,6 +17,12 @@ const defaultProps = {
     },
     title: ''
 };
+
+const headerStyle = classnames({ 
+    'title': true,
+    'title-develop': (__MODE__ == 'development') ? true: false 
+}); 
+
 class Header extends Component {
     constructor(props) {
         super(props);
@@ -30,7 +37,7 @@ class Header extends Component {
     render() {
         const { backFn, title, back, children } = this.props;
         return (
-            <Row className='title'>
+            <Row className={headerStyle}>
                 <Col xs={12}>
                     {
                         back ? (

@@ -71,14 +71,7 @@ class RegisterInfo extends Component {
         console.log(this.props);
         return (
             <div>
-                {/* <div className="register-head">
-                    <div className="top-part">
-                        <Button size="sm" colors="primary" className="cancel-btn">取消</Button>
-                        <Button size="sm" colors="primary" className="save-btn" onClick={this.onSave}>保存</Button>
-                    </div>
-                </div> */}
-
-                <Header title="新增" back={true} >
+                <Header title="供应商注册" back={true} >
                     <div className='head-btn'>
                         <Button className='head-save' onClick={this.onSave}>保存</Button>
                     </div>

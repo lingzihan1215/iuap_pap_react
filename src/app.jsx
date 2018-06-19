@@ -9,9 +9,15 @@ import Routes from "./routes";
 import "tinper-bee/assets/tinper-bee.css";
 import "./app.less";
 
+const MiddlewareConfig = [];
+
+if(__MODE__ == "development") MiddlewareConfig.push(logger);
+
+console.log(MiddlewareConfig)
+
 mirror.defaults({
     historyMode: "hash",
-    middlewares: [logger]
+    middlewares: MiddlewareConfig
 });
 
 render(<Routes />, document.querySelector("#app"));
