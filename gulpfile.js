@@ -4,12 +4,15 @@ var zip = require('gulp-zip');
 var process = require('child_process');
 var fs = require('fs');
 
+const PACKAGE_NAME = "sanyi-app";
+const PACKAGE_WAR_NAME = `${PACKAGE_NAME}.war`;
+
 // maven 配置信息
-var publishConfig = {
+const publishConfig = {
     command: "mvn",
     repositoryId: "iUAP-Snapshots",
     repositoryURL: "http://172.16.51.12:8081/nexus/content/repositories/iUAP-Snapshots",
-    artifactId: "orgcenter-fe",
+    artifactId: PACKAGE_NAME,
     groupId: "com.yonyou.iuap",
     version: "1.0.3-SNAPSHOT"
 };
@@ -22,7 +25,7 @@ var publishConfig = {
  */
 gulp.task("package", function(){
   return gulp.src('./dist/**')
-      .pipe(zip('orgcenter-fe.war'))
+      .pipe(zip(PACKAGE_WAR_NAME))
       .pipe(gulp.dest('./'));
 
 });
@@ -36,15 +39,12 @@ gulp.task("package", function(){
 gulp.task("install", ["package"], function(){
 
   var targetPath = fs.realpathSync('.');
+  const { command, repositoryId, groupId, artifactId, version, repositoryURL } = publishConfig;
 
   // 安装命令
-  var installCommandStr = publishConfig.command +
-      " install:install-file -Dfile=" + targetPath +
-      "/orgcenter-fe.war   -DgroupId="+ publishConfig.groupId +
-      " -DartifactId=" + publishConfig.artifactId +
-      "  -Dversion="+ publishConfig.version +" -Dpackaging=war";
-
-	var installWarProcess =	process.exec(installCommandStr, function(err,stdout,stderr){
+  var installCommandStr = `${command} install:install-file -Dfile=${targetPath}/${PACKAGE_WAR_NAME} -DgroupId=${groupId} -DartifactId=${artifactId} -Dversion=${version} -Dpackaging=war`;
+  
+  var installWarProcess =	process.exec(installCommandStr, function(err,stdout,stderr){
 		if(err) {
 			console.log('install war error:'+stderr);
 		}
@@ -68,8 +68,9 @@ gulp.task("install", ["package"], function(){
  */
 gulp.task("deploy", ["install"], function(){
   var targetPath = fs.realpathSync('.');
+  const { command, repositoryId, groupId, artifactId, version, repositoryURL } = publishConfig;
 
-  var publishCommandStr =  publishConfig.command + " deploy:deploy-file  -Dfile="+ targetPath+"/orgcenter-fe.war   -DgroupId="+ publishConfig.groupId +" -DartifactId="+ publishConfig.artifactId +"  -Dversion="+ publishConfig.version +" -Dpackaging=war  -DrepositoryId="+ publishConfig.repositoryId +" -Durl=" +publishConfig.repositoryURL;
+  var publishCommandStr =  `${command} deploy:deploy-file  -Dfile=${targetPath}/${PACKAGE_WAR_NAME} -DgroupId=${groupId} -DartifactId=${artifactId} -Dversion=${version} -Dpackaging=war -DrepositoryId=${repositoryId} -Durl=${repositoryURL}`;
 
   console.info(publishCommandStr);
 

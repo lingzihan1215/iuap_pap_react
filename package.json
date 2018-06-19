@@ -27,6 +27,8 @@
     "cssnano": "^3.10.0",
     "extract-text-webpack-plugin": "^2.1.2",
     "file-loader": "^1.1.9",
+    "gulp": "^3.9.1",
+    "gulp-zip": "^4.1.0",
     "html-webpack-plugin": "^2.30.1",
     "less": "^3.0.1",
     "less-loader": "^4.0.5",
