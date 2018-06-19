@@ -8,7 +8,8 @@ export default class Board extends Component {
         super(props)
     }
     handleClick = (e) => {
-        let data = actions.dashboard.getInfoData()
+        let data = actions.dashboard.getInfoData();
+        console.log(data)
     }
     
     render(){

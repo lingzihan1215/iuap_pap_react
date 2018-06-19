@@ -12,23 +12,16 @@ const svrConfig = {
   historyApiFallback: false
 };
 
-//远程代理访问，可以配置多个代理服务
-//pathRewrite规则参考https://www.npmjs.com/package/http-proxy-middleware
+// 远程代理访问，可以配置多个代理服务：https://github.com/chimurai/http-proxy-middleware
 const proxyConfig = [
-  {
-    enable: false,
-    headers: {
-      "Referer": "http://10.10.24.43:8080/wbalone/index-view.html"
-    },
-    router: ['/iuap-saas-filesystem-service/', '/newref/', '/wbalone/', '/example/', '/iuap-saas-message-center/', '/iuap-example/', '/eiap-plus/', '/uitemplate_web/', '/iuap-saas-billcode-service/'],
-    url: 'http://10.10.24.43:8080'
-  },
   {
     enable: true,
     headers: {
-      "Referer": "http://172.20.10.13:8088/wbalone/index-view.html"
+      // 这是之前网页的地址，从中可以看到当前请求页面的链接。
+      "Referer": "http://172.20.10.13:8088/wbalone"
     },
-    router: ['/iuap-saas-filesystem-service/', '/newref/', '/wbalone/', '/example/', '/iuap-saas-message-center/', '/iuap-example/', '/eiap-plus/', '/uitemplate_web/', '/iuap-saas-billcode-service/'],
+    router: [
+      '/wbalone/**', '/iuap_pap_quickstart/**'],
     url: 'http://172.20.10.13:8088'
   }
 ];
