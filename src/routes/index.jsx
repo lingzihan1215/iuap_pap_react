@@ -11,7 +11,7 @@ import resource from "modules/resource/router";
 import Supplier from "modules/supplier/router";
 import contracts from "modules/contract/router";
 import system from 'modules/sys-manage/router';
-// import home from 'modules/home/router';
+import home from 'modules/home/router';
 
 import MainLayout from "layout";
 import "./index.less";
@@ -24,7 +24,7 @@ const MainRoutes = () => (
     <Route path="/system" component={system} />
     <Route path="/interimplan" component={interimplan} />
     <Route path="/resource" component={resource} />
-    
+    <Route path="/home" component={home} />
   </div>
 )
 
