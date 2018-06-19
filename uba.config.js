@@ -20,8 +20,10 @@ const proxyConfig = [
       // 这是之前网页的地址，从中可以看到当前请求页面的链接。
       "Referer": "http://172.20.10.13:8088/wbalone"
     },
+    // context，如果不配置，默认就是代理全部。
     router: [
-      '/wbalone/**', '/iuap_pap_quickstart/**'],
+      '/wbalone/**', '/iuap_pap_quickstart/**'
+    ],
     url: 'http://172.20.10.13:8088'
   }
 ];
