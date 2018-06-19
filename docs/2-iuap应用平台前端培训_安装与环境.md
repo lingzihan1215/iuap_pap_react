@@ -13,7 +13,7 @@
 准备工作目录，执行以下命令，获取远程仓库的项目代码，并安装启动：（请确保可以访问外网）
 
 ```
-$ git clone git@github.com:yonyou-iuap/iuap_pap_react.git
+$ git clone https://github.com/yonyou-iuap/iuap_pap_react.git
 $ cd iuap_pap_react && npm i
 $ npm run dev
 ```
