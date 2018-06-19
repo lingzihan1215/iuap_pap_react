@@ -10,6 +10,7 @@ export default class Board extends Component {
     handleClick = (e) => {
         let data = actions.dashboard.getInfoData()
     }
+    
     render(){
         return (
             <div onClick={this.handleClick} className="work"> 工作台 </div>

@@ -6,4 +6,4 @@ import model from './model'
 
 mirror.model(model)
 
-export default connect( state => state.dashboard )(Board)
+export default connect( state => state.dashboard, null )(Board)
