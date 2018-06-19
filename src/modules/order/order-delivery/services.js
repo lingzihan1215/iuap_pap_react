@@ -5,10 +5,10 @@
 import request from "utils/request";
 
 const URL = {
-    "GET_LIST": "/iuap-example/sany_delivery/list",
-    "DELETE": "/iuap-example/sany_delivery/delete",
-    "SAVE": "/iuap-example/sany_delivery/save",
-    "SAVE_ALL": "/iuap-example/sany_delivery/batchSave"
+    "GET_LIST": `${GROBAL_HTTP_CTX}/sany_delivery/list`,
+    "DELETE": `${GROBAL_HTTP_CTX}/sany_delivery/delete`,
+    "SAVE": `${GROBAL_HTTP_CTX}/sany_delivery/save`,
+    "SAVE_ALL": `${GROBAL_HTTP_CTX}/sany_delivery/batchSave`
 }
 
 export const getList = (param) => {

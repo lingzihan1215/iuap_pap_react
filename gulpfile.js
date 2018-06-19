@@ -4,7 +4,7 @@ var zip = require('gulp-zip');
 var process = require('child_process');
 var fs = require('fs');
 
-const PACKAGE_NAME = "sanyi-app";
+const PACKAGE_NAME = "sany-app";
 const PACKAGE_WAR_NAME = `${PACKAGE_NAME}.war`;
 
 // maven 配置信息
@@ -13,8 +13,8 @@ const publishConfig = {
     repositoryId: "iUAP-Snapshots",
     repositoryURL: "http://172.16.51.12:8081/nexus/content/repositories/iUAP-Snapshots",
     artifactId: PACKAGE_NAME,
-    groupId: "com.yonyou.iuap",
-    version: "1.0.3-SNAPSHOT"
+    groupId: "com.yonyou.sany",
+    version: "1.0.1-SNAPSHOT"
 };
 
 /**

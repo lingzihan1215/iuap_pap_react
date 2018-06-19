@@ -1,13 +1,13 @@
 import request from "utils/request";
 
 const URL = {
-    "GET_LIST":  "/iuap-example/demo_order/list",
-    "GET_BODYLIST": process.env.IMS_PATH + "/oprtparamconfig/queryBodyByParentid",    
-    "ADD_SAVE": process.env.IMS_PATH + "/oprtparamconfig/add",
-    "EDIT_SAVE": process.env.IMS_PATH + "/oprtparamconfig/update",
-    "DELETE_ITEMS": "/iuap-example/demo_order/delete",
-    "ENABLE": process.env.IMS_PATH + "/oprtparamconfig/enable",
-    "DISABLE": process.env.IMS_PATH + "/oprtparamconfig/disable"    
+    "GET_LIST":  `${GROBAL_HTTP_CTX}/demo_order/list`,
+    "GET_BODYLIST": `${GROBAL_HTTP_CTX}/oprtparamconfig/queryBodyByParentid`,    
+    "ADD_SAVE": `${GROBAL_HTTP_CTX}/oprtparamconfig/add`,
+    "EDIT_SAVE": `${GROBAL_HTTP_CTX}/oprtparamconfig/update`,
+    "DELETE_ITEMS": `${GROBAL_HTTP_CTX}/demo_order/delete`,
+    "ENABLE": `${GROBAL_HTTP_CTX}/oprtparamconfig/enable`,
+    "DISABLE": `${GROBAL_HTTP_CTX}/oprtparamconfig/disable`    
 }
 
 export const getList = (params) => {

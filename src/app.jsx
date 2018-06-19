@@ -13,8 +13,6 @@ const MiddlewareConfig = [];
 
 if(__MODE__ == "development") MiddlewareConfig.push(logger);
 
-console.log(MiddlewareConfig)
-
 mirror.defaults({
     historyMode: "hash",
     middlewares: MiddlewareConfig

@@ -7,7 +7,10 @@
 
 ```
 $ git clone git@github.com:yonyou-iuap/iuap_pap_react.git
-$ cd iuap_pap_react && npm i
+$ cd iuap_pap_react
+$ npm i     
+# 三一集团开发使用以下命令安装依赖
+$ npm run install
 $ npm run dev
 ```
 

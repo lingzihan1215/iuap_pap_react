@@ -1,17 +1,9 @@
 import request from "utils/request";
 
-let BASE_URL_PATH = '';
-
-if(__MODE__ == "development"){
-    BASE_URL_PATH = ""
-} else {
-    BASE_URL_PATH = ""
-}
-
 const URL = {
-    "GET_LIST":  "/iuap-example/sany_order/list",
-    "SAVE_ORDER":  "/iuap-example/sany_order/save",
-    "DEL_ORDER":  "/iuap-example/sany_order/delete",
+    "GET_LIST":  `${GROBAL_HTTP_CTX}/sany_order/list`,
+    "SAVE_ORDER":  `${GROBAL_HTTP_CTX}/sany_order/save`,
+    "DEL_ORDER":  `${GROBAL_HTTP_CTX}/sany_order/delete`,
     "GET_ORDER_TYPE": "/order/manage/orderType"
 }
 

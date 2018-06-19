@@ -1,8 +1,9 @@
 import request from "utils/request";
 
+
 const URL = {
-    "GET_LIST":  "/iuap-example/sany_supplier/list" ,
-    "SAVE_REGISTER_INFO":"/iuap-example/sany_supplier/save" 
+    "GET_LIST": `${GROBAL_HTTP_CTX}/sany_supplier/list` ,
+    "SAVE_REGISTER_INFO":`${GROBAL_HTTP_CTX}/sany_supplier/save` 
 }
 
 export const getList = (params) => {

@@ -1,8 +1,8 @@
 import request from "utils/request";
 const URL = {
-  GET_TREE: "/iuap-example/instit/list",
-  GET_TABLE: "/iuap-example/telBook/list",
-  ADD_TREE: "/iuap-example/instit/save"
+  GET_TREE: `${GROBAL_HTTP_CTX}/instit/list`,
+  GET_TABLE: `${GROBAL_HTTP_CTX}/telBook/list`,
+  ADD_TREE: `${GROBAL_HTTP_CTX}/instit/save`
 };
 // 获取tree数据
 export const get_tree = param => {

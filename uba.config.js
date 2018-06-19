@@ -138,7 +138,9 @@ const devConfig = {
       filename: '[name].[hash:8].css'
     }),
     new webpack.DefinePlugin({
-      __MODE__: JSON.stringify(process.env.NODE_ENV)
+      __MODE__: JSON.stringify(process.env.NODE_ENV),
+      GROBAL_HTTP_CTX: JSON.stringify("/iuap-example")
+      
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
@@ -179,7 +181,8 @@ const prodConfig = {
       filename: '[name].css'
     }),
     new webpack.DefinePlugin({
-      __MODE__: JSON.stringify(process.env.NODE_ENV)
+      __MODE__: JSON.stringify(process.env.NODE_ENV),
+      GROBAL_HTTP_CTX: JSON.stringify("/iuap-example")
     }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
