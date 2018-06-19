@@ -16,5 +16,5 @@ tinper-bee 是基于 iuap design 设计语言构建的企业级组件库，包�
 
 ### 3、第三方组件
 
-- react-hot-keys：
-- react-custom-scrollbars：
+- react-hot-keys：热键/快捷键组件
+- react-custom-scrollbars：滚动条优化组件
