@@ -12,8 +12,7 @@ const svrConfig = {
   historyApiFallback: false
 };
 
-//远程代理访问，可以配置多个代理服务
-//pathRewrite规则参考https://www.npmjs.com/package/http-proxy-middleware
+// 远程代理访问，可以配置多个代理服务：https://github.com/chimurai/http-proxy-middleware
 const proxyConfig = [
   {
     enable: true,
