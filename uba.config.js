@@ -16,20 +16,12 @@ const svrConfig = {
 //pathRewrite规则参考https://www.npmjs.com/package/http-proxy-middleware
 const proxyConfig = [
   {
-    enable: false,
-    headers: {
-      "Referer": "http://10.10.24.43:8080/wbalone/index-view.html"
-    },
-    router: ['/iuap-saas-filesystem-service/', '/newref/', '/wbalone/', '/example/', '/iuap-saas-message-center/', '/iuap-example/', '/eiap-plus/', '/uitemplate_web/', '/iuap-saas-billcode-service/'],
-    url: 'http://10.10.24.43:8080'
-  },
-  {
     enable: true,
     headers: {
-      "Referer": "http://172.20.10.13:8088/wbalone/index-view.html"
+      "Referer": "http://10.0.12.50:8080/wbalone/index-view.html",
     },
-    router: ['/iuap-saas-filesystem-service/', '/newref/', '/wbalone/', '/example/', '/iuap-saas-message-center/', '/iuap-example/', '/eiap-plus/', '/uitemplate_web/', '/iuap-saas-billcode-service/'],
-    url: 'http://172.20.10.13:8088'
+    router: ['/wbalone/', '/iuap_pap_quickstart/'],
+    url: 'http://10.0.12.50:8080'
   }
 ];
 
@@ -139,7 +131,7 @@ const devConfig = {
     }),
     new webpack.DefinePlugin({
       __MODE__: JSON.stringify(process.env.NODE_ENV),
-      GROBAL_HTTP_CTX: JSON.stringify("/iuap-example")
+      GROBAL_HTTP_CTX: JSON.stringify("/iuap_pap_quickstart")
       
     }),
     new webpack.NamedModulesPlugin(),
@@ -182,7 +174,7 @@ const prodConfig = {
     }),
     new webpack.DefinePlugin({
       __MODE__: JSON.stringify(process.env.NODE_ENV),
-      GROBAL_HTTP_CTX: JSON.stringify("/iuap-example")
+      GROBAL_HTTP_CTX: JSON.stringify("/iuap_pap_quickstart")
     }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,

@@ -7,6 +7,7 @@ import NoData from 'components/NoData';
 import Pagination from 'bee-pagination';
 import 'bee-pagination/build/Pagination.css';
 import Header from "components/Header";
+import SearchPanel from 'components/SearchPanel';
 import './index.less';
 const FormItem = Form.FormItem;
 
@@ -20,17 +21,11 @@ class List extends Component {
     componentDidMount() {
         actions.supplier.loadList();
     }
-    search = (pageObj) => {//查询
-        this.props.form.validateFields((err, values) => {
-            values.pageIndex = pageObj.pageIndex || this.props.pageIndex || 1,
-                values.pageSize = pageObj.pageSize || this.props.pageSize || 10,
-                actions.supplier.loadList(values);
-        });
+    search = (pageObj,error, values) => {//查询
+        values.pageIndex = pageObj.pageIndex || this.props.pageIndex || 1,
+        values.pageSize = pageObj.pageSize || this.props.pageSize || 10,
+        actions.supplier.loadList(values);
     }
-    reset = () => {
-        this.props.form.resetFields();
-    }
-
     cellClick = (record) => {
         actions.routing.push(
             {
@@ -122,7 +117,7 @@ class List extends Component {
         return (
             <div className='supplier-list'>
                 <Header title='供应商管理' back={true} />
-                <div className='search-panel'>
+                <SearchPanel form={form} search={(error,values)=>{this.search({},error,values)}}>
                     <Row>
                         <Col md={4} xs={6}>
                             <FormItem>
@@ -224,13 +219,8 @@ class List extends Component {
                                 </Select>
                             </FormItem>
                         </Col>
-
-                        <Col md={12} xs={12} className='btn-group'>
-                            <Button size='sm' className='reset-btn' onClick={this.reset}>清空</Button>
-                            <Button size='sm' className='submit-btn' onClick={this.search}>查询</Button>
-                        </Col>
                     </Row>
-                </div>
+                </SearchPanel>
                 <div className='table-list'>
                     <div className='table-header'>
                         <Button size='sm' shape="border">

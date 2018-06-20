@@ -11,6 +11,7 @@ import Header from "components/Header";
 import multiSelect from "tinper-bee/lib/multiSelect.js";
 import 'bee-datepicker/build/DatePicker.css';
 import { Scrollbars } from 'react-custom-scrollbars';
+import SearchPanel from 'components/SearchPanel';
 import './list.less';
 const MultiSelectTable = multiSelect(Table, Checkbox);
 const FormItem = Form.FormItem;
@@ -33,24 +34,21 @@ class List extends Component {
         actions.order.loadList();//table数据
         actions.order.getOrderType();//订单类型下拉框
     }
-    search = (pageObj) => {//查询
-        this.props.form.validateFields((err, values) => {
-            let voucherDate = values.voucherDate;
-            if (voucherDate && voucherDate.length) {
-                values.starTime = voucherDate[0].format('YYYY-MM-DD');
-                values.endTime = voucherDate[1].format('YYYY-MM-DD');
-            } else {
-                values.starTime = '';
-                values.endTime = '';
-            }
-            delete values.voucherDate;
-            values.pageIndex = pageObj.pageIndex || this.props.pageIndex || 1,
-                values.pageSize = pageObj.pageSize || this.props.pageSize || 10,
-                actions.order.loadList(values);
-        });
+    search = (pageObj,err,values) => {//查询
+        let voucherDate = values.voucherDate;
+        if (voucherDate && voucherDate.length) {
+            values.starTime = voucherDate[0].format('YYYY-MM-DD');
+            values.endTime = voucherDate[1].format('YYYY-MM-DD');
+        } else {
+            values.starTime = '';
+            values.endTime = '';
+        }
+        delete values.voucherDate;
+        values.pageIndex = pageObj.pageIndex || this.props.pageIndex || 1,
+        values.pageSize = pageObj.pageSize || this.props.pageSize || 10,
+        actions.order.loadList(values);
     }
     reset = () => {//重置
-        this.props.form.resetFields();
         this.setState({
             approvalState: '',
             closeState: '',
@@ -257,7 +255,7 @@ class List extends Component {
         return (
             <div className='order-list'>
                 <Header title='采购订单管理' back={true} />
-                <div className='search-panel'>
+                <SearchPanel form={form} search={(error,values)=>{this.search({},error,values)}} reset={this.reset}>
                     <Row>
                         <Col md={4} xs={6}>
                             <FormItem>
@@ -394,11 +392,10 @@ class List extends Component {
                                 </Radio.RadioGroup>
                             </FormItem>
                         </Col>
-                        <Col md={12} xs={12} className='btn-group'>
-                            <Button size='sm' className='reset-btn' onClick={this.reset}>清空</Button>
-                            <Button size='sm' className='submit-btn' onClick={this.search}>查询</Button>
-                        </Col>
                     </Row>
+                </SearchPanel>
+                <div className='search-panel'>
+                    
                 </div>
                 <div className='table-list'>
                     <div className='table-header'>
