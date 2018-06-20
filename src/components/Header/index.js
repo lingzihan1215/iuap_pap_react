@@ -26,13 +26,9 @@ const headerStyle = classnames({
 class Header extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-
-        };
+        this.state = {};
     }
-    componentDidMount() {
-
-    }
+    componentDidMount() {}
 
     render() {
         const { backFn, title, back, children } = this.props;

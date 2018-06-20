@@ -17,9 +17,13 @@ const proxyConfig = [
   {
     enable: true,
     headers: {
-      "Referer": "http://10.0.12.50:8080/wbalone/index-view.html",
+      // 这是之前网页的地址，从中可以看到当前请求页面的链接。
+      "Referer": "http://10.0.12.50:8080/wbalone/index-view.html"
     },
-    router: ['/wbalone/', '/iuap_pap_quickstart/'],
+    // context，如果不配置，默认就是代理全部。
+    router: [
+      '/wbalone', '/iuap_pap_quickstart', '/iuap-example'
+    ],
     url: 'http://10.0.12.50:8080'
   }
 ];
