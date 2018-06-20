@@ -12,7 +12,6 @@ import Supplier from "modules/supplier/router";
 import contracts from "modules/contract/router";
 import system from 'modules/sys-manage/router';
 import home from 'modules/home/router';
-import manage from 'modules/manage/router';
 
 import MainLayout from "layout";
 import "./index.less";
@@ -26,7 +25,6 @@ const MainRoutes = () => (
     <Route path="/interimplan" component={interimplan} />
     <Route path="/resource" component={resource} />
     <Route path="/home" component={home} />
-    <Route path="/manage" component={manage} />
   </div>
 )
 
