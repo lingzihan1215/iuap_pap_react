@@ -42,7 +42,7 @@ export default class MainLayout extends Component {
         <div className="index-header">
           <ul className="index-main">
             <li className="index-main-li">
-              <h3>iuap 应用平台前端典型案例</h3>
+              <span className="index-main-title">iuap 应用平台前端典型案例</span>
               <ul className="index-ul">{getURLList()}</ul>
             </li>
           </ul>
