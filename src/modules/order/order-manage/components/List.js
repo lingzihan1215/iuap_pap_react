@@ -63,37 +63,37 @@ class List extends Component {
     }
 
     // 多选表格包装函数  开始
-    onAllCheckChange = () => {//全选
-        let self = this;
-        let checkedArray = [];
-        let listData = props.listData.concat();
-        let selIds = [];
-        for (var i = 0; i < self.state.checkedArray.length; i++) {
-            checkedArray[i] = !self.state.checkedAll;
-        }
-        self.setState({
-            checkedAll: !self.state.checkedAll,
-            checkedArray: checkedArray,
-        });
-    };
-    onCheckboxChange = (text, record, index) => {
-        let self = this;
-        let allFlag = false;
-        let checkedArray = self.state.checkedArray.concat();
-        checkedArray[index] = !self.state.checkedArray[index];
-        for (var i = 0; i < self.state.checkedArray.length; i++) {
-            if (!checkedArray[i]) {
-                allFlag = false;
-                break;
-            } else {
-                allFlag = true;
-            }
-        }
-        self.setState({
-            checkedAll: allFlag,
-            checkedArray: checkedArray,
-        });
-    };
+    // onAllCheckChange = () => {//全选
+    //     let self = this;
+    //     let checkedArray = [];
+    //     let listData = props.listData.concat();
+    //     let selIds = [];
+    //     for (var i = 0; i < self.state.checkedArray.length; i++) {
+    //         checkedArray[i] = !self.state.checkedAll;
+    //     }
+    //     self.setState({
+    //         checkedAll: !self.state.checkedAll,
+    //         checkedArray: checkedArray,
+    //     });
+    // };
+    // onCheckboxChange = (text, record, index) => {
+    //     let self = this;
+    //     let allFlag = false;
+    //     let checkedArray = self.state.checkedArray.concat();
+    //     checkedArray[index] = !self.state.checkedArray[index];
+    //     for (var i = 0; i < self.state.checkedArray.length; i++) {
+    //         if (!checkedArray[i]) {
+    //             allFlag = false;
+    //             break;
+    //         } else {
+    //             allFlag = true;
+    //         }
+    //     }
+    //     self.setState({
+    //         checkedAll: allFlag,
+    //         checkedArray: checkedArray,
+    //     });
+    // };
     renderColumnsMultiSelect(columns) {
         const { data, checkedArray } = this.state;
         const { multiSelect } = this.props;

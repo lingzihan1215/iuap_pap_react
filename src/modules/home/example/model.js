@@ -38,7 +38,7 @@ export default {
          */
         async loadList(param, getState) {
             // 正在加载数据，显示加载 Loading 图标
-            actions.example.updateState({ showLoading:true })
+            // actions.example.updateState({ showLoading:true })
             
             // 调用 getList 请求数据
             let res = processData(await api.getList(param)); 
@@ -46,6 +46,11 @@ export default {
             actions.example.updateState({  showLoading:false })
 
             if (res) {
+                if(res.content&&res.content.length){
+                    for(var i=0;i<res.content.length;i++){
+                        res.content[i].key=i+1;
+                    }
+                }
                 actions.example.updateState({
                     list: res.content,
                     pageIndex:res.number,

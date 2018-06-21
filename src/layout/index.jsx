@@ -16,7 +16,10 @@ const urlListPreview = [
   // 供应商管理
   { url: "/supplier/register", name: "供应商注册" },
   { url: "/supplier/list", name: "供应商管理" },
-  { url: "/supplier/detail", name: "供应商详情" }
+  { url: "/supplier/detail", name: "供应商详情" },
+
+  //示例节点
+  { url: "/home/example", name: "示例节点" },
 ];
 
 const getURLList = () => {

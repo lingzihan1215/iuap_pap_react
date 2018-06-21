@@ -1,20 +1,28 @@
-import React, { Component } from 'react'
-import { Table,Button } from 'tinper-bee'
+import React, { Component } from 'react';
+import { Button,Checkbox,Table } from 'tinper-bee';
 import moment from "moment/moment";
+import multiSelect from "tinper-bee/lib/multiSelect.js";
+let MultiSelectTable = multiSelect(Table, Checkbox);
 
 export default class BoardTable extends Component {
     constructor(props){
         super(props);
         this.state = {
-            
+            selectData:[]
         }
     }
 
     edit=()=>{
-        alert();
+        alert('进入编辑');
+    }
+    tabelSelect = (data) => {//tabel选中数据
+        this.setState({
+            selectData: data
+        })
     }
     render(){
         const self=this;
+        const { list,showLoading,pageSize, pageIndex, totalPages } = this.props;
         const column = [
             {
                 title: "序号",
@@ -94,16 +102,16 @@ export default class BoardTable extends Component {
                 }
             }
         ];
-        const { list,showLoading,pageSize, pageIndex, totalPages, } = this.props;
         return (
             <div className="table-list">
-                <Table
-                    loading={{show:showLoading,loadingType:"line"}}
-                    rowKey={(r,i)=>i}
-                    columns={column}
-                    data={list}
-                />
-                
+                <MultiSelectTable
+                        loading={{ show: showLoading, loadingType: "line" }}
+                        rowKey={(r, i) => i}
+                        columns={column}
+                        data={list}
+                        multiSelect={{ type: "checkbox" }}
+                        getSelectedDataFunc={this.tabelSelect}
+                    />
             </div>
         )
     }

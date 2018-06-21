@@ -4,6 +4,7 @@ import { actions } from "mirrorx";
 import Header from 'components/Header';
 import BoardForm from '../example-form/index';
 import BoardTable from '../example-table/index';
+import SelectTable from '../example-select-table/index';
 import './index.less';
 
 
@@ -38,9 +39,10 @@ class ExampleRoot  extends Component {
         const self=this;
         return (
             <div className='manage-order-manage'> 
-                <Header title='订单测试'/>
+                <Header title='示例节点'/>
                 <BoardForm { ...this.props }/>
                 <BoardTable { ...this.props }/>
+                <SelectTable { ...this.props }/>
             </div>
         )
     }

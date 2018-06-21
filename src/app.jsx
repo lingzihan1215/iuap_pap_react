@@ -10,7 +10,7 @@ import mirror, { render } from "mirrorx";
 
 import Routes from "./routes";
 
-import "tinper-bee/assets/tinper-bee.css";
+import './static/trd/tineper-bee/assets/tinper-bee.css'
 import "./app.less";
 
 const MiddlewareConfig = [];

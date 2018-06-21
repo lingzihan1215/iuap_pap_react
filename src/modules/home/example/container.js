@@ -7,5 +7,4 @@ import model from './model'
 
 mirror.model(model)
 
-connect( state => state.example, null )(ExampleForm);
 export default connect( state => state.example, null )(ExampleRoot)
