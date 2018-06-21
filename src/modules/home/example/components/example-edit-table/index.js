@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Table,Button } from 'tinper-bee'
+import { Table,Button,FormControl,InputNumber,Popconfirm } from 'tinper-bee'
 import moment from "moment/moment";
+import { actions } from "mirrorx";
 
 export default class BoardTable extends Component {
     constructor(props){
@@ -9,6 +10,9 @@ export default class BoardTable extends Component {
             
         }
     }
+    /**
+     * 设置tableCell  FormControl
+     */
     EditableCell = ({ editable, value, onChange }) => (
         <div>
             {editable
@@ -17,7 +21,9 @@ export default class BoardTable extends Component {
             }
         </div>
     );
-    //行编辑InputNumber
+    /**
+     * 设置tableCell  InputNumber
+     */
     EditableCellInputNumber = ({ editable, value, onChange }) => (
         <div>
             {editable
@@ -33,7 +39,9 @@ export default class BoardTable extends Component {
             }
         </div>
     );
-    //渲染列
+    /**
+     * 渲染列  FormControl
+     */
     renderColumns = (text, record, column) => {
         return (
             <this.EditableCell
@@ -43,7 +51,9 @@ export default class BoardTable extends Component {
             />
         );
     }
-    //渲染列
+    /**
+     * 渲染列  InputNumber
+     */
     renderColumnsInputNumber = (text, record, column) => {
         return (
             <this.EditableCellInputNumber
@@ -53,53 +63,65 @@ export default class BoardTable extends Component {
             />
         );
     }
-    //修改行指定数据key
+    /**
+     * InputNumber 修改行指定数据key
+     */
     handleChangeNumber = (value, id, column) => {
         const newData = [...this.props.list];
         const target = newData.filter(item => id === item.id)[0];
         if (target) {
             target[column] = parseInt(value);
-            actions.planapply.updateState({
+            actions.example.updateState({
                 list: newData
             });
         }
     }
+    /**
+     * FormControl 修改行指定数据key
+     */
     handleChange = (value, id, column) => {
         const newData = [...this.props.list];
         const target = newData.filter(item => id === item.id)[0];
         if (target) {
             target[column] = value;
-            actions.planapply.updateState({
+            actions.example.updateState({
                 list: newData
             });
         }
     }
-
+    /**
+     * 编辑的回调
+     * @param {*} id  数据id 
+     */
     edit = (id) => {
         const newData = [...this.props.list];
         const target = newData.filter(item => id === item.id)[0];
         if (target.isNew) {
             delete target.isNew;
             target.editable = true;
-            actions.planapply.updateState({
+            actions.example.updateState({
                 list: newData
             });
         } else {
             if (target) {
                 target.editable = true;
-                actions.planapply.updateState({
+                actions.example.updateState({
                     list: newData
                 });
             }
         }
     }
+    /**
+     * 保存
+     * @param {*} id  数据id 
+     */
     save = async (id) => {
         this.setState({ loading: true });
         const newData = [...this.props.list];
         const target = newData.filter(item => id === item.id)[0];
         if (target) {
             delete target.editable;
-            actions.planapply.updateState({
+            actions.example.updateState({
                 list: newData
             });
             this.cacheData = newData.map(item => ({ ...item }));
@@ -110,47 +132,56 @@ export default class BoardTable extends Component {
                 delete newRow.id;
             }
             //TO DO : Save Data
-            let result = await actions.planapply.saveList(newRow);
+            let result = await actions.example.saveList(newRow);
             if (result.data.success) {
                 this.setState({ loading: false });
                 this.loadList();
             }
         }
     }
+    /**
+     * 取消回调
+     * @param {*} id 数据id
+     * @param {*} index 数据index
+     */
     cancel = (id, index) => {
         const newData = [...this.props.list];
         const target = newData.filter(item => id === item.id)[0];
         if (target.isNew) {
             newData.splice(index, 1);
-            actions.planapply.updateState({
+            actions.example.updateState({
                 list: newData
             });
         } else {
             if (target) {
                 Object.assign(target, this.cacheData.filter(item => id === item.id)[0]);
                 delete target.editable;
-                actions.planapply.updateState({
+                actions.example.updateState({
                     list: newData
                 });
             }
         }
     }
+    /**
+     * 删除
+     * @param {*} id 数据id
+     */
     remove = async (id) => {
         this.setState({ loading: true });
         console.log('删除ID：', id);
-        let result = await actions.planapply.removeList(id);
+        let result = await actions.example.removeList(id);
         if (result.data.success) {
             this.setState({ loading: false });
             this.loadList();
         }
     }
     handleSelect = (eventKey) => {
-        actions.planapply.updateState({ pageIndex: eventKey });
+        actions.example.updateState({ pageIndex: eventKey });
         this.loadList();
     }
 
     dataNumSelect = (index, value) => {
-        actions.planapply.updateState({ pageSize: value });
+        actions.example.updateState({ pageSize: value });
     }
     handlerAddClick = () => {
         const newData = [...this.props.list];
@@ -169,7 +200,7 @@ export default class BoardTable extends Component {
             unit: ""
         };
         newData.push(item);
-        actions.planapply.updateState({
+        actions.example.updateState({
             list: newData
         });
     }
@@ -254,16 +285,16 @@ export default class BoardTable extends Component {
                 }
             }
         ];
-        const { list,showLoading,pageSize, pageIndex, totalPages, } = this.props;
+        const { list, showLoading, pageSize, pageIndex, totalPages, } = this.props;
         return (
-            <div className="table-list">
+            <div className="example-edit-table">
                 <Table
                     loading={{ show: this.state.loading, loadingType: "line" }}
                     bordered
                     title={() => <Button size="sm" shape="border" onClick={this.handlerAddClick} colors="primary">添加明细</Button>}
                     data={list}
                     rowKey={r => r.id}
-                    columns={this.columns}
+                    columns={columns}
                     scroll={{ y: 520 }}
                 />
                 

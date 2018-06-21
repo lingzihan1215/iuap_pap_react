@@ -12,10 +12,17 @@ export default class BoardTable extends Component {
         }
     }
 
+    /**
+     * 编辑
+     */
     edit=()=>{
-        alert('进入编辑');
+        console.log('进入编辑');
     }
-    tabelSelect = (data) => {//tabel选中数据
+    /**
+     * tabel选中数据
+     * @param {*} data 
+     */
+    tabelSelect = (data) => {
         this.setState({
             selectData: data
         })
@@ -96,22 +103,22 @@ export default class BoardTable extends Component {
                 render(text, record, index) {
                     return (
                         <div className='operation-btn'>
-                            <Button size='sm' className='edit-btn' onClick={self.edit}>编辑</Button>
+                            <Button size='sm' className='edit-btn' onClick={() => { self.edit(record,true) }}>编辑</Button>
                         </div>
                     )
                 }
             }
         ];
         return (
-            <div className="table-list">
+            <div className="example-select-table">
                 <MultiSelectTable
-                        loading={{ show: showLoading, loadingType: "line" }}
-                        rowKey={(r, i) => i}
-                        columns={column}
-                        data={list}
-                        multiSelect={{ type: "checkbox" }}
-                        getSelectedDataFunc={this.tabelSelect}
-                    />
+                    loading={{ show: showLoading, loadingType: "line" }}
+                    rowKey={(r, i) => i}
+                    columns={column}
+                    data={list}
+                    multiSelect={{ type: "checkbox" }}
+                    getSelectedDataFunc={this.tabelSelect}
+                />
             </div>
         )
     }

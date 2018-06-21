@@ -37,7 +37,10 @@ class BoardForm extends Component {
         values.pageSize = this.props.pageSize || 10,
         actions.example.loadList(values);
     }
-    reset = () => {//重置
+    /**
+     * 重置
+     */
+    reset = () => {
         this.setState({
             approvalState: '',
             closeState: '',
@@ -49,16 +52,16 @@ class BoardForm extends Component {
         const { getFieldProps, getFieldError } = this.props.form;
         const { orderTypes } = this.props;
         return (
-            <SearchPanel form={this.props.form} reset={this.reset} search={this.search}>
+            <SearchPanel className='example-form' form={this.props.form} reset={this.reset} search={this.search}>
                 <Row>
                     <Col md={4} xs={6}>
                         <FormItem>
                             <Label>订单编号：</Label>
                             <FormControl
                                 {
-                                ...getFieldProps('orderCode', {
-                                    initialValue: '',
-                                })
+                                    ...getFieldProps('orderCode', {
+                                        initialValue: '',
+                                    })
                                 }
                             />
                         </FormItem>
@@ -68,9 +71,9 @@ class BoardForm extends Component {
                             <Label>供应商名称：</Label>
                             <FormControl
                                 {
-                                ...getFieldProps('supplierName', {
-                                    initialValue: '',
-                                })
+                                    ...getFieldProps('supplierName', {
+                                        initialValue: '',
+                                    })
                                 }
                             />
                         </FormItem>
@@ -83,13 +86,13 @@ class BoardForm extends Component {
                                 placeholder={'开始 ~ 结束'}
                                 dateInputPlaceholder={['开始', '结束']}
                                 {
-                                ...getFieldProps('voucherDate', {
-                                    onChange: function (v) {
-                                        self.setState({
-                                            voucherDate: v
-                                        })
-                                    }
-                                })
+                                    ...getFieldProps('voucherDate', {
+                                        onChange: function (v) {
+                                            self.setState({
+                                                voucherDate: v
+                                            })
+                                        }
+                                    })
                                 }
                             />
                         </FormItem>
@@ -97,11 +100,13 @@ class BoardForm extends Component {
                     <Col md={4} xs={6}>
                         <FormItem>
                             <Label>订单类型：</Label>
-                            <Select {
-                                ...getFieldProps('type', {
-                                    initialValue: '',
+                            <Select 
+                                {
+                                    ...getFieldProps('type', {
+                                        initialValue: '',
+                                    })
                                 }
-                                )}>
+                            >
                                 <Option value="">请选择</Option>
                                 {
                                     orderTypes.map((item, index) => {
@@ -118,9 +123,9 @@ class BoardForm extends Component {
                             <Label>采购组：</Label>
                             <FormControl
                                 {
-                                ...getFieldProps('purchasingGroup', {
-                                    initialValue: '',
-                                })
+                                    ...getFieldProps('purchasingGroup', {
+                                        initialValue: '',
+                                    })
                                 }
                             />
                         </FormItem>
@@ -131,13 +136,13 @@ class BoardForm extends Component {
                             <Radio.RadioGroup
                                 selectedValue={this.state.approvalState}
                                 {
-                                ...getFieldProps('approvalState', {
-                                    initialValue: '',
-                                    onChange(value) {
-                                        self.setState({ approvalState: value });
-                                    },
+                                    ...getFieldProps('approvalState', {
+                                        initialValue: '',
+                                        onChange(value) {
+                                            self.setState({ approvalState: value });
+                                        },
+                                    })
                                 }
-                                )}
                             >
                                 <Radio value="0" >未审批</Radio>
                                 <Radio value="1" >已审批</Radio>
@@ -151,13 +156,13 @@ class BoardForm extends Component {
                             <Radio.RadioGroup
                                 selectedValue={this.state.closeState}
                                 {
-                                ...getFieldProps('closeState', {
-                                    initialValue: '',
-                                    onChange(value) {
-                                        self.setState({ closeState: value });
-                                    },
+                                    ...getFieldProps('closeState', {
+                                        initialValue: '',
+                                        onChange(value) {
+                                            self.setState({ closeState: value });
+                                        },
+                                    })
                                 }
-                                )}
                             >
                                 <Radio value="0" >未关闭</Radio>
                                 <Radio value="1" >已关闭</Radio>
@@ -171,13 +176,13 @@ class BoardForm extends Component {
                             <Radio.RadioGroup
                                 selectedValue={this.state.confirmState}
                                 {
-                                ...getFieldProps('confirmState', {
-                                    initialValue: '',
-                                    onChange(value) {
-                                        self.setState({ confirmState: value });
-                                    },
+                                    ...getFieldProps('confirmState', {
+                                        initialValue: '',
+                                        onChange(value) {
+                                            self.setState({ confirmState: value });
+                                        },
+                                    })
                                 }
-                                )}
                             >
                                 <Radio value="0" >未确认</Radio>
                                 <Radio value="1" >已确认</Radio>

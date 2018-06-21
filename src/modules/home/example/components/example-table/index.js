@@ -9,12 +9,21 @@ export default class BoardTable extends Component {
             
         }
     }
-
-    edit=()=>{
-        alert();
+    /**
+     * 编辑
+     */
+    edit=(record,editFlag)=>{
+        // actions.routing.push(
+        //     {
+        //         pathname: 'exampleedit',
+        //         detailObj: record,
+        //         editFlag: !!editFlag
+        //     }
+        // )
+        console.log('进入编辑')
     }
     render(){
-        const self=this;
+        const self = this;
         const column = [
             {
                 title: "序号",
@@ -88,7 +97,7 @@ export default class BoardTable extends Component {
                 render(text, record, index) {
                     return (
                         <div className='operation-btn'>
-                            <Button size='sm' className='edit-btn' onClick={self.edit}>编辑</Button>
+                            <Button size='sm' className='edit-btn' onClick={() => { self.edit(record,true) }}>编辑</Button>
                         </div>
                     )
                 }
@@ -96,14 +105,13 @@ export default class BoardTable extends Component {
         ];
         const { list,showLoading,pageSize, pageIndex, totalPages, } = this.props;
         return (
-            <div className="table-list">
+            <div className="example-table">
                 <Table
                     loading={{show:showLoading,loadingType:"line"}}
                     rowKey={(r,i)=>i}
                     columns={column}
                     data={list}
-                />
-                
+                />       
             </div>
         )
     }

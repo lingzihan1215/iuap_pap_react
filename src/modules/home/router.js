@@ -9,5 +9,6 @@ export default ({ match }) => (
     <div className="dashboard-route">
         <Route exact path={`${match.url}/dashboard`} component={Dashboard} />
         <Route exact path={`${match.url}/example`} component={ExampleRoot} />
+        <Route exact path={`${match.url}/exampleedit`} component={ExampleRoot} />
     </div>
 )

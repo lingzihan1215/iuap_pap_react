@@ -36,7 +36,7 @@ class TreeForm extends Component {
   render() {
     const { getFieldProps, getFieldError } = this.props.form;
     return (
-      <div className="tree_form">
+      <div className="tree-form">
         <Modal show={this.props.showModul} onHide={this.onAddClose}>
           <Modal.Header>
             <Modal.Title>{this.props.showText}</Modal.Title>

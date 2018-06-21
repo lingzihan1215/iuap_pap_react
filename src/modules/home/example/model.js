@@ -80,6 +80,24 @@ export default {
                 "name":"D004"
             }]
             })
-        }
+        },
+        /**
+         * getSelect：保存table数据
+         * @param {*} param 
+         * @param {*} getState 
+         */
+        async saveList(param, getState) {
+            let result = await api.saveList(param);
+            return result;
+        },
+        /**
+         * 删除table数据
+         * @param {*} id 
+         * @param {*} getState 
+         */
+        async removeList(id, getState) {
+            let result = await api.deleteList([{id}]);
+            return result;
+        },
     }
 };

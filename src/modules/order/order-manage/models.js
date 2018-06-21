@@ -39,6 +39,11 @@ export default {
         showLoading:false
       })
       if (res) {
+        if(res.content&&res.content.length){
+          for(var i=0;i<res.content.length;i++){
+              res.content[i].key=i+1;
+          }
+        }
         actions.order.updateState({ 
           list: res.content,
           pageIndex:res.number+1,

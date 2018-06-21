@@ -48,6 +48,14 @@ class List extends Component {
         values.pageSize = pageObj.pageSize || this.props.pageSize || 10,
         actions.order.loadList(values);
     }
+
+    getList=(pageObj)=>{
+        //获得表单数据
+        this.props.form.validateFields((err, values) => {
+            this.search(pageObj, err, values);
+        });
+    }
+
     reset = () => {//重置
         this.setState({
             approvalState: '',
@@ -62,38 +70,7 @@ class List extends Component {
         })
     }
 
-    // 多选表格包装函数  开始
-    // onAllCheckChange = () => {//全选
-    //     let self = this;
-    //     let checkedArray = [];
-    //     let listData = props.listData.concat();
-    //     let selIds = [];
-    //     for (var i = 0; i < self.state.checkedArray.length; i++) {
-    //         checkedArray[i] = !self.state.checkedAll;
-    //     }
-    //     self.setState({
-    //         checkedAll: !self.state.checkedAll,
-    //         checkedArray: checkedArray,
-    //     });
-    // };
-    // onCheckboxChange = (text, record, index) => {
-    //     let self = this;
-    //     let allFlag = false;
-    //     let checkedArray = self.state.checkedArray.concat();
-    //     checkedArray[index] = !self.state.checkedArray[index];
-    //     for (var i = 0; i < self.state.checkedArray.length; i++) {
-    //         if (!checkedArray[i]) {
-    //             allFlag = false;
-    //             break;
-    //         } else {
-    //             allFlag = true;
-    //         }
-    //     }
-    //     self.setState({
-    //         checkedAll: allFlag,
-    //         checkedArray: checkedArray,
-    //     });
-    // };
+    
     renderColumnsMultiSelect(columns) {
         const { data, checkedArray } = this.state;
         const { multiSelect } = this.props;
@@ -147,14 +124,14 @@ class List extends Component {
         )
     }
     onPageSelect = (value) => {
-        this.search({
+        this.getList({
             pageIndex: value,
             pageSize: this.props.pageSize
         })
     }
     dataNumSelect = (value) => {
         let pageSize = (value + 1) * 5;//针对于5条/10条/15条/20条选项
-        this.search({
+        this.getList({
             pageSize: pageSize,
             pageIndex: 1
         })
