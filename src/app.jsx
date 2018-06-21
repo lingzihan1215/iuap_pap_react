@@ -3,6 +3,8 @@
  */
 
 import React, { Component } from "react";
+import 'core-js/es6/map';
+import 'core-js/es6/set';
 import logger from "redux-logger";
 import mirror, { render } from "mirrorx";
 

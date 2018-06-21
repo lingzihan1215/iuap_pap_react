@@ -12,7 +12,7 @@ export default {
         showLoading:false,
         list: [],
         orderTypes:[],
-        pageIndex:1,
+        pageIndex:0,
         pageSize:10,
         totalPages:1,
         detail:{}
@@ -48,7 +48,7 @@ export default {
             if (res) {
                 actions.example.updateState({
                     list: res.content,
-                    pageIndex:res.number+1,
+                    pageIndex:res.number,
                     pageSize:res.size,
                     totalPages:res.totalPages,
                 });
@@ -59,7 +59,7 @@ export default {
          * @param {*} param 
          * @param {*} getState 
          */
-        getSelect(param,getState){
+        getOrderTypes(param,getState){
             actions.example.updateState({
             orderTypes:  [{
                 "code":"0",

@@ -1,42 +1,43 @@
 import React, { Component } from 'react'
-import { Loading, Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Select, Radio } from "tinper-bee";
+import { actions } from "mirrorx";
+import { Col, Row,FormControl, Label, Select, Radio } from "tinper-bee";
 import Form from 'bee-form';
 import DatePicker from 'bee-datepicker';
 import 'bee-datepicker/build/DatePicker.css';
+import SearchPanel from 'components/SearchPanel';
 const FormItem = Form.FormItem;
 const { RangePicker } = DatePicker;
-
 import './index.less'
 
 class BoardForm extends Component {
     constructor(props){
         super(props)
         this.state = {
-            selectData: [],
             approvalState: '',
             closeState: '',
             confirmState: '',
             voucherDate: []
         }
     }
-    search = (pageObj) => {//查询
-        this.props.form.validateFields((err, values) => {
-            let voucherDate = values.voucherDate;
-            if (voucherDate && voucherDate.length) {
-                values.starTime = voucherDate[0].format('YYYY-MM-DD');
-                values.endTime = voucherDate[1].format('YYYY-MM-DD');
-            } else {
-                values.starTime = '';
-                values.endTime = '';
-            }
-            delete values.voucherDate;
-
-            values.pageIndex = pageObj.pageIndex || this.props.pageIndex || 1,
-            values.pageSize = pageObj.pageSize || this.props.pageSize || 10;
-        });
+    /** 查询数据
+     * @param {*} error 校验是否成功
+     * @param {*} values 表单数据
+     */
+    search = (error,values) => {
+        let voucherDate = values.voucherDate;
+        if (voucherDate && voucherDate.length) {
+            values.starTime = voucherDate[0].format('YYYY-MM-DD');
+            values.endTime = voucherDate[1].format('YYYY-MM-DD');
+        } else {
+            values.starTime = '';
+            values.endTime = '';
+        }
+        delete values.voucherDate;
+        values.pageIndex = this.props.pageIndex || 0,
+        values.pageSize = this.props.pageSize || 10,
+        actions.example.loadList(values);
     }
     reset = () => {//重置
-        this.props.form.resetFields();
         this.setState({
             approvalState: '',
             closeState: '',
@@ -45,11 +46,10 @@ class BoardForm extends Component {
         })
     }
     render(){
-        
         const { getFieldProps, getFieldError } = this.props.form;
-
+        const { orderTypes } = this.props;
         return (
-            <div className='search-panel'>
+            <SearchPanel form={this.props.form} reset={this.reset} search={this.search}>
                 <Row>
                     <Col md={4} xs={6}>
                         <FormItem>
@@ -104,11 +104,11 @@ class BoardForm extends Component {
                                 )}>
                                 <Option value="">请选择</Option>
                                 {
-                                    // orderTypes.map((item, index) => {
-                                    //     return (
-                                    //         <Option key={index} value={item.code}>{item.name}</Option>
-                                    //     )
-                                    // })
+                                    orderTypes.map((item, index) => {
+                                        return (
+                                            <Option key={index} value={item.code}>{item.name}</Option>
+                                        )
+                                    })
                                 }
                             </Select>
                         </FormItem>
@@ -186,12 +186,8 @@ class BoardForm extends Component {
                             </Radio.RadioGroup>
                         </FormItem>
                     </Col>
-                    <Col md={12} xs={12} className='btn-group'>
-                        <Button size='sm' className='reset-btn' onClick={this.reset}>清空</Button>
-                        <Button size='sm' className='submit-btn' onClick={this.search}>查询</Button>
-                    </Col>
                 </Row>
-            </div>
+            </SearchPanel>
         )
     }
 }

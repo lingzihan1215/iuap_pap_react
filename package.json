@@ -20,7 +20,6 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
-    
     "clean-webpack-plugin": "^0.1.18",
     "copy-webpack-plugin": "^4.4.2",
     "cross-env": "^5.1.6",
@@ -55,16 +54,17 @@
     "bee-tooltip": "^1.0.2",
     "bee-upload": "^1.0.0",
     "classnames": "^2.2.5",
+    "core-js": "^2.5.7",
     "mirrorx": "^0.2.10",
     "moment": "^2.21.0",
     "prop-types": "^15.6.0",
     "query-string": "^5.1.0",
     "react": "^16.3.2",
+    "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.3.2",
     "react-hot-keys": "^1.2.0",
     "tinper-bee": "^1.5.0",
     "yyuap-bpm": "0.0.7",
-    "yyuap-ref": "^1.0.57",
-    "react-custom-scrollbars": "^4.2.1"
+    "yyuap-ref": "^1.0.57"
   }
 }

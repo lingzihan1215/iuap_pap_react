@@ -49,7 +49,7 @@ class BoardForm extends Component {
         const { getFieldProps, getFieldError } = this.props.form;
 
         return (
-            <div className='search-panel'>
+            <div className='board-form search-panel'>
                 <Row>
                     <Col md={4} xs={6}>
                         <FormItem>
