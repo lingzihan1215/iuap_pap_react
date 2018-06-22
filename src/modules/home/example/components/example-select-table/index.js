@@ -110,7 +110,7 @@ export default class BoardTable extends Component {
             }
         ];
         return (
-            <div className="example-select-table">
+            <div className="example-select-table table-list">
                 <MultiSelectTable
                     loading={{ show: showLoading, loadingType: "line" }}
                     rowKey={(r, i) => i}

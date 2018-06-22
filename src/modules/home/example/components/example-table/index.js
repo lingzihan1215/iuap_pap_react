@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { actions } from "mirrorx";
 import { Table,Button } from 'tinper-bee'
 import moment from "moment/moment";
 
@@ -15,7 +16,7 @@ export default class BoardTable extends Component {
     edit=(record,editFlag)=>{
         // actions.routing.push(
         //     {
-        //         pathname: 'exampleedit',
+        //         pathname: 'example-edit',
         //         detailObj: record,
         //         editFlag: !!editFlag
         //     }
@@ -105,7 +106,7 @@ export default class BoardTable extends Component {
         ];
         const { list,showLoading,pageSize, pageIndex, totalPages, } = this.props;
         return (
-            <div className="example-table">
+            <div className="example-table table-list">
                 <Table
                     loading={{show:showLoading,loadingType:"line"}}
                     rowKey={(r,i)=>i}

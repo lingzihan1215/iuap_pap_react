@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { actions } from "mirrorx";
+import {Button} from 'tinper-bee';
 import Header from 'components/Header';
 import BoardForm from '../example-form/index';
 import BoardTable from '../example-table/index';
@@ -25,20 +26,26 @@ class ExampleRoot  extends Component {
     /**
      * 获取table表格数据
      */
-    getTableData(){
+    getTableData=()=>{
         actions.example.loadList();
     }
     /**
      * 获得订单类型列表数据
      */
-    getOrderTypes(){
+    getOrderTypes=()=>{
         actions.example.getOrderTypes();
     }
+    dataNumSelect=()=>{
 
+    }
+    onPageSelect=()=>{
+
+    }
     render() {
         const self=this;
+        let { pageSize, pageIndex, totalPages} = this.props;
         return (
-            <div className='example-root'> 
+            <div className='example-root'>
                 <Header title='示例节点'/>
                 <BoardForm { ...this.props }/>
                 <BoardTable { ...this.props }/>

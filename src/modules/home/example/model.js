@@ -15,7 +15,8 @@ export default {
         pageIndex:0,
         pageSize:10,
         totalPages:1,
-        detail:{}
+        detail:{},
+        searchParam:{}
     },
     reducers: {
         /**

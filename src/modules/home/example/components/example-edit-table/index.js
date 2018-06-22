@@ -287,7 +287,7 @@ export default class BoardTable extends Component {
         ];
         const { list, showLoading, pageSize, pageIndex, totalPages, } = this.props;
         return (
-            <div className="example-edit-table">
+            <div className="example-edit-table table-list">
                 <Table
                     loading={{ show: this.state.loading, loadingType: "line" }}
                     bordered

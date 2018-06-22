@@ -35,6 +35,7 @@ class BoardForm extends Component {
         delete values.voucherDate;
         values.pageIndex = this.props.pageIndex || 0,
         values.pageSize = this.props.pageSize || 10,
+        actions
         actions.example.loadList(values);
     }
     /**

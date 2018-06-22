@@ -5,7 +5,7 @@ import { Loading,Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbo
 import Header from "components/Header";
 import DatePicker from 'bee-datepicker';
 import Form from 'bee-form';
-import './detail.less';
+import './index.less';
 import moment from "moment";
 
 const FormItem = Form.FormItem;
