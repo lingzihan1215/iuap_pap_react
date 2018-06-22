@@ -28,6 +28,14 @@ const proxyConfig = [
   }
 ];
 
+const globalEnvConfig = new webpack.DefinePlugin({
+  __MODE__: JSON.stringify(process.env.NODE_ENV),
+  GROBAL_HTTP_CTX: JSON.stringify("/iuap_pap_quickstart"),
+  GSP_CONTRACT: JSON.stringify("/gsp-contract"),
+  GSP_ORDERS: JSON.stringify("/gsp-orders"),
+  GSP_SUPPLIER: JSON.stringify("/gsp-supplier")
+})
+
 
 //提取package里的包
 function getVendors() {
@@ -130,13 +138,9 @@ const devConfig = {
       name: "vendors"
     }),
     new ExtractTextPlugin({
-      filename: '[name].[hash:8].css'
+      filename: 'css/app.css'
     }),
-    new webpack.DefinePlugin({
-      __MODE__: JSON.stringify(process.env.NODE_ENV),
-      GROBAL_HTTP_CTX: JSON.stringify("/iuap_pap_quickstart")
-      
-    }),
+    globalEnvConfig,
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
@@ -173,12 +177,9 @@ const prodConfig = {
       name: "vendors"
     }),
     new ExtractTextPlugin({
-      filename: '[name].css'
+      filename: 'css/app.css'
     }),
-    new webpack.DefinePlugin({
-      __MODE__: JSON.stringify(process.env.NODE_ENV),
-      GROBAL_HTTP_CTX: JSON.stringify("/iuap_pap_quickstart")
-    }),
+    globalEnvConfig,
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
       compress: {
