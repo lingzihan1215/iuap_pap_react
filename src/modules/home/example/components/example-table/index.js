@@ -105,8 +105,9 @@ export default class BoardTable extends Component {
             }
         ];
         const { list,showLoading,pageSize, pageIndex, totalPages, } = this.props;
+        
         return (
-            <div className="example-table table-list">
+            <div className="table-list">
                 <Table
                     loading={{show:showLoading,loadingType:"line"}}
                     rowKey={(r,i)=>i}

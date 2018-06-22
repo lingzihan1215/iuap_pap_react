@@ -1,11 +1,14 @@
 import React from 'react';
 import mirror, { connect } from 'mirrorx';
-import Root from './components/example-root/index';
-import Edit from './components/example-edit/index';
+import ExampleForm from './components/example-form';
+import ExampleRoot from './components/example-root';
+import SelectTable from './components/example-select-table';//多选table
+import EditTable from './components/example-edit-table';//可编辑table
 
 import model from './model'
 
-mirror.model(model)
+mirror.model(model);
 
-export const ExampleRoot = connect( state => state.example, null )(Root);
-export const ExampleEdit = connect( state => state.example, null )(Edit);
+export const ConnectedExampleRoot = connect( state => state.example, null )(ExampleRoot);
+export const ConnectedSelectTable = connect( state => state.example, null )(SelectTable);
+export const ConnectedEditTable = connect( state => state.example, null )(EditTable);
