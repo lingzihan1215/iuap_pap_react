@@ -35,6 +35,7 @@ export default class BoardTable extends Component {
                 title: "序号",
                 dataIndex: "index",
                 key: "index",
+                width: 100,
                 render(record, text, index) {
                     return index + 1;
                 }
@@ -43,6 +44,7 @@ export default class BoardTable extends Component {
                 title: "订单编号",
                 dataIndex: "orderCode",
                 key: "orderCode",
+                width: 250,
                 onCellClick: (record) => this.cellClick(record, false)
             },
             {
