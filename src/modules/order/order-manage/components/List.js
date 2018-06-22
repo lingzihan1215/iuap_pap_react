@@ -71,47 +71,7 @@ class List extends Component {
     }
 
     
-    renderColumnsMultiSelect(columns) {
-        const { data, checkedArray } = this.state;
-        const { multiSelect } = this.props;
-        let select_column = {};
-        let indeterminate_bool = false;
-        if (multiSelect && multiSelect.type === "checkbox") {
-            let i = checkedArray.length;
-            while (i--) {
-                if (checkedArray[i]) {
-                    indeterminate_bool = true;
-                    break;
-                }
-            }
-            let defaultColumns = [
-                {
-                    title: (
-                        <Checkbox
-                            className="table-checkbox"
-                            checked={this.state.checkedAll}
-                            indeterminate={indeterminate_bool && !this.state.checkedAll}
-                            onChange={this.onAllCheckChange}
-                        />
-                    ),
-                    key: "checkbox",
-                    dataIndex: "checkbox",
-                    width: 50,
-                    render: (text, record, index) => {
-                        return (
-                            <Checkbox
-                                className="table-checkbox"
-                                checked={this.state.checkedArray[index]}
-                                onChange={this.onCheckboxChange.bind(this, text, record, index)}
-                            />
-                        );
-                    }
-                }
-            ];
-            columns = defaultColumns.concat(columns);
-        }
-        return columns;
-    }
+    
     // 多选表格包装函数  结束
 
     cellClick = (record, editFlag) => {//进入详情
@@ -228,7 +188,6 @@ class List extends Component {
         ];
         let { form, list, pageSize, pageIndex, totalPages, orderTypes, showLoading } = this.props;
         const { getFieldProps, getFieldError } = form;
-        let columns = this.renderColumnsMultiSelect(column);
         return (
             <div className='order-list'>
                 <Header title='采购订单管理' back={true} />
@@ -386,7 +345,7 @@ class List extends Component {
                                 loading={{ show: showLoading, loadingType: "line" }}
                                 rowKey={(r, i) => i}
                                 emptyText={() => <NoData />}
-                                columns={columns}
+                                columns={column}
                                 data={list}
                                 multiSelect={{ type: "checkbox" }}
                                 getSelectedDataFunc={this.tabelSelect}

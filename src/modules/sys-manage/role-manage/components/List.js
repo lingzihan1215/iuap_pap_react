@@ -26,15 +26,22 @@ class List extends Component {
         actions.role.loadList(values);
     }
 
+    getList=(pageObj)=>{
+        //获得表单数据
+        this.props.form.validateFields((err, values) => {
+            this.search(pageObj, err, values);
+        });
+    }
+
     onPageSelect = (value) => {
-        this.search({
+        this.getList({
             pageIndex: value ,
             pageSize:this.props.pageSize
         })
     }
     dataNumSelect = (value) => {
         let pageSize = (value + 1) * 5;//针对于5条/10条/15条/20条选项
-        this.search({
+        this.getList({
             pageSize: pageSize,
             pageIndex: 1
         })
