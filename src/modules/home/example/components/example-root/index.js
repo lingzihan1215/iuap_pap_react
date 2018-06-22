@@ -33,12 +33,6 @@ class ExampleRoot  extends Component {
     getOrderTypes=()=>{
         actions.example.getOrderTypes();
     }
-    dataNumSelect=()=>{
-
-    }
-    onPageSelect=()=>{
-
-    }
     render() {
         const self=this;
         let { pageSize, pageIndex, totalPages} = this.props;
