@@ -10,10 +10,12 @@ export default class ExamplePaginationTable extends Component {
         this.state = {
             // 表格中所选中的数据，拿到后可以去进行增删改查
             selectData: [],
-            pageIndex: 0
+            pageIndex: 0,
+            step: 10
         }
     }
     componentWillMount(){
+        this.setState({ step: this.props.pageSize })
         actions.example.loadList();//table数据
     }
     getCloumns(){
@@ -89,6 +91,7 @@ export default class ExamplePaginationTable extends Component {
                 title: "操作",
                 dataIndex: "e",
                 key: "e",
+                // fixed: "right",
                 render(text, record, index) {
                     return (
                         <div className='operation-btn'>
@@ -105,16 +108,12 @@ export default class ExamplePaginationTable extends Component {
             selectData: data
         })
     }
-    onPageSizeSelect = value => {
-        console.log(value)
-        // 50
-        // 100
+    onPageSizeSelect = (index, value) => {
         actions.example.loadList({
             pageSize: value
         })
     }
     onPageIndexSelect = value => {
-        console.log(value)
         actions.example.loadList({
             pageIndex: value
         })
@@ -122,14 +121,13 @@ export default class ExamplePaginationTable extends Component {
     
     render(){
         let { list, showLoading, pageIndex, pageSize, totalPages } = this.props;
-        console.log(this.state.selectData)
-
+       
         return (
             <PaginationTable 
                 data={list}
                 showLoading={showLoading}
                 pageIndex={pageIndex}
-                pageSize={pageSize}
+                pageSize={this.state.step}
                 totalPages={totalPages}
                 columns={this.getCloumns()}
                 onTableSelectedData={this.onTableSelectedData}

@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
-import { Checkbox, Table } from 'tinper-bee';
 import { Scrollbars } from 'react-custom-scrollbars';
+import { Table, Popover, Checkbox, Icon } from 'tinper-bee';
 import PropTypes from 'prop-types';
 import Pagination from 'bee-pagination';
 import multiSelect from "tinper-bee/lib/multiSelect.js";
+import filterColumn from "tinper-bee/lib/filterColumn";
+import dragColumn from "tinper-bee/lib/dragColumn";
+
 import 'bee-pagination/build/Pagination.css';
 import './index.less'
 
-let MultiSelectTable = multiSelect(Table, Checkbox);
+const MultiSelectTable = multiSelect(Table, Checkbox);
+const DragColumnFilterTable = dragColumn(MultiSelectTable);
+
+const FilterColumnTable = filterColumn(MultiSelectTable, Checkbox, Popover, Icon);
 
 const propTypes = {
     // 表格行数据
@@ -54,25 +60,26 @@ class PaginationTable extends Component {
     }
     render(){
         const { 
-            data, showLoading, pageSize, 
+            data, showLoading, pageSize,
             pageIndex, totalPages, columns,
             onTableSelectedData, onPageSizeSelect, onPageIndexSelect
         } = this.props;
-     
+
+        let dataNumSelect = [pageSize, pageSize * 2, pageSize * 3, pageSize * 4];
+        
         return (
             <div className="table-list">
-                <div className="scroll-height">
-                    <Scrollbars>
-                        <MultiSelectTable
-                            loading={{ show: showLoading, loadingType: "line" }}
-                            rowKey={(r, i) => i}
-                            columns={columns}
-                            data={data}
-                            multiSelect={{ type: "checkbox" }}
-                            getSelectedDataFunc={onTableSelectedData}
-                        />
-                    </Scrollbars>
-                </div>
+                <FilterColumnTable
+                    bordered
+                    loading={{ show: showLoading, loadingType: "line" }}
+                    rowKey={(r, i) => i}
+                    columns={columns}
+                    data={data}
+                    multiSelect={{ type: "checkbox" }}
+                    getSelectedDataFunc={onTableSelectedData}
+                    scroll={{ x: 190, y: 500 }}
+                    draggable={true} 
+                />
                 <div className='pagination'>
                     <Pagination
                         first
@@ -85,6 +92,9 @@ class PaginationTable extends Component {
                         onDataNumSelect={onPageSizeSelect}
                         onSelect={onPageIndexSelect}
                         showJump={true}
+                        dataNum={4}
+                        maxButtons={5}
+                        dataNumSelect={dataNumSelect}
                     />
                 </div>
             </div>
