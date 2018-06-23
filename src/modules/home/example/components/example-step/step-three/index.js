@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { actions } from 'mirrorx';
 import PropTypes from 'prop-types';
-import { FormControl, Label } from 'tinper-bee';
+import { FormControl, Label, Row, Col } from 'tinper-bee';
 import Form from 'bee-form';
 import './index.less';
 const FormItem = Form.FormItem;
@@ -20,7 +20,7 @@ const defaultProps = {
 class StepThree extends Component{
     componentWillReceiveProps(nextProps) {
         if (nextProps.validateFlag&&(!this.props.validateFlag)) {
-            this.props.form.validateFields(['name31'],{},(error,values)=>{
+            this.props.form.validateFields(['companyName','companyCode','companyDescription'],{},(error,values)=>{
                 this.props.validatefn(error,values)
             })
         }
@@ -32,26 +32,64 @@ class StepThree extends Component{
         const { getFieldProps, getFieldError} = this.props.form;
         return (
             <div className='step-three'>
-                <FormItem>
-                    <Label>注册资金：</Label>
-                    <FormControl
-                        {
-                            ...getFieldProps('name31', {
-                                initialValue: 10,
-                                validateTrigger: 'onBlur',
-                                rules: [{ 
-                                    required: true, 
-                                    message: '请填写注册资金' 
-                                }],
-                            })
-                        }
-                    />
-                    <span className='error'>
-                        {
-                            getFieldError('name31')
-                        }
-                    </span>
-                </FormItem>
+                <Row>
+                    <Col md={4} xs={6}>
+                        <FormItem>
+                            <Label>公司名称：</Label> <span className='mast'>*</span>
+                            <FormControl placeholder='请输入公司名称'
+                                {
+                                    ...getFieldProps('companyName', {
+                                        initialValue: '',
+                                        validateTrigger: 'onBlur',
+                                        rules: [{ 
+                                            required: true, 
+                                            message: '请填写公司名称' 
+                                        }],
+                                    })
+                                }
+                            />
+                            <span className='error'>
+                                {
+                                    getFieldError('companyName')
+                                }
+                            </span>
+                        </FormItem>
+                    </Col>
+                    <Col md={4} xs={6}>
+                        <FormItem>
+                            <Label>公司编码：</Label><span className='mast'>*</span>
+                            <FormControl placeholder='请输入公司编码'
+                                {
+                                    ...getFieldProps('companyCode', {
+                                        initialValue: '',
+                                        validateTrigger: 'onBlur',
+                                        rules: [{ 
+                                            required: true, 
+                                            message: '请填写公司编码' 
+                                        }],
+                                    })
+                                }
+                            />
+                            <span className='error'>
+                                {
+                                    getFieldError('companyCode')
+                                }
+                            </span>
+                        </FormItem>
+                    </Col>
+                    <Col md={4} xs={6}>
+                        <FormItem>
+                            <Label>公司描述：</Label>
+                            <FormControl placeholder='请输入公司描述'
+                                {
+                                    ...getFieldProps('companyDescription', {
+                                        initialValue: '',
+                                    })
+                                }
+                            />
+                        </FormItem>
+                    </Col>
+                </Row>
             </div>
         )
     }

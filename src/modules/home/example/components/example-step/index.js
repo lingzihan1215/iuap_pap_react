@@ -29,10 +29,10 @@ class exampleStep extends Component{
         });   
     }
     commit=()=>{
+        console.log(this.state.formData);
         actions.example.updateState({
             validateNum:this.state.current
         })
-        console.log(this.state.formData);
     }
 
     validates(current,error,values){
@@ -72,11 +72,11 @@ class exampleStep extends Component{
                     </div>
                 </div>
                 <div className='step-btn'>
-                    <Button onClick={this.next} style={{'display':(current==2||current==3)?'none':'inline-block'}}>
-                        下一页
-                    </Button>
                     <Button onClick={this.prev} style={{'display':current>0?'inline-block':'none'}}>
                         上一页
+                    </Button>
+                    <Button onClick={this.next} style={{'display':(current==2||current==3)?'none':'inline-block'}}>
+                        下一页
                     </Button>
                     <Button onClick={this.commit} style={{'display':current==2?'inline-block':'none'}}>
                         提交

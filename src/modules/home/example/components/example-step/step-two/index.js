@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { actions } from 'mirrorx';
 import PropTypes from 'prop-types';
-import { FormControl, Label } from 'tinper-bee';
+import { FormControl, Label, Row, Col } from 'tinper-bee';
 import Form from 'bee-form';
 import './index.less';
 const FormItem = Form.FormItem;
@@ -20,7 +20,7 @@ const defaultProps = {
 class StepTwo extends Component{
     componentWillReceiveProps(nextProps) {
         if (nextProps.validateFlag&&(!this.props.validateFlag)) {
-            this.props.form.validateFields(['name21','name22','name23'],{},(error,values)=>{
+            this.props.form.validateFields(['userName','userCode','userDescription'],{},(error,values)=>{
                 this.props.validatefn(error,values)
             })
         }
@@ -32,66 +32,64 @@ class StepTwo extends Component{
         const { getFieldProps, getFieldError} = this.props.form;
         return (
             <div className='step-two'>
-                <FormItem>
-                    <Label>注册资金：</Label>
-                    <FormControl
-                        {
-                            ...getFieldProps('name21', {
-                                initialValue: 10,
-                                validateTrigger: 'onBlur',
-                                rules: [{ 
-                                    required: true, 
-                                    message: '请填写注册资金' 
-                                }],
-                            })
-                        }
-                    />
-                    <span className='error'>
-                        {
-                            getFieldError('name21')
-                        }
-                    </span>
-                </FormItem>
-                <FormItem>
-                    <Label>注册资金：</Label>
-                    <FormControl
-                        {
-                            ...getFieldProps('name22', {
-                                initialValue: 10,
-                                validateTrigger: 'onBlur',
-                                rules: [{ 
-                                    required: true, 
-                                    message: '请填写注册资金' 
-                                }],
-                            })
-                        }
-                    />
-                    <span className='error'>
-                        {
-                            getFieldError('name22')
-                        }
-                    </span>
-                </FormItem>
-                <FormItem>
-                    <Label>注册资金：</Label>
-                    <FormControl
-                        {
-                            ...getFieldProps('name23', {
-                                initialValue: 10,
-                                validateTrigger: 'onBlur',
-                                rules: [{ 
-                                    required: true, 
-                                    message: '请填写注册资金' 
-                                }],
-                            })
-                        }
-                    />
-                    <span className='error'>
-                        {
-                            getFieldError('name23')
-                        }
-                    </span>
-                </FormItem>
+                <Row>
+                    <Col md={4} xs={6}>
+                        <FormItem>
+                            <Label>人员名称：</Label> <span className='mast'>*</span>
+                            <FormControl placeholder='请输入人员名称'
+                                {
+                                    ...getFieldProps('userName', {
+                                        initialValue: '',
+                                        validateTrigger: 'onBlur',
+                                        rules: [{ 
+                                            required: true, 
+                                            message: '请填写人员名称' 
+                                        }],
+                                    })
+                                }
+                            />
+                            <span className='error'>
+                                {
+                                    getFieldError('userName')
+                                }
+                            </span>
+                        </FormItem>
+                    </Col>
+                    <Col md={4} xs={6}>
+                        <FormItem>
+                            <Label>人员编码：</Label><span className='mast'>*</span>
+                            <FormControl placeholder='请输入人员编码'
+                                {
+                                    ...getFieldProps('userCode', {
+                                        initialValue: '',
+                                        validateTrigger: 'onBlur',
+                                        rules: [{ 
+                                            required: true, 
+                                            message: '请填写人员编码' 
+                                        }],
+                                    })
+                                }
+                            />
+                            <span className='error'>
+                                {
+                                    getFieldError('userCode')
+                                }
+                            </span>
+                        </FormItem>
+                    </Col>
+                    <Col md={4} xs={6}>
+                        <FormItem>
+                            <Label>人员描述：</Label>
+                            <FormControl placeholder='请输入人员描述'
+                                {
+                                    ...getFieldProps('userDescription', {
+                                        initialValue: '',
+                                    })
+                                }
+                            />
+                        </FormItem>
+                    </Col>
+                </Row>
             </div>
         )
     }

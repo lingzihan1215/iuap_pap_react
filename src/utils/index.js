@@ -31,3 +31,24 @@ export const processData = (response,successMsg) => {
         return;
     }
 }
+
+/**
+ * param拼接到url地址上
+ * @param {*} url 
+ * @param {*} params
+ * @param {*} prefix 
+ */
+export const paramToUrl = (url,params,prefix) =>{
+    if(!prefix)prefix='';
+    if(url.indexOf('?')==-1){
+        url += '?1=1';
+    }
+    for(let attr in params){
+        if((attr=='pageIndex')&&(attr=='pageSize')){
+            url+='&'+attr+'='+params[attr];
+        }else{
+            url+='&'+prefix+attr+'='+params[attr];
+        }
+    }
+    return url;
+}
