@@ -3,6 +3,9 @@ import { Link } from "mirrorx";
 import "./index.less";
 
 const urlListPreview = [
+  // 标准示例
+  { url: "/home/pagination-table", name: "标准表格分页组件示例" },
+
   // 订单管理
   { url: "/order/managelist", name: "订单列表" },
   { url: "/order/delivery", name: "送货单" },

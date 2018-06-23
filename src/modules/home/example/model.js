@@ -15,8 +15,7 @@ export default {
         pageIndex:0,
         pageSize:10,
         totalPages:1,
-        detail:{},
-        searchParam:{}
+        detail:{}
     },
     reducers: {
         /**
@@ -40,7 +39,12 @@ export default {
         async loadList(param, getState) {
             // 正在加载数据，显示加载 Loading 图标
             actions.example.updateState({ showLoading:true })
-            
+            if(param){
+                param.pageIndex = param.pageIndex ? param.pageIndex - 1 : 0;
+                param.pageSize = param.pageSize ? param.pageSize : 10;
+            } else {
+                param = {}
+            }
             // 调用 getList 请求数据
             let res = processData(await api.getList(param)); 
             
@@ -54,7 +58,7 @@ export default {
                 }
                 actions.example.updateState({
                     list: res.content,
-                    pageIndex:res.number,
+                    pageIndex:res.number + 1,
                     pageSize:res.size,
                     totalPages:res.totalPages,
                 });
