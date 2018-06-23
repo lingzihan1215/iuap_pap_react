@@ -72,7 +72,7 @@ class exampleStep extends Component{
                     </div>
                 </div>
                 <div className='step-btn'>
-                    <Button onClick={this.next} style={{'display':(current==2||current==2)?'none':'inline-block'}}>
+                    <Button onClick={this.next} style={{'display':(current==2||current==3)?'none':'inline-block'}}>
                         下一页
                     </Button>
                     <Button onClick={this.prev} style={{'display':current>0?'inline-block':'none'}}>
