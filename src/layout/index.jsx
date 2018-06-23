@@ -21,7 +21,8 @@ const urlListPreview = [
   //示例节点
   { url: "/home/example", name: "单表查询" },
   { url: "/home/example-edit", name: "表格多选" },
-  { url: "/home/example-select", name: "表格编辑" }
+  { url: "/home/example-select", name: "表格编辑" },
+  { url: "/home/example-step", name: "STEP示例" }
 
 ];
 

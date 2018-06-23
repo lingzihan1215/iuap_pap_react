@@ -16,7 +16,8 @@ export default {
         pageSize:10,
         totalPages:1,
         detail:{},
-        searchParam:{}
+        searchParam:{},
+        validateNum:99,//不存在的step
     },
     reducers: {
         /**

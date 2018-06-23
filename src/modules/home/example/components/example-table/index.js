@@ -14,13 +14,6 @@ export default class BoardTable extends Component {
      * 编辑
      */
     edit=(record,editFlag)=>{
-        // actions.routing.push(
-        //     {
-        //         pathname: 'example-edit',
-        //         detailObj: record,
-        //         editFlag: !!editFlag
-        //     }
-        // )
         console.log('进入编辑')
     }
     render(){
