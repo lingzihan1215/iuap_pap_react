@@ -18,9 +18,14 @@ const defaultProps = {
 };
 
 class StepTwo extends Component{
+
+    /**
+     * 当组件的props变化是进入该方法
+     * @param {*} nextProps 
+     */
     componentWillReceiveProps(nextProps) {
         if (nextProps.validateFlag&&(!this.props.validateFlag)) {
-            this.props.form.validateFields(['userName','userCode','userDescription'],{},(error,values)=>{
+            this.props.form.validateFields(['userName','userCode','userDescription'],{},(error,values)=>{//这里需要写要检验的字段，否则全部校验
                 this.props.validatefn(error,values)
             })
         }
