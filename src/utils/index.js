@@ -13,7 +13,11 @@ export const Error = (msg) => {
 export const Warning = (msg) => {
     Message.create({ content: msg, color : 'warning' });
 }
-
+/**
+ * 数据返回统一处理函数
+ * @param {*} response 
+ * @param {*} successMsg 成功提示
+ */
 export const processData = (response,successMsg) => {
     if(response.status=='200'){
         let data=response.data;

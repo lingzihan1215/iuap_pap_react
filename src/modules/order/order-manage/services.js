@@ -1,4 +1,5 @@
 import request from "utils/request";
+import { paramToUrl } from "utils";
 
 const URL = {
     "GET_LIST":  `${GROBAL_HTTP_CTX}/sany_order/list`,
@@ -8,14 +9,7 @@ const URL = {
 }
 
 export const getList = (params) => {
-    let url =URL.GET_LIST+'?1=1';
-    for(let attr in params){
-        if((attr!='pageIndex')&&(attr!='pageSize')){
-            url+='&search_'+attr+'='+params[attr];
-        }else{
-            url+='&'+attr+'='+params[attr];
-        }
-    }
+    let url =paramToUrl(URL.GET_LIST,params);
     return request(url, {
         method: "get",
         data: params
