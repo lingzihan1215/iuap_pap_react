@@ -20,7 +20,7 @@ const defaultProps = {
 class StepTwo extends Component{
     componentWillReceiveProps(nextProps) {
         if (nextProps.validateFlag&&(!this.props.validateFlag)) {
-            this.props.form.validateFields(['name11','name12'],{},(error,values)=>{
+            this.props.form.validateFields(['name21','name22','name23'],{},(error,values)=>{
                 this.props.validatefn(error,values)
             })
         }
@@ -33,52 +33,64 @@ class StepTwo extends Component{
         return (
             <div className='step-two'>
                 <FormItem>
-                    <Label>1</Label>
+                    <Label>注册资金：</Label>
                     <FormControl
                         {
                             ...getFieldProps('name21', {
                                 initialValue: 10,
                                 validateTrigger: 'onBlur',
                                 rules: [{ 
-                                    type:"number",
                                     required: true, 
                                     message: '请填写注册资金' 
                                 }],
                             })
                         }
                     />
+                    <span className='error'>
+                        {
+                            getFieldError('name21')
+                        }
+                    </span>
                 </FormItem>
                 <FormItem>
-                    <Label>2</Label>
+                    <Label>注册资金：</Label>
                     <FormControl
                         {
                             ...getFieldProps('name22', {
                                 initialValue: 10,
                                 validateTrigger: 'onBlur',
                                 rules: [{ 
-                                    type:"number",
                                     required: true, 
                                     message: '请填写注册资金' 
                                 }],
                             })
                         }
                     />
+                    <span className='error'>
+                        {
+                            getFieldError('name22')
+                        }
+                    </span>
                 </FormItem>
                 <FormItem>
-                    <Label>3</Label>
+                    <Label>注册资金：</Label>
                     <FormControl
                         {
                             ...getFieldProps('name23', {
                                 initialValue: 10,
                                 validateTrigger: 'onBlur',
                                 rules: [{ 
-                                    type:"number",
                                     required: true, 
                                     message: '请填写注册资金' 
                                 }],
                             })
                         }
                     />
+                    <span className='error'>
+                        {
+                            getFieldError('name23')
+                        }
+                    </span>
                 </FormItem>
             </div>
         )

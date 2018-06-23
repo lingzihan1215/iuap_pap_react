@@ -34,7 +34,7 @@ class StepOne extends Component{
         return (
             <div className='step-one'>
                 <FormItem>
-                    <Label>1</Label>
+                    <Label>注册资金：</Label>
                     <FormControl
                         {
                             ...getFieldProps('name11', {
@@ -47,9 +47,14 @@ class StepOne extends Component{
                             })
                         }
                     />
+                    <span className='error'>
+                        {
+                            getFieldError('name11')
+                        }
+                    </span>
                 </FormItem>
                 <FormItem>
-                    <Label>2</Label>
+                    <Label>注册资金：</Label>
                     <FormControl
                         {
                             ...getFieldProps('name12', {
@@ -62,6 +67,11 @@ class StepOne extends Component{
                             })
                         }
                     />
+                    <span className='error'>
+                        {
+                            getFieldError('name12')
+                        }
+                    </span>
                 </FormItem>
                 
             </div>

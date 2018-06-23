@@ -33,20 +33,24 @@ class StepThree extends Component{
         return (
             <div className='step-three'>
                 <FormItem>
-                    <Label>1</Label>
+                    <Label>注册资金：</Label>
                     <FormControl
                         {
                             ...getFieldProps('name31', {
                                 initialValue: 10,
                                 validateTrigger: 'onBlur',
                                 rules: [{ 
-                                    type:"number",
                                     required: true, 
                                     message: '请填写注册资金' 
                                 }],
                             })
                         }
                     />
+                    <span className='error'>
+                        {
+                            getFieldError('name31')
+                        }
+                    </span>
                 </FormItem>
             </div>
         )
