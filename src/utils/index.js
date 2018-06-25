@@ -45,7 +45,7 @@ export const processData = (response,successMsg) => {
 export const paramToUrl = (url,params,prefix) =>{
     if(!prefix)prefix='';
     if(url.indexOf('?')==-1){
-        url += '?1=1';
+        url += '?r='+Math.random();
     }
     for(let attr in params){
         if((attr=='pageIndex')&&(attr=='pageSize')){
