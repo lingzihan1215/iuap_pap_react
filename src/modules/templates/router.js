@@ -1,19 +1,20 @@
 import React from 'react'
 import { Route } from 'mirrorx'
 
-import Dashboard from './dashboard/container';
-import { ConnectedExampleRoot, ConnectedSelectTable, 
-    ConnectedEditTable, ConnectedStep, 
-    ConnectedExamplePaginationTable, ConnectedExampleRef } from './example/container';
+import { 
+    ConnectedSimpleTable, 
+    ConnectedSimpleSelectTable,
+    ConnectedSimplePaginationTable
+} from './search-table/container';
 
+/**
+ * 路由说明：
+ * 1、单表：三个示例【form+最简单表格、form+带多选的表格、form+综合表格功能】
+ */
 export default ({ match }) => (
-    <div className="dashboard-route">
-        <Route exact path={`${match.url}/dashboard`} component={Dashboard} />
-        <Route exact path={`${match.url}/example`} component={ConnectedExampleRoot} />
-        <Route exact path={`${match.url}/example-edit`} component={ConnectedSelectTable} />
-        <Route exact path={`${match.url}/example-select`} component={ConnectedEditTable} />
-        <Route exact path={`${match.url}/example-step`} component={ConnectedStep} />
-        <Route exact path={`${match.url}/pagination-table`} component={ConnectedExamplePaginationTable} />
-        <Route exact path={`${match.url}/example-ref`} component={ConnectedExampleRef} />
+    <div className="templates-route">
+        <Route exact path={`${match.url}/simple-table`} component={ConnectedSimpleTable} />
+        <Route exact path={`${match.url}/select-table`} component={ConnectedSimpleSelectTable} />
+        <Route exact path={`${match.url}/pagination-table`} component={ConnectedSimplePaginationTable} />
     </div>
 )
