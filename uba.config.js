@@ -36,6 +36,7 @@ const globalEnvConfig = new webpack.DefinePlugin({
   GSP_SUPPLIER: JSON.stringify("/gsp-supplier")
 })
 
+const MINIMIZE_FLAG = (process.env.NODE_ENV == "production") ? true : false;
 
 //提取package里的包
 function getVendors() {
@@ -81,7 +82,8 @@ const rules = [{
     use: [{
       loader: 'css-loader',
       options: {
-        modules: false
+        modules: false,
+        minimize: MINIMIZE_FLAG
       }
     }, 'postcss-loader'],
     fallback: 'style-loader'
@@ -92,7 +94,8 @@ const rules = [{
     use: [{
       loader: 'css-loader',
       options: {
-        modules: false
+        modules: false,
+        minimize: MINIMIZE_FLAG
       }
     }, 'postcss-loader', 'less-loader'],
     fallback: 'style-loader'
@@ -112,7 +115,9 @@ const rules = [{
   use: [{
     loader: 'file-loader',
     options: {
-      name: 'fonts/[name].[hash:8].[ext]'
+      name: '[name].[hash:8].[ext]',
+      outputPath: 'fonts',
+      publicPath: '../fonts/'
     }
   }]
 }]
