@@ -6,6 +6,7 @@ import SelectTable from './components/example-select-table';//多选table
 import EditTable from './components/example-edit-table';//可编辑table
 import exampleStep from './components/example-step';//step示例
 import ExamplePaginationTable from './components/example-pagination-table';
+import ExampleRef from './components/example-ref';
 
 import model from './model'
 
@@ -16,3 +17,4 @@ export const ConnectedSelectTable = connect( state => state.example, null )(Sele
 export const ConnectedEditTable = connect( state => state.example, null )(EditTable);
 export const ConnectedStep = connect( state => state.example, null )(exampleStep);
 export const ConnectedExamplePaginationTable = connect( state => state.example, null )(ExamplePaginationTable);
+export const ConnectedExampleRef = connect( state => state.example, null )(ExampleRef);

@@ -1,0 +1,253 @@
+# 参照组件
+
+## 参照使用（参照test文件）
+### 参数配置
+```js
+const option = {
+    title: '弹窗标题',
+    refType:3,//1:树形 2.单表 3.树卡型 4.多选 5.default
+    isRadio:false,//1.true 单选 2.false多选
+    hasPage:true,
+    backdrop:true,
+	showLine:false,//树参照是否显示连线
+	multiple:false,
+	treeloadDate:false,//树参照异步加载
+    tabData:[//tab标签
+        {"title":"常用","key":"commonUse"},
+        {"title":"全部","key":"total"},
+        {"title":"推荐","key":"recommed"}
+    ],// option中可增加defaultActiveKey作为默认tab标签
+    param:{//url请求参数
+        refCode:'test_treeTable',//test_common||test_grid||test_tree||test_treeTable
+        refModelUrl: 'http://workbench.yyuap.com/ref/rest/testref_ctr/',
+    },
+    refModelUrl:{
+        TreeUrl:'http://workbench.yyuap.com/ref/rest/iref_ctr/blobRefTree', //树请求
+        TreeGridUrl:'http://workbench.yyuap.com/ref/rest/iref_ctr/blobRefTree', //树表树请求
+        GridUrl:'http://workbench.yyuap.com/ref/rest/iref_ctr/commonRefsearch',//单选多选请求
+        TableBodyUrl:'http://workbench.yyuap.com/ref/rest/iref_ctr/blobRefTreeGrid',//表体请求
+        TableBarUrl:'http://workbench.yyuap.com/ref/rest/iref_ctr/refInfo',//表头请求
+        totalDataUrl:'http://workbench.yyuap.com/ref/diwork/iref_ctr/matchPKRefJSON',//根据refcode请求完整数据
+    },
+    checkedArray:[],//已选中数据回填
+    onCancel: function (p) {
+      console.log(p)
+    },
+    onSave: function (sels) {
+      console.log(sels);
+	},
+	className:'',
+}
+```
+#### 参数说明
+参数|说明|类型
+---|-----|----
+title|弹窗标题|`string`
+refType|1:树形 2.单表 3.树卡型 4.多选 5.其他（默认树卡）|`number`
+isRadio|1.true 单选 2.false多选 default:false|`boolean`
+hasPage|分页标志 true:带分页 false:不带分页 default:false|`boolean`
+backdrop|是否显示遮罩层 可不传 default:true|`boolean`
+showLine|树参照是否带有连线 default:false|`boolean`
+treeloadDate|树参照是否异步加载 default:false|`boolean`
+tabData|标签数据 每个tab标签含有title与key|`Array<Object>`
+param|url的请求参数 |`object`
+refModelUrl|url的请求地址 |`object`
+checkedArray|已选择数据项|`Array<Object>`
+onCancel|取消时回调|`function`
+onSave|确认时回调|`function`
+className|参照样式控制(适配diwork 不用传)|`String`
+totalDataUrl|checkedArray为['refcode'],请求数据|`String`
+multiple|树参照下提供复选 (单树)|`Boolean`
+
+### 使用流程
+1. 加载:
+    1. 利用es模块加载的方式引入参照组件,引入 createModal 方法;
+    2. 利用script引入参照打包的js文件(CDN),window上绑定createModal方法;
+    3. 利用amd或者require加载,会暴露出createModal方法;
+    4. 支持npm加载方式(npm install yyuap-ref)(推荐);引入方式: import createModal from yyuap-ref
+2. 使用:
+    1. 根据上述参数说明进行配置,作为一个option参数;
+    2. 利用createModal(option)即可创建参照;
+3. 注销:
+    1. createModal方法的返回值为destory方法,调用可注销参照.
+	2. 已集成到按钮组件中,无需单独调用destory方法,在点击保存、取消时自动注销.
+## 后台处理参数要求(请求时额外所带参数)
+参数|说明|类型
+---|-----|----
+refClientPageInfo.currPageIndex|滚动加载数据时需要参数 表示当前页数|`string`
+refShowClassCode|tab标签切换时所带tab标签的key值|`string`
+content|搜索时的内容|`string`
+condition(原id)|树节点切换时的key值|`string`
+treeNode|树形参照异步加载，传入treeNode参数返回子节点数组|`string`
+
+## 接口数据要求(请求返回数据)
+### 树
+```json
+{
+	"data": [{
+		"children": [{
+			"children": [],
+			"pid": "lkp",
+			"refpk": "857c41b7-e1a3-11e5-aa70-0242ac11001d",
+			"refcode": "wujd",
+			"id": "wujd",
+			"refname": "名字1"
+		}, {
+			"children": [],
+			"pid": "lkp",
+			"refpk": "780aca16-e1a3-11e5-aa70-0242ac11001d",
+			"refcode": "fzl",
+			"id": "fzl",
+			"refname": "名字2"
+		}],
+		"pid": "",
+		"refpk": "708918f5-e1a3-11e5-aa70-0242ac11001d",
+		"refcode": "lkp",
+		"id": "lkp",
+		"refname": "名字3"
+	}],
+	"page": {
+		"pageSize": 100,
+		"currPageIndex": 0,
+		"pageCount": 0
+	},
+	"allpks": null
+}
+```
+#### 树接口数据说明
+参数|说明|类型
+---|-----|----
+data|包含所有的树数据 包含参数children,id,refname,refpk  |`Array<object>`
+children|包含子树数据 包含参数同data |`Array<object>`
+id|....|`string`
+refname|树节点名字|`string`
+refpk|当前树节点的唯一标识|`string`
+other|非必要参数|`null`
+isLeaf|异步加载必要 是否是叶子节点|`boolean`
+
+### 单选多选
+```json
+{
+	"data": [{
+		"refpk": "xxcc2", 
+		"refcode": "wujd",
+		"refname": "名字1"
+	}, {
+		"refpk": "xxcc4",
+		"refcode": "test4",
+		"refname": "测试4"
+	}],
+	"page": {
+		"pageSize": 50,
+		"currPageIndex": 0,
+		"pageCount": 2
+	},
+	"allpks": null
+}
+```
+#### 单选多选接口数据说明
+参数|说明|类型
+---|-----|----
+data|包含所有的列表数据  数组内一个对象为一个节点|`Array<object>`
+refname|树节点名字|`string`
+refpk|当前节点的唯一标识|`string`
+other|非必要参数|`null`
+
+### 单表参照
+#### 单边参照--表头
+```json
+{
+	"strFieldCode": ["refcode", "refname", "refremark"],
+	"strFieldName": ["编码", "名称", "备注"],
+}
+```
+##### 表头接口数据说明
+参数|说明|类型
+---|-----|----
+strFieldName|表头的各个名字|`Array`
+strFieldCode|表头的各个名字所对应的唯一标示|`Array`
+other|非必要参数|`null`
+
+#### 单边参照--表体
+```json
+{
+	"data": [{
+		"refremark": "备注",
+		"refpk": "xxcc41",
+		"refcode": "test41",
+		"refname": "测试41"
+	}, {
+		"refremark": "备注",
+		"refpk": "xxcc42",
+		"refcode": "test42",
+		"refname": "测试42"
+	},],
+	"page": {
+		"pageSize": 50,
+		"currPageIndex": 0,
+		"pageCount": 2
+	},
+	"allpks": null
+}
+```
+##### 表体接口数据说明
+参数|说明|类型
+---|-----|----
+data|包含所有的表格数据|`Array<object>`
+param-in-object|根据表头的strFieldCode数组来进行设置|`string`
+refpk|当前节点的唯一标识|`string`
+page|用来进行数据滚动加载的翻页数据|`object`
+pageCount|总数据页数(页数计算时从0开始)|`number`
+other|非必要参数|`null`
+
+# Change log
+- yyuap-ref
+- 1.0.0 测试版本
+- 1.0.1 正式版本
+- 1.0.2 修复部分问题
+- 1.0.3 支持修改url请求地址与参数
+- 1.0.4 增加支持单选 完善文档
+- 1.0.5 集成注销事件
+- 1.0.6 增加对分页的支持
+- 1.0.7 更新readme
+- 1.0.8 修复分页bug
+- 1.0.9 gulp 改打包方式 测试
+- 1.0.10 gulp alise错误修复
+- 1.0.11 修复icon引入错误
+- 1.0.12 增加参照样式控制
+- 1.0.13 参照无数据时样式
+- 1.0.14 参照样式控制提升
+- 1.0.15 参照样式调整
+- 1.0.16 参照样式checkbox调整
+- 1.0.17 参照选中逻辑调整 css调整
+- 1.0.18 本地启动服务适配ie9 添加全选逻辑
+- 1.0.19 树卡无数据bug修复
+- 1.0.20 增加全部数据请求可配地址
+- 1.0.21 增加双击事件
+- 1.0.22 bug调整
+- 1.0.23 调整遮罩层与dependence
+- 1.0.24 适配需求 (表头 code->refcode name->refname)
+- 1.0.25 checkbox依赖调整
+- 1.0.26 分页带请求参数
+- 1.0.27 适配需求摘出
+- 1.0.28 写死版本号
+- 1.0.29~35 调整具体版本 适配工作台
+- 1.0.36 广适配(checkbox调整)
+- 1.0.37 适配(checkbox调整 diwork)
+- 1.0.38 适配(checkbox调整 非diwork)
+- 1.0.39 样式调整
+- 1.0.40|41 适配diwork checkbox
+- 1.0.42|43 react版本适配
+- 1.0.44 完成peer
+- 1.0.45 工作台 搜索css调整
+- 1.0.46 非工作台 搜索css调整
+- 1.0.47 工作台 搜索 双击事件
+- 1.0.48 非工作台 搜索 双击事件
+- 1.0.49 非工作台 树 style
+- 1.0.50 reradme更改
+- 1.0.51-53 树参照调整(52工作台 53非工作台)
+- 1.0.54-56 树参照在树卡型下的调整(54工作台 55|6非工作台)
+- 1.0.57 树参照 点击加载
+
+# License
+MIT
