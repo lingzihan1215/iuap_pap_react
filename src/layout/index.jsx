@@ -4,7 +4,7 @@ import "./index.less";
 
 const urlListPreview = [
   // 标准示例
-  { url: "/home/pagination-table", name: "标准表格分页组件示例" },
+  { url: "/templates/pagination-table", name: "标准表格分页组件示例" },
 
   // 订单管理
   { url: "/order/managelist", name: "订单列表" },
@@ -22,10 +22,10 @@ const urlListPreview = [
   { url: "/supplier/detail", name: "供应商详情" },
 
   //示例节点
-  { url: "/home/example", name: "单表查询" },
-  { url: "/home/example-edit", name: "表格多选" },
-  { url: "/home/example-select", name: "表格编辑" },
-  { url: "/home/example-step", name: "STEP示例" }
+  { url: "/templates/example", name: "单表查询" },
+  { url: "/templates/example-edit", name: "表格多选" },
+  { url: "/templates/example-select", name: "表格编辑" },
+  { url: "/templates/example-step", name: "STEP示例" }
 
 ];
 
