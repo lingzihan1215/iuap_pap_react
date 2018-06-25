@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { Table,Button,FormControl,InputNumber,Popconfirm } from 'tinper-bee'
 import moment from "moment/moment";
 import { actions } from "mirrorx";
+import './index.less';
 
-class EditTable extends Component {
+class MultiTable extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -21,4 +22,4 @@ class EditTable extends Component {
     }
 }
 
-export default EditTable;
+export default MultiTable;

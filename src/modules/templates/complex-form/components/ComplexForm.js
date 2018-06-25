@@ -15,7 +15,7 @@ import './index.less';
  * 2、当form区域校验时，会调用此组件的 validates 方法，并将校验结果传入。 如果校验失败则不跳转到下一页
  * 3、每一块form区域校验后，将校验后的结果存入到此组件的 formData 这个state中，最后提交将 formData 传入到后台即可
  */
-class exampleStep extends Component{
+class ComplexForm extends Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -28,7 +28,7 @@ class exampleStep extends Component{
      * 下一页
      */
     next=()=> {
-        actions.example.updateState({
+        actions.complex.updateState({
             validateNum:this.state.current
         })
     }
@@ -47,7 +47,7 @@ class exampleStep extends Component{
      */
     commit=()=>{
         console.log(this.state.formData);
-        actions.example.updateState({
+        actions.complex.updateState({
             validateNum:this.state.current
         })
     }
@@ -110,4 +110,4 @@ class exampleStep extends Component{
     }
 }
 
-export default Form.createForm()(exampleStep);
+export default Form.createForm()(ComplexForm);

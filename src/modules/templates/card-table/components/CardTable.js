@@ -3,7 +3,7 @@ import { Table,Button,FormControl,InputNumber,Popconfirm } from 'tinper-bee'
 import moment from "moment/moment";
 import { actions } from "mirrorx";
 
-class EditTable extends Component {
+class CardTable extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -71,7 +71,7 @@ class EditTable extends Component {
         const target = newData.filter(item => id === item.id)[0];
         if (target) {
             target[column] = parseInt(value);
-            actions.example.updateState({
+            actions.cardTable.updateState({
                 list: newData
             });
         }
@@ -84,7 +84,7 @@ class EditTable extends Component {
         const target = newData.filter(item => id === item.id)[0];
         if (target) {
             target[column] = value;
-            actions.example.updateState({
+            actions.cardTable.updateState({
                 list: newData
             });
         }
@@ -99,13 +99,13 @@ class EditTable extends Component {
         if (target.isNew) {
             delete target.isNew;
             target.editable = true;
-            actions.example.updateState({
+            actions.cardTable.updateState({
                 list: newData
             });
         } else {
             if (target) {
                 target.editable = true;
-                actions.example.updateState({
+                actions.cardTable.updateState({
                     list: newData
                 });
             }
@@ -121,7 +121,7 @@ class EditTable extends Component {
         const target = newData.filter(item => id === item.id)[0];
         if (target) {
             delete target.editable;
-            actions.example.updateState({
+            actions.cardTable.updateState({
                 list: newData
             });
             this.cacheData = newData.map(item => ({ ...item }));
@@ -132,7 +132,7 @@ class EditTable extends Component {
                 delete newRow.id;
             }
             //TO DO : Save Data
-            let result = await actions.example.saveList(newRow);
+            let result = await actions.cardTable.saveList(newRow);
             if (result.data.success) {
                 this.setState({ loading: false });
                 this.loadList();
@@ -149,14 +149,14 @@ class EditTable extends Component {
         const target = newData.filter(item => id === item.id)[0];
         if (target.isNew) {
             newData.splice(index, 1);
-            actions.example.updateState({
+            actions.cardTable.updateState({
                 list: newData
             });
         } else {
             if (target) {
                 Object.assign(target, this.cacheData.filter(item => id === item.id)[0]);
                 delete target.editable;
-                actions.example.updateState({
+                actions.cardTable.updateState({
                     list: newData
                 });
             }
@@ -169,19 +169,19 @@ class EditTable extends Component {
     remove = async (id) => {
         this.setState({ loading: true });
         console.log('删除ID：', id);
-        let result = await actions.example.removeList(id);
+        let result = await actions.cardTable.removeList(id);
         if (result.data.success) {
             this.setState({ loading: false });
             this.loadList();
         }
     }
     handleSelect = (eventKey) => {
-        actions.example.updateState({ pageIndex: eventKey });
+        actions.cardTable.updateState({ pageIndex: eventKey });
         this.loadList();
     }
 
     dataNumSelect = (index, value) => {
-        actions.example.updateState({ pageSize: value });
+        actions.cardTable.updateState({ pageSize: value });
     }
     handlerAddClick = () => {
         const newData = [...this.props.list];
@@ -200,7 +200,7 @@ class EditTable extends Component {
             unit: ""
         };
         newData.push(item);
-        actions.example.updateState({
+        actions.cardTable.updateState({
             list: newData
         });
     }
@@ -302,5 +302,4 @@ class EditTable extends Component {
         )
     }
 }
-
-export default EditTable;
+export default CardTable;

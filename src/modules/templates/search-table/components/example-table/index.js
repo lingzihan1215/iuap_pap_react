@@ -3,7 +3,8 @@ import { actions } from "mirrorx";
 import { Table,Button } from 'tinper-bee'
 import moment from "moment/moment";
 
-export default class BoardTable extends Component {
+// ExampleTable 组件定义
+class ExampleTable extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -13,9 +14,12 @@ export default class BoardTable extends Component {
     /**
      * 编辑
      */
-    edit=(record,editFlag)=>{
+    edit = (record,editFlag) => {
         console.log('进入编辑')
     }
+    /**
+     * 
+     */
     render(){
         const self = this;
         const column = [
@@ -23,6 +27,7 @@ export default class BoardTable extends Component {
                 title: "序号",
                 dataIndex: "index",
                 key: "index",
+                width: 80,
                 render(record, text, index) {
                     return index + 1;
                 }
@@ -31,13 +36,14 @@ export default class BoardTable extends Component {
                 title: "订单编号",
                 dataIndex: "orderCode",
                 key: "orderCode",
+                width: 200,
                 onCellClick: (record) => this.cellClick(record, false)
             },
             {
                 title: "供应商名称",
                 dataIndex: "supplierName",
                 key: "supplierName",
-                width: 300
+                width: 200
             },
             {
                 title: "类型",
@@ -111,3 +117,5 @@ export default class BoardTable extends Component {
         )
     }
 }
+
+export default ExampleTable

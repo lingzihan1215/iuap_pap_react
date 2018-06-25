@@ -4,94 +4,7 @@ import { actions } from 'mirrorx';
 import { Button } from 'tinper-bee';
 import moment from "moment/moment";
 
-const dataList = [ 
-    { 
-        index: 1, 
-        orderCode:"2343", 
-        supplierName: "xxx",
-        type_name: "123",
-        purchasing:'内行', 
-        purchasingGroup:"323",
-        voucherDate:"kkkk",
-        approvalState_name:"vvvv",
-        confirmState_name:"aaaa",
-        closeState_name:"vnnnnn",
-        d:"操作",
-        key: "2"
-    }, 
-    { 
-        index: 1, 
-        orderCode:"2343", 
-        supplierName: "xxx",
-        type_name: "123",
-        purchasing:'内行', 
-        purchasingGroup:"323",
-        voucherDate:"kkkk",
-        approvalState_name:"vvvv",
-        confirmState_name:"aaaa",
-        closeState_name:"vnnnnn",
-        d:"操作",
-        key: "2"
-    }, 
-    { 
-        index: 1, 
-        orderCode:"2343", 
-        supplierName: "xxx",
-        type_name: "123",
-        purchasing:'内行', 
-        purchasingGroup:"323",
-        voucherDate:"kkkk",
-        approvalState_name:"vvvv",
-        confirmState_name:"aaaa",
-        closeState_name:"vnnnnn",
-        d:"操作",
-        key: "2"
-    },
-    { 
-        index: 1, 
-        orderCode:"2343", 
-        supplierName: "xxx",
-        type_name: "123",
-        purchasing:'内行', 
-        purchasingGroup:"323",
-        voucherDate:"kkkk",
-        approvalState_name:"vvvv",
-        confirmState_name:"aaaa",
-        closeState_name:"vnnnnn",
-        d:"操作",
-        key: "2"
-    }, 
-    { 
-        index: 1, 
-        orderCode:"2343", 
-        supplierName: "xxx",
-        type_name: "123",
-        purchasing:'内行', 
-        purchasingGroup:"323",
-        voucherDate:"kkkk",
-        approvalState_name:"vvvv",
-        confirmState_name:"aaaa",
-        closeState_name:"vnnnnn",
-        d:"操作",
-        key: "2"
-    }, 
-    { 
-        index: 1, 
-        orderCode:"2343", 
-        supplierName: "xxx",
-        type_name: "123",
-        purchasing:'内行', 
-        purchasingGroup:"323",
-        voucherDate:"kkkk",
-        approvalState_name:"vvvv",
-        confirmState_name:"aaaa",
-        closeState_name:"vnnnnn",
-        d:"操作",
-        key: "2"
-    }
-]
-
-export default class ExamplePaginationTable extends Component {
+export default class SimplePaginationTable extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -103,7 +16,7 @@ export default class ExamplePaginationTable extends Component {
     }
     componentWillMount(){
         this.setState({ step: this.props.pageSize })
-        actions.example.loadList();//table数据
+        actions.searchTable.loadList();//table数据
     }
     getCloumns(){
         const column = [
@@ -198,12 +111,12 @@ export default class ExamplePaginationTable extends Component {
         })
     }
     onPageSizeSelect = (index, value) => {
-        actions.example.loadList({
+        actions.searchTable.loadList({
             pageSize: value
         })
     }
     onPageIndexSelect = value => {
-        actions.example.loadList({
+        actions.searchTable.loadList({
             pageIndex: value
         })
     }

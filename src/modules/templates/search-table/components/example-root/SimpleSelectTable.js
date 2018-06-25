@@ -4,18 +4,17 @@ import moment from "moment/moment";
 import multiSelect from "tinper-bee/lib/multiSelect.js";
 let MultiSelectTable = multiSelect(Table, Checkbox);
 
-export default class BoardTable extends Component {
+export default class SimpleSelectTable extends Component {
     constructor(props){
         super(props);
         this.state = {
             selectData:[]
         }
     }
-
     /**
      * 编辑
      */
-    edit=()=>{
+    edit = () =>{
         console.log('进入编辑');
     }
     /**

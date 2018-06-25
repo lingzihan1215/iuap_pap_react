@@ -9,7 +9,7 @@ const FormItem = Form.FormItem;
 const { RangePicker } = DatePicker;
 import './index.less'
 
-class BoardForm extends Component {
+class ExampleForm extends Component {
     constructor(props){
         super(props)
         this.state = {
@@ -19,24 +19,36 @@ class BoardForm extends Component {
             voucherDate: []
         }
     }
+    componentWillMount(){
+        // 获得订单类型列表数据
+        actions.searchTable.getOrderTypes();
+    }
     /** 查询数据
      * @param {*} error 校验是否成功
      * @param {*} values 表单数据
      */
     search = (error,values) => {
-        let voucherDate = values.voucherDate;
-        if (voucherDate && voucherDate.length) {
-            values.starTime = voucherDate[0].format('YYYY-MM-DD');
-            values.endTime = voucherDate[1].format('YYYY-MM-DD');
-        } else {
-            values.starTime = '';
-            values.endTime = '';
-        }
-        delete values.voucherDate;
-        values.pageIndex = this.props.pageIndex || 0,
-        values.pageSize = this.props.pageSize || 10,
-        actions
-        actions.example.loadList(values);
+        debugger;
+
+        this.props.form.validateFields((err, values) => {
+            let voucherDate = values.voucherDate;
+
+            if (voucherDate && voucherDate.length) {
+                values.starTime = voucherDate[0].format('YYYY-MM-DD');
+                values.endTime = voucherDate[1].format('YYYY-MM-DD');
+            } else {
+                values.starTime = '';
+                values.endTime = '';
+            }
+            delete values.voucherDate;
+
+            values.pageIndex = this.props.pageIndex || 0;
+            values.pageSize = this.props.pageSize || 10;
+
+            actions.searchTable.loadList(values);
+        });
+
+        
     }
     /**
      * 重置
@@ -51,9 +63,15 @@ class BoardForm extends Component {
     }
     render(){
         const { getFieldProps, getFieldError } = this.props.form;
-        const { orderTypes } = this.props;
+        let { orderTypes } = this.props;
+        let _this = this;
+
         return (
-            <SearchPanel className='example-form' form={this.props.form} reset={this.reset} search={this.search}>
+            <SearchPanel 
+                className='example-form' 
+                form={this.props.form} 
+                reset={this.reset} 
+                search={this.search}>
                 <Row>
                     <Col md={4} xs={6}>
                         <FormItem>
@@ -79,7 +97,7 @@ class BoardForm extends Component {
                             />
                         </FormItem>
                     </Col>
-                    <Col md={4} xs={4}>
+                    <Col md={4} xs={6}>
                         <FormItem>
                             <Label className='time'>凭证日期：</Label>
                             <RangePicker
@@ -89,7 +107,7 @@ class BoardForm extends Component {
                                 {
                                     ...getFieldProps('voucherDate', {
                                         onChange: function (v) {
-                                            self.setState({
+                                            _this.setState({
                                                 voucherDate: v
                                             })
                                         }
@@ -140,7 +158,7 @@ class BoardForm extends Component {
                                     ...getFieldProps('approvalState', {
                                         initialValue: '',
                                         onChange(value) {
-                                            self.setState({ approvalState: value });
+                                            _this.setState({ approvalState: value });
                                         },
                                     })
                                 }
@@ -160,7 +178,7 @@ class BoardForm extends Component {
                                     ...getFieldProps('closeState', {
                                         initialValue: '',
                                         onChange(value) {
-                                            self.setState({ closeState: value });
+                                            _this.setState({ closeState: value });
                                         },
                                     })
                                 }
@@ -180,7 +198,7 @@ class BoardForm extends Component {
                                     ...getFieldProps('confirmState', {
                                         initialValue: '',
                                         onChange(value) {
-                                            self.setState({ confirmState: value });
+                                            _this.setState({ confirmState: value });
                                         },
                                     })
                                 }
@@ -198,4 +216,4 @@ class BoardForm extends Component {
     }
 }
 
-export default Form.createForm()(BoardForm)
+export default Form.createForm()(ExampleForm)

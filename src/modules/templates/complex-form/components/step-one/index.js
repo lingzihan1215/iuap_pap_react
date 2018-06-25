@@ -29,7 +29,7 @@ class StepOne extends Component{
                 this.props.validatefn(error,values)
             })
         }
-        actions.example.updateState({
+        actions.complex.updateState({
             validateNum:99
         })
     }

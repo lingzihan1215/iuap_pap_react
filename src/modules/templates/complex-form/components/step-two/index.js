@@ -17,7 +17,7 @@ const defaultProps = {
     validateFlag:false,
 };
 
-class StepThree extends Component{
+class StepTwo extends Component{
 
     /**
      * 当组件的props变化是进入该方法
@@ -25,69 +25,69 @@ class StepThree extends Component{
      */
     componentWillReceiveProps(nextProps) {
         if (nextProps.validateFlag&&(!this.props.validateFlag)) {
-            this.props.form.validateFields(['companyName','companyCode','companyDescription'],{},(error,values)=>{//这里需要写要检验的字段，否则全部校验
+            this.props.form.validateFields(['userName','userCode','userDescription'],{},(error,values)=>{//这里需要写要检验的字段，否则全部校验
                 this.props.validatefn(error,values)
             })
         }
-        actions.example.updateState({
+        actions.complex.updateState({
             validateNum:99
         })
     }
     render(){
         const { getFieldProps, getFieldError} = this.props.form;
         return (
-            <div className='step-three'>
+            <div className='step-two'>
                 <Row>
                     <Col md={4} xs={6}>
                         <FormItem>
-                            <Label>公司名称：</Label> <span className='mast'>*</span>
-                            <FormControl placeholder='请输入公司名称'
+                            <Label>人员名称：</Label> <span className='mast'>*</span>
+                            <FormControl placeholder='请输入人员名称'
                                 {
-                                    ...getFieldProps('companyName', {
+                                    ...getFieldProps('userName', {
                                         initialValue: '',
                                         validateTrigger: 'onBlur',
                                         rules: [{ 
                                             required: true, 
-                                            message: '请填写公司名称' 
+                                            message: '请填写人员名称' 
                                         }],
                                     })
                                 }
                             />
                             <span className='error'>
                                 {
-                                    getFieldError('companyName')
+                                    getFieldError('userName')
                                 }
                             </span>
                         </FormItem>
                     </Col>
                     <Col md={4} xs={6}>
                         <FormItem>
-                            <Label>公司编码：</Label><span className='mast'>*</span>
-                            <FormControl placeholder='请输入公司编码'
+                            <Label>人员编码：</Label><span className='mast'>*</span>
+                            <FormControl placeholder='请输入人员编码'
                                 {
-                                    ...getFieldProps('companyCode', {
+                                    ...getFieldProps('userCode', {
                                         initialValue: '',
                                         validateTrigger: 'onBlur',
                                         rules: [{ 
                                             required: true, 
-                                            message: '请填写公司编码' 
+                                            message: '请填写人员编码' 
                                         }],
                                     })
                                 }
                             />
                             <span className='error'>
                                 {
-                                    getFieldError('companyCode')
+                                    getFieldError('userCode')
                                 }
                             </span>
                         </FormItem>
                     </Col>
                     <Col md={4} xs={6}>
                         <FormItem>
-                            <Label>公司描述：</Label>
-                            <FormControl placeholder='请输入公司描述'
+                            <Label>人员描述：</Label>
+                            <FormControl placeholder='请输入人员描述'
                                 {
-                                    ...getFieldProps('companyDescription', {
+                                    ...getFieldProps('userDescription', {
                                         initialValue: '',
                                     })
                                 }
@@ -100,6 +100,6 @@ class StepThree extends Component{
     }
 }
 
-StepThree.propTypes = propTypes;
-StepThree.defaultProps = defaultProps;
-export default StepThree;
+StepTwo.propTypes = propTypes;
+StepTwo.defaultProps = defaultProps;
+export default StepTwo;

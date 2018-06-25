@@ -6,7 +6,7 @@ import { processData } from "utils";
 
 export default {
     // 确定 Store 中的数据模型作用域
-    name: "example", 
+    name: "searchTable", 
     // 设置当前 Model 所需的初始化 state
     initialState: {  
         showLoading:false,
@@ -40,7 +40,7 @@ export default {
          */
         async loadList(param, getState) {
             // 正在加载数据，显示加载 Loading 图标
-            actions.example.updateState({ showLoading:true })
+            actions.searchTable.updateState({ showLoading:true })
             if(param){
                 param.pageIndex = param.pageIndex ? param.pageIndex - 1 : 0;
                 param.pageSize = param.pageSize ? param.pageSize : 10;
@@ -50,7 +50,7 @@ export default {
             // 调用 getList 请求数据
             let res = processData(await api.getList(param)); 
             
-            actions.example.updateState({  showLoading:false })
+            actions.searchTable.updateState({  showLoading:false })
 
             if (res) {
                 if(res.content&&res.content.length){
@@ -58,7 +58,7 @@ export default {
                         res.content[i].key=i+1;
                     }
                 }
-                actions.example.updateState({
+                actions.searchTable.updateState({
                     list: res.content,
                     pageIndex:res.number + 1,
                     pageSize:res.size,
@@ -72,7 +72,7 @@ export default {
          * @param {*} getState 
          */
         getOrderTypes(param,getState){
-            actions.example.updateState({
+            actions.searchTable.updateState({
             orderTypes:  [{
                 "code":"0",
                 "name":"D001"

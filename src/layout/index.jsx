@@ -4,8 +4,13 @@ import "./index.less";
 
 const urlListPreview = [
   // 标准示例
-  { url: "/templates/pagination-table", name: "标准表格分页组件示例" },
-
+  { url: "/templates/simple-table", name: "简单单表示例" },
+  { url: "/templates/select-table", name: "简单多选表格示例" },
+  { url: "/templates/pagination-table", name: "简单分页表格示例" },
+  { url: "/templates/card-table", name: "可编辑表格示例" },
+  { url: "/templates/complex-form", name: "复杂表单注册" },
+  { url: "/templates/ref-exmaple", name: "参照功能示例" },
+  
   // 订单管理
   { url: "/order/managelist", name: "订单列表" },
   { url: "/order/delivery", name: "送货单" },
@@ -20,13 +25,6 @@ const urlListPreview = [
   { url: "/supplier/register", name: "供应商注册" },
   { url: "/supplier/list", name: "供应商管理" },
   { url: "/supplier/detail", name: "供应商详情" },
-
-  //示例节点
-  { url: "/templates/example", name: "单表查询" },
-  { url: "/templates/example-edit", name: "表格多选" },
-  { url: "/templates/example-select", name: "表格编辑" },
-  { url: "/templates/example-step", name: "STEP示例" }
-
 ];
 
 const getURLList = () => {
