@@ -4,6 +4,93 @@ import { actions } from 'mirrorx';
 import { Button } from 'tinper-bee';
 import moment from "moment/moment";
 
+const dataList = [ 
+    { 
+        index: 1, 
+        orderCode:"2343", 
+        supplierName: "xxx",
+        type_name: "123",
+        purchasing:'内行', 
+        purchasingGroup:"323",
+        voucherDate:"kkkk",
+        approvalState_name:"vvvv",
+        confirmState_name:"aaaa",
+        closeState_name:"vnnnnn",
+        d:"操作",
+        key: "2"
+    }, 
+    { 
+        index: 1, 
+        orderCode:"2343", 
+        supplierName: "xxx",
+        type_name: "123",
+        purchasing:'内行', 
+        purchasingGroup:"323",
+        voucherDate:"kkkk",
+        approvalState_name:"vvvv",
+        confirmState_name:"aaaa",
+        closeState_name:"vnnnnn",
+        d:"操作",
+        key: "2"
+    }, 
+    { 
+        index: 1, 
+        orderCode:"2343", 
+        supplierName: "xxx",
+        type_name: "123",
+        purchasing:'内行', 
+        purchasingGroup:"323",
+        voucherDate:"kkkk",
+        approvalState_name:"vvvv",
+        confirmState_name:"aaaa",
+        closeState_name:"vnnnnn",
+        d:"操作",
+        key: "2"
+    },
+    { 
+        index: 1, 
+        orderCode:"2343", 
+        supplierName: "xxx",
+        type_name: "123",
+        purchasing:'内行', 
+        purchasingGroup:"323",
+        voucherDate:"kkkk",
+        approvalState_name:"vvvv",
+        confirmState_name:"aaaa",
+        closeState_name:"vnnnnn",
+        d:"操作",
+        key: "2"
+    }, 
+    { 
+        index: 1, 
+        orderCode:"2343", 
+        supplierName: "xxx",
+        type_name: "123",
+        purchasing:'内行', 
+        purchasingGroup:"323",
+        voucherDate:"kkkk",
+        approvalState_name:"vvvv",
+        confirmState_name:"aaaa",
+        closeState_name:"vnnnnn",
+        d:"操作",
+        key: "2"
+    }, 
+    { 
+        index: 1, 
+        orderCode:"2343", 
+        supplierName: "xxx",
+        type_name: "123",
+        purchasing:'内行', 
+        purchasingGroup:"323",
+        voucherDate:"kkkk",
+        approvalState_name:"vvvv",
+        confirmState_name:"aaaa",
+        closeState_name:"vnnnnn",
+        d:"操作",
+        key: "2"
+    }
+]
+
 export default class ExamplePaginationTable extends Component {
     constructor(props){
         super(props);
@@ -80,7 +167,7 @@ export default class ExamplePaginationTable extends Component {
                 dataIndex: "confirmState_name",
                 key: "confirmState_name",
                 width: 100
-            },
+            }, 
             {
                 title: "关闭状态",
                 dataIndex: "closeState_name",
@@ -89,9 +176,10 @@ export default class ExamplePaginationTable extends Component {
             },
             {
                 title: "操作",
-                dataIndex: "e",
-                key: "e",
-                // fixed: "right",
+                dataIndex: "d",
+                key: "d",
+                width:100,
+                fixed: "right",
                 render(text, record, index) {
                     return (
                         <div className='operation-btn'>
@@ -104,6 +192,7 @@ export default class ExamplePaginationTable extends Component {
         return column;
     }
     onTableSelectedData = data => {
+        console.log(data)
         this.setState({
             selectData: data
         })
@@ -125,7 +214,7 @@ export default class ExamplePaginationTable extends Component {
         return (
             <PaginationTable 
                 data={list}
-                showLoading={showLoading}
+                showLoading={false}
                 pageIndex={pageIndex}
                 pageSize={this.state.step}
                 totalPages={totalPages}
@@ -133,6 +222,7 @@ export default class ExamplePaginationTable extends Component {
                 onTableSelectedData={this.onTableSelectedData}
                 onPageSizeSelect={this.onPageSizeSelect}
                 onPageIndexSelect={this.onPageIndexSelect}
+                scroll={{ x: 1550, y: 200}}
             />
         )
         

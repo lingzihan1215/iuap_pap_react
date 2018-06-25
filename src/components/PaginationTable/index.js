@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { Table, Popover, Checkbox, Icon } from 'tinper-bee';
+import { Popover, Checkbox, Icon } from 'tinper-bee';
+import Table from 'bee-table';
 import PropTypes from 'prop-types';
 import Pagination from 'bee-pagination';
-import multiSelect from "tinper-bee/lib/multiSelect.js";
-import filterColumn from "tinper-bee/lib/filterColumn";
-import dragColumn from "tinper-bee/lib/dragColumn";
+import multiSelect from "bee-table/build/lib/newMultiSelect";
+import filterColumn from "bee-table/build/lib/filterColumn";
+import dragColumn from "bee-table/build/lib/dragColumn";
 
+import 'bee-table/build/Table.css';
 import 'bee-pagination/build/Pagination.css';
 import './index.less'
 
-const MultiSelectTable = multiSelect(Table, Checkbox);
-const DragColumnFilterTable = dragColumn(MultiSelectTable);
-
-const FilterColumnTable = filterColumn(MultiSelectTable, Checkbox, Popover, Icon);
+const DragColumnTable = dragColumn(filterColumn(multiSelect(Table, Checkbox), Popover));
 
 const propTypes = {
     // 表格行数据
@@ -33,7 +32,9 @@ const propTypes = {
     // 单页显示多少条，点击联动
     onPageSizeSelect: PropTypes.func.isRequired,
     // 页索引编号点击选中回调方法
-    onPageIndexSelect: PropTypes.func.isRequired
+    onPageIndexSelect: PropTypes.func.isRequired,
+    // 横向或纵向滚动条设置
+    scroll: PropTypes.object
 };
 
 const defaultProps = {
@@ -62,23 +63,24 @@ class PaginationTable extends Component {
         const { 
             data, showLoading, pageSize,
             pageIndex, totalPages, columns,
-            onTableSelectedData, onPageSizeSelect, onPageIndexSelect
+            onTableSelectedData, onPageSizeSelect, onPageIndexSelect,
+            scroll
         } = this.props;
 
         let dataNumSelect = [pageSize, pageSize * 2, pageSize * 3, pageSize * 4];
         
         return (
             <div className="table-list">
-                <FilterColumnTable
+                <DragColumnTable
                     bordered
                     loading={{ show: showLoading, loadingType: "line" }}
                     rowKey={(r, i) => i}
                     columns={columns}
                     data={data}
-                    multiSelect={{ type: "checkbox" }}
+                    multiSelect={{type: "checkbox"}}
                     getSelectedDataFunc={onTableSelectedData}
-                    scroll={{ x: 190, y: 500 }}
-                    draggable={true} 
+                    scroll
+                    dragborder={true}
                 />
                 <div className='pagination'>
                     <Pagination
