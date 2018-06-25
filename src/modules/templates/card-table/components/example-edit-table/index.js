@@ -3,7 +3,7 @@ import { Table,Button,FormControl,InputNumber,Popconfirm } from 'tinper-bee'
 import moment from "moment/moment";
 import { actions } from "mirrorx";
 
-export default class BoardTable extends Component {
+class EditTable extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -302,3 +302,5 @@ export default class BoardTable extends Component {
         )
     }
 }
+
+export default EditTable;
