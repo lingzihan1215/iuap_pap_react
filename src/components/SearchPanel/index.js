@@ -47,7 +47,7 @@ class SearchPanel extends Component {
             classes += ' '+className
         }
         return (
-           <div className='search-panel'>
+           <div className={classes}>
             {children}
                 <div className='search-panel-btn'>
                     <Button size='sm' className='reset-btn' onClick={this.reset}>{resetName?resetName:'清空'}</Button>
