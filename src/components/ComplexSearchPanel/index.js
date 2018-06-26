@@ -2,21 +2,19 @@ import React, { Component } from 'react';
 import { Button,Panel } from 'tinper-bee';
 import PropTypes from 'prop-types';
 import './index.less';
-import classnames from 'classnames';
-
 /**
  * 部分不能通过this.props.form.resetFields()清空的组件，需要传reset方法，在reset方法中自行清空
  */
 const propTypes = {
-    search: PropTypes.func,
-    reset:PropTypes.func,
-    resetName:PropTypes.string,
-    searchName:PropTypes.string,
-    simple:PropTypes.node,
-    complex:PropTypes.node,
-    moreName:PropTypes.string,
-    openFn:PropTypes.func,
-    closeFn:PropTypes.func
+    search: PropTypes.func,//查询回调
+    reset:PropTypes.func,//重置回调
+    resetName:PropTypes.string,//重置名称
+    searchName:PropTypes.string,//查询名称
+    simple:PropTypes.node,//简单查询表单
+    complex:PropTypes.node,//复杂查询表单
+    moreName:PropTypes.string,//展开更多查询名称
+    openFn:PropTypes.func,//更多查询展开回调
+    closeFn:PropTypes.func//更多查询关闭回调
 };
 
 const defaultProps = {
@@ -30,7 +28,7 @@ const defaultProps = {
 };
 
 
-class SearchPanel extends Component {
+class ComplexSearchPanel extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -83,6 +81,6 @@ class SearchPanel extends Component {
         )
     }
 }
-SearchPanel.propTypes = propTypes;
-SearchPanel.defaultProps = defaultProps;
-export default SearchPanel;
+ComplexSearchPanel.propTypes = propTypes;
+ComplexSearchPanel.defaultProps = defaultProps;
+export default ComplexSearchPanel;
