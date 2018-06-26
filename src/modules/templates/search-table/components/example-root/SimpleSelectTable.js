@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Button,Checkbox,Table } from 'tinper-bee';
 import moment from "moment/moment";
 import multiSelect from "tinper-bee/lib/multiSelect.js";
-let MultiSelectTable = multiSelect(Table, Checkbox);
+import Header from 'components/Header';
+import ExampleForm from '../example-form';
+const MultiSelectTable = multiSelect(Table, Checkbox);
 
 export default class SimpleSelectTable extends Component {
     constructor(props){
@@ -112,6 +114,8 @@ export default class SimpleSelectTable extends Component {
         ];
         return (
             <div className="example-select-table table-list">
+                <Header title='简单多选表格示例'/>
+                <ExampleForm { ...this.props }/>
                 <MultiSelectTable
                     loading={{ show: showLoading, loadingType: "line" }}
                     rowKey={(r, i) => i}

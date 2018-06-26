@@ -7,7 +7,6 @@ import Pagination from 'bee-pagination';
 import multiSelect from "bee-table/build/lib/newMultiSelect";
 import filterColumn from "bee-table/build/lib/filterColumn";
 import dragColumn from "bee-table/build/lib/dragColumn";
-
 import 'bee-table/build/Table.css';
 import 'bee-pagination/build/Pagination.css';
 import './index.less'

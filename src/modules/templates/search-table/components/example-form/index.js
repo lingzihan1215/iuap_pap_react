@@ -28,11 +28,8 @@ class ExampleForm extends Component {
      * @param {*} values 表单数据
      */
     search = (error,values) => {
-        debugger;
-
         this.props.form.validateFields((err, values) => {
             let voucherDate = values.voucherDate;
-
             if (voucherDate && voucherDate.length) {
                 values.starTime = voucherDate[0].format('YYYY-MM-DD');
                 values.endTime = voucherDate[1].format('YYYY-MM-DD');
@@ -65,7 +62,6 @@ class ExampleForm extends Component {
         const { getFieldProps, getFieldError } = this.props.form;
         let { orderTypes } = this.props;
         let _this = this;
-
         return (
             <SearchPanel 
                 className='example-form' 

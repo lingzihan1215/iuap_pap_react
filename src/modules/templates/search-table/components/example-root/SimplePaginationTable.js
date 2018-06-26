@@ -3,6 +3,8 @@ import PaginationTable from 'components/PaginationTable'
 import { actions } from 'mirrorx';
 import { Button } from 'tinper-bee';
 import moment from "moment/moment";
+import Header from 'components/Header';
+import ExampleForm from '../example-form';
 
 export default class SimplePaginationTable extends Component {
     constructor(props){
@@ -123,20 +125,24 @@ export default class SimplePaginationTable extends Component {
     
     render(){
         let { list, showLoading, pageIndex, pageSize, totalPages } = this.props;
-       
         return (
-            <PaginationTable 
-                data={list}
-                showLoading={false}
-                pageIndex={pageIndex}
-                pageSize={this.state.step}
-                totalPages={totalPages}
-                columns={this.getCloumns()}
-                onTableSelectedData={this.onTableSelectedData}
-                onPageSizeSelect={this.onPageSizeSelect}
-                onPageIndexSelect={this.onPageIndexSelect}
-                scroll={{ x: 1550, y: 200}}
-            />
+            <div className='example-root'>
+                <Header title='简单分页表格示例'/>
+                <ExampleForm { ...this.props }/>
+                <PaginationTable 
+                    data={list}
+                    showLoading={false}
+                    pageIndex={pageIndex}
+                    pageSize={this.state.step}
+                    totalPages={totalPages}
+                    columns={this.getCloumns()}
+                    onTableSelectedData={this.onTableSelectedData}
+                    onPageSizeSelect={this.onPageSizeSelect}
+                    onPageIndexSelect={this.onPageIndexSelect}
+                    scroll={{ x: 1550, y: 200}}
+                />
+            </div>
+
         )
         
     }

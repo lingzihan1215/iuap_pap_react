@@ -46,6 +46,7 @@ class ComplexForm extends Component{
      * 提交
      */
     commit=()=>{
+        console.log('*******')
         console.log(this.state.formData);
         actions.complex.updateState({
             validateNum:this.state.current
