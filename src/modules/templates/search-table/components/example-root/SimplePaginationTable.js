@@ -12,7 +12,6 @@ export default class SimplePaginationTable extends Component {
         this.state = {
             // 表格中所选中的数据，拿到后可以去进行增删改查
             selectData: [],
-            pageIndex: 0,
             step: 10
         }
     }
@@ -20,7 +19,49 @@ export default class SimplePaginationTable extends Component {
         this.setState({ step: this.props.pageSize })
         actions.searchTable.loadList();//table数据
     }
-    getCloumns(){
+    tabelSelect = (data) => {//tabel选中数据
+        this.setState({
+            selectData: data
+        })
+    }
+    /**
+     * 编辑,详情，增加
+     */
+    cellClick = (record, editFlag) => {
+        actions.routing.push(
+            {
+                pathname: 'example-edit',
+                detailObj: record,
+                editFlag: !!editFlag
+            }
+        )
+    }
+    delItem = (record, index) => {
+        actions.searchTable.delItem({
+            param: [{ id: record.id }],
+            index: index
+        });
+    }
+    onTableSelectedData = data => {
+        console.log(data)
+        this.setState({
+            selectData: data
+        })
+    }
+    onPageSizeSelect = (index, value) => {
+        actions.searchTable.loadList({
+            pageSize: value
+        })
+    }
+    onPageIndexSelect = value => {
+        actions.searchTable.loadList({
+            pageIndex: value
+        })
+    }
+    
+    render(){
+        const self=this;
+        let { list, showLoading, pageIndex, pageSize, totalPages } = this.props;
         const column = [
             {
                 title: "序号",
@@ -36,6 +77,7 @@ export default class SimplePaginationTable extends Component {
                 dataIndex: "orderCode",
                 key: "orderCode",
                 width: 250,
+                className:"td-detail",
                 onCellClick: (record) => this.cellClick(record, false)
             },
             {
@@ -98,44 +140,30 @@ export default class SimplePaginationTable extends Component {
                 render(text, record, index) {
                     return (
                         <div className='operation-btn'>
-                            <Button size='sm' className='edit-btn' onClick={() => { self.edit(record,true) }}>编辑</Button>
+                            <Button size='sm' className='edit-btn' onClick={() => { self.cellClick(record, true) }}>编辑</Button>
+                            <Button size='sm' className='del-btn' onClick={() => { self.delItem(record, index) }}>删除</Button>
                         </div>
                     )
                 }
             }
         ];
-        return column;
-    }
-    onTableSelectedData = data => {
-        console.log(data)
-        this.setState({
-            selectData: data
-        })
-    }
-    onPageSizeSelect = (index, value) => {
-        actions.searchTable.loadList({
-            pageSize: value
-        })
-    }
-    onPageIndexSelect = value => {
-        actions.searchTable.loadList({
-            pageIndex: value
-        })
-    }
-    
-    render(){
-        let { list, showLoading, pageIndex, pageSize, totalPages } = this.props;
         return (
             <div className='example-root'>
                 <Header title='简单分页表格示例'/>
                 <ExampleForm { ...this.props }/>
+                <div className='table-header'>
+                    <Button size='sm' shape="border" onClick={() => { self.cellClick({}, true) }}>
+                        新增
+                    </Button>
+                </div>
                 <PaginationTable 
                     data={list}
-                    showLoading={false}
+                    showLoading={showLoading}
                     pageIndex={pageIndex}
                     pageSize={this.state.step}
                     totalPages={totalPages}
-                    columns={this.getCloumns()}
+                    columns={column}
+                    getSelectedDataFunc={this.tabelSelect}
                     onTableSelectedData={this.onTableSelectedData}
                     onPageSizeSelect={this.onPageSizeSelect}
                     onPageIndexSelect={this.onPageIndexSelect}

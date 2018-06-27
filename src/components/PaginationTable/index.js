@@ -11,7 +11,7 @@ import 'bee-table/build/Table.css';
 import 'bee-pagination/build/Pagination.css';
 import './index.less'
 
-const DragColumnTable = dragColumn(filterColumn(multiSelect(Table, Checkbox), Popover));
+const DragColumnTable = dragColumn(filterColumn(Table, Popover));
 
 const propTypes = {
     // 表格行数据
@@ -62,7 +62,7 @@ class PaginationTable extends Component {
         const { 
             data, showLoading, pageSize,
             pageIndex, totalPages, columns,
-            onTableSelectedData, onPageSizeSelect, onPageIndexSelect,
+            getSelectedDataFunc, onPageSizeSelect, onPageIndexSelect,
             scroll
         } = this.props;
 
@@ -77,7 +77,7 @@ class PaginationTable extends Component {
                     columns={columns}
                     data={data}
                     multiSelect={{type: "checkbox"}}
-                    getSelectedDataFunc={onTableSelectedData}
+                    getSelectedDataFunc={getSelectedDataFunc}
                     scroll
                     dragborder={true}
                 />

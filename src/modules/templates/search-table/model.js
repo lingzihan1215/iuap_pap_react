@@ -12,7 +12,7 @@ export default {
         showLoading:false,
         list: [],
         orderTypes:[],
-        pageIndex:0,
+        pageIndex:1,
         pageSize:10,
         totalPages:1,
         detail:{},
