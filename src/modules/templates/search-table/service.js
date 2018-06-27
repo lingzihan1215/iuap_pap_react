@@ -4,7 +4,9 @@ import request from "utils/request";
 const URL = { 
     "GET_LIST":  `${GROBAL_HTTP_CTX}/sany_order/list`,
     "DELETE": `${GROBAL_HTTP_CTX}/sany_delivery/delete`,
-    "SAVE": `${GROBAL_HTTP_CTX}/sany_delivery/save`
+    "SAVE": `${GROBAL_HTTP_CTX}/sany_delivery/save`,
+    "SAVE_ORDER":  `${GROBAL_HTTP_CTX}/sany_order/save`,
+    "DEL_ORDER":  `${GROBAL_HTTP_CTX}/sany_order/delete`,
 }
 
 /**
@@ -51,5 +53,17 @@ export const saveList = (params) => {
     return request(URL.SAVE, {
         method: "post",
         data:params
+    });
+}
+export const saveOrder = (params) => {
+    return request(URL.SAVE_ORDER, {
+        method: "post",
+        data: params
+    });
+}
+export const delOrder = (params) => {
+    return request(URL.DEL_ORDER, {
+        method: "post",
+        data: params
     });
 }

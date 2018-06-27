@@ -12,10 +12,22 @@ class ExampleTable extends Component {
         }
     }
     /**
-     * 编辑
+     * 编辑,详情，增加
      */
-    edit = (record,editFlag) => {
-        console.log('进入编辑')
+    cellClick = (record, editFlag) => {
+        actions.routing.push(
+            {
+                pathname: 'example-edit',
+                detailObj: record,
+                editFlag: !!editFlag
+            }
+        )
+    }
+    delItem = (record, index) => {
+        actions.searchTable.delItem({
+            param: [{ id: record.id }],
+            index: index
+        });
     }
     /**
      * 
@@ -97,16 +109,21 @@ class ExampleTable extends Component {
                 render(text, record, index) {
                     return (
                         <div className='operation-btn'>
-                            <Button size='sm' className='edit-btn' onClick={() => { self.edit(record,true) }}>编辑</Button>
+                            <Button size='sm' className='edit-btn' onClick={() => { self.cellClick(record, true) }}>编辑</Button>
+                            <Button size='sm' className='del-btn' onClick={() => { self.delItem(record, index) }}>删除</Button>
                         </div>
                     )
                 }
             }
         ];
         const { list,showLoading,pageSize, pageIndex, totalPages, } = this.props;
-        
         return (
             <div className="table-list">
+            <div className='table-header'>
+                <Button size='sm' shape="border" onClick={() => { self.cellClick({}, true) }}>
+                    新增
+                </Button>
+            </div>
                 <Table
                     loading={{show:showLoading,loadingType:"line"}}
                     rowKey={(r,i)=>i}

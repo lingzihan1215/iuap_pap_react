@@ -5,6 +5,7 @@ import {
     ConnectedSimpleTable, 
     ConnectedSimpleSelectTable,
     ConnectedSimplePaginationTable,
+    ConnectedExampleEdit
 } from './search-table/container';
 
 import {
@@ -55,6 +56,7 @@ export default ({ match }) => (
         <Route exact path={`${match.url}/simple-table`} component={ConnectedSimpleTable} />
         <Route exact path={`${match.url}/select-table`} component={ConnectedSimpleSelectTable} />
         <Route exact path={`${match.url}/pagination-table`} component={ConnectedSimplePaginationTable} />
+        <Route exact path={`${match.url}/example-edit`} component={ConnectedExampleEdit} />
         <Route exact path={`${match.url}/card-table`} component={ConnectedCardTable} />
         <Route exact path={`${match.url}/multi-table`} component={ConnectedMultiTable} />
         <Route exact path={`${match.url}/tree-table`} component={ConnectedTreeTable} />

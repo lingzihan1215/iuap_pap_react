@@ -106,5 +106,25 @@ export default {
             let result = await api.deleteList([{id}]);
             return result;
         },
+        
+        async delItem(param,getState){
+            actions.searchTable.updateState({
+              showLoading:true
+            })
+            let res=processData(await api.delOrder(param.param),'删除成功');
+            actions.searchTable.loadList();
+          },
+          async save(param,getState){//保存
+            actions.searchTable.updateState({
+              showLoading:true
+            })
+            let res=processData(await api.saveOrder(param),'保存成功');
+            if(res){
+               window.history.go(-1);
+            }
+            actions.searchTable.updateState({
+              showLoading:false
+            });
+          },
     }
 };
