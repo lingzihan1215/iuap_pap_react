@@ -57,6 +57,8 @@
     "bee-upload": "^1.0.0",
     "classnames": "^2.2.5",
     "core-js": "^2.5.7",
+    "echarts": "^4.1.0",
+    "echarts-for-react": "^2.0.13",
     "mirrorx": "^0.2.10",
     "moment": "^2.21.0",
     "prop-types": "^15.6.0",

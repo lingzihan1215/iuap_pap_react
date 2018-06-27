@@ -27,6 +27,10 @@ import {
     ConnectedTreeTable
 } from './tree-table/container';
 
+import {
+    ConnectedBar,ConnectedLine,ConnectedPie,ConnectedBarLine
+} from './echarts/container';
+
 
 /**
  * 路由说明：
@@ -40,6 +44,11 @@ import {
  * 5、复杂信息表单【complex-form】：如供应商注册功能页面
  * 6、参照功能示例【ref-exmaple】：
  * 7、BPM 流程功能示例【】：如督办任务功能页面
+ * 8、echarts 图表示例
+ *      bar:柱状图
+ *      line:折线图
+ *      pie:饼图
+ *      bar-line:柱状折线图
  */
 export default ({ match }) => (
     <div className="templates-route">
@@ -51,5 +60,9 @@ export default ({ match }) => (
         <Route exact path={`${match.url}/tree-table`} component={ConnectedTreeTable} />
         <Route exact path={`${match.url}/complex-form`} component={ConnectedComplexForm} />
         <Route exact path={`${match.url}/ref-exmaple`} component={ConnectedRef} />
+        <Route exact path={`${match.url}/bar`} component={ConnectedBar} />
+        <Route exact path={`${match.url}/line`} component={ConnectedLine} />
+        <Route exact path={`${match.url}/pie`} component={ConnectedPie} />
+        <Route exact path={`${match.url}/bar-line`} component={ConnectedBarLine} />
     </div>
 )
