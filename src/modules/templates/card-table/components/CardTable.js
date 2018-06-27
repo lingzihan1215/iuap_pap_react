@@ -7,8 +7,19 @@ class CardTable extends Component {
     constructor(props){
         super(props);
         this.state = {
-            
+            loading: false,
         }
+    }
+    componentDidMount = () => {
+        this.loadList();//加载表格
+        actions.cardTable.getFactory();//加载工厂列表
+    }
+    //加载表格
+    loadList = async () => {
+        this.setState({ loading: true });
+        let data = await actions.cardTable.getList();
+        this.cacheData = data.map(item => ({ ...item }));
+        this.setState({ loading: false });
     }
     /**
      * 设置tableCell  FormControl
