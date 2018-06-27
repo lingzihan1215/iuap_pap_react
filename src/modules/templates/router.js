@@ -30,7 +30,7 @@ import {
 
 /**
  * 路由说明：
- * 1、单表【earch-table】：
+ * 1、单表【search-table】：
  *      simple-table：form+最简单表格
  *      select-table：form+带多选的表格
  *      pagination-table：form+综合表格功能
