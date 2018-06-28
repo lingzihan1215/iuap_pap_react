@@ -104,7 +104,7 @@ class PaginationTableDrag extends Component {
     }
 }
 
-PaginationTable.propTypes = propTypes;
-PaginationTable.defaultProps = defaultProps;
+PaginationTableDrag.propTypes = propTypes;
+PaginationTableDrag.defaultProps = defaultProps;
 
 export default PaginationTableDrag
