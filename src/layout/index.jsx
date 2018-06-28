@@ -10,6 +10,8 @@ const urlListPreview = [
   { url: "/templates/card-table", name: "可编辑表格示例" },
   { url: "/templates/complex-form", name: "复杂表单注册" },
   { url: "/templates/ref-exmaple", name: "参照功能示例" },
+  { url: "/templates/bpm-table", name: "流程组件示例" },
+
   
   // 订单管理
   { url: "/order/managelist", name: "订单列表" },

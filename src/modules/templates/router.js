@@ -32,7 +32,12 @@ import {
     ConnectedBar,ConnectedLine,ConnectedPie,ConnectedBarLine
 } from './echarts/container';
 
+import {
+    ConnectedBpmTable,
+    ConnectedBpmCard
+} from './bpm/container';
 
+import BPM from './bpm/components/BPM/Bpm'
 /**
  * 路由说明：
  * 1、单表【search-table】：
@@ -44,7 +49,7 @@ import {
  * 4、树表【tree-table】：
  * 5、复杂信息表单【complex-form】：如供应商注册功能页面
  * 6、参照功能示例【ref-exmaple】：
- * 7、BPM 流程功能示例【】：如督办任务功能页面
+ * 7、BPM 流程功能示例【bpm-table】：如督办任务功能页面
  * 8、echarts 图表示例
  *      bar:柱状图
  *      line:折线图
@@ -62,6 +67,9 @@ export default ({ match }) => (
         <Route exact path={`${match.url}/tree-table`} component={ConnectedTreeTable} />
         <Route exact path={`${match.url}/complex-form`} component={ConnectedComplexForm} />
         <Route exact path={`${match.url}/ref-exmaple`} component={ConnectedRef} />
+        <Route exact path={`${match.url}/bpm-table`} component={ConnectedBpmTable} />
+        <Route exact path={`${match.url}/bpm-card`} component={ConnectedBpmCard} />
+        <Route exact path={`${match.url}/bpm`} component={BPM} />
         <Route exact path={`${match.url}/bar`} component={ConnectedBar} />
         <Route exact path={`${match.url}/line`} component={ConnectedLine} />
         <Route exact path={`${match.url}/pie`} component={ConnectedPie} />
