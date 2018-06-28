@@ -3,7 +3,7 @@ import { actions, connect } from "mirrorx";
 import PropTypes from "prop-types";
 import { FormControl, Label, Col, Modal, Button } from "tinper-bee";
 import Form from "bee-form";
-import "./treeform.less";
+import "./TreeForm.less";
 const FormItem = Form.FormItem;
 class TreeForm extends Component {
   constructor(props) {
