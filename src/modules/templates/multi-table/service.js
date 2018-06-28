@@ -9,10 +9,21 @@ const URL = {
 }
 
 /**
- * 获取列表
+ * 获取主表数据
  * @param {*} params 
  */
-export const getList = (params) => { 
+export const getParentList = (params) => { 
+    let url =paramToUrl(URL.GET_LIST,params);
+    return request(url, {
+        method: "get",
+        data: params
+    });
+}
+/**
+ * 获取子表数据
+ * @param {*} params 
+ */
+export const getChildList = (params) => { 
     let url =paramToUrl(URL.GET_LIST,params);
     return request(url, {
         method: "get",

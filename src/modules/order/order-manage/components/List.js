@@ -31,8 +31,8 @@ class List extends Component {
         }
     }
     componentDidMount() {
-        actions.order.loadList();//table数据
-        actions.order.getOrderType();//订单类型下拉框
+        // actions.multi.loadList();//table数据
+        actions.multi.getOrderType();//订单类型下拉框
     }
     search = (pageObj,err,values) => {//查询
         let voucherDate = values.voucherDate;

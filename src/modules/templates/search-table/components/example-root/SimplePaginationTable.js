@@ -38,10 +38,10 @@ export default class SimplePaginationTable extends Component {
     }
     delItem = (record, index) => {
         actions.searchTable.delItem({
-            param: [{ id: record.id }],
+            param: [record],
             index: index
         });
-    }
+    }    
     onTableSelectedData = data => {
         console.log(data)
         this.setState({
