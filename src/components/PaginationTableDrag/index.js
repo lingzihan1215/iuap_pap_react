@@ -11,7 +11,7 @@ import 'bee-table/build/Table.css';
 import 'bee-pagination/build/Pagination.css';
 import './index.less'
 
-const DragColumnTable = dragColumn(filterColumn(multiSelect(Table, Checkbox), Popover));
+const DragColumnTable = dragColumn(filterColumn(Table, Popover));
 
 const propTypes = {
     // 表格行数据
@@ -49,11 +49,12 @@ const defaultProps = {
 };
 
 /**
- * PaginationTable 组件功能说明：
- * 1、默认支持表格多选
+ * PaginationTableDrag 组件功能说明：
+ * 1、拖拽
  * 2、表格默认自带分页组件
+ * 3、筛选
  */
-class PaginationTable extends Component {
+class PaginationTableDrag extends Component {
     constructor(props){
         super(props);
         this.state = { }
@@ -62,7 +63,7 @@ class PaginationTable extends Component {
         const { 
             data, showLoading, pageSize,
             pageIndex, totalPages, columns,
-            onTableSelectedData, onPageSizeSelect, onPageIndexSelect,
+            getSelectedDataFunc, onPageSizeSelect, onPageIndexSelect,
             scroll
         } = this.props;
 
@@ -77,7 +78,7 @@ class PaginationTable extends Component {
                     columns={columns}
                     data={data}
                     multiSelect={{type: "checkbox"}}
-                    getSelectedDataFunc={onTableSelectedData}
+                    getSelectedDataFunc={getSelectedDataFunc}
                     scroll
                     dragborder={true}
                 />
@@ -106,4 +107,4 @@ class PaginationTable extends Component {
 PaginationTable.propTypes = propTypes;
 PaginationTable.defaultProps = defaultProps;
 
-export default PaginationTable
+export default PaginationTableDrag
