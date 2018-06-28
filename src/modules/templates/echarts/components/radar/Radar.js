@@ -7,7 +7,7 @@ import { Panel } from 'tinper-bee'
 import '../macarons';//引入图标主题
 import './index.less';
 
-class Line extends Component {
+class Radar extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -15,21 +15,19 @@ class Line extends Component {
         }
     }
     componentWillMount(){
-        actions.echarts.getLineOption();
+        actions.echarts.getRadarOption();
     }
-    
     render(){
-        const self=this;
-        const { lineOption } = this.props;
+        let { radarOption } = this.props;
         return (
-            <div className="line">
-                <Header title="折线图示例"/>
+            <div className="radar">
+                <Header title="雷达图示例"/>
                 <Panel>
-                    <ReactEcharts theme={"macarons"} option={lineOption} />
-                </Panel>
+                    <ReactEcharts theme={"macarons"} option={radarOption} />
+                </Panel>    
             </div>
         )
     }
 }
 
-export default Line;
+export default Radar;

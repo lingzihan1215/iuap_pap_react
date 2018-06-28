@@ -29,7 +29,11 @@ import {
 } from './tree-table/container';
 
 import {
-    ConnectedBar,ConnectedLine,ConnectedPie,ConnectedBarLine
+    ConnectedBar,
+    ConnectedLine,
+    ConnectedPie,
+    ConnectedBarLine,
+    ConnectedRadar
 } from './echarts/container';
 
 import {
@@ -74,5 +78,6 @@ export default ({ match }) => (
         <Route exact path={`${match.url}/line`} component={ConnectedLine} />
         <Route exact path={`${match.url}/pie`} component={ConnectedPie} />
         <Route exact path={`${match.url}/bar-line`} component={ConnectedBarLine} />
+        <Route exact path={`${match.url}/radar`} component={ConnectedRadar} />
     </div>
 )

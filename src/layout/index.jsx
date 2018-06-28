@@ -27,6 +27,13 @@ const urlListPreview = [
   { url: "/supplier/register", name: "供应商注册" },
   { url: "/supplier/list", name: "供应商管理" },
   { url: "/supplier/detail", name: "供应商详情" },
+
+  // 图标示例
+  { url: "/templates/bar", name: "柱状图示例" },
+  { url: "/templates/line", name: "折线图示例" },
+  { url: "/templates/bar-line", name: "饼状折线图示例" },
+  { url: "/templates/pie", name: "饼状图示例" },
+  { url: "/templates/radar", name: "雷达图示例" },
 ];
 
 const getURLList = () => {
