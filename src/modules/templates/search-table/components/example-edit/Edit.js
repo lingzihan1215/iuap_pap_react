@@ -40,6 +40,7 @@ class Edit extends Component {
             }else{
                 if(this.props.location.detailObj&&this.props.location.detailObj.id){
                     values.id=this.props.location.detailObj.id;
+                    values.ts=this.props.location.detailObj.ts;
                 }
                 actions.searchTable.save(values);
             }
