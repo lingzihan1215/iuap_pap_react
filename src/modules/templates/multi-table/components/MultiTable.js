@@ -26,7 +26,10 @@ class MultiTable extends Component {
         actions.multi.loadParent();//table数据
         actions.multi.getOrderType();//订单类型下拉框
     }
-    search = (pageObj,err,values) => {//查询
+    /**
+     * 查询
+     */
+    search = (pageObj,err,values) => {
         let voucherDate = values.voucherDate;
         if (voucherDate && voucherDate.length) {
             values.starTime = voucherDate[0].format('YYYY-MM-DD');
@@ -41,14 +44,16 @@ class MultiTable extends Component {
         actions.order.loadList(values);
     }
 
+    /**
+     * 获得主表数据
+     */
     getParentList=(pageObj)=>{
-        //获得表单数据
         this.props.form.validateFields((err, values) => {
             this.search(pageObj, err, values);
         });
     }
 
-    reset = () => {//重置
+    reset = () => {
         this.setState({
             approvalState: '',
             closeState: '',
@@ -56,12 +61,14 @@ class MultiTable extends Component {
             voucherDate: []
         })
     }
+
     onPageSelect = (value) => {
         this.getParentList({
             pageIndex: value,
             pageSize: this.props.pageSize
         })
     }
+
     dataNumSelect = (value) => {
         let pageSize = (value + 1) * 5;//针对于5条/10条/15条/20条选项
         this.getParentList({
@@ -70,6 +77,9 @@ class MultiTable extends Component {
         })
     }
 
+    /**
+     * 主表行点击事件，请求子表数据
+     */
     rowclick = (record, index) => {
         actions.multi.loadChild(record.id);
     };
@@ -165,77 +175,6 @@ class MultiTable extends Component {
                 title: "采购组",
                 dataIndex: "purchasingGroup",
                 key: "purchasingGroup"
-            }
-        ];
-        const listParentDate=[
-            {
-                "key": "10",
-                "index": "10",
-                "orderCode": "0000",
-                "supplier": "10080",
-                "supplierName": "山东吉华重工",
-                "type": "NB",
-                "purchasing": "1300",
-                "purchasingGroup": "460",
-                "voucherDate": "2016-06-01",
-                "approvalState_name": "已审批",
-                "confirmState_name": "已确认",
-                "closeState_name": "已关闭"
-            }, {
-                "key": "11",
-                "index": "11",
-                "orderCode": "0001",
-                "supplier": "10081",
-                "supplierName": "山东吉华重工",
-                "type": "NB",
-                "purchasing": "1301",
-                "purchasingGroup": "461",
-                "voucherDate": "2016-06-01",
-                "approvalState": "已审批",
-                "confirmState": "已确认",
-                "closeState": "已关闭"
-            }, {
-                "key": "12",
-                "index": "12",
-                "orderCode": "0002",
-                "supplier": "10082",
-                "supplierName": "山东吉华重工",
-                "type": "NB",
-                "purchasing": "1302",
-                "purchasingGroup": "462",
-                "voucherDate": "2016-06-02",
-                "approvalState": "已审批",
-                "confirmState": "已确认",
-                "closeState": "已关闭"
-            }
-        ];
-        const listChildDate=[
-            {
-                "key": "10",
-                "index": "10",
-                "orderCode": "0000",
-                "supplier": "10080",
-                "supplierName": "山东吉华重工",
-                "type": "NB",
-                "purchasing": "1300",
-                "purchasingGroup": "460",
-                "voucherDate": "2016-06-01",
-                "approvalState": "已审批",
-                "confirmState": "已确认",
-                "closeState": "已关闭"
-            }, {
-                "key": "11",
-                "index": "11",
-                "orderCode": "0001",
-                "supplier": "10081",
-                "supplierName": "山东吉华重工",
-                "type": "NB",
-                "purchasing": "1301",
-                "purchasingGroup": "461",
-                "voucherDate": "2016-06-01",
-                "approvalState": "已审批",
-                "confirmState": "已确认",
-                "closeState": "已关闭"
             }
         ];
         return (
@@ -382,9 +321,9 @@ class MultiTable extends Component {
             <Table
                 loading={{ show: showLoadingParent, loadingType: "line" }}
                 columns={columnParent}
-                data={listParentDate}
+                data={listParent}
                 onRowClick={this.rowclick}
-                title={currentData => <div>标题: 我是主表</div>}
+                title={currentData => <div>主表</div>}
             />
             <div className='pagination'>
                 <Pagination
@@ -404,9 +343,9 @@ class MultiTable extends Component {
             <Table
                 loading={{ show: showLoadingChild, loadingType: "line" }}
                 columns={columnChild}
-                data={listParentDate}
+                data={listChild}
                 onRowClick={this.rowclick}
-                title={currentData => <div>标题: 我是主表</div>}
+                title={currentData => <div>子表</div>}
             />
 
             </div>
