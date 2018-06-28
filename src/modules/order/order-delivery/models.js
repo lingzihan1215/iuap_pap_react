@@ -11,7 +11,8 @@ export default {
     list: [],
     total: 0,
     pageIndex: 1,
-    pageSize: 10
+    pageSize: 10,
+    fileview:[]
   },
   reducers: {
     updateState(state, data) {
@@ -49,7 +50,6 @@ export default {
     },
     async saveForm(param, getState) {
       console.log(param);
-
     }
   }
 };

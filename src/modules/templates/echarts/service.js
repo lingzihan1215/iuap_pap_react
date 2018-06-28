@@ -49,4 +49,14 @@ export const getPieOption = (params) => {
         data: params
     });
 }
+/** 
+ * 获取雷达图数据
+ * @param {*} params 
+ */
+export const getRadarOption = (params) => { 
+    return request(URL.GET_PIE, {
+        method: "get",
+        data: params
+    });
+}
 

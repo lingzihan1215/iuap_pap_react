@@ -44,6 +44,7 @@
     "redux-logger": "^3.0.6"
   },
   "dependencies": {
+    "ac-upload": "0.0.4",
     "axios": "^0.18.0",
     "bee-autocomplete": "^1.0.4",
     "bee-city-select": "^1.0.6",
@@ -62,6 +63,7 @@
     "mirrorx": "^0.2.10",
     "moment": "^2.21.0",
     "prop-types": "^15.6.0",
+    "query-string": "^6.1.0",
     "react": "^16.3.2",
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.3.2",
