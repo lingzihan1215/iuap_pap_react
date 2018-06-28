@@ -16,6 +16,8 @@ import {
     Select,
     Tooltip
 } from "tinper-bee";
+import AcUpload from 'ac-upload'
+import 'ac-upload/build/ac-upload.css';
 import Pagination from 'bee-pagination';
 import NoData from 'components/NoData';
 import Form from 'bee-form';
@@ -351,8 +353,11 @@ class List extends Component {
             }
         });
     }
+    handlerUploadSuccess = (data) => {
+        actions.delivery.updateState({ fileview: data });
+    }
     render() {
-        let { list, deliveryCode, form } = this.props;
+        let { list, deliveryCode, form, fileview } = this.props;
         const { getFieldProps, getFieldError } = form;
         return (
             <div className='order-delivery-wrap'>
@@ -553,7 +558,25 @@ class List extends Component {
                                 />
                             </FormItem>
                         </Col>
+                        <Col md={4} xs={6}>
+                            <FormItem>
+                                <Label>附件上传：</Label>
+                                <AcUpload
+                                    action="/iuap_pap_quickstart/fileMananger/fastDfs/imgUpload"
+                                    multiple={true}
+                                    onError={(err) => alert('上传报错了')}
+                                    onSuccess={this.handlerUploadSuccess}
+                                >
+                                    <Button shape="border" colors="success">上传</Button>
+                                </AcUpload>
+                                {
+                                    fileview.map((item,index) => (
+                                        <span key={index} className="fileview"><a href={item.accessAddress} target="_blank">查看附件</a></span>
+                                    ))
+                                }
 
+                            </FormItem>
+                        </Col>
                     </Row>
                 </div>
 
