@@ -427,7 +427,7 @@ class TableWrapper extends Component {
     }
     // 导出
     onExport = ()=>{
-
+        
     }
 
     render() {
@@ -464,7 +464,7 @@ class TableWrapper extends Component {
                         onStart = {this.onRecallStart}
                     />
                     <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onMultiDel} style={{ marginLeft: "5px" }}>删除</Button>
-                    <AcUpload
+                    {/* <AcUpload
                         title="图片上传"
                         action="/iuap_pap_quickstart/fileMananger/fastDfs/imgUpload"
                         name="filelist[]"
@@ -475,7 +475,7 @@ class TableWrapper extends Component {
                         onSuccess={(data) => console.log(data)}
                     >
                         <Button className="editable-add-btn" size="sm" colors="primary" style={{ marginLeft: "5px" }}>导入</Button>
-                    </AcUpload>
+                    </AcUpload> */}
                     
                     <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onExport} style={{ marginLeft: "5px" }}>导出</Button>
                 </div>
