@@ -26,7 +26,6 @@ const urlListPreview = [
   // 供应商管理
   { url: "/supplier/register", name: "供应商注册" },
   { url: "/supplier/list", name: "供应商管理" },
-  { url: "/supplier/detail", name: "供应商详情" },
 
   // 图标示例
   { url: "/templates/bar", name: "柱状图示例" },
