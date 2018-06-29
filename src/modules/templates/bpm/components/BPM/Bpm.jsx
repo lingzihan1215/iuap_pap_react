@@ -8,6 +8,7 @@ import './index.less';
 class Bpm extends Component {
     constructor(props) {
         super(props);
+        console.log("bpm",props);
     }
 
     onBack = ()=>{
