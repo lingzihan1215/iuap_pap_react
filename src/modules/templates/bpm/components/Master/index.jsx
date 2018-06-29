@@ -142,7 +142,7 @@ class MasterTable extends Component {
                     </div>
                     <div className={searchFlag ?"u-row u-panel-body b-searech-open":"u-row u-panel-body b-searech-close"}>
                         <Row>
-                            <Col md={1} xs={1} sm={1}>
+                            <Col md={1} xs={1} sm={1} className="lineheight40">
                                 <div className='gray ml15 '>
                                     工单编码
                                 </div>
@@ -150,7 +150,7 @@ class MasterTable extends Component {
                             <Col md={2} xs={2} sm={2} className="vertical-center" >
                                 <FormControl ref="code" onChange={this.onSearchInfoChange("code")} value={this.state.code} />
                             </Col>
-                            <Col md={1} xs={1} sm={1}>
+                            <Col md={1} xs={1} sm={1} className="lineheight40">
                                 <div className='gray ml15 '>
                                     工单名称
                                 </div>

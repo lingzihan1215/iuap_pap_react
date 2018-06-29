@@ -29,7 +29,7 @@ function disabledDate(current){
 //设置默认设置
 Message.config({
     top: 20,  //顶上显示时距顶部的位置
-    duration: 1, //显示持续时间
+    duration: 2, //显示持续时间
     width: 500, //左下左上右下右上显示时的宽度
     size:"large"
 });
@@ -140,20 +140,6 @@ class BpmCard extends Component {
             search:`?id=${this.props.rowData.id}`
         })
     } 
-
-    /* onLoad = ()=>{
-        this.setState({
-            showLine: true
-        },async ()=>{
-            // done表示是否加载完毕
-            let {done} = await actions.master.load();
-            if (done) {
-                this.setState({
-                    showLine: false
-                }) 
-            }
-        })
-    } */
 
     render() {
         const { getFieldProps, getFieldError,getFieldDecorator} = this.props.form;
@@ -271,7 +257,7 @@ class BpmCard extends Component {
                                         </span>
                                     </FormItem>
                                 </Col>
-                                <Col md={4} xs={4} sm={4}>
+                                <Col md={4} xs={4} sm={4} className="mt10">
                                     <FormItem >
                                         <Label className="label_ajust">申请人</Label>
                                         <span style={{color:"#ff0000"}}>*</span>
@@ -289,7 +275,7 @@ class BpmCard extends Component {
                                         </span>
                                     </FormItem>
                                 </Col>
-                                <Col md={4} xs={4} sm={4}>
+                                <Col md={4} xs={4} sm={4} className="mt10">
                                     <FormItem >
                                         <Label className="label_ajust">申请时间</Label>
                                         <span  className="date-icon-adjust" >*</span>
@@ -317,7 +303,7 @@ class BpmCard extends Component {
                                         </span>
                                     </FormItem>
                                 </Col>
-                                <Col md={4} xs={4} sm={4}>
+                                <Col md={4} xs={4} sm={4} className="mt10">
                                     <FormItem >
                                         <Label className="label_ajust">工单状态</Label>
                                         <span style={{color:"#ff0000"}}>*</span>
@@ -343,7 +329,7 @@ class BpmCard extends Component {
                                         </span>
                                     </FormItem>
                                 </Col>
-                                <Col md={12} xs={12} sm={12}>
+                                <Col md={12} xs={12} sm={12} className="mt10">
                                     <FormItem className="content-adjust" >
                                         <Label className="align-label-adjust">工作内容</Label>
                                         <textarea disabled={btnFlag==2?"disabled":false} className="area-adjust" name="\" id="" width="100%" rows="3"
@@ -357,7 +343,7 @@ class BpmCard extends Component {
                                         ></textarea>
                                     </FormItem>
                                 </Col>
-                                <Col md={12} xs={12} sm={12} className="mt30">
+                                <Col md={12} xs={12} sm={12} className="mt40">
                                     <FormItem className="content-adjust " >
                                         <Label className="align-label-adjust">备注</Label>
                                         <textarea disabled={btnFlag==2?"disabled":false} className="area-adjust remark" name="\" id="" width="100%" rows="3"
