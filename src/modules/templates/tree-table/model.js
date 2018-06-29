@@ -9,9 +9,10 @@ export default {
     name: "tree", 
     // 设置当前 Model 所需的初始化 state
     initialState: {  
+        treeData:[],
         showLoading:false,
         list: [],
-        pageIndex:0,
+        pageIndex:1,
         pageSize:10,
         totalPages:1
     },
@@ -29,6 +30,100 @@ export default {
         }
     },
     effects: { 
-        
+      /**
+       * 获得树的数据
+       * @param {*} param 
+       * @param {*} getState 
+       */
+        async getTreeData(param,getState){
+            actions.tree.updateState({
+                treeData: [{
+                    title: '0-0',
+                    key: '0-0',
+                    children: [{
+                      title: '0-0-0',
+                      key: '0-0-0',
+                      children: [
+                        { title: '0-0-0-0', key: '0-0-0-0' },
+                        { title: '0-0-0-1', key: '0-0-0-1' },
+                        { title: '0-0-0-2', key: '0-0-0-2' },
+                      ],
+                    }, {
+                      title: '0-0-1',
+                      key: '0-0-1',
+                      children: [
+                        { title: '0-0-1-0', key: '0-0-1-0' },
+                        { title: '0-0-1-1', key: '0-0-1-1' },
+                        { title: '0-0-1-2', key: '0-0-1-2' },
+                      ],
+                    }, {
+                      title: '0-0-2',
+                      key: '0-0-2',
+                    }],
+                  }, {
+                    title: '0-1',
+                    key: '0-1',
+                    children: [
+                      { title: '0-1-0-0', key: '0-1-0-0' },
+                      { title: '0-1-0-1', key: '0-1-0-1' },
+                      { title: '0-1-0-2', key: '0-1-0-2' },
+                    ],
+                  }, {
+                    title: '0-2',
+                    key: '0-2',
+                  }]
+            })
+        },
+        /**
+         * 获得表格数据
+         * @param {*} param 
+         * @param {*} getState 
+         */
+        async getTableData(param,getState){
+          actions.tree.updateState({
+            list:[
+              {
+                "key": "10",
+                "index": "10",
+                "orderCode": "0000"+param,
+                "supplier": "10080",
+                "supplierName": "山东吉华重工",
+                "type": "NB",
+                "purchasing": "1300",
+                "purchasingGroup": "460",
+                "voucherDate": "2016-06-01",
+                "approvalState": "已审批",
+                "confirmState": "已确认",
+                "closeState": "已关闭"
+            }, {
+                "key": "11",
+                "index": "11",
+                "orderCode": "0001"+param,
+                "supplier": "10081",
+                "supplierName": "山东吉华重工",
+                "type": "NB",
+                "purchasing": "1301",
+                "purchasingGroup": "461",
+                "voucherDate": "2016-06-01",
+                "approvalState": "已审批",
+                "confirmState": "已确认",
+                "closeState": "已关闭"
+            }, {
+                "key": "12",
+                "index": "12",
+                "orderCode": "0002"+param,
+                "supplier": "10082",
+                "supplierName": "山东吉华重工",
+                "type": "NB",
+                "purchasing": "1302",
+                "purchasingGroup": "462",
+                "voucherDate": "2016-06-02",
+                "approvalState": "已审批",
+                "confirmState": "已确认",
+                "closeState": "已关闭"
+            }
+            ]
+          })
+        }
     }
 };

@@ -1,49 +1,38 @@
+/**
+ * 计划申请请求
+ */
 import request from "utils/request";
-import { paramToUrl } from "utils";
 
-//定义接口地址
-const URL = { 
-    "GET_LIST":  `${GROBAL_HTTP_CTX}/sany_order/list`,
+const URL = {
+    "GET_LIST": `${GROBAL_HTTP_CTX}/sany_delivery/list`,
     "DELETE": `${GROBAL_HTTP_CTX}/sany_delivery/delete`,
     "SAVE": `${GROBAL_HTTP_CTX}/sany_delivery/save`
 }
 
-/**
- * 获取列表
- * @param {*} params 
- */
-export const getList = (params) => { 
-    let url =paramToUrl(URL.GET_LIST,params);
-    return request(url, {
+export const getList = (param) => {
+    return request(URL.GET_LIST, {
         method: "get",
-        data: params
+        param
     });
 }
 
-/**
- * 获取下拉列表
- * @param {*} params 
- */
-export const getSelect = (params) => { 
-    return request(URL.GET_SELECT, {
-        method: "get",
-        data: params
-    });
-}
-/**
- * 删除table数据
- * @param {*} params 
- */
-export const deleteList = (params) => {
+export const deleteList = (data) => {
     return request(URL.DELETE, {
         method: "post",
-        data:params
+        data
     });
 }
 
-export const saveList = (params) => {
+export const saveList = (data) => {
     return request(URL.SAVE, {
         method: "post",
-        data:params
+        data
+    });
+}
+
+export const saveAll = (data) => {
+    return request(URL.SAVE, {
+        method: "post",
+        data
     });
 }
