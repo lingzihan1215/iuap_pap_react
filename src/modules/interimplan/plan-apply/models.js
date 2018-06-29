@@ -24,7 +24,7 @@ export default {
   },
   effects: {
     async getList(param, getState) {
-      let { pageIndex, pageSize } = getState().delivery;
+      let { pageIndex, pageSize } = getState().planapply;
       let { data: { detailMsg, success } } = await api.getList({
         pageIndex: pageIndex - 1,
         pageSize
@@ -64,6 +64,14 @@ export default {
           },
       ]
       })
-    }
+    },
+    async saveAll (form,getState){
+      let saveObj={
+        ...form,
+        tableList:getState().planapply.list
+      };
+      console.log('****')
+      console.log(saveObj);
+    },
   }
 };

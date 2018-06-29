@@ -279,8 +279,7 @@ class List extends Component {
             if(err){
                 Message.create({ content: '数据填写错误', color : 'danger'  });
             }else{
-                // actions.delivery.saveForm(values);
-                Message.create({ content: '保存成功', color : 'success'  });
+                actions.planapply.saveAll(values)
             }
         });
     }

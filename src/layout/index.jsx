@@ -34,6 +34,9 @@ const urlListPreview = [
   { url: "/templates/bar-line", name: "饼状折线图示例" },
   { url: "/templates/pie", name: "饼状图示例" },
   { url: "/templates/radar", name: "雷达图示例" },
+
+  { url: "/templates/tree-table", name: "树表示例" },
+  { url: "/templates/card-table", name: "卡表示例" },
 ];
 
 const getURLList = () => {
