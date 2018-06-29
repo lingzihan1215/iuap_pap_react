@@ -46,7 +46,7 @@ class List extends Component {
                 fixed: "left",
                 render: (text, record, index) => {
                     return (<span>
-                        <Popconfirm placement="left" content="是否确认删除?" onClose={() => this.remove(record.id, index)} >
+                        <Popconfirm placement="right" content="是否确认删除?" onClose={() => this.remove(record.id, index)} >
                             <Button className="table-op-btn" colors="primary" size="sm">删除</Button>
                         </Popconfirm>
                     </span>)
@@ -341,6 +341,7 @@ class List extends Component {
                     newParam.push(item);
                 });
                 console.log(newParam);
+                values.attachmenturl = this.props.fileview;
                 let result = await actions.delivery.saveAllList({
                     table: newParam,
                     form: [values]
@@ -354,10 +355,10 @@ class List extends Component {
         });
     }
     handlerUploadSuccess = (data) => {
-        actions.delivery.updateState({ fileview: data });
+        
     }
     render() {
-        let { list, deliveryCode, form, fileview } = this.props;
+        let { list, deliveryCode, form } = this.props;
         const { getFieldProps, getFieldError } = form;
         return (
             <div className='order-delivery-wrap'>
@@ -569,12 +570,6 @@ class List extends Component {
                                 >
                                     <Button shape="border" colors="success">上传</Button>
                                 </AcUpload>
-                                {
-                                    fileview.map((item,index) => (
-                                        <span key={index} className="fileview"><a href={item.accessAddress} target="_blank">查看附件</a></span>
-                                    ))
-                                }
-
                             </FormItem>
                         </Col>
                     </Row>
