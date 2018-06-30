@@ -9,7 +9,7 @@ import logger from "redux-logger";
 import mirror, { render } from "mirrorx";
 // import { Locale } from 'tinper-bee';
 // import enUS from 'tinper-bee/locale/en-US.js';
-import Routes from "./routes";
+import MainLayout from "./layout";
 
 import './static/trd/tineper-bee/assets/tinper-bee.css'
 import "./app.less";
@@ -23,10 +23,4 @@ mirror.defaults({
     middlewares: MiddlewareConfig
 });
 
-render( <Routes />, document.querySelector("#app"));
-// render(
-//     <Locale locale={enUS}>
-//         <Routes />
-//     </Locale>, 
-//     document.querySelector("#app")
-// );
+render( <MainLayout />, document.querySelector("#app"));

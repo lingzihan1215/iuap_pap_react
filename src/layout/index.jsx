@@ -1,52 +1,10 @@
 import React, { Component } from "react";
-import { Link } from "mirrorx";
+import { Router } from "mirrorx";
+
+import LayoutHeader from './Header';
+import Sidebar from './Sidebar';
+import Routes from "../routes";
 import "./index.less";
-
-const urlListPreview = [
-  // 标准示例
-  { url: "/templates/simple-table", name: "简单单表示例" },
-  { url: "/templates/select-table", name: "简单多选表格示例" },
-  { url: "/templates/pagination-table", name: "简单分页表格示例" },
-  { url: "/templates/card-table", name: "可编辑表格示例" },
-  { url: "/templates/complex-form", name: "复杂表单注册" },
-  { url: "/templates/ref-exmaple", name: "参照功能示例" },
-  { url: "/templates/bpm-table", name: "流程组件示例" },
-
-  
-  // 订单管理
-  { url: "/order/managelist", name: "订单列表" },
-  { url: "/order/delivery", name: "送货单" },
-  { url: "/system/rolelist", name: "角色管理" },
-  { url: "/interimplan/planapply", name: "计划申请" },
-  { url: "/resource/research", name: "资源调查表" },
-
-  { url: "/system/person-manage", name: "人员管理" },
-  { url: "/contract/manage", name: "合同管理" },
-  
-  // 供应商管理
-  { url: "/supplier/register", name: "供应商注册" },
-  { url: "/supplier/list", name: "供应商管理" },
-
-  // 图标示例
-  { url: "/templates/bar", name: "柱状图示例" },
-  { url: "/templates/line", name: "折线图示例" },
-  { url: "/templates/bar-line", name: "饼状折线图示例" },
-  { url: "/templates/pie", name: "饼状图示例" },
-  { url: "/templates/radar", name: "雷达图示例" },
-
-  { url: "/templates/tree-table", name: "树表示例" },
-  { url: "/templates/card-table", name: "卡表示例" },
-];
-
-const getURLList = () => {
-  return urlListPreview.map((item, index) => {
-    return (
-      <li key={index} className="index-li">
-        <Link to={item.url}>{item.name}</Link>
-      </li>
-    );
-  });
-};
 
 export default class MainLayout extends Component {
   constructor(props) {
@@ -54,16 +12,18 @@ export default class MainLayout extends Component {
   }
   render() {
     return (
-      <div className="index">
-        <div className="index-header">
-          <ul className="index-main">
-            <li className="index-main-li">
-              <span className="index-main-title">iuap 应用平台前端典型案例</span>
-              <ul className="index-ul">{getURLList()}</ul>
-            </li>
-          </ul>
+      <Router>
+        <div className="app">
+          { (__MODE__ == "development") ? <LayoutHeader /> : "" }
+          <div className="layout-container">
+            { (__MODE__ == "development") ?  <Sidebar /> : "" }
+            <div className="layout-content">
+              <Routes />
+            </div>
+          </div>
         </div>
-      </div>
+      </Router>
     );
   }
 }
+
