@@ -44,6 +44,7 @@
     "redux-logger": "^3.0.6"
   },
   "dependencies": {
+    "ac-upload": "0.0.5",
     "axios": "^0.18.0",
     "bee-autocomplete": "^1.0.4",
     "bee-city-select": "^1.0.6",

@@ -2,12 +2,12 @@ import axios from 'axios';
 import request from 'utils/request';
 
 const URL = {
-    "GET_List": "/iuap-example/example_workorder/list",
-    "DELETE_List": "/iuap-example/example_workorder/delete",
-    "SAVE_FORM":"/iuap-example/example_workorder/save",
+    "GET_List": "/iuap_pap_quickstart/example_workorder/list",
+    "DELETE_List": "/iuap_pap_quickstart/example_workorder/delete",
+    "SAVE_FORM":"/iuap_pap_quickstart/example_workorder/save",
     "QUERY_BPM_URL":"/eiap-plus/appResAllocate/queryBpmTemplateAllocate/",
-    "COMMIT_URL":"/iuap-example/example_workorder/submit",
-    "RECALL_URL":"/iuap-example/example_workorder/recall"
+    "COMMIT_URL":"/iuap_pap_quickstart/example_workorder/submit",
+    "RECALL_URL":"/iuap_pap_quickstart/example_workorder/recall"
 }
 
 export const get = (param) => {

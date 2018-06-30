@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import moment from "moment/moment";
 import { actions } from "mirrorx";
 import ReactEcharts from 'echarts-for-react';
+import Header from "components/Header";
+import { Panel } from 'tinper-bee'
 import '../macarons';//引入图标主题
 import './index.less';
 
@@ -19,7 +21,10 @@ class Pie extends Component {
         let { pieOption } = this.props;
         return (
             <div className="pie">
-                <ReactEcharts theme={"macarons"} option={pieOption} />
+                <Header title="饼状图示例"/>
+                <Panel>
+                    <ReactEcharts theme={"macarons"} option={pieOption} />
+                </Panel>
             </div>
         )
     }

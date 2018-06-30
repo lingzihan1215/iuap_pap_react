@@ -16,6 +16,8 @@ import {
     Select,
     Tooltip
 } from "tinper-bee";
+import AcUpload from 'ac-upload'
+import 'ac-upload/build/ac-upload.css';
 import Pagination from 'bee-pagination';
 import NoData from 'components/NoData';
 import Form from 'bee-form';
@@ -44,7 +46,7 @@ class List extends Component {
                 fixed: "left",
                 render: (text, record, index) => {
                     return (<span>
-                        <Popconfirm placement="left" content="是否确认删除?" onClose={() => this.remove(record.id, index)} >
+                        <Popconfirm placement="right" content="是否确认删除?" onClose={() => this.remove(record.id, index)} >
                             <Button className="table-op-btn" colors="primary" size="sm">删除</Button>
                         </Popconfirm>
                     </span>)
@@ -339,6 +341,7 @@ class List extends Component {
                     newParam.push(item);
                 });
                 console.log(newParam);
+                values.attachmenturl = this.props.fileview;
                 let result = await actions.delivery.saveAllList({
                     table: newParam,
                     form: [values]
@@ -350,6 +353,9 @@ class List extends Component {
                 }
             }
         });
+    }
+    handlerUploadSuccess = (data) => {
+        
     }
     render() {
         let { list, deliveryCode, form } = this.props;
@@ -553,7 +559,19 @@ class List extends Component {
                                 />
                             </FormItem>
                         </Col>
-
+                        <Col md={4} xs={6}>
+                            <FormItem>
+                                <Label>附件上传：</Label>
+                                <AcUpload
+                                    action="/iuap_pap_quickstart/fileMananger/fastDfs/imgUpload"
+                                    multiple={true}
+                                    onError={(err) => alert('上传报错了')}
+                                    onSuccess={this.handlerUploadSuccess}
+                                >
+                                    <Button shape="border" colors="success">上传</Button>
+                                </AcUpload>
+                            </FormItem>
+                        </Col>
                     </Row>
                 </div>
 

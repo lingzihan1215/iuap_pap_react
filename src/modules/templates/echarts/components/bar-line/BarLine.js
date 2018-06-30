@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import moment from "moment/moment";
 import { actions } from "mirrorx";
 import ReactEcharts from 'echarts-for-react';
+import Header from "components/Header";
+import { Panel } from 'tinper-bee'
 import '../macarons';//引入图标主题
 import './index.less';
 
@@ -19,7 +21,10 @@ class BarLine extends Component {
         let { barLineOption } = this.props;
         return (
             <div className="bar-line">
-                <ReactEcharts theme={"macarons"} option={barLineOption} />
+                <Header title="饼状折线图示例"/>  
+                <Panel>  
+                    <ReactEcharts theme={"macarons"} option={barLineOption} />
+                </Panel>
             </div>
         )
     }

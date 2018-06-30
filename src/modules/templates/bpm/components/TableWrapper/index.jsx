@@ -4,6 +4,8 @@ import {Loading,Message, Table, Checkbox,Button,Popconfirm,Icon } from 'tinper-b
 import {actions,routing,connect} from 'mirrorx';
 import Pagination from 'bee-pagination';
 import {BpmButtonSubmit,BpmButtonRecall} from 'yyuap-bpm';
+import AcUpload from 'ac-upload';//加载组件
+import 'ac-upload/build/ac-upload.css';//加载组件样式
 import './index.less';
 
 const defaultPropsSelf = {
@@ -75,7 +77,7 @@ class TableWrapper extends Component {
             checkedAll: false,
             checkedArray: [],
             commitFlag:0,
-            showLine:true,
+            showLine:false,
         };
     }
     
@@ -94,9 +96,9 @@ class TableWrapper extends Component {
 
     async componentDidMount() {
         await actions.master.load();
-        this.setState({
+        /* this.setState({
             showLine:!this.state.showLine
-        })
+        }) */
     }
     onAllCheckChange = () => {
         let self = this;
@@ -117,14 +119,7 @@ class TableWrapper extends Component {
     onCheckboxChange = (text, record, index) => {
         let self = this;
         let allFlag = false;
-        // let selIds = self.state.selIds;
-        // let id = self.props.postId;
         let checkedArray = self.state.checkedArray.concat();
-        // if (self.state.checkedArray[index]) {
-        // selIds.remove(record[id]);
-        // } else {
-        // selIds.push(record[id]);
-        // }
         checkedArray[index] = !self.state.checkedArray[index];
         for (var i = 0; i < self.state.checkedArray.length; i++) {
             if (!checkedArray[i]) {
@@ -308,94 +303,6 @@ class TableWrapper extends Component {
         
     }
 
-    // 提交方法
-    /* onCommit = async ()=>{
-        
-        let { checkedArray } = this.state;
-        let data = this.props.masterData;
-        console.log("data", data);
-        let length = (data.length < checkedArray.length) ? data.length : checkedArray.length;
-        let submitArray = [];
-        for (var i = 0; i < checkedArray.length; i++) {
-            if (checkedArray[i]) {
-                if(data[i]["status"]==0){
-                    submitArray.push({ "id": data[i]["id"] });
-                }else {
-                    Message.create({content: `单据${data[i]["code"]}不能重复提交`, color: 'warning', duration: null});
-                }
-                
-                // submitArray.push(data[i]);
-            }
-        }
-        console.log("submitArray", submitArray);
-
-        if (submitArray.length > 0) {
-            let tempState = {
-                "funccode": "react",
-                "nodekey": "003",
-                "submitArray": submitArray
-            }
-            this.setState({
-                showLine:true
-            },async ()=>{
-                let {done,message} = await actions.master.onCommit(tempState);
-                if(done){
-                    this.setState({
-                        showLine:false
-                    });
-                    Message.create({content: '单据提交操作成功', color: 'success'});
-                    
-                }else {
-                    this.setState({showLine:false});
-                    Message.create({content: message, color: 'danger'});
-                }
-            })
-            
-        } else {
-            // 弹出提示请选择数据
-            Message.create({content: "请重新选择提交数据", color: 'warning'});
-        }
-        
-    } */
-
-    // 撤回
-    /* onRecall = async ()=>{
-        let {checkedArray} = this.state;
-        let data = this.props.masterData;
-        console.log("data",data);
-        let length = (data.length<checkedArray.length)?data.length:checkedArray.length;
-        let recallArray = [];
-        for(var i=0;i<checkedArray.length;i++){
-            if(checkedArray[i]){
-                if(data[i]["status"]==1){
-                    recallArray.push({"id":data[i]["id"]});
-                }else {
-                    Message.create({content: `单据${data[i]["code"]}未提交,不能执行撤回操作`, color: 'warning'});
-                } 
-            }
-        }
-        console.log("撤回",recallArray);
-        if(recallArray.length>0){
-            this.setState({
-                showLine:true
-            },async ()=>{
-                let {done,message} = await actions.master.onRecall(recallArray);
-                if(done){
-                    this.setState({
-                        showLine:false
-                    })
-                    Message.create({content: '单据收回操作成功', color: 'success'});
-                    
-                }else {
-                    Message.create({content: message, color: 'danger'});
-                }
-            }) 
-        }else {
-            // 弹出提示请选择数据
-            Message.create({content: '请选择收回数据', color: 'warning'});
-        }
-    } */
-
     // 多行删除
     onMultiDel= async ()=>{
         let {checkedArray} = this.state;
@@ -514,6 +421,14 @@ class TableWrapper extends Component {
             }) 
         })
     }
+    // 导入
+    onImport = ()=>{
+
+    }
+    // 导出
+    onExport = ()=>{
+        
+    }
 
     render() {
         let columns = this.renderColumnsMultiSelect(masterCols);
@@ -522,13 +437,6 @@ class TableWrapper extends Component {
         let {totalElements,totalPages} = this.props.paginationRes;
         console.log("选中数组",checkedArray);
         console.log(this.props);
-        let submitParam = {
-            data:masterData,
-            checkedArray:checkedArray,
-            funccode: "react",
-            nodekey: "003",
-            url:"/iuap-example/example_workorder/submit",
-        }
         return (
             <div>
                 <div style={{ margin:" 6px 15px 0 15px" }}>
@@ -540,7 +448,7 @@ class TableWrapper extends Component {
                         checkedArray = {checkedArray}
                         funccode = "react"
                         nodekey = "003"
-                        url = "/iuap-example/example_workorder/submit"
+                        url = "/iuap_pap_quickstart/example_workorder/submit"
                         onSuccess = {this.onSubmitSuc}
                         onError = {this.onSubmitFail}
                         onStart={this.onSubmitStart}
@@ -550,12 +458,26 @@ class TableWrapper extends Component {
                         className="editable-add-btn ml5"
                         data = {masterData}
                         checkedArray = {checkedArray}
-                        url = "/iuap-example/example_workorder/recall"
+                        url = "/iuap_pap_quickstart/example_workorder/recall"
                         onSuccess = {this.onRecallSuc}
                         onError = {this.onRecallFail}
                         onStart = {this.onRecallStart}
                     />
                     <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onMultiDel} style={{ marginLeft: "5px" }}>删除</Button>
+                    {/* <AcUpload
+                        title="图片上传"
+                        action="/iuap_pap_quickstart/fileMananger/fastDfs/imgUpload"
+                        name="filelist[]"
+                        data={{ "other": "params" }}
+                        accept="image/*"
+                        multiple={true}
+                        onError={(err) => console.log(err)}
+                        onSuccess={(data) => console.log(data)}
+                    >
+                        <Button className="editable-add-btn" size="sm" colors="primary" style={{ marginLeft: "5px" }}>导入</Button>
+                    </AcUpload> */}
+                    
+                    <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onExport} style={{ marginLeft: "5px" }}>导出</Button>
                 </div>
                 <Table 
                     columns={columns} 
