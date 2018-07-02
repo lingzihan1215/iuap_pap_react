@@ -182,6 +182,21 @@ class TableWrapper extends Component {
         
     }
 
+    onExamine = (text, record, index)=> {
+        return async ()=>{
+            console.log("record", record);
+            let tempState = {
+                "btnFlag": 2,
+                "rowData": record
+            }
+            await actions.master.save(tempState);
+            actions.routing.push({
+                pathname:'/templates/bpm-card',
+            })
+        }
+        
+    }
+
     onLoad = ()=>{
         this.setState({
             showLine: true
@@ -244,6 +259,7 @@ class TableWrapper extends Component {
                             <div>
                                 <span className="bcolor" onClick={this.onEdit(text, record, index)}>编辑</span>
                                 {/* <span className="span-adjust" onClick={this.onRowDel(text, record, index)} >删除</span> */}
+                                <span className="span-adjust " onClick={this.onExamine(text, record, index)}>查看</span>
                                 <Popconfirm content="确认删除?" id="aa" onClose={this.onRowDel(text, record, index)}>
                                     {/* <Icon type="uf-del" className="tablewrapper-delicon"/> */}
                                     <span className="span-adjust" >删除</span>
@@ -441,7 +457,7 @@ class TableWrapper extends Component {
             <div>
                 <div style={{ margin:" 6px 15px 0 15px" }}>
                     <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onAdd} style={{ marginLeft: "5px" }} >新增</Button>
-                    <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onCheck} style={{ marginLeft: "5px" }} >查看</Button>
+                    {/* <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onCheck} style={{ marginLeft: "5px" }} >查看</Button> */}
                     <BpmButtonSubmit 
                         className="editable-add-btn ml5"
                         data = {masterData}
@@ -464,20 +480,6 @@ class TableWrapper extends Component {
                         onStart = {this.onRecallStart}
                     />
                     <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onMultiDel} style={{ marginLeft: "5px" }}>删除</Button>
-                    {/* <AcUpload
-                        title="图片上传"
-                        action="/iuap_pap_quickstart/fileMananger/fastDfs/imgUpload"
-                        name="filelist[]"
-                        data={{ "other": "params" }}
-                        accept="image/*"
-                        multiple={true}
-                        onError={(err) => console.log(err)}
-                        onSuccess={(data) => console.log(data)}
-                    >
-                        <Button className="editable-add-btn" size="sm" colors="primary" style={{ marginLeft: "5px" }}>导入</Button>
-                    </AcUpload> */}
-                    
-                    <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onExport} style={{ marginLeft: "5px" }}>导出</Button>
                 </div>
                 <Table 
                     columns={columns} 

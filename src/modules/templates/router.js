@@ -46,6 +46,10 @@ import {
 } from './editor/container'
 
 import BPM from './bpm/components/BPM/Bpm'
+
+import {
+    Upload
+} from './upload/container'
 /**
  * 路由说明：
  * 1、单表【search-table】：
@@ -85,5 +89,7 @@ export default ({ match }) => (
         <Route exact path={`${match.url}/bar-line`} component={ConnectedBarLine} />
         <Route exact path={`${match.url}/radar`} component={ConnectedRadar} />
         <Route exact path={`${match.url}/editor`} component={ConnectedEditor} />
+        <Route exact path={`${match.url}/upload`} component={Upload} />
+        
     </div>
 )
