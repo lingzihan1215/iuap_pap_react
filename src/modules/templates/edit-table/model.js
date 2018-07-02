@@ -44,33 +44,9 @@ export default {
       let result = await api.saveList(form);
       return result;
     },
-    async getFactory(param,getState){
-      actions.actions.editTable.updateState({
-        factory:[
-          {
-              name:'工厂A',code:'a'
-          },
-          {
-              name:'工厂B',code:'b'
-          },
-          {
-              name:'工厂C',code:'c'
-          },
-          {
-              name:'工厂D',code:'d'
-          },
-          {
-              name:'工厂E',code:'e'
-          },
-      ]
-      })
-    },
-    async saveAll (form,getState){
-      let saveObj={
-        ...form,
-        tableList:getState().cardTable.list
-      };
-      await api.saveList(saveObj);
+
+    async saveAll (data,getState){
+      await api.saveList(getState().editTable.list);
     },
   }
 };

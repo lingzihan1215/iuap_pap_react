@@ -330,9 +330,6 @@ class List extends Component {
                         </Col>
                     </Row>
                 </SearchPanel>
-                <div className='search-panel'>
-                    
-                </div>
                 <div className='table-list'>
                     <div className='table-header'>
                         <Button size='sm' shape="border" onClick={() => { self.cellClick({}, true) }}>
