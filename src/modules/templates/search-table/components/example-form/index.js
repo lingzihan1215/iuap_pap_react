@@ -4,7 +4,7 @@ import { Col, Row,FormControl, Label, Select, Radio } from "tinper-bee";
 import Form from 'bee-form';
 import DatePicker from 'bee-datepicker';
 import 'bee-datepicker/build/DatePicker.css';
-import SearchPanel from 'components/SearchPanel';
+import ComplexSearchPanel from 'components/ComplexSearchPanel';
 const FormItem = Form.FormItem;
 const { RangePicker } = DatePicker;
 import './index.less'
@@ -63,12 +63,13 @@ class ExampleForm extends Component {
         let { orderTypes } = this.props;
         let _this = this;
         return (
-            <SearchPanel 
+            <ComplexSearchPanel 
                 className='example-form' 
                 form={this.props.form} 
                 reset={this.reset} 
-                search={this.search}>
-                <Row>
+                search={this.search}
+                simple={(
+                    <Row>
                     <Col md={4} xs={6}>
                         <FormItem>
                             <Label>订单编号：</Label>
@@ -112,6 +113,10 @@ class ExampleForm extends Component {
                             />
                         </FormItem>
                     </Col>
+                    </Row>
+                )}
+                complex={(
+<Row>
                     <Col md={4} xs={6}>
                         <FormItem>
                             <Label>订单类型：</Label>
@@ -207,7 +212,10 @@ class ExampleForm extends Component {
                         </FormItem>
                     </Col>
                 </Row>
-            </SearchPanel>
+                )}
+                >
+                
+            </ComplexSearchPanel>
         )
     }
 }
