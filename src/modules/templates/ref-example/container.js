@@ -1,6 +1,6 @@
 import React from 'react';
 import mirror, { connect } from 'mirrorx';
-import ExampleRef from './components/ExampleRef';//多选table
+import ExampleRef from './components/Ref';//多选table
 
 import model from './model'
 
