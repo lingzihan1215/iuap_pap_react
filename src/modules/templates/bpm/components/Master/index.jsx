@@ -123,7 +123,7 @@ class MasterTable extends Component {
         return (
             <div className="bgwhite">
                 <div className="pap-title">工单管理</div>
-                <div className="form-search">
+                <div className="master-form-search">
                     <div className="u-panel-heading u-collapse-updown">
                         <span className="u-panel-title">查询与筛选
                             <span className="u-link" onClick={this.onToggleSearch}>
