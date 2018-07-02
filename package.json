@@ -56,6 +56,7 @@
     "bee-table": "^1.2.5",
     "bee-tooltip": "^1.0.2",
     "bee-upload": "^1.0.0",
+    "braft-editor": "^1.9.7",
     "classnames": "^2.2.5",
     "core-js": "^2.5.7",
     "echarts": "^4.1.0",
