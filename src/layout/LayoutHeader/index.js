@@ -10,7 +10,9 @@ const urlListPreview = [
   { url: "/templates/complex-form", name: "复杂表单注册" },
   { url: "/templates/ref-exmaple", name: "参照功能示例" },
   { url: "/templates/bpm-table", name: "流程组件示例" },
-
+  { url: "/templates/tree-table", name: "树表示例" },
+  { url: "/templates/card-table", name: "卡表示例" },
+  { url: "/templates/editor", name: "富文本编辑示例" },
   
   // 订单管理
   { url: "/order/managelist", name: "订单列表" },
