@@ -170,19 +170,24 @@ class BpmCard extends Component {
                         <div className="topPart">
                             <Button size="sm" colors="primary" className="editable-add-btn backBtn" onClick={this.onBack}>返回</Button>
                             <h1>{msg}</h1>
-                            <Button size="sm" shape="border" colors="info" className={btnFlag==2? "hide":"cancelBtn"} onClick={this.onBack}>取消</Button>
-                            <Button size="sm" colors="primary" className={btnFlag==2 ? "hide":"saveBtn"} onClick={this.onSave}>确定</Button>
+                            <div>
+                                <Button size="sm" shape="border" colors="info" className={btnFlag==2? "hide":"cancelBtn"} onClick={this.onBack}>取消</Button>
+                                <Button size="sm" colors="primary" className={btnFlag==2 ? "hide":"saveBtn"} onClick={this.onSave}>确定</Button>
+                            </div>
+                            
                         </div>
                     </div>
                     {
 
-                        function (btnFlag) {
+                        function (btnFlag,rowData,bpmClick) {
                             if (btnFlag == 2) {
-                                return <BpmTaskApprovalWrap
-                                    id={rowData.id}
-                                    onBpmFlowClick={bpmClick}
-                                    appType={"1"}
-                                />;
+                                return <div>
+                                    <BpmTaskApprovalWrap
+                                        id={rowData.id}
+                                        onBpmFlowClick={bpmClick}
+                                        appType={"1"}
+                                    />
+                                </div>;
                             }
 
                         }(btnFlag, rowData, bpmClick)
