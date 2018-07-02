@@ -50,6 +50,10 @@ import BPM from './bpm/components/BPM/Bpm'
 import {
     Upload
 } from './upload/container'
+
+import {
+    ConnectedEditTable
+} from './edit-table/container'
 /**
  * 路由说明：
  * 1、单表【search-table】：
@@ -68,6 +72,7 @@ import {
  *      pie:饼图
  *      bar-line:柱状折线图
  * 9、富文本编辑器示例
+ * 10、编辑表格示例
  */
 export default ({ match }) => (
     <div className="templates-route">
@@ -90,6 +95,6 @@ export default ({ match }) => (
         <Route exact path={`${match.url}/radar`} component={ConnectedRadar} />
         <Route exact path={`${match.url}/editor`} component={ConnectedEditor} />
         <Route exact path={`${match.url}/upload`} component={Upload} />
-        
+        <Route exact path={`${match.url}/edit-table`} component={ConnectedEditTable} />
     </div>
 )

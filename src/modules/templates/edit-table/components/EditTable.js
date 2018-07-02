@@ -11,7 +11,7 @@ const FormItem = Form.FormItem;
 const Option = Select.Option;
 const FilterColumnTable = filterColumn(Table, Checkbox, Popover, Icon);
 
-class List extends Component {
+class EditTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -20,7 +20,6 @@ class List extends Component {
     }
     componentDidMount = () => {
         this.loadList();//加载表格数据
-        actions.editTable.getFactory();//加载工厂列表
     }
     /**
      * 加载表格数据
@@ -316,7 +315,7 @@ class List extends Component {
                             bordered
                             title={() => (<div>
                                             <Button size="sm" shape="border" onClick={this.handlerAddClick} colors="primary">添加明细</Button>
-                                            <Button size="sm" shape="border" onClick={this.saveAll} colors="primary">获取数据</Button>
+                                            <Button size="sm" shape="border" onClick={this.saveAll} style={{'marginLeft':'10px'}} colors="primary">获取数据</Button>
                                         </div>)}
                             emptyText={() => <NoData />}
                             data={list}
@@ -341,4 +340,4 @@ class List extends Component {
     }
 }
 
-export default Form.createForm()(List);
+export default Form.createForm()(EditTable);
