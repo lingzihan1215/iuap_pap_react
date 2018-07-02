@@ -35,22 +35,22 @@ export default class Siderbar extends Component {
       }
       this.myfilter = this.myfilter.bind(this);
     }
-  
+
     componentWillMount() {
       var self = this;
-  
+
       // actions.sidebar.setMenus(data.data)
     }
-  
-  
+
+
     handleSelect(index) {
       this.setState({selectedkey: index});
     }
-  
+
     onToggle(value) {
       this.setState({expanded: value});
     }
-  
+
     handleClick(e) {
       this.setState({current: e.key});
     }
@@ -59,9 +59,9 @@ export default class Siderbar extends Component {
       actions.sidebar.setExpanded(true);
       const latestOpenKey = this.myfilter(openKeys,state.openKeys);
       const latestCloseKey = this.myfilter(state.openKeys,openKeys);
-  
+
       let nextOpenKeys = [];
-  
+
       if (latestOpenKey) {
         nextOpenKeys = this.getAncestorKeys(latestOpenKey).concat(latestOpenKey);
       }
@@ -81,7 +81,7 @@ export default class Siderbar extends Component {
       if(arr2.length == 0 || !arr2) {
         return arr1[0];
       }
-  
+
       for(var i=0;i<arr1.length;i++)
       {
         if(arr2.indexOf(arr1[i].toString())==-1)
@@ -92,17 +92,17 @@ export default class Siderbar extends Component {
       return false;
     }
     getAncestorKeys(key) {
-  
+
       const map = {
         "子项": ['组织2'],
       };
-  
+
       return map[key] || [];
     }
 
     getMenuList = (menus) => {
       return menus.map(function (item) {
-  
+
         let blank = item.openview=="blank"?"_blank":"";
 
 
@@ -134,7 +134,7 @@ export default class Siderbar extends Component {
     render() {
       let {expanded,menus} = this.props;
       let {openKeys} = this.state;
-     
+
       return (
         <div className={classNames({ 'sidebar-contanier':true,'sidebar-expanded': expanded })}>
           <div className="sider-menu">
@@ -145,13 +145,13 @@ export default class Siderbar extends Component {
               </a>
             </div>
             <SideContainer onToggle={this.onToggle.bind(this)} expanded={this.state.expanded}>
-              <Menu mode="inline" 
-                className="wrapper-menu" 
-                openKeys={openKeys} 
-                selectedKeys={[this.state.current]}  
-                onOpenChange={this.onOpenChange.bind(this)}  
+              <Menu mode="inline"
+                className="wrapper-menu"
+                openKeys={openKeys}
+                selectedKeys={[this.state.current]}
+                onOpenChange={this.onOpenChange.bind(this)}
                 onClick={this.handleClick.bind(this)}>
-                { getURLList(URLConfig) }
+                { this.getMenuList(URLConfig) }
               </Menu>
             </SideContainer>
           </div>

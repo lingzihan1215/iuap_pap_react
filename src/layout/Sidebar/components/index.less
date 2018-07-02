@@ -1,28 +1,26 @@
 .sidebar-contanier {
-    // background: #001529;
-    width:254px;
-    box-shadow: -1px 0 6px rgba(0, 21, 41, 0.35);
-    flex: 0 0 254px;
-    max-width: 254px;
-    min-width: 254px;
-    width: 254px;
+    background: #001529;
+    width:256px;
+    box-shadow:2px 0 6px rgba(0, 21, 41, 0.35);
+    flex: 0 0 256px;
+    max-width: 256px;
+    min-width: 256px;
+    width: 256px;
     min-height:100vh;
     transition:all  0.3s ease;
-    float: left;
-    .u-menu-inline, .u-menu-vertical {
-        padding: 0;
-    }
 }
-.u-navbar-side-container  {
+.sidebar-contanier .u-navbar-side-container  {
     border:none;
     box-shadow: none;
+    width:auto;
 }
-.u-navbar-side-container li {
+.sidebar-contanier .u-navbar-side-container li {
     background:none;
 }
-.u-navbar-side-container .u-menu .u-menu-item>a {
+.sidebar-contanier .u-navbar-side-container .u-menu .u-menu-item>a {
     color:rgba(255, 255, 255, 0.65);
     font-size:14px;
+    display:block;
     transition:color 0.3s cubic-bezier(0.65, 0.05, 0.36, 1), border-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), padding 0.15s cubic-bezier(0.645, 0.045, 0.355, 1)
 }
 .u-menu-inline .u-menu-inline .u-menu-item-selected, .u-menu-inline .u-menu-selected {
@@ -65,14 +63,14 @@
     -webkit-transition: all .3s;
     -o-transition: all .3s;
     transition: all .3s;
-    background: #e14c46;
+    background: #002140;
     overflow: hidden;
 }
 .logo-box .logo{
     vertical-align: middle;
     height: 32px;
     font-size: 58px;
-    color: #fff;
+    color:red;
 }
 .logo-box a {
     color:#fff;

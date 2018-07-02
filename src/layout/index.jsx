@@ -13,15 +13,13 @@ export default class MainLayout extends Component {
   render() {
     return (
       <Router>
-        <div className="app">
-          <div className="layout-container">
-            { (__MODE__ == "development") ?  <Sidebar /> : "" }
-            <div className="layout-content">
-              { (__MODE__ == "development") ? <LayoutHeader /> : "" }
-              <Routes />
-            </div>
+          <div className="honey-container">
+              { (__MODE__ == "development") ?  <Sidebar /> : "" }
+              <div className="page-layout">
+                  { (__MODE__ == "development") ? <LayoutHeader /> : "" }
+                  <Routes />
+              </div>
           </div>
-        </div>
       </Router>
     );
   }
