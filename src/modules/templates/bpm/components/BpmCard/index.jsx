@@ -176,7 +176,7 @@ class BpmCard extends Component {
                     </div>
                     {
 
-                        function showBtn(btnFlag) {
+                        function (btnFlag) {
                             if (btnFlag == 2) {
                                 return <BpmTaskApprovalWrap
                                     id={rowData.id}
