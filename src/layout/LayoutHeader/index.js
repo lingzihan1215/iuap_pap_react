@@ -53,10 +53,7 @@ export default class LayoutHeader extends Component {
         return (
             <div className="index-header">
                 <ul className="index-main">
-                    <li className="index-main-li">
-                    <span className="index-main-title">iuap 应用平台前端典型案例</span>
-                    <ul className="index-ul">{getURLList()}</ul>
-                    </li>
+                    
                 </ul>
             </div>
         )

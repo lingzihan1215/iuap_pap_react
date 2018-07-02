@@ -19,7 +19,6 @@ import "./index.less";
 export default class App extends Component {
   render(){
     return (
-      
       <div className="route-content">
         <Route path="/order" component={order} />
         <Route path="/supplier" component={Supplier} />
@@ -29,7 +28,6 @@ export default class App extends Component {
         <Route path="/resource" component={resource} />
         <Route path="/templates" component={templates} />
       </div>
-     
     )
   }
 }
