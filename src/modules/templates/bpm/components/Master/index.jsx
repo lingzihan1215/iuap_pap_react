@@ -140,7 +140,7 @@ class MasterTable extends Component {
                             </span>
                         </span>
                     </div>
-                    <div className={searchFlag ?"u-row u-panel-body b-searech-open":"u-row u-panel-body b-searech-close"}>
+                    <div className={searchFlag ?" u-row u-panel-body  b-searech-open":"u-row u-panel-body b-searech-close"}>
                         <Row>
                             <Col md={1} xs={1} sm={1} className="lineheight40">
                                 <div className='gray ml15 '>
@@ -159,7 +159,7 @@ class MasterTable extends Component {
                                 <FormControl ref="name" onChange={this.onSearchInfoChange("name")} value={this.state.name}/>
                             </Col>
                         </Row>
-                        <div className="float-right">
+                        <div className="align-right ">
                             <Button size="sm" shape="border" colors="info" className="ml15" onClick={this.clear}>清空</Button>
                             <Button size="sm" colors="primary" className="ml15" onClick={this.onSearch}>搜索</Button>
                         </div>

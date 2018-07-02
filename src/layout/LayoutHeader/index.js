@@ -1,63 +1,56 @@
-import React, { Component } from 'react'
-import { Link } from "mirrorx";
+import React,{Component} from 'react'
+import mirror, {actions, connect} from 'mirrorx'
+import {Navbar,Menu,FormControl,Badge,Icon} from 'tinper-bee'
+import './header.less'
 
-const urlListPreview = [
-  // 标准示例
-  { url: "/templates/simple-table", name: "简单单表示例" },
-  { url: "/templates/select-table", name: "简单多选表格示例" },
-  { url: "/templates/pagination-table", name: "简单分页表格示例" },
-  { url: "/templates/card-table", name: "可编辑表格示例" },
-  { url: "/templates/complex-form", name: "复杂表单注册" },
-  { url: "/templates/ref-exmaple", name: "参照功能示例" },
-  { url: "/templates/bpm-table", name: "流程组件示例" },
-  { url: "/templates/tree-table", name: "树表示例" },
-  { url: "/templates/card-table", name: "卡表示例" },
-  { url: "/templates/editor", name: "富文本编辑示例" },
-  
-  // 订单管理
-  { url: "/order/managelist", name: "订单列表" },
-  { url: "/order/delivery", name: "送货单" },
-  { url: "/system/rolelist", name: "角色管理" },
-  { url: "/interimplan/planapply", name: "计划申请" },
-  { url: "/resource/research", name: "资源调查表" },
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
+const MenuToggle = Menu.MenuToggle;
+const SideContainer = Menu.SideContainer;
 
-  { url: "/system/person-manage", name: "人员管理" },
-  { url: "/contract/manage", name: "合同管理" },
-  
-  // 供应商管理
-  { url: "/supplier/register", name: "供应商注册" },
-  { url: "/supplier/list", name: "供应商管理" },
-  { url: "/supplier/detail", name: "供应商详情" },
+const NavItem = Navbar.NavItem;
+const Headers = Navbar.Header;
+const Brand = Navbar.Brand;
+const Nav = Navbar.Nav;
 
-  // 图标示例
-  { url: "/templates/bar", name: "柱状图示例" },
-  { url: "/templates/line", name: "折线图示例" },
-  { url: "/templates/bar-line", name: "饼状折线图示例" },
-  { url: "/templates/pie", name: "饼状图示例" },
-  { url: "/templates/radar", name: "雷达图示例" },
-];
+class Header extends Component {
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
+            expanded: true,
+        }
 
-const getURLList = () => {
-  return urlListPreview.map((item, index) => {
-    return (
-      <li key={index} className="index-li">
-        <Link to={item.url}>{item.name}</Link>
-      </li>
-    );
-  });
-};
-
-export default class LayoutHeader extends Component {
-    constructor(props){
-        super(props)
+    }
+    onToggle(value) {
+        this.setState({expanded: value});
     }
     render(){
+        let {expanded} = this.props;
         return (
-            <div className="index-header">
-                <ul className="index-main">
-                    
-                </ul>
-            </div>
+            <Navbar className="header" fluid expanded={this.state.expanded} onToggle={this.onToggle.bind(this)}>
+                <MenuToggle show/>
+                <Headers>
+                    <Brand>
+                        <a href="javascript:;" onClick={() => actions.sidebar.setExpanded()}>
+                            <i className="navmenu uf uf-navmenu"></i>
+                        </a>
+                    </Brand>
+                </Headers>
+
+                <Nav pullRight>
+                    {/*<Menu mode="horizontal" className="dropdown">*/}
+                    {/*<SubMenu title={<span><span className="avatar-icon"><img src="https://gw.alipayobjects.com/zos/rmsportal/eHBsAsOrrJcnvFlnzNTT.png" /></span>赵宇<Icon type="uf-triangle-down"></Icon></span>}>*/}
+                    {/*<Menu.Item key="setting:2"><i className="uf uf-users-o"></i>个人中心</Menu.Item>*/}
+                    {/*<Menu.Item key="setting:3"><i className="uf uf-settings"></i>设置</Menu.Item>*/}
+                    {/*<Menu.Item key="setting:4"><i className="uf uf-plug-o"></i>退出登录</Menu.Item>*/}
+                    {/*</SubMenu>*/}
+                    {/*</Menu>*/}
+                </Nav>
+            </Navbar>
         )
     }
+
 }
+
+
+export default Header
