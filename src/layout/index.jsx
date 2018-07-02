@@ -36,6 +36,7 @@ const urlListPreview = [
 
   { url: "/templates/tree-table", name: "树表示例" },
   { url: "/templates/card-table", name: "卡表示例" },
+  { url: "/templates/editor", name: "富文本编辑示例" },
 ];
 
 const getURLList = () => {
