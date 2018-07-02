@@ -35,9 +35,7 @@ class ExampleRoot  extends Component {
             <div className='example-root'>
                 <Header title='简单单表查询示例' back={true}/>
                 <ExampleForm { ...this.props }/>
-                <div className="table-list">
-                    <ExampleTable { ...this.props }/>
-                </div>
+                <ExampleTable { ...this.props }/>
             </div>
         )
     }

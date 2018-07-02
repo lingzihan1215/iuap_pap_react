@@ -307,34 +307,35 @@ class EditTable extends Component {
         return (
             <div className='plan-apply-wrap'>
                 <Header title='表格编辑示例' />
-             
-                <Row className='table-list'>
-                    <Col md={12}>
-                        <Table
-                            loading={{ show: this.state.loading, loadingType: "line" }}
-                            bordered
-                            title={() => (<div>
-                                            <Button size="sm" shape="border" onClick={this.handlerAddClick} colors="primary">添加明细</Button>
-                                            <Button size="sm" shape="border" onClick={this.saveAll} style={{'marginLeft':'10px'}} colors="primary">获取数据</Button>
-                                        </div>)}
-                            emptyText={() => <NoData />}
-                            data={list}
-                            rowKey={r => r.id}
-                            columns={columns}
-                            scroll={{ y: 520 }}
-                            footer={() => <Pagination
-                                first
-                                last
-                                boundaryLinks
-                                items={this.props.total}
-                                activePage={this.props.pageIndex}
-                                onSelect={this.handleSelect}
-                                onDataNumSelect={this.dataNumSelect}
-                                showJump={true}
-                            />}
-                        />
-                    </Col>
-                </Row>
+                <div className='table-list clearfix'>
+                    <Row>
+                        <Col md={12}>
+                            <Table
+                                loading={{ show: this.state.loading, loadingType: "line" }}
+                                bordered
+                                title={() => (<div>
+                                                <Button size="sm" shape="border" onClick={this.handlerAddClick} colors="primary">添加明细</Button>
+                                                <Button size="sm" shape="border" onClick={this.saveAll} style={{'marginLeft':'10px'}} colors="primary">获取数据</Button>
+                                            </div>)}
+                                emptyText={() => <NoData />}
+                                data={list}
+                                rowKey={r => r.id}
+                                columns={columns}
+                                scroll={{ y: 520 }}
+                                footer={() => <Pagination
+                                    first
+                                    last
+                                    boundaryLinks
+                                    items={this.props.total}
+                                    activePage={this.props.pageIndex}
+                                    onSelect={this.handleSelect}
+                                    onDataNumSelect={this.dataNumSelect}
+                                    showJump={true}
+                                />}
+                            />
+                        </Col>
+                    </Row>
+                </div>
             </div>
         )
     }

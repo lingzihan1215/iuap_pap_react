@@ -119,11 +119,11 @@ class ExampleTable extends Component {
         const { list,showLoading,pageSize, pageIndex, totalPages, } = this.props;
         return (
             <div className="table-list">
-            <div className='table-header'>
-                <Button size='sm' shape="border" onClick={() => { self.cellClick({}, true) }}>
-                    新增
-                </Button>
-            </div>
+                <div className='table-header'>
+                    <Button size='sm' shape="border" onClick={() => { self.cellClick({}, true) }}>
+                        新增
+                    </Button>
+                </div>
                 <Table
                     loading={{show:showLoading,loadingType:"line"}}
                     rowKey={(r,i)=>i}
