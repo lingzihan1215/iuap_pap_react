@@ -33,7 +33,11 @@ const propTypes = {
     // 页索引编号点击选中回调方法
     onPageIndexSelect: PropTypes.func.isRequired,
     // 横向或纵向滚动条设置
-    scroll: PropTypes.object
+    scroll: PropTypes.object,
+    // 表格标题
+    title:PropTypes.func,
+    // 表格尾部
+    footer:PropTypes.func,
 };
 
 const defaultProps = {
@@ -64,7 +68,7 @@ class PaginationTableDrag extends Component {
             data, showLoading, pageSize,
             pageIndex, totalPages, columns,
             getSelectedDataFunc, onPageSizeSelect, onPageIndexSelect,
-            scroll
+            scroll,title,footer
         } = this.props;
 
         let dataNumSelect = [pageSize, pageSize * 2, pageSize * 3, pageSize * 4];
@@ -81,6 +85,8 @@ class PaginationTableDrag extends Component {
                     getSelectedDataFunc={getSelectedDataFunc}
                     scroll
                     dragborder={true}
+                    title={title}
+                    footer={footer}
                 />
                 <div className='pagination'>
                     <Pagination
