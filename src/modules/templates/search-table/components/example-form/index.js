@@ -4,7 +4,7 @@ import { Col, Row,FormControl, Label, Select, Radio } from "tinper-bee";
 import Form from 'bee-form';
 import DatePicker from 'bee-datepicker';
 import 'bee-datepicker/build/DatePicker.css';
-import SearchPanel from 'components/SearchPanel';
+import ComplexSearchPanel from 'components/ComplexSearchPanel';
 const FormItem = Form.FormItem;
 const { RangePicker } = DatePicker;
 import './index.less'
@@ -63,11 +63,12 @@ class ExampleForm extends Component {
         let { orderTypes } = this.props;
         let _this = this;
         return (
-            <SearchPanel 
+            <ComplexSearchPanel 
                 className='example-form' 
                 form={this.props.form} 
                 reset={this.reset} 
-                search={this.search}>
+                search={this.search}
+                simple={(
                 <Row>
                     <Col md={4} xs={6}>
                         <FormItem>
@@ -112,102 +113,109 @@ class ExampleForm extends Component {
                             />
                         </FormItem>
                     </Col>
-                    <Col md={4} xs={6}>
-                        <FormItem>
-                            <Label>订单类型：</Label>
-                            <Select 
-                                {
-                                    ...getFieldProps('type', {
-                                        initialValue: '',
-                                    })
-                                }
-                            >
-                                <Option value="">请选择</Option>
-                                {
-                                    orderTypes.map((item, index) => {
-                                        return (
-                                            <Option key={index} value={item.code}>{item.name}</Option>
-                                        )
-                                    })
-                                }
-                            </Select>
-                        </FormItem>
-                    </Col>
-                    <Col md={4} xs={6}>
-                        <FormItem>
-                            <Label>采购组：</Label>
-                            <FormControl
-                                {
-                                    ...getFieldProps('purchasingGroup', {
-                                        initialValue: '',
-                                    })
-                                }
-                            />
-                        </FormItem>
-                    </Col>
-                    <Col md={4} xs={6}>
-                        <FormItem>
-                            <Label>审批状态：</Label>
-                            <Radio.RadioGroup
-                                selectedValue={this.state.approvalState}
-                                {
-                                    ...getFieldProps('approvalState', {
-                                        initialValue: '',
-                                        onChange(value) {
-                                            _this.setState({ approvalState: value });
-                                        },
-                                    })
-                                }
-                            >
-                                <Radio value="0" >未审批</Radio>
-                                <Radio value="1" >已审批</Radio>
-                                <Radio value="" >全部</Radio>
-                            </Radio.RadioGroup>
-                        </FormItem>
-                    </Col>
-                    <Col md={4} xs={6}>
-                        <FormItem>
-                            <Label>关闭状态：</Label>
-                            <Radio.RadioGroup
-                                selectedValue={this.state.closeState}
-                                {
-                                    ...getFieldProps('closeState', {
-                                        initialValue: '',
-                                        onChange(value) {
-                                            _this.setState({ closeState: value });
-                                        },
-                                    })
-                                }
-                            >
-                                <Radio value="0" >未关闭</Radio>
-                                <Radio value="1" >已关闭</Radio>
-                                <Radio value="" >全部</Radio>
-                            </Radio.RadioGroup>
-                        </FormItem>
-                    </Col>
-                    <Col md={4} xs={6}>
-                        <FormItem>
-                            <Label>确认状态：</Label>
-                            <Radio.RadioGroup
-                                selectedValue={this.state.confirmState}
-                                {
-                                    ...getFieldProps('confirmState', {
-                                        initialValue: '',
-                                        onChange(value) {
-                                            _this.setState({ confirmState: value });
-                                        },
-                                    })
-                                }
-                            >
-                                <Radio value="0" >未确认</Radio>
-                                <Radio value="1" >已确认</Radio>
-                                <Radio value="2" >拒绝</Radio>
-                                <Radio value="" >全部</Radio>
-                            </Radio.RadioGroup>
-                        </FormItem>
-                    </Col>
                 </Row>
-            </SearchPanel>
+                )}
+                complex={(
+                    <Row>
+                        <Col md={4} xs={6}>
+                            <FormItem>
+                                <Label>订单类型：</Label>
+                                <Select 
+                                    {
+                                        ...getFieldProps('type', {
+                                            initialValue: '',
+                                        })
+                                    }
+                                >
+                                    <Option value="">请选择</Option>
+                                    {
+                                        orderTypes.map((item, index) => {
+                                            return (
+                                                <Option key={index} value={item.code}>{item.name}</Option>
+                                            )
+                                        })
+                                    }
+                                </Select>
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={6}>
+                            <FormItem>
+                                <Label>采购组：</Label>
+                                <FormControl
+                                    {
+                                        ...getFieldProps('purchasingGroup', {
+                                            initialValue: '',
+                                        })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={6}>
+                            <FormItem>
+                                <Label>审批状态：</Label>
+                                <Radio.RadioGroup
+                                    selectedValue={this.state.approvalState}
+                                    {
+                                        ...getFieldProps('approvalState', {
+                                            initialValue: '',
+                                            onChange(value) {
+                                                _this.setState({ approvalState: value });
+                                            },
+                                        })
+                                    }
+                                >
+                                    <Radio value="0" >未审批</Radio>
+                                    <Radio value="1" >已审批</Radio>
+                                    <Radio value="" >全部</Radio>
+                                </Radio.RadioGroup>
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={6}>
+                            <FormItem>
+                                <Label>关闭状态：</Label>
+                                <Radio.RadioGroup
+                                    selectedValue={this.state.closeState}
+                                    {
+                                        ...getFieldProps('closeState', {
+                                            initialValue: '',
+                                            onChange(value) {
+                                                _this.setState({ closeState: value });
+                                            },
+                                        })
+                                    }
+                                >
+                                    <Radio value="0" >未关闭</Radio>
+                                    <Radio value="1" >已关闭</Radio>
+                                    <Radio value="" >全部</Radio>
+                                </Radio.RadioGroup>
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={6}>
+                            <FormItem>
+                                <Label>确认状态：</Label>
+                                <Radio.RadioGroup
+                                    selectedValue={this.state.confirmState}
+                                    {
+                                        ...getFieldProps('confirmState', {
+                                            initialValue: '',
+                                            onChange(value) {
+                                                _this.setState({ confirmState: value });
+                                            },
+                                        })
+                                    }
+                                >
+                                    <Radio value="0" >未确认</Radio>
+                                    <Radio value="1" >已确认</Radio>
+                                    <Radio value="2" >拒绝</Radio>
+                                    <Radio value="" >全部</Radio>
+                                </Radio.RadioGroup>
+                            </FormItem>
+                        </Col>
+                    </Row>
+                )}
+                >
+                
+            </ComplexSearchPanel>
         )
     }
 }
