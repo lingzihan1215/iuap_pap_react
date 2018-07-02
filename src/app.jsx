@@ -7,8 +7,9 @@ import 'core-js/es6/map';
 import 'core-js/es6/set';
 import logger from "redux-logger";
 import mirror, { render } from "mirrorx";
-
-import Routes from "./routes";
+// import { Locale } from 'tinper-bee';
+// import enUS from 'tinper-bee/locale/en-US.js';
+import MainLayout from "./layout";
 
 import './static/trd/tineper-bee/assets/tinper-bee.css'
 import "./app.less";
@@ -22,4 +23,4 @@ mirror.defaults({
     middlewares: MiddlewareConfig
 });
 
-render(<Routes />, document.querySelector("#app"));
+render( <MainLayout />, document.querySelector("#app"));

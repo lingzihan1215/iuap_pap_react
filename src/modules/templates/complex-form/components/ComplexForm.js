@@ -74,11 +74,13 @@ class ComplexForm extends Component{
         const { current } = this.state;
         return (
             <div className='example-step'>
-                 <Step.Steps current={current}>
-                    <Step title="Finished" description="This is a description." />
-                    <Step title="In Progress" description="This is a description." />
-                    <Step title="Waiting" description="This is a description." />
-                </Step.Steps>
+                <div className="step-container">
+                    <Step.Steps current={current}>
+                        <Step title="第一步" description="供应商基本信息" />
+                        <Step title="第二步" description="供应商账户信息填写" />
+                        <Step title="第三步" description="供应商工商信息填写" />
+                    </Step.Steps>
+                </div>
                 <div className='step-content'>
                     <div className='edit-panel' style={{'display':current==0?'block':'none'}}>
                         <StepOne form={form} validateFlag={validateNum==0} validatefn={(error,values)=>{self.validates(0,error,values)}} />

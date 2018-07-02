@@ -33,9 +33,11 @@ class ExampleRoot  extends Component {
         let { pageSize, pageIndex, totalPages} = this.props;
         return (
             <div className='example-root'>
-                <Header title='简单单表查询示例'/>
+                <Header title='简单单表查询示例' back={true}/>
                 <ExampleForm { ...this.props }/>
-                <ExampleTable { ...this.props }/>
+                <div className="table-list">
+                    <ExampleTable { ...this.props }/>
+                </div>
             </div>
         )
     }

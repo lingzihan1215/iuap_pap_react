@@ -113,17 +113,19 @@ export default class SimpleSelectTable extends Component {
             }
         ];
         return (
-            <div className="example-select-table table-list">
-                <Header title='简单多选表格示例'/>
+            <div className="example-select-table">
+                <Header title='简单多选表格示例' back={true} />
                 <ExampleForm { ...this.props }/>
-                <MultiSelectTable
-                    loading={{ show: showLoading, loadingType: "line" }}
-                    rowKey={(r, i) => i}
-                    columns={column}
-                    data={list}
-                    multiSelect={{ type: "checkbox" }}
-                    getSelectedDataFunc={this.tabelSelect}
-                />
+                <div className="table-list">
+                    <MultiSelectTable
+                        loading={{ show: showLoading, loadingType: "line" }}
+                        rowKey={(r, i) => i}
+                        columns={column}
+                        data={list}
+                        multiSelect={{ type: "checkbox" }}
+                        getSelectedDataFunc={this.tabelSelect}
+                    />
+                </div>
             </div>
         )
     }
