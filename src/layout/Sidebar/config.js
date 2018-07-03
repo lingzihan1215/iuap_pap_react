@@ -113,7 +113,7 @@ export default [
         "location": "/application",
         "menustatus": "Y",
         "parentid": null,
-        "icon": "uf uf-9square-2",
+        "icon": "uf uf-files-o",
         "target": "",
         "urltype": "url",
         "children": [{
@@ -217,7 +217,7 @@ export default [
         "location": "/application",
         "menustatus": "Y",
         "parentid": null,
-        "icon": "uf uf-9square-2",
+        "icon": "uf uf-3dot-c-o",
         "target": "",
         "urltype": "url",
         "children": [{
@@ -256,7 +256,7 @@ export default [
         "location": "/application",
         "menustatus": "Y",
         "parentid": null,
-        "icon": "uf uf-9square-2",
+        "icon": "uf uf-histogram-s-o-2",
         "target": "",
         "urltype": "url",
         "children": [{
