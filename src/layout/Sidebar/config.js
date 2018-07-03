@@ -398,6 +398,19 @@ export default [
             "sort": 1,
             "openview": "curpage",
             "category": "engine"
+        },{
+            "id": "app505",
+            "name": "查询面板示例",
+            "location": "/examples/search-panel",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
         }],
         "sort": 1,
         "openview": "curpage",

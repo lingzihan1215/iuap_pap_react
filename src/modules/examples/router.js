@@ -26,6 +26,10 @@ import {
     CtDelModal
 } from './del-modal/container'
 
+import {
+    CtSearchPanel
+} from './search-panel/container'
+
 
 /**
  * 路由说明：
@@ -38,6 +42,7 @@ import {
  * 3、编辑表格示例
  * 4、周选择示例
  * 5、删除确认弹窗示例
+ * 6、查询面板示例
  */
 export default ({ match }) => (
     <div className="examples-route">
@@ -50,5 +55,6 @@ export default ({ match }) => (
         <Route exact path={`${match.url}/upload`} component={Upload} />
         <Route exact path={`${match.url}/week-picker`} component={ConnectedWeekPicker} />
         <Route exact path={`${match.url}/del-modal`} component={CtDelModal} />
+        <Route exact path={`${match.url}/search-panel`} component={CtSearchPanel} />
     </div>
 )
