@@ -6,7 +6,7 @@ import React, { Component } from "react";
 import 'core-js/es6/map';
 import 'core-js/es6/set';
 import logger from "redux-logger";
-import mirror, { render } from "mirrorx";
+import mirror, { render,Router } from "mirrorx";
 // import { Locale } from 'tinper-bee';
 // import enUS from 'tinper-bee/locale/en-US.js';
 import MainLayout from "./layout";
@@ -23,4 +23,6 @@ mirror.defaults({
     middlewares: MiddlewareConfig
 });
 
-render( <MainLayout />, document.querySelector("#app"));
+render(<Router>
+    <MainLayout />
+</Router>, document.querySelector("#app"));

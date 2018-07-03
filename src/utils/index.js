@@ -19,6 +19,11 @@ export const Warning = (msg) => {
  * @param {*} successMsg 成功提示
  */
 export const processData = (response,successMsg) => {
+    if(typeof response != 'object') {
+        Error('数据返回出错：1、请确保服务运行正常；2、请确保您的前端工程代理服务正常；3、请确认您已在本地登录过应用平台');
+        return;
+    }
+    
     if(response.status=='200'){
         let data=response.data;
         if(data.success=='success'){
