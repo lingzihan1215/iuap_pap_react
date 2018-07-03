@@ -2,10 +2,6 @@ import React from 'react'
 import { Route } from 'mirrorx'
 
 
-// import {
-//     ConnectedRef
-// } from './ref-example/container';
-
 import {
     ConnectedBar,
     ConnectedLine,
@@ -25,6 +21,16 @@ import {
 import {
     ConnectedWeekPicker
 } from './week-picker/container'
+
+import {
+    CtDelModal
+} from './del-modal/container'
+
+import {
+    CtSearchPanel
+} from './search-panel/container'
+
+
 /**
  * 路由说明：
  * 1、echarts 图表示例
@@ -35,6 +41,8 @@ import {
  * 2、富文本编辑器示例
  * 3、编辑表格示例
  * 4、周选择示例
+ * 5、删除确认弹窗示例
+ * 6、查询面板示例
  */
 export default ({ match }) => (
     <div className="examples-route">
@@ -46,6 +54,7 @@ export default ({ match }) => (
         <Route exact path={`${match.url}/editor`} component={ConnectedEditor} />
         <Route exact path={`${match.url}/upload`} component={Upload} />
         <Route exact path={`${match.url}/week-picker`} component={ConnectedWeekPicker} />
-        {/* <Route exact path={`${match.url}/ref-example`} component={ConnectedRef} /> */}
+        <Route exact path={`${match.url}/del-modal`} component={CtDelModal} />
+        <Route exact path={`${match.url}/search-panel`} component={CtSearchPanel} />
     </div>
 )

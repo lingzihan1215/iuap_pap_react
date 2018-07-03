@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { actions } from "mirrorx";
 import { Table,FormControl, Button, Col, Row, Icon, Popconfirm, Checkbox} from 'tinper-bee';
 import TableWrapper from '../TableWrapper';
+import ComplexSearchPanel from 'components/ComplexSearchPanel';
 
 import "./index.less"
 // 主表列字段
@@ -119,7 +120,23 @@ class MasterTable extends Component {
          */
         let {  masterData, refData,searchFlag,checkedArray,rowData,btnFlag } = this.props;
         console.log("searchFlag", searchFlag);
-        
+        let searchContent = ()=>{
+            return (
+                <div className="demo">
+                    <Row className="clearfix">
+                        <Col md={4} xs={3} sm={3} >
+                            <label className="demo-label">工单编码:</label>
+                            <FormControl placeholder="请输入名称"/>
+                        </Col>
+                        <Col xs={3} sm={3} >
+                            <label className="demo-label">工单名称:</label>
+                            <FormControl placeholder="请输入编码"/>
+                        </Col>
+                    </Row>
+                </div>
+            )
+        }
+
         return (
             <div className="bgwhite">
                 <div className="pap-title">工单管理</div>
@@ -166,6 +183,13 @@ class MasterTable extends Component {
                     </div>
                 </div>
 
+                {/* <ComplexSearchPanel
+                    moreName="收起与展开"
+                    complex = {searchContent()}
+                    resetName = "重置"
+                    searchName = "查询"
+
+                /> */}
 
                 <TableWrapper
                     checkedArray={checkedArray}

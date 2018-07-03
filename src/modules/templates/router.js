@@ -31,9 +31,6 @@ import {
 
 import BPM from './bpm/components/BPM/Bpm'
 
-import {
-    ConnectedEditTable
-} from './edit-table/container'
 
 /**
  * 路由说明：
@@ -62,6 +59,5 @@ export default ({ match }) => (
         <Route exact path={`${match.url}/bpm-table`} component={ConnectedBpmTable} />
         <Route exact path={`${match.url}/bpm-card`} component={ConnectedBpmCard} />
         <Route exact path={`${match.url}/bpm`} component={BPM} />
-        <Route exact path={`${match.url}/edit-table`} component={ConnectedEditTable} />
     </div>
 )
