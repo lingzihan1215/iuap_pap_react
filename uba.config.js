@@ -23,7 +23,18 @@ const proxyConfig = [
     router: [
       '/wbalone', '/iuap_pap_quickstart', '/iuap-example','/eiap-plus/','/newref/'
     ],
-    url: 'http://172.20.23.242:8080'  }
+    url: 'http://172.20.23.242:8080'  
+  },
+  {
+    enable: true,
+    headers: {
+    "Referer": "http://10.10.24.43:8080/" },
+    router: [
+    '/wbalone', '/iuap_pap_quickstart', '/iuap-example','/eiap-plus/','/newref/'
+    ],
+    url: 'http://10.10.24.43:8080' 
+  }
+    
 ];
 
 const globalEnvConfig = new webpack.DefinePlugin({
