@@ -1,8 +1,8 @@
 import React from 'react'
 import { Route } from 'mirrorx'
 
-import { 
-    ConnectedSimpleTable, 
+import {
+    ConnectedSimpleTable,
     ConnectedSimpleSelectTable,
     ConnectedSimplePaginationTable,
     ConnectedExampleEdit
@@ -81,6 +81,7 @@ import {
  */
 export default ({ match }) => (
     <div className="templates-route">
+        <Route exact path={`/`} component={ConnectedSimpleTable} />
         <Route exact path={`${match.url}/simple-table`} component={ConnectedSimpleTable} />
         <Route exact path={`${match.url}/select-table`} component={ConnectedSimpleSelectTable} />
         <Route exact path={`${match.url}/pagination-table`} component={ConnectedSimplePaginationTable} />
