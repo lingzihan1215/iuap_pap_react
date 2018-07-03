@@ -1,27 +1,40 @@
 import React, { Component } from "react";
-import { Router } from "mirrorx";
+import { Router,Switch,withRouter } from "mirrorx";
+import { Transition,TransitionGroup,CSSTransition} from 'react-transition-group'
 
 import LayoutHeader from './LayoutHeader';
 import Sidebar from './Sidebar/index.js';
 import Routes from "../routes";
 import "./index.less";
+import "./animation.css";
 
-export default class MainLayout extends Component {
+class MainLayout extends Component {
   constructor(props) {
     super(props);
   }
   render() {
+  const {location} = this.props;
+  const currentKey = location.pathname.split('/')[1] || '/'
+  const timeout = { enter: 500, exit: 500 }
     return (
-      <Router>
+
           <div className="honey-container">
               { (__MODE__ == "development") ?  <Sidebar /> : "" }
               <div className="page-layout">
                   { (__MODE__ == "development") ? <LayoutHeader /> : "" }
-                  <Routes />
+
+                  <TransitionGroup component="main" className="page-main">
+                      <CSSTransition key={currentKey} timeout={timeout} classNames="fade" appear>
+                          <Switch location={location}>
+                              <Routes />
+                          </Switch>
+                      </CSSTransition>
+                  </TransitionGroup>
               </div>
           </div>
-      </Router>
+
     );
   }
 }
 
+export default  withRouter(MainLayout)

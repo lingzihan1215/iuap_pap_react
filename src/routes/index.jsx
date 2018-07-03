@@ -29,6 +29,7 @@ export default class App extends Component {
         <Route path="/resource" component={resource} />
         <Route path="/templates" component={templates} />
         <Route path="/examples" component={examples} />
+        <Route path="/" exact={true} component={templates} />
       </div>
     )
   }
