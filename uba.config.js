@@ -33,7 +33,7 @@ const proxyConfig = [
     router: [
     '/wbalone', '/iuap_pap_quickstart', '/iuap-example','/eiap-plus/','/newref/'
     ],
-    url: 'http://10.10.24.43:8080' 
+    url: 'http://10.10.24.43:8080'
   }
     
 ];
