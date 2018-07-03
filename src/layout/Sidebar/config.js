@@ -3,9 +3,10 @@
  */
 
 export default [
+    // 典型案例
     {
         "id": "application",
-        "name": "标准示例",
+        "name": "典型案例",
         "location": "/application",
         "menustatus": "Y",
         "parentid": null,
@@ -80,7 +81,7 @@ export default [
         },{
             "id": "app06",
             "name": "参照功能示例",
-            "location": "/templates/ref-exmaple",
+            "location": "/examples/ref-exmaple",
             "menustatus": "Y",
             "parentid": null,
             "icon": "uf uf-9square-2",
@@ -107,13 +108,15 @@ export default [
         "sort": 1,
         "openview": "curpage",
         "category": "engine"
-    },{
+    },
+    // 订单管理
+    {
         "id": "application2",
         "name": "订单管理",
         "location": "/application",
         "menustatus": "Y",
         "parentid": null,
-        "icon": "uf uf-9square-2",
+        "icon": "uf uf-files-o",
         "target": "",
         "urltype": "url",
         "children": [{
@@ -211,13 +214,15 @@ export default [
         "sort": 1,
         "openview": "curpage",
         "category": "engine"
-    },{
+    },
+    // 供应商管理
+    {
         "id": "application3",
         "name": "供应商管理",
         "location": "/application",
         "menustatus": "Y",
         "parentid": null,
-        "icon": "uf uf-9square-2",
+        "icon": "uf uf-3dot-c-o",
         "target": "",
         "urltype": "url",
         "children": [{
@@ -250,19 +255,21 @@ export default [
         "sort": 1,
         "openview": "curpage",
         "category": "engine"
-    },{
+    },
+    // 图表示例
+    {
         "id": "application4",
-        "name": "图标示例",
+        "name": "图表示例",
         "location": "/application",
         "menustatus": "Y",
         "parentid": null,
-        "icon": "uf uf-9square-2",
+        "icon": "uf uf-histogram-s-o-2",
         "target": "",
         "urltype": "url",
         "children": [{
             "id": "app401",
             "name": "柱状图示例",
-            "location": "/templates/bar",
+            "location": "/examples/bar",
             "menustatus": "Y",
             "parentid": null,
             "icon": "uf uf-9square-2",
@@ -275,7 +282,7 @@ export default [
         },{
             "id": "app402",
             "name": "折线图示例",
-            "location": "/templates/line",
+            "location": "/examples/line",
             "menustatus": "Y",
             "parentid": null,
             "icon": "uf uf-9square-2",
@@ -288,7 +295,7 @@ export default [
         },{
             "id": "app403",
             "name": "饼状折线图示例",
-            "location": "/templates/bar-line",
+            "location": "/examples/bar-line",
             "menustatus": "Y",
             "parentid": null,
             "icon": "uf uf-9square-2",
@@ -301,7 +308,7 @@ export default [
         },{
             "id": "app404",
             "name": "饼状图示例",
-            "location": "/templates/pie",
+            "location": "/examples/pie",
             "menustatus": "Y",
             "parentid": null,
             "icon": "uf uf-9square-2",
@@ -314,7 +321,89 @@ export default [
         },{
             "id": "app405",
             "name": "雷达图示例",
-            "location": "/templates/radar",
+            "location": "/examples/radar",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
+        }],
+        "sort": 1,
+        "openview": "curpage",
+        "category": "engine"
+    },
+    // 应用组件示例
+    {
+        "id": "application5",
+        "name": "应用组件示例",
+        "location": "/application",
+        "menustatus": "Y",
+        "parentid": null,
+        "icon": "uf uf-3dot-c-o",
+        "target": "",
+        "urltype": "url",
+        "children": [{
+            "id": "app501",
+            "name": "附件管理",
+            "location": "/examples/upload",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
+        },{
+            "id": "app502",
+            "name": "富文本编辑器",
+            "location": "/examples/editor",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
+        },{
+            "id": "app503",
+            "name": "星期选择",
+            "location": "/examples/week-picker",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
+        }],
+        "sort": 1,
+        "openview": "curpage",
+        "category": "engine"
+    },
+    // 参照组件示例
+    {
+        "id": "application6",
+        "name": "参照组件示例",
+        "location": "/application",
+        "menustatus": "Y",
+        "parentid": null,
+        "icon": "uf uf-3dot-c-o",
+        "target": "",
+        "urltype": "url",
+        "children": [{
+            "id": "app601",
+            "name": "树形参照",
+            "location": "/examples/ref-example",
             "menustatus": "Y",
             "parentid": null,
             "icon": "uf uf-9square-2",

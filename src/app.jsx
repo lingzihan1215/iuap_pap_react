@@ -6,9 +6,11 @@ import React, {Component} from "react";
 import 'core-js/es6/map';
 import 'core-js/es6/set';
 import logger from "redux-logger";
-import mirror, {render} from "mirrorx";
+
 import { addLocaleData, IntlProvider } from 'react-intl';
 import {Locale} from 'tinper-bee';
+import mirror, { render,Router } from "mirrorx";
+
 import MainLayout from "./layout";
 
 import './static/trd/tineper-bee/assets/tinper-bee.css'
@@ -27,10 +29,14 @@ mirror.defaults({
     middlewares: MiddlewareConfig
 });
 
+
 render(
     <Locale locale={appLocale.tinperBee}>
         <IntlProvider locale={appLocale.locale} messages={appLocale.messages}>
-            <MainLayout />
+            <Router>
+                <MainLayout />
+            </Router>
         </IntlProvider>
     </Locale>,
     document.querySelector("#app"));
+
