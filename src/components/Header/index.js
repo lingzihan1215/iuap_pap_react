@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import { Col, Row } from 'tinper-bee';
+import { FormattedMessage, defineMessages } from 'react-intl';
 import PropTypes from 'prop-types';
 import './index.less';
 import classnames from 'classnames';
+
+const messages = defineMessages({
+    back: {
+        id: 'Header.back',
+        defaultMessage: '返回',
+    },
+});
 
 const propTypes = {
     back: PropTypes.bool,
@@ -39,7 +47,7 @@ class Header extends Component {
                         back ? (
                             <span onClick={backFn} className="back-icon">
                                 <i className={classnames({ 'uf uf-arrow-left pull-left': true, 'hide': !back })} />
-                                返回
+                                <FormattedMessage {...messages.back} />
                         </span>) : ''
                     }
                     <span className="main-title">
