@@ -2,7 +2,20 @@ import React, { Component } from 'react';
 import { Button } from 'tinper-bee';
 import PropTypes from 'prop-types';
 import './index.less';
-import classnames from 'classnames';
+import { FormattedMessage, defineMessages } from 'react-intl';
+
+
+const messages = defineMessages({
+    clear: {
+        id: 'SearchPanel.clear',
+        defaultMessage: '清空',
+    },
+    search: {
+        id: 'SearchPanel.search',
+        defaultMessage: '查询',
+    },
+});
+
 /**
  * 部分不能通过this.props.form.resetFields()清空的组件，需要传reset方法，在reset方法中自行清空
  */
@@ -50,8 +63,22 @@ class SearchPanel extends Component {
            <div className={classes}>
             {children}
                 <div className='search-panel-btn'>
-                    <Button size='sm' className='reset-btn' onClick={this.reset}>{resetName?resetName:'清空'}</Button>
-                    <Button size='sm' className='submit-btn' onClick={this.search}>{searchName?searchName:'查询'}</Button>
+                    <Button
+                        size='sm'
+                        className='reset-btn'
+                        onClick={this.reset}>
+                        {
+                            resetName?resetName:<FormattedMessage {...messages.clear} />
+                        }
+                        </Button>
+                    <Button
+                        size='sm'
+                        className='submit-btn'
+                        onClick={this.search}>
+                        {
+                            searchName?searchName:<FormattedMessage {...messages.search} />
+                        }
+                        </Button>
                 </div>
            </div>
         )

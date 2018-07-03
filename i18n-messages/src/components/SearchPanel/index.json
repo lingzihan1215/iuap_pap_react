@@ -1,0 +1,10 @@
+[
+  {
+    "id": "SearchPanel.clear",
+    "defaultMessage": "清空"
+  },
+  {
+    "id": "SearchPanel.search",
+    "defaultMessage": "查询"
+  }
+]

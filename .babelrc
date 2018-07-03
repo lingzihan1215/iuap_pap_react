@@ -12,6 +12,12 @@
         "polyfill": true,
         "regenerator": true
       }
+    ],
+    [
+      "react-intl",
+      {
+        "messagesDir": "./i18n-messages"
+      }
     ]
   ]
 }
