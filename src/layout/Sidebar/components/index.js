@@ -55,10 +55,10 @@ export default class Siderbar extends Component {
       this.setState({current: e.key});
     }
     onOpenChange(openKeys) {
-      const state = this.state;
+        const props = this.props;
       actions.sidebar.setExpanded(true);
-      const latestOpenKey = this.myfilter(openKeys,state.openKeys);
-      const latestCloseKey = this.myfilter(state.openKeys,openKeys);
+      const latestOpenKey = this.myfilter(openKeys,props.openKeys);
+      const latestCloseKey = this.myfilter(props.openKeys,openKeys);
 
       let nextOpenKeys = [];
 
@@ -68,12 +68,13 @@ export default class Siderbar extends Component {
       if (latestCloseKey) {
         nextOpenKeys = this.getAncestorKeys(latestCloseKey);
       }
-      this.setState({
-        current:openKeys,
-        submenuSelected:openKeys,
-        openKeys: nextOpenKeys,
-        expanded:false
-      });
+      // this.setState({
+      //   current:openKeys,
+      //   submenuSelected:openKeys,
+      //   openKeys: nextOpenKeys,
+      //   expanded:false
+      // });
+        actions.sidebar.setOpenKeys(nextOpenKeys);
 
     }
     //IE下 array.find（）方法不可用
@@ -132,8 +133,7 @@ export default class Siderbar extends Component {
     }
 
     render() {
-      let {expanded,menus} = this.props;
-      let {openKeys} = this.state;
+      let {expanded,menus,openKeys} = this.props;
 
       return (
         <div className={classNames({ 'sidebar-contanier':true,'sidebar-expanded': expanded })}>
@@ -144,7 +144,7 @@ export default class Siderbar extends Component {
                 <h1>iuap 应用平台</h1>
               </a>
             </div>
-            <SideContainer onToggle={this.onToggle.bind(this)} expanded={this.state.expanded}>
+            <SideContainer onToggle={this.onToggle.bind(this)}  expanded={this.state.expanded}>
               <Menu mode="inline"
                 className="wrapper-menu"
                 openKeys={openKeys}
