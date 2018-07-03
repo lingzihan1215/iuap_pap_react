@@ -246,19 +246,6 @@ export default [
             "sort": 1,
             "openview": "curpage",
             "category": "engine"
-        },{
-            "id": "app303",
-            "name": "供应商详情",
-            "location": "/supplier/detail",
-            "menustatus": "Y",
-            "parentid": null,
-            "icon": "uf uf-9square-2",
-            "target": "",
-            "urltype": "url",
-            "children": [],
-            "sort": 1,
-            "openview": "curpage",
-            "category": "engine"
         }],
         "sort": 1,
         "openview": "curpage",
