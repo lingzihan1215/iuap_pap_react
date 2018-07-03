@@ -252,7 +252,7 @@ export default [
         "category": "engine"
     },{
         "id": "application4",
-        "name": "图标示例",
+        "name": "图表示例",
         "location": "/application",
         "menustatus": "Y",
         "parentid": null,
@@ -262,7 +262,7 @@ export default [
         "children": [{
             "id": "app401",
             "name": "柱状图示例",
-            "location": "/templates/bar",
+            "location": "/examples/bar",
             "menustatus": "Y",
             "parentid": null,
             "icon": "uf uf-9square-2",
@@ -275,7 +275,7 @@ export default [
         },{
             "id": "app402",
             "name": "折线图示例",
-            "location": "/templates/line",
+            "location": "/examples/line",
             "menustatus": "Y",
             "parentid": null,
             "icon": "uf uf-9square-2",
@@ -288,7 +288,7 @@ export default [
         },{
             "id": "app403",
             "name": "饼状折线图示例",
-            "location": "/templates/bar-line",
+            "location": "/examples/bar-line",
             "menustatus": "Y",
             "parentid": null,
             "icon": "uf uf-9square-2",
@@ -301,7 +301,7 @@ export default [
         },{
             "id": "app404",
             "name": "饼状图示例",
-            "location": "/templates/pie",
+            "location": "/examples/pie",
             "menustatus": "Y",
             "parentid": null,
             "icon": "uf uf-9square-2",
@@ -314,7 +314,7 @@ export default [
         },{
             "id": "app405",
             "name": "雷达图示例",
-            "location": "/templates/radar",
+            "location": "/examples/radar",
             "menustatus": "Y",
             "parentid": null,
             "icon": "uf uf-9square-2",
