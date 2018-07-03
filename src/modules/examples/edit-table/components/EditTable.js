@@ -27,8 +27,10 @@ class EditTable extends Component {
     loadList = async () => {
         this.setState({ loading: true });
         let data = await actions.editTable.getList();
-        this.cacheData = data.map(item => ({ ...item }));
-        this.setState({ loading: false });
+        if(data){
+            this.cacheData = data.map(item => ({ ...item }));
+            this.setState({ loading: false });
+        }
     }
     /**
      * 行编辑列渲染成FormControl
@@ -228,6 +230,7 @@ class EditTable extends Component {
         });
     }
     saveAll = () =>{
+        alert('数据在控制台输出，请查看');
         console.log(this.props.list);
     }
 

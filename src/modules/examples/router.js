@@ -30,6 +30,10 @@ import {
     CtSearchPanel
 } from './search-panel/container'
 
+import {
+    ConnectedEditTable
+} from './edit-table/container'
+
 
 /**
  * 路由说明：
@@ -56,5 +60,6 @@ export default ({ match }) => (
         <Route exact path={`${match.url}/week-picker`} component={ConnectedWeekPicker} />
         <Route exact path={`${match.url}/del-modal`} component={CtDelModal} />
         <Route exact path={`${match.url}/search-panel`} component={CtSearchPanel} />
+        <Route exact path={`${match.url}/edit-table`} component={ConnectedEditTable} />
     </div>
 )
