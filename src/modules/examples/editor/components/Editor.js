@@ -94,13 +94,13 @@ class Editor extends Component {
             }
         }
         return ( 
-            <div className = 'example' >
+            <div className = 'example'>
                 <Header title = '富文本编辑器示例' / >
-                <Row className='example-ctn'>
-                    <Col md = {12} >
-                        <BraftEditor { ...editorProps}/> 
-                    </Col> 
-                </Row> 
+                    <Row className="example-ctn">
+                        <Col md = {12} >
+                         <BraftEditor { ...editorProps}/> 
+                        </Col> 
+                    </Row> 
             </div>
         )
     }

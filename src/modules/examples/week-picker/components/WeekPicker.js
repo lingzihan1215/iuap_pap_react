@@ -13,22 +13,21 @@ class WeekPickerC extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            weekDate:''
+            weekDate:moment()
         }
     }
     getValue=()=>{
         this.props.form.validateFields((err, values) => {
-            console.log(this.state)
             console.log(values);
         });
     }
 
     render() {
         const { getFieldProps } = this.props.form;
-        const self=this;
+        const self = this;
         return ( 
             <div className = 'example' >
-                <Header title = '周选择示例'/ >
+                <Header title = '周选择示例'/>
                 <Row className="example-ctn">
                     <Col md = {6} >
                         <WeekPicker placeholder="选择周" defaultValue={this.state.weekDate}
@@ -42,15 +41,13 @@ class WeekPickerC extends Component {
                                 })
                             }
                         />
-                    </Col> 
+                    </Col>
                     <Col md = {6} >
                         <Button onClick={this.getValue}>
                             获取值
                         </Button>
-                    </Col> 
-
-                </Row> 
-
+                    </Col>
+                </Row>
             </div>
         )
     }

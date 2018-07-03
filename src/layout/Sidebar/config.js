@@ -3,9 +3,10 @@
  */
 
 export default [
+    // 典型案例
     {
         "id": "application",
-        "name": "标准示例",
+        "name": "典型案例",
         "location": "/application",
         "menustatus": "Y",
         "parentid": null,
@@ -80,7 +81,7 @@ export default [
         },{
             "id": "app06",
             "name": "参照功能示例",
-            "location": "/templates/ref-exmaple",
+            "location": "/examples/ref-exmaple",
             "menustatus": "Y",
             "parentid": null,
             "icon": "uf uf-9square-2",
@@ -107,7 +108,9 @@ export default [
         "sort": 1,
         "openview": "curpage",
         "category": "engine"
-    },{
+    },
+    // 订单管理
+    {
         "id": "application2",
         "name": "订单管理",
         "location": "/application",
@@ -211,7 +214,9 @@ export default [
         "sort": 1,
         "openview": "curpage",
         "category": "engine"
-    },{
+    },
+    // 供应商管理
+    {
         "id": "application3",
         "name": "供应商管理",
         "location": "/application",
@@ -250,7 +255,9 @@ export default [
         "sort": 1,
         "openview": "curpage",
         "category": "engine"
-    },{
+    },
+    // 图表示例
+    {
         "id": "application4",
         "name": "图表示例",
         "location": "/application",
@@ -328,31 +335,20 @@ export default [
         "sort": 1,
         "openview": "curpage",
         "category": "engine"
-    },{
+    },
+    // 应用组件示例
+    {
         "id": "application5",
-        "name": "其它示例",
+        "name": "应用组件示例",
         "location": "/application",
         "menustatus": "Y",
         "parentid": null,
-        "icon": "uf uf-9square-2",
+        "icon": "uf uf-3dot-c-o",
         "target": "",
         "urltype": "url",
         "children": [{
             "id": "app501",
-            "name": "富文本示例",
-            "location": "/examples/editor",
-            "menustatus": "Y",
-            "parentid": null,
-            "icon": "uf uf-9square-2",
-            "target": "",
-            "urltype": "url",
-            "children": [],
-            "sort": 1,
-            "openview": "curpage",
-            "category": "engine"
-        },{
-            "id": "app502",
-            "name": "上传示例",
+            "name": "附件管理",
             "location": "/examples/upload",
             "menustatus": "Y",
             "parentid": null,
@@ -364,8 +360,21 @@ export default [
             "openview": "curpage",
             "category": "engine"
         },{
+            "id": "app502",
+            "name": "富文本编辑器",
+            "location": "/examples/editor",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
+        },{
             "id": "app503",
-            "name": "周选择示例",
+            "name": "星期选择",
             "location": "/examples/week-picker",
             "menustatus": "Y",
             "parentid": null,
@@ -378,8 +387,36 @@ export default [
             "category": "engine"
         },{
             "id": "app504",
-            "name": "编辑表格示例",
-            "location": "/examples/edit-table",
+            "name": "删除确认模态框",
+            "location": "/examples/del-modal",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
+        }],
+        "sort": 1,
+        "openview": "curpage",
+        "category": "engine"
+    },
+    // 参照组件示例
+    {
+        "id": "application6",
+        "name": "参照组件示例",
+        "location": "/application",
+        "menustatus": "Y",
+        "parentid": null,
+        "icon": "uf uf-3dot-c-o",
+        "target": "",
+        "urltype": "url",
+        "children": [{
+            "id": "app601",
+            "name": "树形参照",
+            "location": "/examples/ref-example",
             "menustatus": "Y",
             "parentid": null,
             "icon": "uf uf-9square-2",

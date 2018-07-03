@@ -21,10 +21,6 @@ import {
 } from './multi-table/container';
 
 import {
-    ConnectedRef
-} from './ref-example/container';
-
-import {
     ConnectedTreeTable
 } from './tree-table/container';
 
@@ -34,6 +30,7 @@ import {
 } from './bpm/container';
 
 import BPM from './bpm/components/BPM/Bpm'
+
 
 /**
  * 路由说明：
@@ -59,8 +56,8 @@ export default ({ match }) => (
         <Route exact path={`${match.url}/multi-table`} component={ConnectedMultiTable} />
         <Route exact path={`${match.url}/tree-table`} component={ConnectedTreeTable} />
         <Route exact path={`${match.url}/complex-form`} component={ConnectedComplexForm} />
-        <Route exact path={`${match.url}/ref-exmaple`} component={ConnectedRef} />
         <Route exact path={`${match.url}/bpm-table`} component={ConnectedBpmTable} />
         <Route exact path={`${match.url}/bpm-card`} component={ConnectedBpmCard} />
+        <Route exact path={`${match.url}/bpm`} component={BPM} />
     </div>
 )
