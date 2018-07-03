@@ -194,8 +194,6 @@ class BpmCard extends Component {
                     }
                 </div>
                 
-                
-                
                 <div className="card-content">
             
                     <div className={btnFlag==2?"user-form mt15":"user-form"} disabled={btnFlag==2?"disabled":false}>
