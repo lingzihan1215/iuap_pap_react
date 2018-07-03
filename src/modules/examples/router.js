@@ -25,6 +25,10 @@ import {
 import {
     ConnectedWeekPicker
 } from './week-picker/container'
+
+import {
+    CtDelModal
+} from './del-modal/container'
 /**
  * 路由说明：
  * 1、echarts 图表示例
@@ -36,6 +40,7 @@ import {
  * 3、上传组件示例
  * 4、编辑表格示例
  * 5、周选择示例
+ * 6、删除确认框示例
  */
 export default ({ match }) => (
     <div className="templates-route">
@@ -48,5 +53,6 @@ export default ({ match }) => (
         <Route exact path={`${match.url}/upload`} component={Upload} />
         <Route exact path={`${match.url}/edit-table`} component={ConnectedEditTable} />
         <Route exact path={`${match.url}/week-picker`} component={ConnectedWeekPicker} />
+        <Route exact path={`${match.url}/del-modal`} component={CtDelModal} />
     </div>
 )
