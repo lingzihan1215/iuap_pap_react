@@ -12,6 +12,7 @@ import Supplier from "modules/supplier/router";
 import contracts from "modules/contract/router";
 import system from 'modules/sys-manage/router';
 import templates from 'modules/templates/router';
+import examples from 'modules/examples/router';
 
 import MainLayout from "layout";
 import "./index.less";
@@ -27,6 +28,7 @@ export default class App extends Component {
         <Route path="/interimplan" component={interimplan} />
         <Route path="/resource" component={resource} />
         <Route path="/templates" component={templates} />
+        <Route path="/examples" component={examples} />
       </div>
     )
   }

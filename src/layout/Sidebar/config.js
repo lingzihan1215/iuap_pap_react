@@ -328,5 +328,70 @@ export default [
         "sort": 1,
         "openview": "curpage",
         "category": "engine"
+    },{
+        "id": "application5",
+        "name": "其它示例",
+        "location": "/application",
+        "menustatus": "Y",
+        "parentid": null,
+        "icon": "uf uf-9square-2",
+        "target": "",
+        "urltype": "url",
+        "children": [{
+            "id": "app501",
+            "name": "富文本示例",
+            "location": "/examples/editor",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
+        },{
+            "id": "app502",
+            "name": "上传示例",
+            "location": "/examples/upload",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
+        },{
+            "id": "app503",
+            "name": "周选择示例",
+            "location": "/examples/week-picker",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
+        },{
+            "id": "app504",
+            "name": "编辑表格示例",
+            "location": "/examples/edit-table",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
+        }],
+        "sort": 1,
+        "openview": "curpage",
+        "category": "engine"
     }
 ]

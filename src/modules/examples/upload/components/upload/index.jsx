@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Button, Row, Col } from 'tinper-bee';
-import Form from 'bee-form';
 import { actions } from 'mirrorx';
 import AcUpload from 'ac-upload';
+import Header from "components/Header";
 import './index.less';
-const FormItem = Form.FormItem;
 
 class Upload extends Component {
     constructor(props) {
