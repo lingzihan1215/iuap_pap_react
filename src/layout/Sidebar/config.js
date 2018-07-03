@@ -400,6 +400,19 @@ export default [
             "sort": 1,
             "openview": "curpage",
             "category": "engine"
+        },{
+            "id": "app506",
+            "name": "表格编辑示例",
+            "location": "/examples/edit-table",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
         }],
         "sort": 1,
         "openview": "curpage",
