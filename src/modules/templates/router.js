@@ -54,6 +54,10 @@ import {
 import {
     ConnectedEditTable
 } from './edit-table/container'
+
+import {
+    ConnectedWeekPicker
+} from './week-picker/container'
 /**
  * 路由说明：
  * 1、单表【search-table】：
@@ -73,6 +77,7 @@ import {
  *      bar-line:柱状折线图
  * 9、富文本编辑器示例
  * 10、编辑表格示例
+ * 11、周选择示例
  */
 export default ({ match }) => (
     <div className="templates-route">
@@ -96,5 +101,6 @@ export default ({ match }) => (
         <Route exact path={`${match.url}/editor`} component={ConnectedEditor} />
         <Route exact path={`${match.url}/upload`} component={Upload} />
         <Route exact path={`${match.url}/edit-table`} component={ConnectedEditTable} />
+        <Route exact path={`${match.url}/week-picker`} component={ConnectedWeekPicker} />
     </div>
 )

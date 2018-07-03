@@ -293,7 +293,7 @@ class List extends Component {
                             <Button className='head-save' onClick={this.saveForm}>保存</Button>
                         </div>
                 </Header>
-                <div className='common-form edit-panel'>
+                <div className='common-form edit-panel clearfix'>
                     <Row >
                         <Col md={4} xs={6}>
                             <FormItem>
