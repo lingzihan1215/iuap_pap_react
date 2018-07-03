@@ -13,7 +13,7 @@ class WeekPickerC extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            weekDate:''
+            weekDate:moment()
         }
     }
     getValue=()=>{
@@ -28,8 +28,8 @@ class WeekPickerC extends Component {
         const self = this;
         return ( 
             <div className = 'editor-example' >
-                <Header title = '周选择示例'/ >
-                <Row >
+                <Header title = '周选择示例'/>
+                <Row>
                     <Col md = {6} >
                         <WeekPicker placeholder="选择周" defaultValue={this.state.weekDate}
                             {
@@ -43,14 +43,14 @@ class WeekPickerC extends Component {
                                 })
                             }
                         />
-                    </Col> 
+                    </Col>
                     <Col md = {6} >
                         <Button onClick={this.getValue}>
                             获取值
                         </Button>
-                    </Col> 
+                    </Col>
 
-                </Row> 
+                </Row>
 
             </div>
         )
