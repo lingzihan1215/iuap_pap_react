@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PaginationTable from 'components/PaginationTable'
 import {BpmButtonSubmit,BpmButtonRecall} from 'yyuap-bpm';
 import { actions } from 'mirrorx';
-import { Button } from 'tinper-bee';
+import { Button,Message } from 'tinper-bee';
 import moment from "moment/moment";
 import Header from 'components/Header';
 import ExampleForm from '../example-form';
@@ -42,7 +42,7 @@ export default class SimplePaginationTable extends Component {
             param: [record],
             index: index
         });
-    }    
+    }
     onTableSelectedData = data => {
         console.log(data)
         this.setState({
@@ -63,12 +63,12 @@ export default class SimplePaginationTable extends Component {
     onSubmitSuc = async ()=>{
         await actions.searchTable.loadList();
         actions.searchTable.updateState({showLine:false});
-        Message.create({content: '单据提交成功', color: 'success'}); 
+        Message.create({content: '单据提交成功', color: 'success'});
     }
     // 提交操作初始执行操作
     onSubmitStart = ()=>{
         actions.searchTable.updateState({showLine:true});
-        
+
     }
     // 提交失败回调函数
     onSubmitFail = ()=>{
@@ -81,7 +81,7 @@ export default class SimplePaginationTable extends Component {
         console.log("onRecallSuc 成功进入recall回调");
         await actions.searchTable.loadList();
         actions.searchTable.updateState({showLine:false});
-        Message.create({content: '单据撤回成功', color: 'success'}); 
+        Message.create({content: '单据撤回成功', color: 'success'});
     }
     onRecallFail = ()=>{
         actions.searchTable.updateState({showLine:false});
@@ -90,7 +90,7 @@ export default class SimplePaginationTable extends Component {
     onRecallStart = ()=>{
         this.setState({showLine:true});
     }
-    
+
     //查看方法
     onExamine = async (text, record, index)=> {
         console.log("record", record);
@@ -168,7 +168,7 @@ export default class SimplePaginationTable extends Component {
                 dataIndex: "confirmState_name",
                 key: "confirmState_name",
                 width: 100
-            }, 
+            },
             {
                 title: "关闭状态",
                 dataIndex: "closeState_name",
@@ -200,7 +200,7 @@ export default class SimplePaginationTable extends Component {
                     <Button size='sm' shape="border" onClick={() => { self.cellClick({}, true) }}>
                         新增
                     </Button>
-                    <BpmButtonSubmit 
+                    <BpmButtonSubmit
                         className="ml5 "
                         data = {list}
                         checkedArray = {[true]}
@@ -211,7 +211,7 @@ export default class SimplePaginationTable extends Component {
                         onError = {this.onSubmitFail}
                         onStart={this.onSubmitStart}
                     />
-                    <BpmButtonRecall 
+                    <BpmButtonRecall
                         className="ml5 "
                         data = {list}
                         checkedArray = {[true]}
@@ -221,7 +221,7 @@ export default class SimplePaginationTable extends Component {
                         onStart = {this.onRecallStart}
                     />
                 </div>
-                <PaginationTable 
+                <PaginationTable
                     data={list}
                     showLoading={showLoading}
                     pageIndex={pageIndex}
@@ -237,6 +237,6 @@ export default class SimplePaginationTable extends Component {
             </div>
 
         )
-        
+
     }
 }
