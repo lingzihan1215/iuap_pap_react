@@ -189,8 +189,9 @@ class TableWrapper extends Component {
                 "btnFlag": 2,
                 "rowData": record
             }
+            console.log("onExamine",tempState);
             await actions.master.save(tempState);
-            actions.routing.push({
+            await actions.routing.push({
                 pathname:'/templates/bpm-card',
             })
         }
@@ -262,7 +263,7 @@ class TableWrapper extends Component {
                                 <Button className="inline-btn" size="sm" onClick={this.onEdit(text, record, index)}>编辑</Button>
                                 {/* <span className="span-adjust" onClick={this.onRowDel(text, record, index)} >删除</span> */}
                                 {/* <span className="span-adjust " onClick={this.onExamine(text, record, index)}>查看</span> */}
-                                <Button className="inline-btn ml5" size="sm"  onClick={this.onEdit(text, record, index)}>查看</Button>
+                                <Button className="inline-btn ml5" size="sm"  onClick={this.onExamine(text, record, index)}>查看</Button>
                                 <Popconfirm content="确认删除?" id="aa" onClose={this.onRowDel(text, record, index)}>
                                     {/* <Icon type="uf-del" className="tablewrapper-delicon"/> */}
                                     <Button className="inline-btn ml5" size="sm" >删除</Button>
