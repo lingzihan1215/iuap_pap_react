@@ -34,6 +34,10 @@ import {
     ConnectedEditTable
 } from './edit-table/container'
 
+import {
+    CtFormValidate
+} from './form-validate/container'
+
 
 /**
  * 路由说明：
@@ -47,6 +51,7 @@ import {
  * 4、周选择示例
  * 5、删除确认弹窗示例
  * 6、查询面板示例
+ * 7、form示例
  */
 export default ({ match }) => (
     <div className="examples-route">
@@ -61,5 +66,6 @@ export default ({ match }) => (
         <Route exact path={`${match.url}/del-modal`} component={CtDelModal} />
         <Route exact path={`${match.url}/search-panel`} component={CtSearchPanel} />
         <Route exact path={`${match.url}/edit-table`} component={ConnectedEditTable} />
+        <Route exact path={`${match.url}/form-validate`} component={CtFormValidate} />
     </div>
 )

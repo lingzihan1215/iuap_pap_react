@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PaginationTable from 'components/PaginationTableDrag'
+import PaginationTable from 'components/PaginationTable'
 import { actions } from 'mirrorx';
 import { Button } from 'tinper-bee';
 import moment from "moment/moment";
