@@ -71,7 +71,7 @@
     "react-hot-keys": "^1.2.0",
     "react-transition-group": "^2.4.0",
     "tinper-bee": "^1.5.0",
-    "yyuap-bpm": "0.0.10",
-    "yyuap-ref": "^1.0.67"
+    "yyuap-ref": "^1.0.67",
+    "yyuap-bpm": "0.0.12"
   }
 }
