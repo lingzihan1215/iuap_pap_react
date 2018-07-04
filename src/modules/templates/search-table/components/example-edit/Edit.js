@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { actions } from "mirrorx";
 import { Loading,Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Select,Radio } from "tinper-bee";
 import { BpmTaskApprovalWrap } from 'yyuap-bpm';
+import AcUpload from 'ac-upload';
 import Header from "components/Header";
 import DatePicker from 'bee-datepicker';
 import Form from 'bee-form';
@@ -74,6 +75,10 @@ class Edit extends Component {
                 break;
         }
         return msg;
+    }
+
+    handlerUploadSuccess = (data) => {
+        console.log(data);
     }
     render (){
         const self=this;
@@ -253,6 +258,23 @@ class Edit extends Component {
                                     <Radio value="1" >已关闭</Radio>
                                 </Radio.RadioGroup>):(
                                     <FormControl disabled={!editFlag} value={closeState}/>
+                                )
+                        }
+                    </Col>
+                    <Col md={4} xs={6}>
+                        <Label>
+                            附件：
+                        </Label>
+                        {
+                            editFlag ? (<AcUpload
+                                multiple={false}
+                                isShow={true}
+                                onError={() => console.log('上传报错了')}
+                                onSuccess={this.handlerUploadSuccess}
+                            >
+                                <Button colors="info">上传</Button>
+                            </AcUpload>) : (
+                                    <span>查看附件</span>
                                 )
                         }
                     </Col>
