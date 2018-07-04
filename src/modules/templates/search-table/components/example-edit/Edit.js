@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { actions } from "mirrorx";
 import { Loading,Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Select,Radio } from "tinper-bee";
+import { BpmTaskApprovalWrap } from 'yyuap-bpm';
 import Header from "components/Header";
 import DatePicker from 'bee-datepicker';
 import Form from 'bee-form';
@@ -48,6 +49,31 @@ class Edit extends Component {
     }
     cancel=()=>{
         window.history.go(-1);
+    }
+    // 跳转到流程图
+    onClickToBPM = ()=>{
+        console.log("actions",actions);
+        actions.routing.push({
+            pathname:'example-chart',
+            search:`?id=${this.props.rowData.id}`
+        })
+    }
+
+    // 动态显示标题
+    onChangeHead = (btnFlag)=>{
+        let msg = "";
+        switch(btnFlag) {
+            case 0:
+                msg = "新增";
+                break;
+            case 1:
+                msg = "编辑";
+                break;
+            case 2:
+                msg = "详情"
+                break;
+        }
+        return msg;
     }
     render (){
         const self=this;

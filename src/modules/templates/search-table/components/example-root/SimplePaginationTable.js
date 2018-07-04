@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PaginationTable from 'components/PaginationTable'
+import {BpmButtonSubmit,BpmButtonRecall} from 'yyuap-bpm';
 import { actions } from 'mirrorx';
 import { Button } from 'tinper-bee';
 import moment from "moment/moment";
@@ -57,6 +58,37 @@ export default class SimplePaginationTable extends Component {
         actions.searchTable.loadList({
             pageIndex: value
         })
+    }
+
+    onSubmitSuc = async ()=>{
+        await actions.searchTable.loadList();
+        actions.searchTable.updateState({showLine:false});
+        Message.create({content: '单据提交成功', color: 'success'}); 
+    }
+    // 提交操作初始执行操作
+    onSubmitStart = ()=>{
+        actions.searchTable.updateState({showLine:true});
+        
+    }
+    // 提交失败回调函数
+    onSubmitFail = ()=>{
+        actions.searchTable.updateState({showLine:false});
+        Message.create({content: "单据提交失败", color: 'danger'});
+    }
+
+    // 撤回成功，失败，开始回调函数
+    onRecallSuc = async ()=>{
+        console.log("onRecallSuc 成功进入recall回调");
+        await actions.searchTable.loadList();
+        actions.searchTable.updateState({showLine:false});
+        Message.create({content: '单据撤回成功', color: 'success'}); 
+    }
+    onRecallFail = ()=>{
+        actions.searchTable.updateState({showLine:false});
+        Message.create({content: "单据撤回失败", color: 'danger'});
+    }
+    onRecallStart = ()=>{
+        this.setState({showLine:true});
     }
     
     render(){
@@ -155,6 +187,26 @@ export default class SimplePaginationTable extends Component {
                     <Button size='sm' shape="border" onClick={() => { self.cellClick({}, true) }}>
                         新增
                     </Button>
+                    <BpmButtonSubmit 
+                        className="ml5 "
+                        data = {list}
+                        checkedArray = {[true]}
+                        funccode = "react"
+                        nodekey = "003"
+                        url = {`${GROBAL_HTTP_CTX}/example_workorder/submit`}
+                        onSuccess = {this.onSubmitSuc}
+                        onError = {this.onSubmitFail}
+                        onStart={this.onSubmitStart}
+                    />
+                    <BpmButtonRecall 
+                        className="ml5 "
+                        data = {list}
+                        checkedArray = {[true]}
+                        url = {`${GROBAL_HTTP_CTX}/example_workorder/recall`}
+                        onSuccess = {this.onRecallSuc}
+                        onError = {this.onRecallFail}
+                        onStart = {this.onRecallStart}
+                    />
                 </div>
                 <PaginationTable 
                     data={list}
