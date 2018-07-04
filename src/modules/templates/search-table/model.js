@@ -4,6 +4,14 @@ import * as api from "./service";
 // 接口返回数据公共处理方法，根据具体需要
 import { processData } from "utils"; 
 
+/** 
+ *          btnFlag为按钮状态，新增、修改是可编辑，查看详情不可编辑，
+ *          新增表格为空
+ *          修改需要将行数据带上并显示在卡片页面
+ *          查看详情携带行数据但是表格不可编辑
+ *          0表示新增、1表示编辑，2表示查看详情 3提交
+*/
+
 export default {
     // 确定 Store 中的数据模型作用域
     name: "searchTable", 
@@ -18,6 +26,7 @@ export default {
         detail:{},
         searchParam:{},
         validateNum:99,//不存在的step
+        btnFlag:0
     },
     reducers: {
         /**
