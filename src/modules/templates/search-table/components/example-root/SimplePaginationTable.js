@@ -91,6 +91,18 @@ export default class SimplePaginationTable extends Component {
         this.setState({showLine:true});
     }
     
+    //查看方法
+    onExamine = async (text, record, index)=> {
+        console.log("record", record);
+        await actions.routing.push(
+            {
+                pathname: 'example-edit',
+                detailObj: record,
+                btnFlag:2
+            }
+        )
+    }
+
     render(){
         const self=this;
         let { list, showLoading, pageIndex, pageSize, totalPages } = this.props;
@@ -172,6 +184,7 @@ export default class SimplePaginationTable extends Component {
                 render(text, record, index) {
                     return (
                         <div className='operation-btn'>
+                            <Button size='sm' className='edit-btn' onClick={() => { self.onExamine(text, record, index) }}>查看</Button>
                             <Button size='sm' className='edit-btn' onClick={() => { self.cellClick(record, true) }}>编辑</Button>
                             <Button size='sm' className='del-btn' onClick={() => { self.delItem(record, index) }}>删除</Button>
                         </div>

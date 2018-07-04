@@ -192,6 +192,7 @@ class Edit extends Component {
                         {
                             editFlag?
                             (<Radio.RadioGroup
+                                disabled = {true}
                                 selectedValue={this.state.approvalState}
                                 {
                                     ...getFieldProps('approvalState', {
