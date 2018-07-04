@@ -44,7 +44,7 @@
     "redux-logger": "^3.0.6"
   },
   "dependencies": {
-    "ac-upload": "0.0.7",
+    "ac-upload": "0.0.8",
     "axios": "^0.18.0",
     "bee-autocomplete": "^1.0.4",
     "bee-city-select": "^1.0.6",
@@ -71,7 +71,7 @@
     "react-hot-keys": "^1.2.0",
     "react-transition-group": "^2.4.0",
     "tinper-bee": "^1.5.0",
-    "yyuap-ref": "^1.0.67",
-    "yyuap-bpm": "0.0.12"
+    "yyuap-bpm": "0.0.12",
+    "yyuap-ref": "^1.0.67"
   }
 }
