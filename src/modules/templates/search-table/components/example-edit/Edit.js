@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { actions } from "mirrorx";
-import { Loading,Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Select,Radio } from "tinper-bee";
+import { Loading, Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Select, Radio } from "tinper-bee";
 import { BpmTaskApprovalWrap } from 'yyuap-bpm';
+import AcUpload from 'ac-upload';
 import Header from "components/Header";
 import DatePicker from 'bee-datepicker';
 import Form from 'bee-form';
@@ -12,57 +13,59 @@ import moment from "moment";
 const FormItem = Form.FormItem;
 
 class Edit extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
-            approvalState:'0',
-            closeState:'0',
-            confirmState:'0'
+        this.state = {
+            approvalState: '0',
+            closeState: '0',
+            confirmState: '0',
+            fileNameData: {}
         }
     }
-    componentWillMount(){
-        if(this.props.location.detailObj&&this.props.location.detailObj.id){
-            let {approvalState,closeState,confirmState}=this.props.location.detailObj;
+    componentWillMount() {
+        if (this.props.location.detailObj && this.props.location.detailObj.id) {
+            let { approvalState, closeState, confirmState } = this.props.location.detailObj;
             this.setState({
-                approvalState:String(approvalState),
-                closeState:String(closeState),
-                confirmState:String(confirmState)
+                approvalState: String(approvalState),
+                closeState: String(closeState),
+                confirmState: String(confirmState)
             })
         }
     }
     save = () => {//保存
         this.props.form.validateFields((err, values) => {
-            values.approvalState=Number(values.approvalState);
-            values.closeState=Number(values.closeState);
-            values.confirmState=Number(values.confirmState);
-            values.voucherDate=values.voucherDate!=undefined?values.voucherDate.format('YYYY-MM-DD'):'';
-            if(err){
-                Message.create({ content: '数据填写错误', color : 'danger'  });
-            }else{
-                if(this.props.location.detailObj&&this.props.location.detailObj.id){
-                    values.id=this.props.location.detailObj.id;
-                    values.ts=this.props.location.detailObj.ts;
+            values.attachment = this.state.fileNameData;
+            values.approvalState = Number(values.approvalState);
+            values.closeState = Number(values.closeState);
+            values.confirmState = Number(values.confirmState);
+            values.voucherDate = values.voucherDate != undefined ? values.voucherDate.format('YYYY-MM-DD') : '';
+            if (err) {
+                Message.create({ content: '数据填写错误', color: 'danger' });
+            } else {
+                if (this.props.location.detailObj && this.props.location.detailObj.id) {
+                    values.id = this.props.location.detailObj.id;
+                    values.ts = this.props.location.detailObj.ts;
                 }
                 actions.searchTable.save(values);
             }
         });
     }
-    cancel=()=>{
+    cancel = () => {
         window.history.go(-1);
     }
     // 跳转到流程图
-    onClickToBPM = ()=>{
-        console.log("actions",actions);
+    onClickToBPM = () => {
+        console.log("actions", actions);
         actions.routing.push({
-            pathname:'example-chart',
-            search:`?id=${this.props.rowData.id}`
+            pathname: 'example-chart',
+            search: `?id=${this.props.rowData.id}`
         })
     }
 
     // 动态显示标题
-    onChangeHead = (btnFlag)=>{
+    onChangeHead = (btnFlag) => {
         let msg = "";
-        switch(btnFlag) {
+        switch (btnFlag) {
             case 0:
                 msg = "新增";
                 break;
@@ -75,87 +78,94 @@ class Edit extends Component {
         }
         return msg;
     }
-    render (){
-        const self=this;
-        let {orderTypes,orderCode,supplier,supplierName,type,purchasing,purchasingGroup,voucherDate,approvalState,confirmState,closeState} = this.props.location.detailObj;
+
+    handlerUploadSuccess = (data) => {
+        console.log(data);
+        this.setState({
+            fileNameData: data
+        });
+    }
+    render() {
+        const self = this;
+        let { orderTypes, orderCode, supplier, supplierName, type, purchasing, purchasingGroup, voucherDate, approvalState, confirmState, closeState } = this.props.location.detailObj;
         const editFlag = this.props.location.editFlag;
         const { getFieldProps, getFieldError } = this.props.form;
         return (
             <div className='order-detail'>
-            <Loading
-            showBackDrop={true}
-            loadingType="line"
-            show={this.props.showLoading}
-            />
-                <Header title={editFlag?'订单编辑':'订单详情'} back={true}>
-                    {editFlag?(
+                <Loading
+                    showBackDrop={true}
+                    loadingType="line"
+                    show={this.props.showLoading}
+                />
+                <Header title={editFlag ? '订单编辑' : '订单详情'} back={true}>
+                    {editFlag ? (
                         <div className='head-btn'>
                             <Button className='head-cancel' onClick={this.cancel}>取消</Button>
                             <Button className='head-save' onClick={this.save}>保存</Button>
                         </div>
-                    ):''}
+                    ) : ''}
                 </Header>
                 <Row className='detail-body'>
                     <Col md={4} xs={6}>
                         <Label>
                             订单编号：
                         </Label>
-                        <FormControl disabled={true} 
+                        <FormControl disabled={true}
                             placeholder="使用编码规则生成"
                             {
-                                ...getFieldProps('orderCode', {
-                                    initialValue: orderCode
-                                }
-                            ) }
-                        />
-                    </Col>
-                    <Col md={4} xs={6}>
-                        <Label>
-                        供应商名称：
-                        </Label>
-                        <FormControl disabled={!editFlag} 
-                            {
-                                ...getFieldProps('supplierName', {
-                                    initialValue: supplierName
-                                }
+                            ...getFieldProps('orderCode', {
+                                initialValue: orderCode
+                            }
                             )}
                         />
                     </Col>
                     <Col md={4} xs={6}>
                         <Label>
-                        类型：
+                            供应商名称：
+                        </Label>
+                        <FormControl disabled={!editFlag}
+                            {
+                            ...getFieldProps('supplierName', {
+                                initialValue: supplierName
+                            }
+                            )}
+                        />
+                    </Col>
+                    <Col md={4} xs={6}>
+                        <Label>
+                            类型：
                         </Label>
                         {
-                            editFlag?(
-                                <Select  
-                                {
-                                ...getFieldProps('type', {
-                                    initialValue: type||'',
-                                }
-                                )}>
-                                <Option value="">请选择</Option>
-                                {
-                                    self.props.orderTypes.map((item,index)=>{
-                                        return (
-                                            <Option key={index} value={item.code}>{item.name}</Option>
-                                        )
-                                    })
-                                }
-                            </Select>
-                            ):(<FormControl disabled={!editFlag} />)
+                            editFlag ? (
+                                <Select
+                                    {
+                                    ...getFieldProps('type', {
+                                        initialValue: type || '',
+                                    }
+                                    )}>
+                                    <Option value="">请选择</Option>
+                                    {
+                                        self.props.orderTypes.map((item, index) => {
+                                            return (
+                                                <Option key={index} value={item.code}>{item.name}</Option>
+                                            )
+                                        })
+                                    }
+                                </Select>
+                            ) : (<FormControl disabled={!editFlag} />)
                         }
 
-                        
+
                     </Col>
                     <Col md={4} xs={6}>
                         <Label>
                             采购组织：
                         </Label>
-                        <FormControl disabled={!editFlag} 
+                        <FormControl disabled={!editFlag}
                             {
-                                ...getFieldProps('purchasing', {
-                                    initialValue: purchasing
-                                }
+                            ...getFieldProps('purchasing', {
+                                initialValue: purchasing
+                            }
                             )}
                         />
                     </Col>
@@ -163,11 +173,11 @@ class Edit extends Component {
                         <Label>
                             采购组：
                         </Label>
-                        <FormControl disabled={!editFlag} 
+                        <FormControl disabled={!editFlag}
                             {
-                                ...getFieldProps('purchasingGroup', {
-                                    initialValue: purchasingGroup
-                                }
+                            ...getFieldProps('purchasingGroup', {
+                                initialValue: purchasingGroup
+                            }
                             )}
                         />
                     </Col>
@@ -175,17 +185,17 @@ class Edit extends Component {
                         <Label className='time'>
                             凭证日期：
                         </Label>
-                        <DatePicker className='form-item' disabled={!editFlag} 
+                        <DatePicker className='form-item' disabled={!editFlag}
                             defaultValue={moment(voucherDate)}
-                            format = "YYYY-MM-DD"
+                            format="YYYY-MM-DD"
                             {
-                                ...getFieldProps('voucherDate', {
-                                    initialValue: moment(voucherDate)
-                                }
+                            ...getFieldProps('voucherDate', {
+                                initialValue: moment(voucherDate)
+                            }
                             )}
                         />
                     </Col>
-                    <Col md={4} xs={6}>
+                    {/* <Col md={4} xs={6}>
                         <Label>
                             审批状态：
                         </Label>
@@ -254,6 +264,23 @@ class Edit extends Component {
                                     <Radio value="1" >已关闭</Radio>
                                 </Radio.RadioGroup>):(
                                     <FormControl disabled={!editFlag} value={closeState}/>
+                                )
+                        }
+                    </Col> */}
+                    <Col md={4} xs={6}>
+                        <Label>
+                            附件：
+                        </Label>
+                        {
+                            editFlag ? (<AcUpload
+                                multiple={false}
+                                isShow={true}
+                                onError={() => console.log('上传报错了')}
+                                onSuccess={this.handlerUploadSuccess}
+                            >
+                                <Button colors="info">上传</Button>
+                            </AcUpload>) : (
+                                    <span>查看附件</span>
                                 )
                         }
                     </Col>
