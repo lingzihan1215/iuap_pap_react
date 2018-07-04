@@ -190,7 +190,7 @@ class Edit extends Component {
                             )}
                         />
                     </Col>
-                    <Col md={4} xs={6}>
+                    {/* <Col md={4} xs={6}>
                         <Label>
                             审批状态：
                         </Label>
@@ -260,7 +260,7 @@ class Edit extends Component {
                                     <FormControl disabled={!editFlag} value={closeState}/>
                                 )
                         }
-                    </Col>
+                    </Col> */}
                     <Col md={4} xs={6}>
                         <Label>
                             附件：
