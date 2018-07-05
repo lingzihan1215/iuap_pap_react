@@ -106,6 +106,7 @@ export default class SimplePaginationTable extends Component {
     render(){
         const self=this;
         let { list, showLoading, pageIndex, pageSize, totalPages } = this.props;
+        let {selectData} = this.state;
         const column = [
             {
                 title: "序号",
@@ -202,8 +203,7 @@ export default class SimplePaginationTable extends Component {
                     </Button>
                     <BpmButtonSubmit
                         className="ml5 "
-                        data = {list}
-                        checkedArray = {[true]}
+                        checkedArray = {selectData}
                         funccode = "react"
                         nodekey = "003"
                         url = {`${GROBAL_HTTP_CTX}/example_workorder/submit`}
@@ -213,8 +213,7 @@ export default class SimplePaginationTable extends Component {
                     />
                     <BpmButtonRecall
                         className="ml5 "
-                        data = {list}
-                        checkedArray = {[true]}
+                        checkedArray = {selectData}
                         url = {`${GROBAL_HTTP_CTX}/example_workorder/recall`}
                         onSuccess = {this.onRecallSuc}
                         onError = {this.onRecallFail}
