@@ -57,11 +57,11 @@ class Edit extends Component {
         window.history.go(-1);
     }
     // 跳转到流程图
-    onClickToBPM = (detailObj) => {
+    onClickToBPM = (rowData) => {
         console.log("actions", actions);
         actions.routing.push({
             pathname: 'example-chart',
-            search: `?id=${detailObj.id}`
+            search: `?id=${rowData.id}`
         })
     }
 
@@ -89,13 +89,13 @@ class Edit extends Component {
         });
     }
 
-    showBpmComponent = (editFlag,detailObj)=> {
-        if(!editFlag && detailObj && detailObj['id']) {
+    showBpmComponent = (editFlag,rowData)=> {
+        if(!editFlag && rowData && rowData['id']) {
             console.log("showBpmComponent",editFlag)
             return (
                 <BpmTaskApprovalWrap
-                    id={detailObj.id}
-                    onBpmFlowClick={()=>{this.onClickToBPM(detailObj)}}
+                    id={rowData.id}
+                    onBpmFlowClick={()=>{this.onClickToBPM(rowData)}}
                     appType={"1"}
                 />
             );
@@ -103,8 +103,9 @@ class Edit extends Component {
     }
     render() {
         const self = this;
-        let { orderTypes, orderCode, supplier, supplierName, type, purchasing, purchasingGroup, voucherDate, approvalState, confirmState, closeState } = this.props.location.detailObj;
-        const {editFlag,detailObj} = this.props.location;
+        let rowData = self.props.rowData;
+        let { orderCode, supplier, supplierName, type, purchasing, purchasingGroup, voucherDate, approvalState, confirmState, closeState } = rowData;
+        let {editFlag} = this.props.location;
         // console.log("edit editFlag",editFlag)
         const { getFieldProps, getFieldError } = this.props.form;
         return (
@@ -123,7 +124,7 @@ class Edit extends Component {
                     ) : ''}
                 </Header>
                 {
-                    self.showBpmComponent(editFlag,detailObj)
+                    self.showBpmComponent(editFlag,rowData)
                 }
                 <Row className='detail-body'>
                     <Col md={4} xs={6}>
@@ -184,7 +185,7 @@ class Edit extends Component {
                         <FormControl disabled={!editFlag}
                             {
                             ...getFieldProps('purchasing', {
-                                initialValue: purchasing
+                                initialValue: purchasing || ''
                             }
                             )}
                         />
@@ -196,7 +197,7 @@ class Edit extends Component {
                         <FormControl disabled={!editFlag}
                             {
                             ...getFieldProps('purchasingGroup', {
-                                initialValue: purchasingGroup
+                                initialValue: purchasingGroup || ''
                             }
                             )}
                         />
@@ -257,9 +258,9 @@ class Edit extends Component {
                                         }
                                         ) }
                                     >
-                                   <Radio value="0" >未确认</Radio>
-                                    <Radio value="1" >已确认</Radio>
-                                    <Radio value="2" >拒绝</Radio>
+                                   <Radio value="0" disabled={true} >未确认</Radio>
+                                    <Radio value="1" disabled={true} >已确认</Radio>
+                                    <Radio value="2" disabled={true}>拒绝</Radio>
                                 </Radio.RadioGroup>
                         ):(<FormControl disabled={!editFlag} value={confirmState}/>)}
                         
@@ -280,8 +281,8 @@ class Edit extends Component {
                                         }
                                         ) }
                                     >
-                                    <Radio value="0" >未关闭</Radio>
-                                    <Radio value="1" >已关闭</Radio>
+                                    <Radio value="0" disabled={true} >未关闭</Radio>
+                                    <Radio value="1" disabled={true} >已关闭</Radio>
                                 </Radio.RadioGroup>):(
                                     <FormControl disabled={!editFlag} value={closeState}/>
                                 )

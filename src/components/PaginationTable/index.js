@@ -5,13 +5,13 @@ import Table from 'bee-table';
 import PropTypes from 'prop-types';
 import Pagination from 'bee-pagination';
 import multiSelect from "bee-table/build/lib/newMultiSelect";
-import filterColumn from "bee-table/build/lib/filterColumn";
+// import filterColumn from "bee-table/build/lib/filterColumn";
 import dragColumn from "bee-table/build/lib/dragColumn";
 import 'bee-table/build/Table.css';
 import 'bee-pagination/build/Pagination.css';
 import './index.less'
 
-const DragColumnTable = dragColumn(filterColumn(multiSelect(Table, Checkbox), Popover));
+const DragColumnTable = dragColumn(multiSelect(Table, Checkbox));
 
 const propTypes = {
     // 表格行数据
