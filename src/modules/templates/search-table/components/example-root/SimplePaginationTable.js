@@ -28,11 +28,23 @@ export default class SimplePaginationTable extends Component {
     /**
      * 编辑,详情，增加
      */
-    cellClick = (record, editFlag) => {
+
+    onAdd = async (record, editFlag)=>{
+        await actions.searchTable.updateState({rowData:{}});
         actions.routing.push(
             {
                 pathname: 'example-edit',
                 detailObj: record,
+                editFlag: !!editFlag
+            }
+        )
+    }
+
+    cellClick = async (record, editFlag) => {
+        await actions.searchTable.updateState({rowData:record});
+        actions.routing.push(
+            {
+                pathname: 'example-edit',
                 editFlag: !!editFlag
             }
         )
@@ -64,7 +76,7 @@ export default class SimplePaginationTable extends Component {
         await actions.searchTable.loadList();
         actions.searchTable.updateState({showLine:false});
         Message.create({content: '单据提交成功', color: 'success'});
-        this.clearSelData();
+        
     }
     // 提交操作初始执行操作
     onSubmitStart = ()=>{
@@ -75,7 +87,7 @@ export default class SimplePaginationTable extends Component {
     onSubmitFail = (error)=>{
         actions.searchTable.updateState({showLine:false});
         Message.create({content: error.msg, color: 'danger'});
-        this.clearSelData();
+        
     }
 
     // 撤回成功，失败，开始回调函数
@@ -84,12 +96,12 @@ export default class SimplePaginationTable extends Component {
         await actions.searchTable.loadList();
         actions.searchTable.updateState({showLine:false});
         Message.create({content: '单据撤回成功', color: 'success'});
-        this.clearSelData();
+        
     }
     onRecallFail = (error)=>{
         actions.searchTable.updateState({showLine:false});
         Message.create({content: error.msg, color: 'danger'});
-        this.clearSelData();
+        
     }
     onRecallStart = ()=>{
         actions.searchTable.updateState({showLine:true});
@@ -98,11 +110,11 @@ export default class SimplePaginationTable extends Component {
     //查看方法
     onExamine = async (text, record, index)=> {
         console.log("record", record);
+        await actions.searchTable.updateState({rowData:record});
         await actions.routing.push(
             {
                 pathname: 'example-edit',
                 detailObj: record,
-                btnFlag:2
             }
         )
     }
@@ -211,7 +223,7 @@ export default class SimplePaginationTable extends Component {
                 <Header title='简单分页表格示例'/>
                 <ExampleForm { ...this.props }/>
                 <div className='table-header'>
-                    <Button size='sm' shape="border" onClick={() => { self.cellClick({}, true) }}>
+                    <Button size='sm' shape="border" onClick={() => { self.onAdd({}, true) }}>
                         新增
                     </Button>
                     <BpmButtonSubmit
