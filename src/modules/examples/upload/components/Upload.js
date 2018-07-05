@@ -5,7 +5,7 @@ import AcUpload from 'ac-upload';
 import Header from "components/Header";
 import './index.less';
 
-class Upload extends Component {
+class UploadComp extends Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -22,21 +22,21 @@ class Upload extends Component {
         return (
             <div className = 'example'>
                 <Header title = '上传示例' / >
-                    <Row className="example-ctn">
-                        <Col md = {12} >
-                            <AcUpload
-                                action="/iuap_pap_quickstart/fileMananger/fastDfs/imgUpload"
-                                multiple={true}
-                                onError={this.handlerUploadError}
-                                onSuccess={this.handlerUploadSuccess}
-                            >
-                                <Button shape="border" colors="success">上传</Button>
-                            </AcUpload>  
-                        </Col> 
-                    </Row> 
+                <Row className="example-ctn">
+                    <Col md = {12} >
+                        <AcUpload
+                            action="/iuap_pap_quickstart/fileMananger/fastDfs/imgUpload"
+                            multiple={true}
+                            onError={this.handlerUploadError}
+                            onSuccess={this.handlerUploadSuccess}
+                        >
+                            <Button shape="border" colors="success">上传</Button>
+                        </AcUpload>  
+                    </Col> 
+                </Row> 
             </div>
         );
     }
 }
 
-export default Upload;
+export default UploadComp;

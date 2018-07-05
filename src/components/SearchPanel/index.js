@@ -3,7 +3,7 @@ import { Panel,Button } from 'tinper-bee';
 import PropTypes from 'prop-types';
 import './index.less';
 import { FormattedMessage, defineMessages } from 'react-intl';
-
+import classnames from 'classnames'
 
 const messages = defineMessages({
     clear: {

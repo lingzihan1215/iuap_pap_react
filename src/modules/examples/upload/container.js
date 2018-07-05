@@ -1,11 +1,7 @@
 import mirror, { actions, connect } from "mirrorx";
-import UploadModel from './model';
 import UploadComp from './components/Upload'
 
-//注入Model
+import UploadModel from './model';
 mirror.model(UploadModel);
 
-
-
-
-export const Upload = connect((state) => state.upload)(UploadComp);
+export const ConnectedUpload = connect((state) => state.upload)(UploadComp);

@@ -1,5 +1,5 @@
 import { actions } from 'mirrorx';
-import * as api from "./service";
+import * as api from "./service.js";
 
 export default {
     name: "upload",

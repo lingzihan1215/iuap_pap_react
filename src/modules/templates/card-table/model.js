@@ -24,7 +24,7 @@ export default {
   },
   effects: {
     async getList(param, getState) {
-      let { pageIndex, pageSize } = getState().planapply;
+      let { pageIndex, pageSize } = getState().cardTable;
       let { data: { detailMsg, success } } = await api.getList({
         pageIndex: pageIndex - 1,
         pageSize

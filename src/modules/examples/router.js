@@ -15,8 +15,8 @@ import {
 } from './editor/container'
 
 import {
-    Upload
-} from './upload/container'
+    ConnectedUpload
+} from './upload/container.js'
 
 import {
     ConnectedWeekPicker
@@ -61,7 +61,7 @@ export default ({ match }) => (
         <Route exact path={`${match.url}/bar-line`} component={ConnectedBarLine} />
         <Route exact path={`${match.url}/radar`} component={ConnectedRadar} />
         <Route exact path={`${match.url}/editor`} component={ConnectedEditor} />
-        <Route exact path={`${match.url}/upload`} component={Upload} />
+        <Route exact path={`${match.url}/upload`} component={ConnectedUpload} />
         <Route exact path={`${match.url}/week-picker`} component={ConnectedWeekPicker} />
         <Route exact path={`${match.url}/del-modal`} component={CtDelModal} />
         <Route exact path={`${match.url}/search-panel`} component={CtSearchPanel} />
