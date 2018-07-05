@@ -3,6 +3,8 @@ import { actions } from "mirrorx";
 import { Table,Button } from 'tinper-bee'
 import moment from "moment/moment";
 
+import './index.less'
+
 // ExampleTable 组件定义
 class ExampleTable extends Component {
     constructor(props){
@@ -120,7 +122,11 @@ class ExampleTable extends Component {
         return (
             <div className="table-list">
                 <div className='table-header'>
-                    <Button size='sm' shape="border" onClick={() => { self.cellClick({}, true) }}>
+                    <Button 
+                        size="sm" 
+                        colors="primary"
+                        shape="border" 
+                        onClick={() => { self.cellClick({}, true) }}>
                         新增
                     </Button>
                 </div>
