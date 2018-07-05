@@ -34,13 +34,12 @@ export default class SimplePaginationTable extends Component {
         actions.routing.push(
             {
                 pathname: 'example-edit',
-                detailObj: record,
                 editFlag: !!editFlag
             }
         )
     }
 
-    cellClick = async (record, editFlag) => {
+    cellClick = async (record, editFlag,btnFlag) => {
         await actions.searchTable.updateState({rowData:record});
         actions.routing.push(
             {
@@ -148,7 +147,7 @@ export default class SimplePaginationTable extends Component {
                 key: "orderCode",
                 width: 250,
                 className:"td-detail",
-                onCellClick: (record) => this.cellClick(record, false)
+                onCellClick: (record) => this.cellClick(record, false,2)
             },
             {
                 title: "供应商名称",
@@ -210,8 +209,8 @@ export default class SimplePaginationTable extends Component {
                 render(text, record, index) {
                     return (
                         <div className='operation-btn'>
-                            <Button size='sm' className='edit-btn' onClick={() => { self.onExamine(text, record, index) }}>查看</Button>
-                            <Button size='sm' className='edit-btn' onClick={() => { self.cellClick(record, true) }}>编辑</Button>
+                            <Button size='sm' className='edit-btn' onClick={() => { self.cellClick(record, false,2) }}>查看</Button>
+                            <Button size='sm' className='edit-btn' onClick={() => { self.cellClick(record, true,1) }}>编辑</Button>
                             <Button size='sm' className='del-btn' onClick={() => { self.delItem(record, index) }}>删除</Button>
                         </div>
                     )
@@ -223,7 +222,7 @@ export default class SimplePaginationTable extends Component {
                 <Header title='简单分页表格示例'/>
                 <ExampleForm { ...this.props }/>
                 <div className='table-header'>
-                    <Button size='sm' shape="border" onClick={() => { self.onAdd({}, true) }}>
+                    <Button size='sm' shape="border" onClick={() => { self.onAdd({}, true,0) }}>
                         新增
                     </Button>
                     <BpmButtonSubmit
