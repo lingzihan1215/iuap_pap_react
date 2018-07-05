@@ -64,16 +64,18 @@ export default class SimplePaginationTable extends Component {
         await actions.searchTable.loadList();
         actions.searchTable.updateState({showLine:false});
         Message.create({content: '单据提交成功', color: 'success'});
+        this.clearSelData();
     }
     // 提交操作初始执行操作
     onSubmitStart = ()=>{
         actions.searchTable.updateState({showLine:true});
-
+        
     }
     // 提交失败回调函数
-    onSubmitFail = ()=>{
+    onSubmitFail = (error)=>{
         actions.searchTable.updateState({showLine:false});
-        Message.create({content: "单据提交失败", color: 'danger'});
+        Message.create({content: error.msg, color: 'danger'});
+        this.clearSelData();
     }
 
     // 撤回成功，失败，开始回调函数
@@ -82,10 +84,12 @@ export default class SimplePaginationTable extends Component {
         await actions.searchTable.loadList();
         actions.searchTable.updateState({showLine:false});
         Message.create({content: '单据撤回成功', color: 'success'});
+        this.clearSelData();
     }
-    onRecallFail = ()=>{
+    onRecallFail = (error)=>{
         actions.searchTable.updateState({showLine:false});
-        Message.create({content: "单据撤回失败", color: 'danger'});
+        Message.create({content: error.msg, color: 'danger'});
+        this.clearSelData();
     }
     onRecallStart = ()=>{
         actions.searchTable.updateState({showLine:true});
@@ -101,6 +105,13 @@ export default class SimplePaginationTable extends Component {
                 btnFlag:2
             }
         )
+    }
+
+    // 清空selectData
+    clearSelData = ()=>{
+        this.setState({
+            selectData:[]
+        })
     }
 
     render(){
