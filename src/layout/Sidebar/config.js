@@ -413,6 +413,19 @@ export default [
             "sort": 1,
             "openview": "curpage",
             "category": "engine"
+        },{
+            "id": "app507",
+            "name": "form表单示例",
+            "location": "/examples/form-validate",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
         }],
         "sort": 1,
         "openview": "curpage",

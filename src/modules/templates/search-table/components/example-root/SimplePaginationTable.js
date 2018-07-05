@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import PaginationTable from 'components/PaginationTableDrag'
+import PaginationTable from 'components/PaginationTable'
+import {BpmButtonSubmit,BpmButtonRecall} from 'yyuap-bpm';
 import { actions } from 'mirrorx';
-import { Button } from 'tinper-bee';
+import { Button,Message } from 'tinper-bee';
 import moment from "moment/moment";
 import Header from 'components/Header';
 import ExampleForm from '../example-form';
@@ -41,7 +42,7 @@ export default class SimplePaginationTable extends Component {
             param: [record],
             index: index
         });
-    }    
+    }
     onTableSelectedData = data => {
         console.log(data)
         this.setState({
@@ -58,7 +59,50 @@ export default class SimplePaginationTable extends Component {
             pageIndex: value
         })
     }
-    
+
+    onSubmitSuc = async ()=>{
+        await actions.searchTable.loadList();
+        actions.searchTable.updateState({showLine:false});
+        Message.create({content: '单据提交成功', color: 'success'});
+    }
+    // 提交操作初始执行操作
+    onSubmitStart = ()=>{
+        actions.searchTable.updateState({showLine:true});
+
+    }
+    // 提交失败回调函数
+    onSubmitFail = ()=>{
+        actions.searchTable.updateState({showLine:false});
+        Message.create({content: "单据提交失败", color: 'danger'});
+    }
+
+    // 撤回成功，失败，开始回调函数
+    onRecallSuc = async ()=>{
+        console.log("onRecallSuc 成功进入recall回调");
+        await actions.searchTable.loadList();
+        actions.searchTable.updateState({showLine:false});
+        Message.create({content: '单据撤回成功', color: 'success'});
+    }
+    onRecallFail = ()=>{
+        actions.searchTable.updateState({showLine:false});
+        Message.create({content: "单据撤回失败", color: 'danger'});
+    }
+    onRecallStart = ()=>{
+        this.setState({showLine:true});
+    }
+
+    //查看方法
+    onExamine = async (text, record, index)=> {
+        console.log("record", record);
+        await actions.routing.push(
+            {
+                pathname: 'example-edit',
+                detailObj: record,
+                btnFlag:2
+            }
+        )
+    }
+
     render(){
         const self=this;
         let { list, showLoading, pageIndex, pageSize, totalPages } = this.props;
@@ -124,7 +168,7 @@ export default class SimplePaginationTable extends Component {
                 dataIndex: "confirmState_name",
                 key: "confirmState_name",
                 width: 100
-            }, 
+            },
             {
                 title: "关闭状态",
                 dataIndex: "closeState_name",
@@ -140,6 +184,7 @@ export default class SimplePaginationTable extends Component {
                 render(text, record, index) {
                     return (
                         <div className='operation-btn'>
+                            <Button size='sm' className='edit-btn' onClick={() => { self.onExamine(text, record, index) }}>查看</Button>
                             <Button size='sm' className='edit-btn' onClick={() => { self.cellClick(record, true) }}>编辑</Button>
                             <Button size='sm' className='del-btn' onClick={() => { self.delItem(record, index) }}>删除</Button>
                         </div>
@@ -155,8 +200,28 @@ export default class SimplePaginationTable extends Component {
                     <Button size='sm' shape="border" onClick={() => { self.cellClick({}, true) }}>
                         新增
                     </Button>
+                    <BpmButtonSubmit
+                        className="ml5 "
+                        data = {list}
+                        checkedArray = {[true]}
+                        funccode = "react"
+                        nodekey = "003"
+                        url = {`${GROBAL_HTTP_CTX}/example_workorder/submit`}
+                        onSuccess = {this.onSubmitSuc}
+                        onError = {this.onSubmitFail}
+                        onStart={this.onSubmitStart}
+                    />
+                    <BpmButtonRecall
+                        className="ml5 "
+                        data = {list}
+                        checkedArray = {[true]}
+                        url = {`${GROBAL_HTTP_CTX}/example_workorder/recall`}
+                        onSuccess = {this.onRecallSuc}
+                        onError = {this.onRecallFail}
+                        onStart = {this.onRecallStart}
+                    />
                 </div>
-                <PaginationTable 
+                <PaginationTable
                     data={list}
                     showLoading={showLoading}
                     pageIndex={pageIndex}
@@ -172,6 +237,6 @@ export default class SimplePaginationTable extends Component {
             </div>
 
         )
-        
+
     }
 }
