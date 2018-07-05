@@ -1,8 +1,7 @@
 import mirror, { actions, connect } from "mirrorx";
 import UploadModel from './model';
-// import asyncComponent from 'components/AsyncComponent';
-import UploadComp from './components/upload'
-// const MasterTable = asyncComponent(() => import('./components/Master'));
+import UploadComp from './components/Upload'
+
 //注入Model
 mirror.model(UploadModel);
 

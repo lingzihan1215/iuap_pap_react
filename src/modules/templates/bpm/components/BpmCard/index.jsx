@@ -118,6 +118,13 @@ class BpmCard extends Component {
                     showLine: true
                 })
                 // done表示是否加载完毕
+                let {btnFlag,rowData} = this.props;
+                // btnFlag为1,表示bpmcard在编辑状态下
+                if(btnFlag==1){
+                    value = Object.assign({},rowData,value);
+                }
+
+                console.log("bpmcard 保存操作",value);
                 let {done} = await actions.master.onSave(value);
                 if (done) {
                     this.setState({
@@ -193,8 +200,6 @@ class BpmCard extends Component {
                         }(btnFlag, rowData, bpmClick)
                     }
                 </div>
-                
-                
                 
                 <div className="card-content">
             

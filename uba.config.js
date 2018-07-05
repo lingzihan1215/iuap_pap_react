@@ -19,7 +19,8 @@ const proxyConfig = [
     enable: false,
     headers: {
       // 这是之前网页的地址，从中可以看到当前请求页面的链接。
-      "Referer": "http://172.20.23.242:8080/"    },
+      // "Referer": "http://172.20.23.242:8080/"    },
+      "Referer": "http://10.10.24.43:8080/"    },
     // context，如果不配置，默认就是代理全部。
     router: [
       '/wbalone', '/iuap_pap_quickstart', '/iuap-example','/eiap-plus/','/newref/'

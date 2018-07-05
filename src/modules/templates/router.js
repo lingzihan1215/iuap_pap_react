@@ -5,7 +5,8 @@ import {
     ConnectedSimpleTable,
     ConnectedSimpleSelectTable,
     ConnectedSimplePaginationTable,
-    ConnectedExampleEdit
+    ConnectedExampleEdit,
+    ConnectedExampleBpmChart
 } from './search-table/container';
 
 import {
@@ -31,9 +32,6 @@ import {
 
 import BPM from './bpm/components/BPM/Bpm'
 
-import {
-    ConnectedEditTable
-} from './edit-table/container'
 
 /**
  * 路由说明：
@@ -55,6 +53,7 @@ export default ({ match }) => (
         <Route exact path={`${match.url}/select-table`} component={ConnectedSimpleSelectTable} />
         <Route exact path={`${match.url}/pagination-table`} component={ConnectedSimplePaginationTable} />
         <Route exact path={`${match.url}/example-edit`} component={ConnectedExampleEdit} />
+        <Route exact path={`${match.url}/example-chart`} component={ConnectedExampleBpmChart} />
         <Route exact path={`${match.url}/card-table`} component={ConnectedCardTable} />
         <Route exact path={`${match.url}/multi-table`} component={ConnectedMultiTable} />
         <Route exact path={`${match.url}/tree-table`} component={ConnectedTreeTable} />
@@ -62,6 +61,5 @@ export default ({ match }) => (
         <Route exact path={`${match.url}/bpm-table`} component={ConnectedBpmTable} />
         <Route exact path={`${match.url}/bpm-card`} component={ConnectedBpmCard} />
         <Route exact path={`${match.url}/bpm`} component={BPM} />
-        <Route exact path={`${match.url}/edit-table`} component={ConnectedEditTable} />
     </div>
 )

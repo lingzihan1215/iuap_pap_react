@@ -93,16 +93,15 @@ class Editor extends Component {
                 uploadFn: this.uploadFn,
             }
         }
-        return ( <div className = 'editor-example' >
-                    <Header title = '富文本编辑器示例' / >
-                    <div className = 'edit-panel' >
-                        <Row >
-                            <Col md = {12} >
-                                <BraftEditor { ...editorProps}/> 
-                            </Col> 
-                        </Row> 
-                    </div> 
-                </div>
+        return ( 
+            <div className = 'example'>
+                <Header title = '富文本编辑器示例' / >
+                    <Row className="example-ctn">
+                        <Col md = {12} >
+                         <BraftEditor { ...editorProps}/> 
+                        </Col> 
+                    </Row> 
+            </div>
         )
     }
 }

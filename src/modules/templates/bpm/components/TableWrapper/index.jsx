@@ -189,8 +189,9 @@ class TableWrapper extends Component {
                 "btnFlag": 2,
                 "rowData": record
             }
+            console.log("onExamine",tempState);
             await actions.master.save(tempState);
-            actions.routing.push({
+            await actions.routing.push({
                 pathname:'/templates/bpm-card',
             })
         }
@@ -237,7 +238,7 @@ class TableWrapper extends Component {
                     ),
                     key: "checkbox",
                     dataIndex: "checkbox",
-                    width: "5%",
+                    width: "50px",
                     render: (text, record, index) => {
                         return (
                             <Checkbox
@@ -254,15 +255,18 @@ class TableWrapper extends Component {
                     title: "操作",
                     dataIndex: "operate",
                     key: "operate",
+                    width : "350px",
                     render:(text, record, index)=> {
                         return (
                             <div>
-                                <span className="bcolor" onClick={this.onEdit(text, record, index)}>编辑</span>
+                                {/* <span className="bcolor" onClick={this.onEdit(text, record, index)}>编辑</span> */}
+                                <Button className="inline-btn" size="sm" onClick={this.onEdit(text, record, index)}>编辑</Button>
                                 {/* <span className="span-adjust" onClick={this.onRowDel(text, record, index)} >删除</span> */}
-                                <span className="span-adjust " onClick={this.onExamine(text, record, index)}>查看</span>
+                                {/* <span className="span-adjust " onClick={this.onExamine(text, record, index)}>查看</span> */}
+                                <Button className="inline-btn ml5" size="sm"  onClick={this.onExamine(text, record, index)}>查看</Button>
                                 <Popconfirm content="确认删除?" id="aa" onClose={this.onRowDel(text, record, index)}>
                                     {/* <Icon type="uf-del" className="tablewrapper-delicon"/> */}
-                                    <span className="span-adjust" >删除</span>
+                                    <Button className="inline-btn ml5" size="sm" >删除</Button>
                                 </Popconfirm>
                             </div>
                         );
@@ -278,7 +282,6 @@ class TableWrapper extends Component {
     onAdd = () => {
         console.log("添加数据");
         let tempState = {
-            // "showIndex": 1 ,
             "btnFlag":0,
             "rowData":{}
         }
@@ -307,7 +310,6 @@ class TableWrapper extends Component {
             return;
         }else {
             let tempState = {
-                // "showIndex":1,
                 "btnFlag":2,
                 "rowData":rowData
             }
@@ -455,11 +457,11 @@ class TableWrapper extends Component {
         console.log(this.props);
         return (
             <div>
-                <div style={{ margin:" 6px 15px 0 15px" }}>
-                    <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onAdd} style={{ marginLeft: "5px" }} >新增</Button>
+                <div >
+                    <Button className="editable-add-btn"  size="sm" colors="primary" onClick={this.onAdd} style={{ marginLeft: "8px" }} >新增</Button>
                     {/* <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onCheck} style={{ marginLeft: "5px" }} >查看</Button> */}
                     <BpmButtonSubmit 
-                        className="editable-add-btn ml5"
+                        className="editable-add-btn ml5 "
                         data = {masterData}
                         checkedArray = {checkedArray}
                         funccode = "react"
@@ -471,7 +473,7 @@ class TableWrapper extends Component {
                     />
                     {/* <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onRecall} style={{ marginLeft: "5px" }}>收回</Button> */}
                     <BpmButtonRecall 
-                        className="editable-add-btn ml5"
+                        className="editable-add-btn ml5 "
                         data = {masterData}
                         checkedArray = {checkedArray}
                         url = "/iuap_pap_quickstart/example_workorder/recall"
@@ -479,13 +481,14 @@ class TableWrapper extends Component {
                         onError = {this.onRecallFail}
                         onStart = {this.onRecallStart}
                     />
-                    <Button className="editable-add-btn" size="sm" colors="primary" onClick={this.onMultiDel} style={{ marginLeft: "5px" }}>删除</Button>
+                    <Button className="editable-add-btn" size="sm" shape="border" colors="info" onClick={this.onMultiDel} style={{ marginLeft: "5px" }}>删除</Button>
                 </div>
                 <Table 
                     columns={columns} 
                     data={masterData} 
                     rowKey={(record)=>record.id}
                     onRowDoubleClick={this.onRowDoubleClick}
+                    scroll = {{x:1300}}
                     footer={() => <Pagination
                         prev
                         next

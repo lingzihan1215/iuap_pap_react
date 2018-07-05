@@ -24,14 +24,17 @@ export default {
   },
   effects: {
     async getList(param, getState) {
-      let { pageIndex, pageSize } = getState().planapply;
-      let { data: { detailMsg, success } } = await api.getList({
+      let { pageIndex, pageSize } = getState().editTable;
+      let res=await api.getList({
         pageIndex: pageIndex - 1,
         pageSize
       });
-      if (success) {
-        actions.editTable.updateState({ list: detailMsg.data.content, total: detailMsg.data.totalPages });
-        return detailMsg.data.content;
+      if(res){
+        let { data: { detailMsg, success } } = res;
+        if (success) {
+          actions.editTable.updateState({ list: detailMsg.data.content, total: detailMsg.data.totalPages });
+          return detailMsg.data.content;
+        }
       }
     },
     async removeList(id, getState) {
