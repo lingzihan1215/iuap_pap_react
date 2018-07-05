@@ -19,7 +19,9 @@ class Edit extends Component {
             approvalState: '0',
             closeState: '0',
             confirmState: '0',
-            fileNameData: {}
+            fileNameData: [{"fileName":"123","accessAddress":"123"},
+                {"fileName":"123456","accessAddress":"123456"}
+            ]
         }
     }
     componentWillMount() {
@@ -34,7 +36,7 @@ class Edit extends Component {
     }
     save = () => {//保存
         this.props.form.validateFields((err, values) => {
-            values.attachment = this.state.fileNameData;
+            values.attachment = this.state.fileNameData ;
             values.approvalState = Number(values.approvalState);
             values.closeState = Number(values.closeState);
             values.confirmState = Number(values.confirmState);
@@ -46,6 +48,7 @@ class Edit extends Component {
                     values.id = this.props.location.detailObj.id;
                     values.ts = this.props.location.detailObj.ts;
                 }
+                console.log("save values",JSON.stringify(values));
                 actions.searchTable.save(values);
             }
         });
@@ -54,11 +57,11 @@ class Edit extends Component {
         window.history.go(-1);
     }
     // 跳转到流程图
-    onClickToBPM = () => {
+    onClickToBPM = (detailObj) => {
         console.log("actions", actions);
         actions.routing.push({
             pathname: 'example-chart',
-            search: `?id=${this.props.rowData.id}`
+            search: `?id=${detailObj.id}`
         })
     }
 
@@ -85,10 +88,24 @@ class Edit extends Component {
             fileNameData: data
         });
     }
+
+    showBpmComponent = (editFlag,detailObj)=> {
+        if(!editFlag && detailObj && detailObj['id']) {
+            console.log("showBpmComponent",editFlag)
+            return (
+                <BpmTaskApprovalWrap
+                    id={detailObj.id}
+                    onBpmFlowClick={()=>{this.onClickToBPM(detailObj)}}
+                    appType={"1"}
+                />
+            );
+        }
+    }
     render() {
         const self = this;
         let { orderTypes, orderCode, supplier, supplierName, type, purchasing, purchasingGroup, voucherDate, approvalState, confirmState, closeState } = this.props.location.detailObj;
-        const editFlag = this.props.location.editFlag;
+        const {editFlag,detailObj} = this.props.location;
+        // console.log("edit editFlag",editFlag)
         const { getFieldProps, getFieldError } = this.props.form;
         return (
             <div className='order-detail'>
@@ -105,6 +122,9 @@ class Edit extends Component {
                         </div>
                     ) : ''}
                 </Header>
+                {
+                    self.showBpmComponent(editFlag,detailObj)
+                }
                 <Row className='detail-body'>
                     <Col md={4} xs={6}>
                         <Label>
@@ -114,7 +134,7 @@ class Edit extends Component {
                             placeholder="使用编码规则生成"
                             {
                             ...getFieldProps('orderCode', {
-                                initialValue: orderCode
+                                initialValue: orderCode||'使用编码规则生成'
                             }
                             )}
                         />
@@ -126,7 +146,7 @@ class Edit extends Component {
                         <FormControl disabled={!editFlag}
                             {
                             ...getFieldProps('supplierName', {
-                                initialValue: supplierName
+                                initialValue: supplierName||''
                             }
                             )}
                         />
@@ -195,7 +215,7 @@ class Edit extends Component {
                             )}
                         />
                     </Col>
-                    {/* <Col md={4} xs={6}>
+                    <Col md={4} xs={6}>
                         <Label>
                             审批状态：
                         </Label>
@@ -213,8 +233,8 @@ class Edit extends Component {
                                     }
                                     ) }
                                 >
-                                <Radio value="0" >未审批</Radio>
-                                <Radio value="1" >已审批</Radio>
+                                <Radio value="0" disabled={true}>未审批</Radio>
+                                <Radio value="1" disabled={true}>已审批</Radio>
                                 </Radio.RadioGroup>):(
                                 <FormControl disabled={!editFlag} value={approvalState}/>
                             )
@@ -266,7 +286,7 @@ class Edit extends Component {
                                     <FormControl disabled={!editFlag} value={closeState}/>
                                 )
                         }
-                    </Col> */}
+                    </Col>
                     <Col md={4} xs={6}>
                         <Label>
                             附件：

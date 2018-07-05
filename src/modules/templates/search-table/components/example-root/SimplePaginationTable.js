@@ -44,7 +44,7 @@ export default class SimplePaginationTable extends Component {
         });
     }
     onTableSelectedData = data => {
-        console.log(data)
+        
         this.setState({
             selectData: data
         })
@@ -64,16 +64,18 @@ export default class SimplePaginationTable extends Component {
         await actions.searchTable.loadList();
         actions.searchTable.updateState({showLine:false});
         Message.create({content: '单据提交成功', color: 'success'});
+        this.clearSelData();
     }
     // 提交操作初始执行操作
     onSubmitStart = ()=>{
         actions.searchTable.updateState({showLine:true});
-
+        
     }
     // 提交失败回调函数
-    onSubmitFail = ()=>{
+    onSubmitFail = (error)=>{
         actions.searchTable.updateState({showLine:false});
-        Message.create({content: "单据提交失败", color: 'danger'});
+        Message.create({content: error.msg, color: 'danger'});
+        this.clearSelData();
     }
 
     // 撤回成功，失败，开始回调函数
@@ -82,13 +84,15 @@ export default class SimplePaginationTable extends Component {
         await actions.searchTable.loadList();
         actions.searchTable.updateState({showLine:false});
         Message.create({content: '单据撤回成功', color: 'success'});
+        this.clearSelData();
     }
-    onRecallFail = ()=>{
+    onRecallFail = (error)=>{
         actions.searchTable.updateState({showLine:false});
-        Message.create({content: "单据撤回失败", color: 'danger'});
+        Message.create({content: error.msg, color: 'danger'});
+        this.clearSelData();
     }
     onRecallStart = ()=>{
-        this.setState({showLine:true});
+        actions.searchTable.updateState({showLine:true});
     }
 
     //查看方法
@@ -103,9 +107,19 @@ export default class SimplePaginationTable extends Component {
         )
     }
 
+    // 清空selectData
+    clearSelData = ()=>{
+        this.setState({
+            selectData:[]
+        })
+    }
+
     render(){
         const self=this;
         let { list, showLoading, pageIndex, pageSize, totalPages } = this.props;
+        let {selectData} = this.state;
+        console.log("selectData",selectData)
+        console.log("${GROBAL_HTTP_CTX}",`${GROBAL_HTTP_CTX}`);
         const column = [
             {
                 title: "序号",
@@ -202,20 +216,18 @@ export default class SimplePaginationTable extends Component {
                     </Button>
                     <BpmButtonSubmit
                         className="ml5 "
-                        data = {list}
-                        checkedArray = {[true]}
+                        checkedArray = {selectData}
                         funccode = "react"
                         nodekey = "003"
-                        url = {`${GROBAL_HTTP_CTX}/example_workorder/submit`}
+                        url = {`${GROBAL_HTTP_CTX}/sany_order/submit`}
                         onSuccess = {this.onSubmitSuc}
                         onError = {this.onSubmitFail}
                         onStart={this.onSubmitStart}
                     />
                     <BpmButtonRecall
                         className="ml5 "
-                        data = {list}
-                        checkedArray = {[true]}
-                        url = {`${GROBAL_HTTP_CTX}/example_workorder/recall`}
+                        checkedArray = {selectData}
+                        url = {`${GROBAL_HTTP_CTX}/sany_order/recall`}
                         onSuccess = {this.onRecallSuc}
                         onError = {this.onRecallFail}
                         onStart = {this.onRecallStart}
