@@ -95,7 +95,7 @@ class Edit extends Component {
             return (
                 <BpmTaskApprovalWrap
                     id={detailObj.id}
-                    onBpmFlowClick={()=>{this.bpmClick(detailObj)}}
+                    onBpmFlowClick={()=>{this.onClickToBPM(detailObj)}}
                     appType={"1"}
                 />
             );
