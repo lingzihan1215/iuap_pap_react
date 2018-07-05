@@ -134,7 +134,7 @@ class Edit extends Component {
                             placeholder="使用编码规则生成"
                             {
                             ...getFieldProps('orderCode', {
-                                initialValue: orderCode
+                                initialValue: orderCode||'使用编码规则生成'
                             }
                             )}
                         />
@@ -146,7 +146,7 @@ class Edit extends Component {
                         <FormControl disabled={!editFlag}
                             {
                             ...getFieldProps('supplierName', {
-                                initialValue: supplierName
+                                initialValue: supplierName||''
                             }
                             )}
                         />
