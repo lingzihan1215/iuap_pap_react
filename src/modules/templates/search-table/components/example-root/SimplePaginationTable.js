@@ -44,7 +44,7 @@ export default class SimplePaginationTable extends Component {
         });
     }
     onTableSelectedData = data => {
-        console.log(data)
+        
         this.setState({
             selectData: data
         })
@@ -88,7 +88,7 @@ export default class SimplePaginationTable extends Component {
         Message.create({content: "单据撤回失败", color: 'danger'});
     }
     onRecallStart = ()=>{
-        this.setState({showLine:true});
+        actions.searchTable.updateState({showLine:true});
     }
 
     //查看方法
@@ -107,6 +107,8 @@ export default class SimplePaginationTable extends Component {
         const self=this;
         let { list, showLoading, pageIndex, pageSize, totalPages } = this.props;
         let {selectData} = this.state;
+        console.log("selectData",selectData)
+        console.log("${GROBAL_HTTP_CTX}",`${GROBAL_HTTP_CTX}`);
         const column = [
             {
                 title: "序号",
@@ -206,7 +208,7 @@ export default class SimplePaginationTable extends Component {
                         checkedArray = {selectData}
                         funccode = "react"
                         nodekey = "003"
-                        url = {`${GROBAL_HTTP_CTX}/example_workorder/submit`}
+                        url = {`${GROBAL_HTTP_CTX}/sany_order/submit`}
                         onSuccess = {this.onSubmitSuc}
                         onError = {this.onSubmitFail}
                         onStart={this.onSubmitStart}
@@ -214,7 +216,7 @@ export default class SimplePaginationTable extends Component {
                     <BpmButtonRecall
                         className="ml5 "
                         checkedArray = {selectData}
-                        url = {`${GROBAL_HTTP_CTX}/example_workorder/recall`}
+                        url = {`${GROBAL_HTTP_CTX}/sany_order/recall`}
                         onSuccess = {this.onRecallSuc}
                         onError = {this.onRecallFail}
                         onStart = {this.onRecallStart}
