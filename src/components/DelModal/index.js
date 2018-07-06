@@ -98,7 +98,7 @@ class DelModal extends Component {
                     
                     {
                         showFooter?(<Modal.Footer>
-                            <Button onClick={ this.close } size='sm' style={{'marginRight':'15px'}}>取消</Button>
+                            <Button onClick={ this.close } size='sm' style={{'marginRight':'15px'}}>{cancelFnName}</Button>
                             <Button onClick={ this.onConfirm } size='sm'  colors="primary">{confirmName}</Button>
                         </Modal.Footer>):''
                     }
