@@ -62,7 +62,7 @@ class RefTransfer extends Component {
                 transmitParam:'EXAMPLE_CONTACTS,EXAMPLE_ORGANIZATION',
             },
             refModelUrl:{
-                TreeUrl:'http://10.10.24.43:8080/newref/rest/iref_ctr/blobRefTree', //树请求
+                TreeUrl:'/newref/rest/iref_ctr/blobRefTree', //树请求
                 TableBodyUrl:'/tablebody',//表体请求
                 TableBarUrl:'/tablebar',//表头请求
             },

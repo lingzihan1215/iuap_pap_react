@@ -124,8 +124,9 @@ export default {
             })
             let res=processData(await api.delOrder(param.param),'删除成功');
             actions.searchTable.loadList();
-          },
-          async save(param,getState){//保存
+        },
+
+        async save(param,getState){//保存
             actions.searchTable.updateState({
               showLoading:true
             })
@@ -136,6 +137,12 @@ export default {
             actions.searchTable.updateState({
               showLoading:false
             });
-          },
+        },
+
+        async queryDetail(param,getState) {
+            let res= await processData(await api.getDetail(param),'查询成功');
+            // console.log("查询返回值",res);
+            return res;
+        }
     }
 };

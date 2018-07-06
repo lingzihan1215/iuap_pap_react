@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { actions } from "mirrorx";
+import queryString from 'query-string';
 import { Loading, Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Select, Radio } from "tinper-bee";
 import { BpmTaskApprovalWrap } from 'yyuap-bpm';
 import AcUpload from 'ac-upload';
@@ -25,10 +26,11 @@ class Edit extends Component {
             fileNameData: [{"fileName":"123","accessAddress":"123"},
                 {"fileName":"123456","accessAddress":"123456"}
             ],
-            purchasing:[]
+            purchasing:[],
+            rowData : {}
         }
     }
-    componentWillMount() {
+    async componentWillMount() {
         if (this.props.rowData && this.props.rowData.id) {
             let { approvalState, closeState, confirmState } = this.props.rowData;
             this.setState({
@@ -37,6 +39,16 @@ class Edit extends Component {
                 confirmState: String(confirmState)
             })
         }
+        let searchObj = queryString.parse(this.props.location.search);
+        let {btnFlag} = searchObj;
+        if(btnFlag && btnFlag>0){
+            let {search_id} = searchObj;
+            let rowData = await actions.searchTable.queryDetail({search_id});
+            this.setState({
+                rowData
+            })
+        }
+        
     }
     save = () => {//保存
         this.props.form.validateFields((err, values) => {
@@ -71,6 +83,7 @@ class Edit extends Component {
 
     // 动态显示标题
     onChangeHead = (btnFlag) => {
+        console.log("btnFlag",btnFlag);
         let msg = "";
         switch (btnFlag) {
             case 0:
@@ -83,6 +96,7 @@ class Edit extends Component {
                 msg = "详情"
                 break;
         }
+        console.log("msg",msg);
         return msg;
     }
 
@@ -93,9 +107,10 @@ class Edit extends Component {
         });
     }
 
-    showBpmComponent = (editFlag,rowData)=> {
-        if(!editFlag && rowData && rowData['id']) {
-            console.log("showBpmComponent",editFlag)
+    showBpmComponent = (btnFlag,rowData)=> {
+        // btnFlag为2表示为详情
+        if((btnFlag==2) && rowData && rowData['id']) {
+            console.log("showBpmComponent",btnFlag)
             return (
                 <BpmTaskApprovalWrap
                     id={rowData.id}
@@ -105,6 +120,8 @@ class Edit extends Component {
             );
         }
     }
+
+    // 通过search_id查询数据
 
     render() {
         const self = this;
@@ -148,10 +165,13 @@ class Edit extends Component {
                 rightInfo:[{text:'流水号',key:'refname'},{text:'品类编码',key:'refname'},{text:'品类描述',key:'refname'}],
             }
         }
-        let {rowData,btnFlag} = self.props;
+        let {btnFlag} =queryString.parse(this.props.location.search);
+        console.log("typeof btnFlag",typeof btnFlag);
+        btnFlag = Number(btnFlag);
+        let {rowData} =  this.state ;
+        console.log("detailData",rowData);
+        console.log("props",this.props);
         let { orderCode, supplier, supplierName, type, purchasing, purchasingGroup, voucherDate, approvalState, confirmState, closeState } = rowData;
-        let {editFlag} = self.props.location;
-        // console.log("edit editFlag",editFlag)
         const { getFieldProps, getFieldError } = this.props.form;
 
         return (
@@ -162,7 +182,7 @@ class Edit extends Component {
                     show={this.props.showLoading}
                 />
                 <Header title={this.onChangeHead(btnFlag)} back={true}>
-                    {editFlag ? (
+                    {(btnFlag<2 )? (
                         <div className='head-btn'>
                             <Button className='head-cancel' onClick={this.cancel}>取消</Button>
                             <Button className='head-save' onClick={this.save}>保存</Button>
@@ -170,7 +190,7 @@ class Edit extends Component {
                     ) : ''}
                 </Header>
                 {
-                    self.showBpmComponent(editFlag,rowData)
+                    self.showBpmComponent(btnFlag,rowData)
                 }
                 <Row className='detail-body'>
                     <Col md={4} xs={6}>
@@ -190,7 +210,7 @@ class Edit extends Component {
                         <Label>
                             供应商名称：
                         </Label>
-                        <FormControl disabled={!editFlag}
+                        <FormControl disabled={btnFlag==2}
                             {
                             ...getFieldProps('supplierName', {
                                 initialValue: supplierName||''
@@ -203,7 +223,7 @@ class Edit extends Component {
                             类型：
                         </Label>
                         {
-                            editFlag ? (
+                            (btnFlag<2) ? (
                                 <Select
                                     {
                                     ...getFieldProps('type', {
@@ -219,7 +239,7 @@ class Edit extends Component {
                                         })
                                     }
                                 </Select>
-                            ) : (<FormControl disabled={!editFlag} />)
+                            ) : (<FormControl disabled={btnFlag==2} />)
                         }
 
 
@@ -230,7 +250,7 @@ class Edit extends Component {
                             采购组织：
                         </Label>
                         
-                        {/*<FormControl disabled={!editFlag}
+                        {/*<FormControl disabled={btnFlag==2}
                             {
                             ...getFieldProps('purchasing', {
                                 initialValue: purchasing || ''
@@ -244,7 +264,7 @@ class Edit extends Component {
                         <Label>
                             采购组：
                         </Label>
-                        <FormControl disabled={!editFlag}
+                        <FormControl disabled={btnFlag==2}
                             {
                             ...getFieldProps('purchasingGroup', {
                                 initialValue: purchasingGroup || ''
@@ -256,7 +276,7 @@ class Edit extends Component {
                         <Label className='time'>
                             凭证日期：
                         </Label>
-                        <DatePicker className='form-item' disabled={!editFlag}
+                        <DatePicker className='form-item' disabled={btnFlag==2}
                             defaultValue={moment(voucherDate)}
                             format="YYYY-MM-DD"
                             {
@@ -271,7 +291,7 @@ class Edit extends Component {
                             审批状态：
                         </Label>
                         {
-                            editFlag?
+                            (btnFlag<2)?
                             (<Radio.RadioGroup
                                 disabled = {true}
                                 selectedValue={this.state.approvalState}
@@ -287,7 +307,7 @@ class Edit extends Component {
                                 <Radio value="0" disabled={true}>未审批</Radio>
                                 <Radio value="1" disabled={true}>已审批</Radio>
                                 </Radio.RadioGroup>):(
-                                <FormControl disabled={!editFlag} value={approvalState}/>
+                                <FormControl disabled={btnFlag==2} value={approvalState}/>
                             )
                         }
                         
@@ -296,7 +316,7 @@ class Edit extends Component {
                         <Label>
                             确认状态：
                         </Label>
-                        {editFlag?(
+                        {(btnFlag<2)?(
                                 <Radio.RadioGroup
                                 selectedValue={this.state.confirmState}
                                     {
@@ -312,7 +332,7 @@ class Edit extends Component {
                                     <Radio value="1" disabled={true} >已确认</Radio>
                                     <Radio value="2" disabled={true}>拒绝</Radio>
                                 </Radio.RadioGroup>
-                        ):(<FormControl disabled={!editFlag} value={confirmState}/>)}
+                        ):(<FormControl disabled={btnFlag==2} value={confirmState}/>)}
                         
                     </Col>
                     <Col md={4} xs={6}>
@@ -320,7 +340,7 @@ class Edit extends Component {
                             关闭状态：
                         </Label>
                         {
-                            editFlag?(<Radio.RadioGroup
+                            (btnFlag<2)?(<Radio.RadioGroup
                                 selectedValue={this.state.closeState}
                                     {
                                         ...getFieldProps('closeState', {
@@ -334,7 +354,7 @@ class Edit extends Component {
                                     <Radio value="0" disabled={true} >未关闭</Radio>
                                     <Radio value="1" disabled={true} >已关闭</Radio>
                                 </Radio.RadioGroup>):(
-                                    <FormControl disabled={!editFlag} value={closeState}/>
+                                    <FormControl disabled={btnFlag==2} value={closeState}/>
                                 )
                         }
                     </Col>
@@ -343,7 +363,7 @@ class Edit extends Component {
                             附件：
                         </Label>
                         {
-                            editFlag ? (<AcUpload
+                            (btnFlag<2) ? (<AcUpload
                                 multiple={false}
                                 isShow={true}
                                 onError={() => console.log('上传报错了')}
