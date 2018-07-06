@@ -28,11 +28,22 @@ export default class SimplePaginationTable extends Component {
     /**
      * 编辑,详情，增加
      */
-    cellClick = (record, editFlag) => {
+
+    onAdd = async (record, editFlag)=>{
+        await actions.searchTable.updateState({rowData:{}});
         actions.routing.push(
             {
                 pathname: 'example-edit',
-                detailObj: record,
+                editFlag: !!editFlag
+            }
+        )
+    }
+
+    cellClick = async (record, editFlag,btnFlag) => {
+        await actions.searchTable.updateState({rowData:record});
+        actions.routing.push(
+            {
+                pathname: 'example-edit',
                 editFlag: !!editFlag
             }
         )
@@ -44,7 +55,7 @@ export default class SimplePaginationTable extends Component {
         });
     }
     onTableSelectedData = data => {
-        console.log(data)
+        
         this.setState({
             selectData: data
         })
@@ -64,16 +75,18 @@ export default class SimplePaginationTable extends Component {
         await actions.searchTable.loadList();
         actions.searchTable.updateState({showLine:false});
         Message.create({content: '单据提交成功', color: 'success'});
+        
     }
     // 提交操作初始执行操作
     onSubmitStart = ()=>{
         actions.searchTable.updateState({showLine:true});
-
+        
     }
     // 提交失败回调函数
-    onSubmitFail = ()=>{
+    onSubmitFail = (error)=>{
         actions.searchTable.updateState({showLine:false});
-        Message.create({content: "单据提交失败", color: 'danger'});
+        Message.create({content: error.msg, color: 'danger'});
+        
     }
 
     // 撤回成功，失败，开始回调函数
@@ -82,30 +95,42 @@ export default class SimplePaginationTable extends Component {
         await actions.searchTable.loadList();
         actions.searchTable.updateState({showLine:false});
         Message.create({content: '单据撤回成功', color: 'success'});
+        
     }
-    onRecallFail = ()=>{
+    onRecallFail = (error)=>{
         actions.searchTable.updateState({showLine:false});
-        Message.create({content: "单据撤回失败", color: 'danger'});
+        Message.create({content: error.msg, color: 'danger'});
+        
     }
     onRecallStart = ()=>{
-        this.setState({showLine:true});
+        actions.searchTable.updateState({showLine:true});
     }
 
     //查看方法
     onExamine = async (text, record, index)=> {
         console.log("record", record);
+        await actions.searchTable.updateState({rowData:record});
         await actions.routing.push(
             {
                 pathname: 'example-edit',
                 detailObj: record,
-                btnFlag:2
             }
         )
+    }
+
+    // 清空selectData
+    clearSelData = ()=>{
+        this.setState({
+            selectData:[]
+        })
     }
 
     render(){
         const self=this;
         let { list, showLoading, pageIndex, pageSize, totalPages } = this.props;
+        let {selectData} = this.state;
+        console.log("selectData",selectData)
+        console.log("${GROBAL_HTTP_CTX}",`${GROBAL_HTTP_CTX}`);
         const column = [
             {
                 title: "序号",
@@ -122,7 +147,7 @@ export default class SimplePaginationTable extends Component {
                 key: "orderCode",
                 width: 250,
                 className:"td-detail",
-                onCellClick: (record) => this.cellClick(record, false)
+                onCellClick: (record) => this.cellClick(record, false,2)
             },
             {
                 title: "供应商名称",
@@ -184,8 +209,8 @@ export default class SimplePaginationTable extends Component {
                 render(text, record, index) {
                     return (
                         <div className='operation-btn'>
-                            <Button size='sm' className='edit-btn' onClick={() => { self.onExamine(text, record, index) }}>查看</Button>
-                            <Button size='sm' className='edit-btn' onClick={() => { self.cellClick(record, true) }}>编辑</Button>
+                            <Button size='sm' className='edit-btn' onClick={() => { self.cellClick(record, false,2) }}>查看</Button>
+                            <Button size='sm' className='edit-btn' onClick={() => { self.cellClick(record, true,1) }}>编辑</Button>
                             <Button size='sm' className='del-btn' onClick={() => { self.delItem(record, index) }}>删除</Button>
                         </div>
                     )
@@ -197,25 +222,23 @@ export default class SimplePaginationTable extends Component {
                 <Header title='简单分页表格示例'/>
                 <ExampleForm { ...this.props }/>
                 <div className='table-header'>
-                    <Button size='sm' shape="border" onClick={() => { self.cellClick({}, true) }}>
+                    <Button size='sm' shape="border" onClick={() => { self.onAdd({}, true,0) }}>
                         新增
                     </Button>
                     <BpmButtonSubmit
                         className="ml5 "
-                        data = {list}
-                        checkedArray = {[true]}
+                        checkedArray = {selectData}
                         funccode = "react"
                         nodekey = "003"
-                        url = {`${GROBAL_HTTP_CTX}/example_workorder/submit`}
+                        url = {`${GROBAL_HTTP_CTX}/sany_order/submit`}
                         onSuccess = {this.onSubmitSuc}
                         onError = {this.onSubmitFail}
                         onStart={this.onSubmitStart}
                     />
                     <BpmButtonRecall
                         className="ml5 "
-                        data = {list}
-                        checkedArray = {[true]}
-                        url = {`${GROBAL_HTTP_CTX}/example_workorder/recall`}
+                        checkedArray = {selectData}
+                        url = {`${GROBAL_HTTP_CTX}/sany_order/recall`}
                         onSuccess = {this.onRecallSuc}
                         onError = {this.onRecallFail}
                         onStart = {this.onRecallStart}

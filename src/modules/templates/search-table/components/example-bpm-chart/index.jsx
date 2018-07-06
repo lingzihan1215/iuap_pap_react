@@ -14,6 +14,14 @@ class ExampleBpmChart extends Component {
 
         };
     }
+    onBack = ()=>{
+        actions.routing.push(
+            {
+                pathname: 'example-edit',
+                editFlag: false
+            }
+        )
+    }
     render() {
         let { id, processDefinitionId, processInstanceId } = queryString.parse(this.props.location.search);
         return (

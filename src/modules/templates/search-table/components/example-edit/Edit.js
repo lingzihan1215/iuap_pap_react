@@ -7,10 +7,13 @@ import AcUpload from 'ac-upload';
 import Header from "components/Header";
 import DatePicker from 'bee-datepicker';
 import Form from 'bee-form';
-import './edit.less';
+import RefWithInput from 'yyuap-ref/dist2/refWithInput'
 import moment from "moment";
+import 'yyuap-ref/dist2/yyuap-ref.css'//参照样式
+import './edit.less';
 
 const FormItem = Form.FormItem;
+
 
 class Edit extends Component {
     constructor(props) {
@@ -19,7 +22,10 @@ class Edit extends Component {
             approvalState: '0',
             closeState: '0',
             confirmState: '0',
-            fileNameData: {}
+            fileNameData: [{"fileName":"123","accessAddress":"123"},
+                {"fileName":"123456","accessAddress":"123456"}
+            ],
+            purchasing:[]
         }
     }
     componentWillMount() {
@@ -34,7 +40,7 @@ class Edit extends Component {
     }
     save = () => {//保存
         this.props.form.validateFields((err, values) => {
-            values.attachment = this.state.fileNameData;
+            values.attachment = this.state.fileNameData ;
             values.approvalState = Number(values.approvalState);
             values.closeState = Number(values.closeState);
             values.confirmState = Number(values.confirmState);
@@ -46,6 +52,7 @@ class Edit extends Component {
                     values.id = this.props.location.detailObj.id;
                     values.ts = this.props.location.detailObj.ts;
                 }
+                console.log("save values",JSON.stringify(values));
                 actions.searchTable.save(values);
             }
         });
@@ -54,11 +61,11 @@ class Edit extends Component {
         window.history.go(-1);
     }
     // 跳转到流程图
-    onClickToBPM = () => {
+    onClickToBPM = (rowData) => {
         console.log("actions", actions);
         actions.routing.push({
             pathname: 'example-chart',
-            search: `?id=${this.props.rowData.id}`
+            search: `?id=${rowData.id}`
         })
     }
 
@@ -85,11 +92,68 @@ class Edit extends Component {
             fileNameData: data
         });
     }
+
+    showBpmComponent = (editFlag,rowData)=> {
+        if(!editFlag && rowData && rowData['id']) {
+            console.log("showBpmComponent",editFlag)
+            return (
+                <BpmTaskApprovalWrap
+                    id={rowData.id}
+                    onBpmFlowClick={()=>{this.onClickToBPM(rowData)}}
+                    appType={"1"}
+                />
+            );
+        }
+    }
+
     render() {
         const self = this;
-        let { orderTypes, orderCode, supplier, supplierName, type, purchasing, purchasingGroup, voucherDate, approvalState, confirmState, closeState } = this.props.location.detailObj;
-        const editFlag = this.props.location.editFlag;
+        const option = {
+            title:'',
+            refType:5,//1:树形 2.单表 3.树卡型 4.多选 5.default
+            className:'',
+            param:{//url请求参数
+                refCode:'common_ref',
+                tenantId:'',
+                sysId:'',
+                transmitParam:'EXAMPLE_CONTACTS,EXAMPLE_ORGANIZATION',
+            },
+            refModelUrl:{
+                TreeUrl:'/newref/rest/iref_ctr/blobRefTree', //树请求
+                TableBodyUrl:'/tablebody',//表体请求
+                TableBarUrl:'/tablebar',//表头请求
+            },
+            filterRefUrl:'/iuap_pap_quickstart/filterRef',//get
+            keyList:self.state.purchasing,//选中的key
+            // checkedArray: [],
+            onCancel: function (p) {
+              console.log(p)
+            },
+            onSave: function (sels) {
+              console.log(sels);
+              var temp = sels.map(v=>v.key)
+              self.setState({
+                purchasing:temp,
+              })
+
+            },
+            filterKey:[{title:'人员名称人员名称人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'}],
+            textOption:{
+                modalTitle:'选择品类',
+                leftTitle:'品类结构',
+                rightTitle:'品类列表',
+                leftTransferText:'待选品类',
+                rightTransferText:'已选品类',
+                leftInfo:[{text:'流水号',key:'refname'},{text:'品类编码',key:'refname'},{text:'品类描述',key:'refname'}],
+                rightInfo:[{text:'流水号',key:'refname'},{text:'品类编码',key:'refname'},{text:'品类描述',key:'refname'}],
+            }
+        }
+        let {rowData,btnFlag} = self.props;
+        let { orderCode, supplier, supplierName, type, purchasing, purchasingGroup, voucherDate, approvalState, confirmState, closeState } = rowData;
+        let {editFlag} = self.props.location;
+        // console.log("edit editFlag",editFlag)
         const { getFieldProps, getFieldError } = this.props.form;
+
         return (
             <div className='order-detail'>
                 <Loading
@@ -97,7 +161,7 @@ class Edit extends Component {
                     loadingType="line"
                     show={this.props.showLoading}
                 />
-                <Header title={editFlag ? '订单编辑' : '订单详情'} back={true}>
+                <Header title={this.onChangeHead(btnFlag)} back={true}>
                     {editFlag ? (
                         <div className='head-btn'>
                             <Button className='head-cancel' onClick={this.cancel}>取消</Button>
@@ -105,6 +169,9 @@ class Edit extends Component {
                         </div>
                     ) : ''}
                 </Header>
+                {
+                    self.showBpmComponent(editFlag,rowData)
+                }
                 <Row className='detail-body'>
                     <Col md={4} xs={6}>
                         <Label>
@@ -114,7 +181,7 @@ class Edit extends Component {
                             placeholder="使用编码规则生成"
                             {
                             ...getFieldProps('orderCode', {
-                                initialValue: orderCode
+                                initialValue: orderCode||'使用编码规则生成'
                             }
                             )}
                         />
@@ -126,7 +193,7 @@ class Edit extends Component {
                         <FormControl disabled={!editFlag}
                             {
                             ...getFieldProps('supplierName', {
-                                initialValue: supplierName
+                                initialValue: supplierName||''
                             }
                             )}
                         />
@@ -158,16 +225,20 @@ class Edit extends Component {
 
                     </Col>
                     <Col md={4} xs={6}>
+                        
                         <Label>
                             采购组织：
                         </Label>
-                        <FormControl disabled={!editFlag}
+                        
+                        {/*<FormControl disabled={!editFlag}
                             {
                             ...getFieldProps('purchasing', {
-                                initialValue: purchasing
+                                initialValue: purchasing || ''
                             }
                             )}
-                        />
+                        />*/}
+                        <RefWithInput option={option}/>
+                        
                     </Col>
                     <Col md={4} xs={6}>
                         <Label>
@@ -176,7 +247,7 @@ class Edit extends Component {
                         <FormControl disabled={!editFlag}
                             {
                             ...getFieldProps('purchasingGroup', {
-                                initialValue: purchasingGroup
+                                initialValue: purchasingGroup || ''
                             }
                             )}
                         />
@@ -195,7 +266,7 @@ class Edit extends Component {
                             )}
                         />
                     </Col>
-                    {/* <Col md={4} xs={6}>
+                    <Col md={4} xs={6}>
                         <Label>
                             审批状态：
                         </Label>
@@ -213,8 +284,8 @@ class Edit extends Component {
                                     }
                                     ) }
                                 >
-                                <Radio value="0" >未审批</Radio>
-                                <Radio value="1" >已审批</Radio>
+                                <Radio value="0" disabled={true}>未审批</Radio>
+                                <Radio value="1" disabled={true}>已审批</Radio>
                                 </Radio.RadioGroup>):(
                                 <FormControl disabled={!editFlag} value={approvalState}/>
                             )
@@ -237,9 +308,9 @@ class Edit extends Component {
                                         }
                                         ) }
                                     >
-                                   <Radio value="0" >未确认</Radio>
-                                    <Radio value="1" >已确认</Radio>
-                                    <Radio value="2" >拒绝</Radio>
+                                   <Radio value="0" disabled={true} >未确认</Radio>
+                                    <Radio value="1" disabled={true} >已确认</Radio>
+                                    <Radio value="2" disabled={true}>拒绝</Radio>
                                 </Radio.RadioGroup>
                         ):(<FormControl disabled={!editFlag} value={confirmState}/>)}
                         
@@ -260,13 +331,13 @@ class Edit extends Component {
                                         }
                                         ) }
                                     >
-                                    <Radio value="0" >未关闭</Radio>
-                                    <Radio value="1" >已关闭</Radio>
+                                    <Radio value="0" disabled={true} >未关闭</Radio>
+                                    <Radio value="1" disabled={true} >已关闭</Radio>
                                 </Radio.RadioGroup>):(
                                     <FormControl disabled={!editFlag} value={closeState}/>
                                 )
                         }
-                    </Col> */}
+                    </Col>
                     <Col md={4} xs={6}>
                         <Label>
                             附件：
