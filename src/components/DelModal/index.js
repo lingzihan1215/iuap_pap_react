@@ -3,16 +3,16 @@ import { Button,Modal } from 'tinper-bee';
 import PropTypes from 'prop-types';
 import './index.less';
 import classnames from 'classnames';
-/**
- * 部分不能通过this.props.form.resetFields()清空的组件，需要传reset方法，在reset方法中自行清空
- */
+
 const propTypes = {
     modalTitle:PropTypes.string,//删除modal标题
-    modalContent:PropTypes.string,//简单内容可直接传字符串，复杂内容写在children里
+    modalContent:PropTypes.node,//modal内容，可传字符串和dom
     confirmFn:PropTypes.func,//点击确认按钮的回调
     cancelFn:PropTypes.func,//点击取消的回调
     confirmName:PropTypes.string,
     cancelFnName:PropTypes.string,
+    showFooter:PropTypes.bool,//是否显示确认取消按钮
+    showTitle:PropTypes.bool,//是否显示modal标题
 };
 
 const defaultProps = {
@@ -25,7 +25,9 @@ const defaultProps = {
         
     },
     confirmName:'确定',
-    cancelFnName:'取消'
+    cancelFnName:'取消',
+    showFooter:true,
+    showTitle:true,
 };
 
 
@@ -54,7 +56,7 @@ class DelModal extends Component {
         });
     }
     render() {
-        const {children,className,modalContent,modalTitle } = this.props;
+        const {children,className,modalContent,modalTitle,confirmName,cancelFnName,showTitle,showFooter } = this.props;
         let classes = 'del-confrim';
         if(className){
             classes += ' '+className
@@ -67,18 +69,21 @@ class DelModal extends Component {
                 <Modal className="del-confrim-modal"
                     show = { this.state.showModal }
                     onHide = { this.close } >
-                    <Modal.Header>
-                        <Modal.Title>{modalTitle}</Modal.Title>
-                    </Modal.Header>
-
+                    {
+                        showTitle?(<Modal.Header>
+                            <Modal.Title>{modalTitle}</Modal.Title>
+                        </Modal.Header>):''
+                    }
                     <Modal.Body>
                         {modalContent}
                     </Modal.Body>
-
-                    <Modal.Footer>
-                        <Button onClick={ this.close } size='sm' style={{'marginRight':'15px'}}>取消</Button>
-                        <Button onClick={ this.onConfirm } size='sm'  colors="primary">确认</Button>
-                    </Modal.Footer>
+                    
+                    {
+                        showFooter?(<Modal.Footer>
+                            <Button onClick={ this.close } size='sm' style={{'marginRight':'15px'}}>取消</Button>
+                            <Button onClick={ this.onConfirm } size='sm'  colors="primary">{confirmName}</Button>
+                        </Modal.Footer>):''
+                    }
                 </Modal>
             </span>
             
