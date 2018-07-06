@@ -217,7 +217,7 @@ export default class SimplePaginationTable extends Component {
         console.log(list)
         return (
             <div className='example-root'>
-                <Header title='简单分页表格示例'/>
+                <Header title='简单分页表格示例' back={true} />
                 <ExampleForm { ...this.props }/>
                 <div className='table-header'>
                     <Button size='sm' shape="border" onClick={() => { self.cellClick({},0) }}>
@@ -253,7 +253,7 @@ export default class SimplePaginationTable extends Component {
                     onTableSelectedData={this.onTableSelectedData}
                     onPageSizeSelect={this.onPageSizeSelect}
                     onPageIndexSelect={this.onPageIndexSelect}
-                    scroll={{ x: 1550, y: 200}}
+                    scroll={{ x: 1550, y: 500}}
                 />
             </div>
 

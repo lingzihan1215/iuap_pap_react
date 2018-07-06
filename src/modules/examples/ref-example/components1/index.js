@@ -94,7 +94,7 @@ class RefTransfer extends Component {
         return (
             <div className="ref-page">
                 参照示例:
-                <RefWithInput option={option}/>
+                <RefWithInput option={option} disabled={true}/>
             </div>
         );
     }

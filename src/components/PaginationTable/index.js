@@ -83,7 +83,7 @@ class PaginationTable extends Component {
                     data={data}
                     multiSelect={{type: "checkbox"}}
                     getSelectedDataFunc={onTableSelectedData}
-                    scroll
+                    scroll={scroll}
                     title={title}
                     footer={footer}
                 />
