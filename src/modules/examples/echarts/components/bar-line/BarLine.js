@@ -22,6 +22,7 @@ class BarLine extends Component {
         return (
             <div className="bar-line">
                 <Header title="饼状折线图示例"/>  
+                <div className='file-src'>文件位置：src/modules/examples/echarts/bar-line</div>
                 <Panel>  
                     <ReactEcharts theme={"macarons"} option={barLineOption} />
                 </Panel>

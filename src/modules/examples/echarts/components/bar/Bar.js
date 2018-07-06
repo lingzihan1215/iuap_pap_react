@@ -22,6 +22,7 @@ class Bar extends Component {
         return (
             <div className="bar">
                 <Header title="饼状图示例"/>
+                <div className='file-src'>文件位置：src/modules/examples/echarts/bar</div>
                 <Panel>
                     <ReactEcharts theme={"macarons"} option={barOption} />
                 </Panel>

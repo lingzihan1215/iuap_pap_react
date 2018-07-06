@@ -310,6 +310,7 @@ class EditTable extends Component {
         return (
             <div className='plan-apply-wrap'>
                 <Header title='表格编辑示例' />
+                <div className='file-src'>文件位置：src/modules/examples/edit-table</div>
                 <div className='table-list clearfix'>
                     <Row>
                         <Col md={12}>

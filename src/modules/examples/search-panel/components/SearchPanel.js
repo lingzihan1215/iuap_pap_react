@@ -55,6 +55,7 @@ class SearchPanelC extends Component {
         return (
             <div className = 'example'>
                 <Header title = '查询面板示例' / >
+                <div className='file-src'>文件位置：src/modules/examples/search-panel</div>
                 <SearchPanel form={this.props.form} search={this.search} reset={this.reset}>
                     <Row>
                         <Col md={4} xs={6}>

@@ -22,6 +22,7 @@ class Pie extends Component {
         return (
             <div className="pie">
                 <Header title="饼状图示例"/>
+                <div className='file-src'>文件位置：src/modules/examples/echarts/pie</div>
                 <Panel>
                     <ReactEcharts theme={"macarons"} option={pieOption} />
                 </Panel>

@@ -28,6 +28,7 @@ class WeekPickerC extends Component {
         return (
             <div className = 'example' >
                 <Header title = '周选择示例'/>
+                <div className='file-src'>文件位置：src/modules/examples/week-picker</div>
                 <Row className="example-ctn">
                     <Col md = {6} >
                         <WeekPicker placeholder="选择周"
