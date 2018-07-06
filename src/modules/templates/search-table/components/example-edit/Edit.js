@@ -60,9 +60,10 @@ class Edit extends Component {
             if (err) {
                 Message.create({ content: '数据填写错误', color: 'danger' });
             } else {
-                if (this.props.rowData && this.props.rowData.id) {
-                    values.id = this.props.location.detailObj.id;
-                    values.ts = this.props.location.detailObj.ts;
+                let {rowData} = this.state; 
+                if (rowData && rowData.id) {
+                    values.id = rowData.id;
+                    values.ts = rowData.ts;
                 }
                 console.log("save values",JSON.stringify(values));
                 actions.searchTable.save(values);

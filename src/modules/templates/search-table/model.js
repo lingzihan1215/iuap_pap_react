@@ -140,7 +140,7 @@ export default {
         },
 
         async queryDetail(param,getState) {
-            let res= await processData(await api.getDetail(param),'查询成功');
+            let res= await processData(await api.getDetail(param),'');
             // console.log("查询返回值",res);
             return res;
         }
