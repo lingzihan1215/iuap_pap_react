@@ -104,10 +104,14 @@ class Edit extends Component {
     handlerUploadSuccess = (data) => {
         let searchObj = queryString.parse(this.props.location.search);
         let id = searchObj.search_id;
+        if (searchObj.btnFlag == 0) {
 
-        if (data.length > 0) {
-            data[0]['id'] = id;
+        } else if (searchObj.btnFlag == 1) {
+            if (data.length > 0) {
+                data[0]['id'] = id;
+            }
         }
+
         this.setState(({ fileNameData }) => {
             //拿到当前原始对象
             let newFileList = [];
