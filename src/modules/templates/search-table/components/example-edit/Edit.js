@@ -107,9 +107,9 @@ class Edit extends Component {
         if (searchObj.btnFlag == 0) {
 
         } else if (searchObj.btnFlag == 1) {
-            if (data.length > 0) {
-                data[0]['id'] = id;
-            }
+            // if (data.length > 0) {
+            //     data[0]['id'] = id;
+            // }
         }
 
         this.setState(({ fileNameData }) => {
