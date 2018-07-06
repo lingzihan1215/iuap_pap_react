@@ -52,7 +52,7 @@ export default class SimplePaginationTable extends Component {
         });
     }
     onTableSelectedData = data => {
-        
+
         this.setState({
             selectData: data
         })
@@ -77,13 +77,13 @@ export default class SimplePaginationTable extends Component {
     // 提交操作初始执行操作
     onSubmitStart = ()=>{
         actions.searchTable.updateState({showLine:true});
-        
+
     }
     // 提交失败回调函数
     onSubmitFail = (error)=>{
         actions.searchTable.updateState({showLine:false});
         Message.create({content: error.msg, color: 'danger'});
-        
+
     }
 
     // 撤回成功，失败，开始回调函数
@@ -92,12 +92,12 @@ export default class SimplePaginationTable extends Component {
         await actions.searchTable.loadList();
         actions.searchTable.updateState({showLine:false});
         Message.create({content: '单据撤回成功', color: 'success'});
-        
+
     }
     onRecallFail = (error)=>{
         actions.searchTable.updateState({showLine:false});
         Message.create({content: error.msg, color: 'danger'});
-        
+
     }
     onRecallStart = ()=>{
         actions.searchTable.updateState({showLine:true});
@@ -206,9 +206,9 @@ export default class SimplePaginationTable extends Component {
                 render(text, record, index) {
                     return (
                         <div className='operation-btn'>
-                            <Button size='sm' className='edit-btn' onClick={() => { self.cellClick(record,2) }}>查看</Button>
-                            <Button size='sm' className='edit-btn' onClick={() => { self.cellClick(record,1) }}>编辑</Button>
-                            <Button size='sm' className='del-btn' onClick={() => { self.delItem(record, index) }}>删除</Button>
+                            <i size='sm' className='uf uf-search edit-btn' onClick={() => { self.cellClick(record,2) }}></i>
+                            <i size='sm' className='uf uf-pencil edit-btn' onClick={() => { self.cellClick(record,1) }}></i>
+                            <i size='sm' className='uf uf-del del-btn' onClick={() => { self.delItem(record, index) }}></i>
                         </div>
                     )
                 }
