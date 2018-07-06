@@ -130,8 +130,6 @@ export default {
             actions.searchTable.updateState({
               showLoading:true
             })
-            let result = await api.saveOrder(param);
-            console.log("result",result);
             let res=processData(await api.saveOrder(param),'保存成功');
             if(res){
                window.history.go(-1);
