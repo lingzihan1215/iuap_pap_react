@@ -96,6 +96,7 @@ class Editor extends Component {
         return ( 
             <div className = 'example'>
                 <Header title = '富文本编辑器示例' / >
+                <div className='file-src'>文件位置：src/modules/examples/editor</div>
                     <Row className="example-ctn">
                         <Col md = {12} >
                          <BraftEditor { ...editorProps}/> 

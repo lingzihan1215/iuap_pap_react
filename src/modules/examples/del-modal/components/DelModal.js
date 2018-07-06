@@ -23,6 +23,7 @@ class Upload extends Component {
         return (
             <div className = 'example'>
                 <Header title = '确认删除模态框示例' / >
+                <div className='file-src'>文件位置：src/modules/examples/del-modal</div>
                     <Row className="example-ctn">
                         <Col md = {12} >
                             <DelModal confirmFn={this.confirm} cancelFn={this.cancel}>

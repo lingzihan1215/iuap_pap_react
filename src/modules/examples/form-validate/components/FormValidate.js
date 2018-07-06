@@ -54,6 +54,7 @@ class FormValidate extends Component {
         return (
             <div className = 'example'>
                 <Header title = 'form表单示例' / >
+                <div className='file-src'>文件位置：src/modules/examples/form-validate</div>
                     {/* 三列布局 */}
                     <Row className = 'edit-panel'>
                         <Col md={4} sm={6} xs={12}>

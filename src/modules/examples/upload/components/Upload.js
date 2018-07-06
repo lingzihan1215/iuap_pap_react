@@ -22,6 +22,7 @@ class Upload extends Component {
         return (
             <div className = 'example'>
                 <Header title = '上传示例' / >
+                <div className='file-src'>文件位置：src/modules/examples/upload</div>
                     <Row className="example-ctn">
                         <Col md = {12} >
                             <AcUpload
