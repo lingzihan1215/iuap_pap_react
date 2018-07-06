@@ -15,11 +15,11 @@ const option = {
         transmitParam:'EXAMPLE_CONTACTS,EXAMPLE_ORGANIZATION',
     },
     refModelUrl:{
-        TreeUrl:'http://10.10.24.43:8080/newref/rest/iref_ctr/blobRefTree', //树请求
+        TreeUrl:'/newref/rest/iref_ctr/blobRefTree', //树请求
         TableBodyUrl:'/tablebody',//表体请求
         TableBarUrl:'/tablebar',//表头请求
     },
-    filterRefUrl:'/iuap_pap_quickstart/filterRef',//get
+    filterRefUrl:'/iuap_pap_quickstart/common/filterRef',//get
     keyList:[],//选中的key
     // checkedArray: [],
     onCancel: function (p) {
@@ -62,11 +62,11 @@ class RefTransfer extends Component {
                 transmitParam:'EXAMPLE_CONTACTS,EXAMPLE_ORGANIZATION',
             },
             refModelUrl:{
-                TreeUrl:'http://10.10.24.43:8080/newref/rest/iref_ctr/blobRefTree', //树请求
+                TreeUrl:'/newref/rest/iref_ctr/blobRefTree', //树请求
                 TableBodyUrl:'/tablebody',//表体请求
                 TableBarUrl:'/tablebar',//表头请求
             },
-            filterRefUrl:'/iuap_pap_quickstart/filterRef',//get
+            filterRefUrl:'/iuap_pap_quickstart/common/filterRef',//get
             keyList:self.state.saveKeys,//选中的key
             // checkedArray: [],
             onCancel: function (p) {
@@ -94,7 +94,9 @@ class RefTransfer extends Component {
         return (
             <div className="ref-page">
                 参照示例:
-                <RefWithInput option={option} disabled={true}/>
+                <RefWithInput option={option} disabled={false}/>
+
+                <div>选中数据:{this.state.saveKeys}</div>
             </div>
         );
     }
