@@ -13,6 +13,10 @@ const propTypes = {
     cancelFnName:PropTypes.string,
     showFooter:PropTypes.bool,//是否显示确认取消按钮
     showTitle:PropTypes.bool,//是否显示modal标题
+    onShow:PropTypes.func,//显示的钩子函数
+    onHide:PropTypes.func,//隐藏的钩子函数
+    size:PropTypes.oneOf(["sm", "lg", "xlg", ""]),//模态框尺寸
+    dialogClassName:PropTypes.string,//传递给模态框的样式	
 };
 
 const defaultProps = {
@@ -28,6 +32,9 @@ const defaultProps = {
     cancelFnName:'取消',
     showFooter:true,
     showTitle:true,
+    onHide:()=>{
+
+    }
 };
 
 
@@ -55,8 +62,15 @@ class DelModal extends Component {
             showModal: true
         });
     }
+    onHide = ()=>{
+        this.setState({
+            showModal: false
+        });
+    }
     render() {
-        const {children,className,modalContent,modalTitle,confirmName,cancelFnName,showTitle,showFooter } = this.props;
+        const {children,className,modalContent,modalTitle,
+            confirmName,cancelFnName,showTitle,showFooter,
+            onShow,onHide,dialogClassName,size } = this.props;
         let classes = 'del-confrim';
         if(className){
             classes += ' '+className
@@ -68,9 +82,13 @@ class DelModal extends Component {
                 </span>
                 <Modal className="del-confrim-modal"
                     show = { this.state.showModal }
-                    onHide = { this.close } >
+                    onHide = {this.onHide}
+                    onShow = {onShow}
+                    dialogClassName = {dialogClassName}
+                    size = {size}
+                     >
                     {
-                        showTitle?(<Modal.Header>
+                        showTitle?(<Modal.Header closeButton>
                             <Modal.Title>{modalTitle}</Modal.Title>
                         </Modal.Header>):''
                     }
