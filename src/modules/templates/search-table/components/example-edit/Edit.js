@@ -26,7 +26,7 @@ class Edit extends Component {
             confirmState: '0',
             fileNameData: props.rowData.attachment || [],//上传附件数据
             purchasing: [],
-            rowData: {}
+            rowData: {},
         }
     }
     async componentWillMount() {
@@ -48,7 +48,7 @@ class Edit extends Component {
                 rowData
             })
         }
-
+        
     }
     save = () => {//保存
         this.props.form.validateFields((err, values) => {
@@ -84,7 +84,6 @@ class Edit extends Component {
 
     // 动态显示标题
     onChangeHead = (btnFlag) => {
-        console.log("btnFlag", btnFlag);
         let msg = "";
         switch (btnFlag) {
             case 0:
@@ -197,11 +196,10 @@ class Edit extends Component {
             }
         }
         let { btnFlag } = queryString.parse(this.props.location.search);
-        console.log("typeof btnFlag", typeof btnFlag);
         btnFlag = Number(btnFlag);
-        let { rowData } = this.state;
+        let {rowData } = this.state;
+        let title = this.onChangeHead(btnFlag);
         console.log("detailData", rowData);
-        console.log("props", this.props);
         let { orderCode, supplier, supplierName, type, purchasing, purchasingGroup, voucherDate, approvalState, confirmState, closeState } = rowData;
         const { getFieldProps, getFieldError } = this.props.form;
 
@@ -212,7 +210,7 @@ class Edit extends Component {
                     loadingType="line"
                     show={this.props.showLoading}
                 />
-                <Header title={this.onChangeHead(btnFlag)} back={true}>
+                <Header title={title} back={true}>
                     {(btnFlag < 2) ? (
                         <div className='head-btn'>
                             <Button className='head-cancel' onClick={this.cancel}>取消</Button>
