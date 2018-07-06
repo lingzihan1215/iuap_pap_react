@@ -10,13 +10,16 @@ import { processData } from "utils";
  *          修改需要将行数据带上并显示在卡片页面
  *          查看详情携带行数据但是表格不可编辑
  *          0表示新增、1表示编辑，2表示查看详情 3提交
+ * 
+ *          rowData为行间距
 */
 
 export default {
     // 确定 Store 中的数据模型作用域
     name: "searchTable", 
     // 设置当前 Model 所需的初始化 state
-    initialState: {  
+    initialState: {
+        rowData:{},  
         showLoading:false,
         list: [],
         orderTypes:[],
@@ -58,7 +61,6 @@ export default {
             }
             // 调用 getList 请求数据
             let res = processData(await api.getList(param)); 
-            
             actions.searchTable.updateState({  showLoading:false })
 
             if (res) {

@@ -40,7 +40,10 @@ export default class SimplePaginationTable extends Component {
     }
 
     cellClick = async (record, editFlag,btnFlag) => {
-        await actions.searchTable.updateState({rowData:record});
+        await actions.searchTable.updateState({
+            rowData : record,
+            btnFlag : btnFlag
+        });
         actions.routing.push(
             {
                 pathname: 'example-edit',

@@ -2,10 +2,10 @@ import request from "utils/request";
 
 //定义接口地址
 const URL = { 
-    "GET_LIST":  `${GROBAL_HTTP_CTX}/sany_order/list`,
+    "GET_LIST":  `${GROBAL_HTTP_CTX}/sany_order/getListWithAttach`,
     "DELETE": `${GROBAL_HTTP_CTX}/sany_delivery/delete`,
     "SAVE": `${GROBAL_HTTP_CTX}/sany_delivery/save`,
-    "SAVE_ORDER":  `${GROBAL_HTTP_CTX}/sany_order/save`,
+    "SAVE_ORDER":  `${GROBAL_HTTP_CTX}/sany_order/saveWithAttach`,
     "DEL_ORDER":  `${GROBAL_HTTP_CTX}/sany_order/deleteBatch`,
 }
 

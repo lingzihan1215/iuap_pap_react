@@ -29,8 +29,8 @@ class Edit extends Component {
         }
     }
     componentWillMount() {
-        if (this.props.location.detailObj && this.props.location.detailObj.id) {
-            let { approvalState, closeState, confirmState } = this.props.location.detailObj;
+        if (this.props.rowData && this.props.rowData.id) {
+            let { approvalState, closeState, confirmState } = this.props.rowData;
             this.setState({
                 approvalState: String(approvalState),
                 closeState: String(closeState),
@@ -48,7 +48,7 @@ class Edit extends Component {
             if (err) {
                 Message.create({ content: '数据填写错误', color: 'danger' });
             } else {
-                if (this.props.location.detailObj && this.props.location.detailObj.id) {
+                if (this.props.rowData && this.props.rowData.id) {
                     values.id = this.props.location.detailObj.id;
                     values.ts = this.props.location.detailObj.ts;
                 }
