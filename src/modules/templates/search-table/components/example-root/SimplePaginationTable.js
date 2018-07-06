@@ -16,8 +16,8 @@ export default class SimplePaginationTable extends Component {
             step: 10
         }
     }
-    componentWillMount(){
-        this.setState({ step: this.props.pageSize })
+    componentDidMount(){
+        // this.setState({ step: this.props.pageSize })
         actions.searchTable.loadList();//table数据
     }
     tabelSelect = (data) => {//tabel选中数据
@@ -29,25 +29,19 @@ export default class SimplePaginationTable extends Component {
      * 编辑,详情，增加
      */
 
-    onAdd = async (record, editFlag)=>{
-        await actions.searchTable.updateState({rowData:{}});
-        actions.routing.push(
-            {
-                pathname: 'example-edit',
-                editFlag: !!editFlag
-            }
-        )
-    }
-
-    cellClick = async (record, editFlag,btnFlag) => {
+    cellClick = async (record,btnFlag) => {
         await actions.searchTable.updateState({
             rowData : record,
-            btnFlag : btnFlag
         });
+
+        let id = "";
+        if(record){
+            id = record["id"];
+        }
         actions.routing.push(
             {
                 pathname: 'example-edit',
-                editFlag: !!editFlag
+                search:`?search_id=${id}&btnFlag=${btnFlag}`
             }
         )
     }
@@ -78,7 +72,7 @@ export default class SimplePaginationTable extends Component {
         await actions.searchTable.loadList();
         actions.searchTable.updateState({showLine:false});
         Message.create({content: '单据提交成功', color: 'success'});
-        
+
     }
     // 提交操作初始执行操作
     onSubmitStart = ()=>{
@@ -150,7 +144,7 @@ export default class SimplePaginationTable extends Component {
                 key: "orderCode",
                 width: 250,
                 className:"td-detail",
-                onCellClick: (record) => this.cellClick(record, false,2)
+                onCellClick: (record) => this.cellClick(record,2)
             },
             {
                 title: "供应商名称",
@@ -212,20 +206,21 @@ export default class SimplePaginationTable extends Component {
                 render(text, record, index) {
                     return (
                         <div className='operation-btn'>
-                            <Button size='sm' className='edit-btn' onClick={() => { self.cellClick(record, false,2) }}>查看</Button>
-                            <Button size='sm' className='edit-btn' onClick={() => { self.cellClick(record, true,1) }}>编辑</Button>
+                            <Button size='sm' className='edit-btn' onClick={() => { self.cellClick(record,2) }}>查看</Button>
+                            <Button size='sm' className='edit-btn' onClick={() => { self.cellClick(record,1) }}>编辑</Button>
                             <Button size='sm' className='del-btn' onClick={() => { self.delItem(record, index) }}>删除</Button>
                         </div>
                     )
                 }
             }
         ];
+        console.log(list)
         return (
             <div className='example-root'>
                 <Header title='简单分页表格示例' back={true} />
                 <ExampleForm { ...this.props }/>
                 <div className='table-header'>
-                    <Button size='sm' shape="border" onClick={() => { self.onAdd({}, true,0) }}>
+                    <Button size='sm' shape="border" onClick={() => { self.cellClick({},0) }}>
                         新增
                     </Button>
                     <BpmButtonSubmit
@@ -251,7 +246,7 @@ export default class SimplePaginationTable extends Component {
                     data={list}
                     showLoading={showLoading}
                     pageIndex={pageIndex}
-                    pageSize={this.state.step}
+                    pageSize={pageSize}
                     totalPages={totalPages}
                     columns={column}
                     getSelectedDataFunc={this.tabelSelect}

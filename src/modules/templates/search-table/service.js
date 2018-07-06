@@ -7,6 +7,7 @@ const URL = {
     "SAVE": `${GROBAL_HTTP_CTX}/sany_delivery/save`,
     "SAVE_ORDER":  `${GROBAL_HTTP_CTX}/sany_order/saveWithAttach`,
     "DEL_ORDER":  `${GROBAL_HTTP_CTX}/sany_order/deleteBatch`,
+    "GET_DETAIL" : `${GROBAL_HTTP_CTX}/sany_order/get`,
 }
 
 /**
@@ -65,5 +66,16 @@ export const delOrder = (params) => {
     return request(URL.DEL_ORDER, {
         method: "post",
         data: params
+    });
+}
+
+/** 
+ * 通过search_id 查询列表详情
+*/
+
+export const getDetail = (params) => { 
+    return request(URL.GET_DETAIL, {
+        method: "get",
+        param: params
     });
 }
