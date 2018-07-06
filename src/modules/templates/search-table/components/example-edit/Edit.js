@@ -120,10 +120,10 @@ class Edit extends Component {
             },
             refModelUrl:{
                 TreeUrl:'/newref/rest/iref_ctr/blobRefTree', //树请求
-                TableBodyUrl:'/tablebody',//表体请求
-                TableBarUrl:'/tablebar',//表头请求
+                TableBodyUrl:'/newref/rest/iref_ctr/blobRefTreeGrid',//表体请求//ref/rest/iref_ctr/blobRefTreeGrid
+                TableBarUrl:'/newref/rest/iref_ctr/refInfo',//表头请求ref/rest/iref_ctr/refInfo
             },
-            filterRefUrl:'/iuap_pap_quickstart/filterRef',//get
+            filterRefUrl:'/iuap_pap_quickstart/common/filterRef',//get
             keyList:self.state.purchasing,//选中的key
             // checkedArray: [],
             onCancel: function (p) {
