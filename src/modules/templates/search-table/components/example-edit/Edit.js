@@ -106,9 +106,9 @@ class Edit extends Component {
         if (searchObj.btnFlag == 0) {
 
         } else if (searchObj.btnFlag == 1) {
-            if (data.length > 0) {
-                data[0]['id'] = id;
-            }
+            // if (data.length > 0) {
+            //     data[0]['id'] = id;
+            // }
         }
 
         this.setState(({ fileNameData }) => {
@@ -165,13 +165,13 @@ class Edit extends Component {
                 sysId: '',
                 transmitParam: 'EXAMPLE_CONTACTS,EXAMPLE_ORGANIZATION',
             },
-            refModelUrl: {
-                TreeUrl: '/newref/rest/iref_ctr/blobRefTree', //树请求
-                TableBodyUrl: '/tablebody',//表体请求
-                TableBarUrl: '/tablebar',//表头请求
+            refModelUrl:{
+                TreeUrl:'/newref/rest/iref_ctr/blobRefTree', //树请求
+                TableBodyUrl:'/newref/rest/iref_ctr/blobRefTreeGrid',//表体请求//ref/rest/iref_ctr/blobRefTreeGrid
+                TableBarUrl:'/newref/rest/iref_ctr/refInfo',//表头请求ref/rest/iref_ctr/refInfo
             },
-            filterRefUrl: '/iuap_pap_quickstart/filterRef',//get
-            keyList: self.state.purchasing,//选中的key
+            filterRefUrl:'/iuap_pap_quickstart/common/filterRef',//get
+            keyList:self.state.purchasing,//选中的key
             // checkedArray: [],
             onCancel: function (p) {
                 console.log(p)
