@@ -72,7 +72,7 @@ export default class SimplePaginationTable extends Component {
         await actions.searchTable.loadList();
         actions.searchTable.updateState({showLine:false});
         Message.create({content: '单据提交成功', color: 'success'});
-        
+
     }
     // 提交操作初始执行操作
     onSubmitStart = ()=>{

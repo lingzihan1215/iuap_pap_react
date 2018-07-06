@@ -38,6 +38,7 @@ class Edit extends Component {
                 confirmState: String(confirmState)
             })
         }
+        await actions.searchTable.getOrderTypes();
         let searchObj = queryString.parse(this.props.location.search);
         let { btnFlag } = searchObj;
         if (btnFlag && btnFlag > 0) {
@@ -96,7 +97,6 @@ class Edit extends Component {
                 msg = "详情"
                 break;
         }
-        console.log("msg", msg);
         return msg;
     }
 

@@ -37,6 +37,7 @@ export default {
     },
     reducers : {
         save(state, data) {
+            console.log("data",data);
             return {
                 ...state,
                 ...data
