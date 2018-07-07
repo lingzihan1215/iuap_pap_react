@@ -443,8 +443,8 @@ export default [
         "urltype": "url",
         "children": [{
             "id": "app601",
-            "name": "树形参照",
-            "location": "/examples/ref-example",
+            "name": "穿梭框参照",
+            "location": "/examples/ref-transfer-example",
             "menustatus": "Y",
             "parentid": null,
             "icon": "uf uf-9square-2",
@@ -452,6 +452,19 @@ export default [
             "urltype": "url",
             "children": [],
             "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
+        },{
+            "id": "app602",
+            "name": "多过滤项参照",
+            "location": "/examples/ref-multile-example",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 2,
             "openview": "curpage",
             "category": "engine"
         }],
