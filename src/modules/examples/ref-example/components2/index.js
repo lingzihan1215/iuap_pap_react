@@ -4,7 +4,7 @@ import RefWithInput from 'yyuap-ref/dist2/refWithInput'
 import 'yyuap-ref/dist2/yyuap-ref.css'//参照样式
 import './style.css'
 
-class RefTransfer extends Component {
+class RefMultiple extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,7 +16,7 @@ class RefTransfer extends Component {
         var self = this;
         const option = {
             title:'',
-            refType:5,//1:树形 2.单表 3.树卡型 4.多选 5.default
+            refType:6,//1:树形 2.单表 3.树卡型 4.多选 5.default
             className:'',
             param: {//url请求参数
                 refCode: 'common_ref',
@@ -61,12 +61,13 @@ class RefTransfer extends Component {
         return (
             <div className="ref-page">
                 <h2>参照示例:</h2>
-                <div>穿梭框</div>
+                <div>多选</div>
                 <RefWithInput option={option} disabled={false}/>
-                <div>穿梭框选中数据:{this.state.saveKeys}</div>
+                <div>多选选中数据:{this.state.saveKeys}</div>
+
             </div>
         );
     }
 }
 
-export default RefTransfer;
+export default RefMultiple;
