@@ -45,7 +45,7 @@ class ExampleForm extends Component {
             actions.searchTable.loadList(values);
         });
 
-        
+
     }
     /**
      * 重置
@@ -63,10 +63,10 @@ class ExampleForm extends Component {
         let { orderTypes } = this.props;
         let _this = this;
         return (
-            <SearchPanel 
-                className='example-form' 
-                form={this.props.form} 
-                reset={this.reset} 
+            <SearchPanel
+                className='example-form'
+                form={this.props.form}
+                reset={this.reset}
                 search={this.search}
                 >
                 <Row>
@@ -101,6 +101,7 @@ class ExampleForm extends Component {
                                 defaultValue={this.state.voucherDate}
                                 placeholder={'开始 ~ 结束'}
                                 dateInputPlaceholder={['开始', '结束']}
+                                showClear={true}
                                 {
                                     ...getFieldProps('voucherDate', {
                                         onChange: function (v) {
@@ -116,7 +117,7 @@ class ExampleForm extends Component {
                     <Col md={4} xs={6}>
                             <FormItem>
                                 <Label>订单类型：</Label>
-                                <Select 
+                                <Select
                                     {
                                         ...getFieldProps('type', {
                                             initialValue: '',
