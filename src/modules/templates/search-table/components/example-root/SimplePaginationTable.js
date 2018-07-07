@@ -7,101 +7,13 @@ import moment from "moment/moment";
 import Header from 'components/Header';
 import ExampleForm from '../example-form';
 
-let columns = [
-    {
-        title: "序号",
-        dataIndex: "index",
-        key: "index",
-        width: 100,
-        render(record, text, index) {
-            return index + 1;
-        }
-    },
-    {
-        title: "订单编号",
-        dataIndex: "orderCode",
-        key: "orderCode",
-        width: 250,
-        className:"td-detail",
-        onCellClick: (record) => this.cellClick(record,2)
-    },
-    {
-        title: "供应商名称",
-        dataIndex: "supplierName",
-        key: "supplierName",
-        // width: 300
-    },
-    {
-        title: "类型",
-        dataIndex: "type_name",
-        key: "type_name",
-        width: 100
-    },
-    {
-        title: "采购组织",
-        dataIndex: "purchasing",
-        key: "purchasing",
-        width: 100
-    },
-    {
-        title: "采购组",
-        dataIndex: "purchasingGroup",
-        key: "purchasingGroup",
-        width: 100
-    },
-    {
-        title: "凭证日期",
-        dataIndex: "voucherDate",
-        key: "voucherDate",
-        width: 100,
-        render(record, text, index) {
-            return moment(text).format('YYYY-MM-DD')
-        }
-    },
-    {
-        title: "审批状态",
-        dataIndex: "approvalState_name",
-        key: "approvalState_name",
-        width: 100
-    },
-    {
-        title: "确认状态",
-        dataIndex: "confirmState_name",
-        key: "confirmState_name",
-        width: 100
-    },
-    {
-        title: "关闭状态",
-        dataIndex: "closeState_name",
-        key: "closeState_name",
-        width: 100
-    },
-    {
-        title: "操作",
-        dataIndex: "d",
-        key: "d",
-        width:100,
-        fixed: "right",
-        render(text, record, index) {
-            return (
-                <div className='operation-btn'>
-                    <i size='sm' className='uf uf-search edit-btn' onClick={() => { self.cellClick(record,2) }}></i>
-                    <i size='sm' className='uf uf-pencil edit-btn' onClick={() => { self.cellClick(record,1) }}></i>
-                    <i size='sm' className='uf uf-del del-btn' onClick={() => { self.delItem(record, index) }}></i>
-                </div>
-            )
-        }
-    }
-];
-
-
 export default class SimplePaginationTable extends Component {
     constructor(props){
         super(props);
         this.state = {
             // 表格中所选中的数据，拿到后可以去进行增删改查
             selectData: [],
-            step: 10
+            step: 10,
         }
     }
     componentDidMount(){
@@ -214,10 +126,10 @@ export default class SimplePaginationTable extends Component {
         const self=this;
         let { list, showLoading, pageIndex, pageSize, totalPages } = this.props;
         let {selectData} = this.state;
-        console.log("selectData",selectData)
-        console.log("${GROBAL_HTTP_CTX}",`${GROBAL_HTTP_CTX}`);
-        console.log("list",list)
-        const column = [
+        // console.log("selectData",selectData)
+        // console.log("${GROBAL_HTTP_CTX}",`${GROBAL_HTTP_CTX}`);
+        // console.log("list",list)
+        const columns = [
             {
                 title: "序号",
                 dataIndex: "index",
@@ -269,7 +181,8 @@ export default class SimplePaginationTable extends Component {
                 title: "审批状态",
                 dataIndex: "approvalState_name",
                 key: "approvalState_name",
-                width: 100
+                width: 100,
+
             },
             {
                 title: "确认状态",
@@ -292,15 +205,16 @@ export default class SimplePaginationTable extends Component {
                 render(text, record, index) {
                     return (
                         <div className='operation-btn'>
-                            <Button size='sm' className='edit-btn' onClick={() => { self.cellClick(record,2) }}>查看</Button>
-                            <Button size='sm' className='edit-btn' onClick={() => { self.cellClick(record,1) }}>编辑</Button>
-                            <Button size='sm' className='del-btn' onClick={() => { self.delItem(record, index) }}>删除</Button>
+                            <i size='sm' className='uf uf-search edit-btn' onClick={() => { self.cellClick(record, 2) }}></i>
+                            <i size='sm' className='uf uf-pencil edit-btn' onClick={() => { self.cellClick(record, 1) }}></i>
+                            <i size='sm' className='uf uf-del del-btn' onClick={() => { self.delItem(record, index) }}></i>
                         </div>
                     )
                 }
             }
         ];
-        
+        console.log("selectData",selectData);
+        console.log('list',list);
         return (
             <div className='example-root'>
                 <Header title='简单分页表格示例' back={true} />
