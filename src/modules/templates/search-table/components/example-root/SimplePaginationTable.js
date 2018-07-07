@@ -128,6 +128,7 @@ export default class SimplePaginationTable extends Component {
         let {selectData} = this.state;
         console.log("selectData",selectData)
         console.log("${GROBAL_HTTP_CTX}",`${GROBAL_HTTP_CTX}`);
+        console.log("list",list)
         const column = [
             {
                 title: "序号",
@@ -175,9 +176,6 @@ export default class SimplePaginationTable extends Component {
                 dataIndex: "voucherDate",
                 key: "voucherDate",
                 width: 100,
-                render(record, text, index) {
-                    return moment(text).format('YYYY-MM-DD')
-                }
             },
             {
                 title: "审批状态",
@@ -214,7 +212,7 @@ export default class SimplePaginationTable extends Component {
                 }
             }
         ];
-        console.log(list)
+        
         return (
             <div className='example-root'>
                 <Header title='简单分页表格示例' back={true} />

@@ -3,6 +3,7 @@ import { actions } from "mirrorx";
 import * as api from "./service";
 // 接口返回数据公共处理方法，根据具体需要
 import { processData } from "utils";
+import moment from 'moment';
 
 /**
  *          btnFlag为按钮状态，新增、修改是可编辑，查看详情不可编辑，
@@ -62,11 +63,12 @@ export default {
             // 调用 getList 请求数据
             let res = processData(await api.getList(param));
             actions.searchTable.updateState({  showLoading:false })
-
+            console.log("res content",res.content);
             if (res) {
                 if(res.content&&res.content.length){
                     for(var i=0;i<res.content.length;i++){
                         res.content[i].key=i+1;
+                        res.content[i].voucherDate = moment(res.content[i].voucherDate).format('YYYY-MM-DD');
                     }
                 }
                 actions.searchTable.updateState({

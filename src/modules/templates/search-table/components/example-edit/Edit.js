@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { actions } from "mirrorx";
 import queryString from 'query-string';
-import { Loading, Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Select, Radio } from "tinper-bee";
+import { Loading, Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Radio } from "tinper-bee";
 import { BpmTaskApprovalWrap } from 'yyuap-bpm';
 import AcUpload from 'ac-upload';
 import Header from "components/Header";
 import DatePicker from 'bee-datepicker';
 import Form from 'bee-form';
+import Select from 'bee-select';
 import RefWithInput from 'yyuap-ref/dist2/refWithInput'
 import moment from "moment";
 import 'yyuap-ref/dist2/yyuap-ref.css'//参照样式
@@ -15,7 +16,7 @@ import './edit.less';
 import 'ac-upload/build/ac-upload.css';
 
 const FormItem = Form.FormItem;
-
+const Option = Select.Option;
 
 class Edit extends Component {
     constructor(props) {
@@ -242,10 +243,17 @@ class Edit extends Component {
                         <FormControl disabled={btnFlag == 2}
                             {
                             ...getFieldProps('supplierName', {
-                                initialValue: supplierName || ''
+                                validateTrigger: 'onBlur',
+                                initialValue: supplierName || '',
+                                rules: [{
+                                    type:'string',required: true, message: '请输入供应商名称',
+                                }],
                             }
                             )}
                         />
+                        <span className='error'>
+                            {getFieldError('supplierName')}
+                        </span>
                     </Col>
                     <Col md={4} xs={6}>
                         <Label>
@@ -257,6 +265,10 @@ class Edit extends Component {
                                     {
                                     ...getFieldProps('type', {
                                         initialValue: type || '',
+                                        validateTrigger: 'onBlur',
+                                        rules: [{
+                                            type:'string',required: true, message: '请选择类型',
+                                        }],
                                     }
                                     )}>
                                     <Option value="">请选择</Option>
@@ -271,6 +283,9 @@ class Edit extends Component {
                             ) : (<FormControl disabled={btnFlag == 2} />)
                         }
 
+                        <span className='error'>
+                            {getFieldError('type')}
+                        </span>
 
                     </Col>
                     <Col md={4} xs={6}>
@@ -296,24 +311,37 @@ class Edit extends Component {
                         <FormControl disabled={btnFlag == 2}
                             {
                             ...getFieldProps('purchasingGroup', {
-                                initialValue: purchasingGroup || ''
+                                initialValue: purchasingGroup || '',
+                                validateTrigger: 'onBlur',
+                                rules: [{
+                                    type:'string',required: true, message: '请输入采购组',
+                                }],
                             }
                             )}
                         />
+                        <span className='error'>
+                            {getFieldError('purchasingGroup')}
+                        </span>
                     </Col>
                     <Col md={4} xs={6}>
-                        <Label className='time'>
+                        <Label className='datepicker'>
                             凭证日期：
                         </Label>
                         <DatePicker className='form-item' disabled={btnFlag == 2}
-                            defaultValue={moment(voucherDate)}
                             format="YYYY-MM-DD"
                             {
                             ...getFieldProps('voucherDate', {
-                                initialValue: moment(voucherDate)
+                                initialValue: moment(voucherDate),
+                                validateTrigger: 'onBlur',
+                                rules: [{
+                                    required: true, message: '请选择日期',
+                                }],
                             }
                             )}
                         />
+                        <span className='error'>
+                            {getFieldError('voucherDate')}
+                        </span>
                     </Col>
                     <Col md={4} xs={6}>
                         <Label>
@@ -327,6 +355,10 @@ class Edit extends Component {
                                     {
                                     ...getFieldProps('approvalState', {
                                         initialValue: '0',
+                                        validateTrigger: 'onBlur',
+                                        rules: [{
+                                            required: true, message: '请选择审批状态',
+                                        }],
                                         onChange(value) {
                                             self.setState({ approvalState: value });
                                         },
@@ -339,7 +371,9 @@ class Edit extends Component {
                                     <FormControl disabled={btnFlag == 2} value={approvalState} />
                                 )
                         }
-
+                        <span className='error'>
+                            {getFieldError('approvalState')}
+                        </span>
                     </Col>
                     <Col md={4} xs={6}>
                         <Label>
@@ -351,6 +385,10 @@ class Edit extends Component {
                                 {
                                 ...getFieldProps('confirmState', {
                                     initialValue: '0',
+                                    validateTrigger: 'onBlur',
+                                    rules: [{
+                                        required: true, message: '请选择确认状态',
+                                    }],
                                     onChange(value) {
                                         self.setState({ confirmState: value });
                                     },
@@ -362,7 +400,9 @@ class Edit extends Component {
                                 <Radio value="2" disabled={true}>拒绝</Radio>
                             </Radio.RadioGroup>
                         ) : (<FormControl disabled={btnFlag == 2} value={confirmState} />)}
-
+                        <span className='error'>
+                            {getFieldError('confirmState')}
+                        </span>
                     </Col>
                     <Col md={4} xs={6}>
                         <Label>
@@ -386,6 +426,9 @@ class Edit extends Component {
                                     <FormControl disabled={btnFlag == 2} value={closeState} />
                                 )
                         }
+                        <span className='error'>
+                            {getFieldError('closeState')}
+                        </span>
                     </Col>
                     <Col md={4} xs={6}>
                         <Label>
