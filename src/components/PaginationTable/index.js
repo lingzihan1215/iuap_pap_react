@@ -112,7 +112,7 @@ class PaginationTable extends Component {
                     loading={{ show: showLoading, loadingType: "line" }}
                     rowKey={(r, i) => i}
                     columns={columns}
-                    data={dataList}
+                    data={data}
                     multiSelect={{type: "checkbox"}}
                     getSelectedDataFunc={onTableSelectedData}
                     scroll={scroll}
