@@ -7,6 +7,94 @@ import moment from "moment/moment";
 import Header from 'components/Header';
 import ExampleForm from '../example-form';
 
+let columns = [
+    {
+        title: "序号",
+        dataIndex: "index",
+        key: "index",
+        width: 100,
+        render(record, text, index) {
+            return index + 1;
+        }
+    },
+    {
+        title: "订单编号",
+        dataIndex: "orderCode",
+        key: "orderCode",
+        width: 250,
+        className:"td-detail",
+        onCellClick: (record) => this.cellClick(record,2)
+    },
+    {
+        title: "供应商名称",
+        dataIndex: "supplierName",
+        key: "supplierName",
+        // width: 300
+    },
+    {
+        title: "类型",
+        dataIndex: "type_name",
+        key: "type_name",
+        width: 100
+    },
+    {
+        title: "采购组织",
+        dataIndex: "purchasing",
+        key: "purchasing",
+        width: 100
+    },
+    {
+        title: "采购组",
+        dataIndex: "purchasingGroup",
+        key: "purchasingGroup",
+        width: 100
+    },
+    {
+        title: "凭证日期",
+        dataIndex: "voucherDate",
+        key: "voucherDate",
+        width: 100,
+        render(record, text, index) {
+            return moment(text).format('YYYY-MM-DD')
+        }
+    },
+    {
+        title: "审批状态",
+        dataIndex: "approvalState_name",
+        key: "approvalState_name",
+        width: 100
+    },
+    {
+        title: "确认状态",
+        dataIndex: "confirmState_name",
+        key: "confirmState_name",
+        width: 100
+    },
+    {
+        title: "关闭状态",
+        dataIndex: "closeState_name",
+        key: "closeState_name",
+        width: 100
+    },
+    {
+        title: "操作",
+        dataIndex: "d",
+        key: "d",
+        width:100,
+        fixed: "right",
+        render(text, record, index) {
+            return (
+                <div className='operation-btn'>
+                    <i size='sm' className='uf uf-search edit-btn' onClick={() => { self.cellClick(record,2) }}></i>
+                    <i size='sm' className='uf uf-pencil edit-btn' onClick={() => { self.cellClick(record,1) }}></i>
+                    <i size='sm' className='uf uf-del del-btn' onClick={() => { self.delItem(record, index) }}></i>
+                </div>
+            )
+        }
+    }
+];
+
+
 export default class SimplePaginationTable extends Component {
     constructor(props){
         super(props);
@@ -128,93 +216,7 @@ export default class SimplePaginationTable extends Component {
         let {selectData} = this.state;
         console.log("selectData",selectData)
         console.log("${GROBAL_HTTP_CTX}",`${GROBAL_HTTP_CTX}`);
-        const column = [
-            {
-                title: "序号",
-                dataIndex: "index",
-                key: "index",
-                width: 100,
-                render(record, text, index) {
-                    return index + 1;
-                }
-            },
-            {
-                title: "订单编号",
-                dataIndex: "orderCode",
-                key: "orderCode",
-                width: 250,
-                className:"td-detail",
-                onCellClick: (record) => this.cellClick(record,2)
-            },
-            {
-                title: "供应商名称",
-                dataIndex: "supplierName",
-                key: "supplierName",
-                width: 300
-            },
-            {
-                title: "类型",
-                dataIndex: "type_name",
-                key: "type_name",
-                width: 100
-            },
-            {
-                title: "采购组织",
-                dataIndex: "purchasing",
-                key: "purchasing",
-                width: 100
-            },
-            {
-                title: "采购组",
-                dataIndex: "purchasingGroup",
-                key: "purchasingGroup",
-                width: 100
-            },
-            {
-                title: "凭证日期",
-                dataIndex: "voucherDate",
-                key: "voucherDate",
-                width: 100,
-                render(record, text, index) {
-                    return moment(text).format('YYYY-MM-DD')
-                }
-            },
-            {
-                title: "审批状态",
-                dataIndex: "approvalState_name",
-                key: "approvalState_name",
-                width: 100
-            },
-            {
-                title: "确认状态",
-                dataIndex: "confirmState_name",
-                key: "confirmState_name",
-                width: 100
-            },
-            {
-                title: "关闭状态",
-                dataIndex: "closeState_name",
-                key: "closeState_name",
-                width: 100
-            },
-            {
-                title: "操作",
-                dataIndex: "d",
-                key: "d",
-                width:100,
-                fixed: "right",
-                render(text, record, index) {
-                    return (
-                        <div className='operation-btn'>
-                            <i size='sm' className='uf uf-search edit-btn' onClick={() => { self.cellClick(record,2) }}></i>
-                            <i size='sm' className='uf uf-pencil edit-btn' onClick={() => { self.cellClick(record,1) }}></i>
-                            <i size='sm' className='uf uf-del del-btn' onClick={() => { self.delItem(record, index) }}></i>
-                        </div>
-                    )
-                }
-            }
-        ];
-        console.log(list)
+ 
         return (
             <div className='example-root'>
                 <Header title='简单分页表格示例' back={true} />
@@ -248,7 +250,8 @@ export default class SimplePaginationTable extends Component {
                     pageIndex={pageIndex}
                     pageSize={pageSize}
                     totalPages={totalPages}
-                    columns={column}
+                    columns={columns}
+                    checkMinSize={6}
                     getSelectedDataFunc={this.tabelSelect}
                     onTableSelectedData={this.onTableSelectedData}
                     onPageSizeSelect={this.onPageSizeSelect}

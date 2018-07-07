@@ -5,14 +5,15 @@ import Table from 'bee-table';
 import PropTypes from 'prop-types';
 import Pagination from 'bee-pagination';
 import multiSelect from "bee-table/build/lib/newMultiSelect";
-// import filterColumn from "bee-table/build/lib/filterColumn";
+import filterColumn from "bee-table/build/lib/filterColumn";
 import dragColumn from "bee-table/build/lib/dragColumn";
 import 'bee-table/build/Table.css';
 import 'bee-pagination/build/Pagination.css';
 import './index.less'
 
-const DragColumnTable = dragColumn(multiSelect(Table, Checkbox));
-const MultiSelectTable = multiSelect(Table, Checkbox);
+// const DragColumnTable = dragColumn(multiSelect(Table, Checkbox));
+// const MultiSelectTable = multiSelect(Table, Checkbox);
+const DragColumnTable = filterColumn(dragColumn(multiSelect(Table, Checkbox)),Popover);
 
 const propTypes = {
     // 表格行数据
@@ -53,6 +54,37 @@ const defaultProps = {
     onPageIndexSelect: (value) => { }
 };
 
+
+const dataList = [ 
+    { 
+        index: 1, 
+        orderCode:"2343", 
+        supplierName: "xxx",
+        type_name: "123",
+        purchasing:'内行', 
+        purchasingGroup:"323",
+        voucherDate:"kkkk",
+        approvalState_name:"vvvv",
+        confirmState_name:"aaaa",
+        closeState_name:"vnnnnn",
+        d:"操作",
+        key: "1"
+    }, 
+    { 
+      index: 2, 
+      orderCode:"222", 
+      supplierName: "22xxx",
+      type_name: "1223",
+      purchasing:'内行2', 
+      purchasingGroup:"3223",
+      voucherDate:"222kk",
+      approvalState_name:"22vvvv",
+      confirmState_name:"2aaaa",
+      closeState_name:"2vnnnnn",
+      d:"2操作",
+      key: "2"
+  }, 
+  ]
 /**
  * PaginationTable 组件功能说明：
  * 1、默认支持表格多选
@@ -66,7 +98,7 @@ class PaginationTable extends Component {
     render(){
         const { 
             data, showLoading, pageSize,
-            pageIndex, totalPages, columns,
+            pageIndex, totalPages, columns,checkMinSize,
             onTableSelectedData, onPageSizeSelect, onPageIndexSelect,
             scroll,title,footer
         } = this.props;
@@ -75,17 +107,18 @@ class PaginationTable extends Component {
         
         return (
             <div className="table-list">
-                <MultiSelectTable
+                <DragColumnTable
                     bordered
                     loading={{ show: showLoading, loadingType: "line" }}
                     rowKey={(r, i) => i}
                     columns={columns}
-                    data={data}
+                    data={dataList}
                     multiSelect={{type: "checkbox"}}
                     getSelectedDataFunc={onTableSelectedData}
                     scroll={scroll}
                     title={title}
                     footer={footer}
+                    checkMinSize={checkMinSize}
                 />
                 <div className='pagination'>
                     <Pagination
