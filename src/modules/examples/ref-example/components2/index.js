@@ -43,15 +43,6 @@ class RefMultiple extends Component {
               })
             },
             filterKey:[{title:'人员名称人员名称人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'}],
-            textOption:{
-                modalTitle:'选择品类',
-                leftTitle:'品类结构',
-                rightTitle:'品类列表',
-                leftTransferText:'待选品类',
-                rightTransferText:'已选品类',
-                leftInfo:[{text:'流水号',key:'refname'},{text:'品类编码',key:'refname'},{text:'品类描述',key:'refname'}],
-                rightInfo:[{text:'流水号',key:'refname'},{text:'品类编码',key:'refname'},{text:'品类描述',key:'refname'}],
-            },
             showKey:'peoname',
             verification:false,//是否进行校验
             verKey:'aaaa',//校验字段
