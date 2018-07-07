@@ -72,7 +72,6 @@ export default {
                 actions.searchTable.updateState({
                     list: res.content,
                     pageIndex:res.number + 1,
-                    pageSize:res.size,
                     totalPages:res.totalPages,
                 });
             }
