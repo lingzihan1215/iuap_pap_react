@@ -10,6 +10,7 @@ import ExampleForm from '../example-form';
 export default class SimplePaginationTable extends Component {
     constructor(props){
         super(props);
+        let self=this;
         this.state = {
             // 表格中所选中的数据，拿到后可以去进行增删改查
             selectData: [],
@@ -248,7 +249,7 @@ export default class SimplePaginationTable extends Component {
                     pageIndex={pageIndex}
                     pageSize={pageSize}
                     totalPages={totalPages}
-                    columns={columns}
+                    columns={this.state.column}
                     checkMinSize={6}
                     getSelectedDataFunc={this.tabelSelect}
                     onTableSelectedData={this.onTableSelectedData}
