@@ -7,6 +7,7 @@ import Pagination from 'bee-pagination';
 import multiSelect from "bee-table/build/lib/newMultiSelect";
 import filterColumn from "bee-table/build/lib/filterColumn";
 import dragColumn from "bee-table/build/lib/dragColumn";
+
 import 'bee-table/build/Table.css';
 import 'bee-pagination/build/Pagination.css';
 import './index.less'
@@ -93,7 +94,12 @@ const dataList = [
 class PaginationTable extends Component {
     constructor(props){
         super(props);
-        this.state = { }
+        this.state = { step: 10 }
+    }
+    componentWillMount(){
+        this.setState({
+            step: this.props.pageSize
+        })
     }
     render(){
         const { 
@@ -102,8 +108,8 @@ class PaginationTable extends Component {
             onTableSelectedData, onPageSizeSelect, onPageIndexSelect,
             scroll,title,footer
         } = this.props;
-
-        let dataNumSelect = [pageSize, pageSize * 2, pageSize * 3, pageSize * 4];
+        const step = this.state.step;
+        let dataNumSelect = [step, step * 2, step * 3, step * 4];
         
         return (
             <div className="table-list">
