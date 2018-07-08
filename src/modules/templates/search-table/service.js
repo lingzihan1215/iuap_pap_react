@@ -7,7 +7,7 @@ const URL = {
     "SAVE": `${GROBAL_HTTP_CTX}/sany_delivery/save`,
     "SAVE_ORDER":  `${GROBAL_HTTP_CTX}/sany_order/saveWithAttach`,
     "DEL_ORDER":  `${GROBAL_HTTP_CTX}/sany_order/deleteBatch`,
-    "GET_DETAIL" : `${GROBAL_HTTP_CTX}/sany_order/get`,
+    "GET_DETAIL" : `${GROBAL_HTTP_CTX}/sany_order/getListWithAttach`,
 }
 
 /**
@@ -70,7 +70,7 @@ export const delOrder = (params) => {
 }
 
 /** 
- * 通过search_id 查询列表详情
+ * 通过search_id 查询列表详情,使用查询列表接口
 */
 
 export const getDetail = (params) => { 

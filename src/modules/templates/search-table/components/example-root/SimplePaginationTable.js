@@ -210,8 +210,8 @@ export default class SimplePaginationTable extends Component {
         const self=this;
         let { list, showLoading, pageIndex, pageSize, totalPages } = this.props;
         let {selectData} = this.state;
-        console.log("selectData",selectData)
-        console.log("${GROBAL_HTTP_CTX}",`${GROBAL_HTTP_CTX}`);
+        // console.log("selectData",selectData)
+        // console.log("${GROBAL_HTTP_CTX}",`${GROBAL_HTTP_CTX}`);
         console.log("list",list)
         return (
             <div className='example-root'>

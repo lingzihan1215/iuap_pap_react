@@ -66,8 +66,10 @@ export default {
             if (res) {
                 if(res.content&&res.content.length){
                     for(let i=0;i<res.content.length;i++){
+                        let temp = Object.assign({},res.content[i]);
                         res.content[i].key=i+1;
-                        res.content[i].voucherDate = moment(res.content[i].voucherDate).format('YYYY-MM-DD');
+                        res.content[i].voucherDate = moment(temp.voucherDate).format('YYYY-MM-DD');
+                        res.content[i].purchasing = temp.purchasingName;
                     }
                 }
                 // console.log('res content',res.content);
@@ -141,9 +143,8 @@ export default {
         },
 
         async queryDetail(param,getState) {
-            let res= await processData(await api.getDetail(param),'');
-            // console.log("查询返回值",res);
-            return res;
+            let res=processData(await api.getDetail(param),'');
+            return  res.content[0];
         }
     }
 };
