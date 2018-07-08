@@ -176,7 +176,7 @@ class Edit extends Component {
         let {rowData,refKeyArray } = this.state;
         let title = this.onChangeHead(btnFlag);
         // console.log("detailData", rowData);
-        let { orderCode, supplier, supplierName, type, purchasing, purchasingGroup, voucherDate, approvalState, confirmState, closeState } = rowData;
+        let { orderCode, supplier, supplierName, type,type_name,purchasing, purchasingGroup, voucherDate, approvalState,approvalState_name,confirmState,confirmState_name,closeState,closeState_name} = rowData;
         const { getFieldProps, getFieldError } = this.props.form;
         console.log("keylist",self.state.refKeyArray);
         let option = {
@@ -302,7 +302,7 @@ class Edit extends Component {
                                         })
                                     }
                                 </Select>
-                            ) : (<FormControl disabled={btnFlag == 2} />)
+                            ) : (<FormControl disabled={btnFlag == 2} value={type_name} />)
                         }
 
                         <span className='error'>
@@ -383,7 +383,7 @@ class Edit extends Component {
                                     <Radio value="0" disabled={true}>未审批</Radio>
                                     <Radio value="1" disabled={true}>已审批</Radio>
                                 </Radio.RadioGroup>) : (
-                                    <FormControl disabled={btnFlag == 2} value={approvalState} />
+                                    <FormControl disabled={btnFlag == 2} value={approvalState_name} />
                                 )
                         }
                         <span className='error'>
@@ -414,7 +414,7 @@ class Edit extends Component {
                                 <Radio value="1" disabled={true} >已确认</Radio>
                                 <Radio value="2" disabled={true}>拒绝</Radio>
                             </Radio.RadioGroup>
-                        ) : (<FormControl disabled={btnFlag == 2} value={confirmState} />)}
+                        ) : (<FormControl disabled={btnFlag == 2} value={confirmState_name} />)}
                         <span className='error'>
                             {getFieldError('confirmState')}
                         </span>
@@ -438,7 +438,7 @@ class Edit extends Component {
                                 <Radio value="0" disabled={true} >未关闭</Radio>
                                 <Radio value="1" disabled={true} >已关闭</Radio>
                             </Radio.RadioGroup>) : (
-                                    <FormControl disabled={btnFlag == 2} value={closeState} />
+                                    <FormControl disabled={btnFlag == 2} value={closeState_name} />
                                 )
                         }
                         <span className='error'>
