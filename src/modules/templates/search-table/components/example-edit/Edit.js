@@ -329,9 +329,8 @@ class Edit extends Component {
                             className={"input-number"}
                             {
                                 ...getFieldProps('purchasingGroup', {
-                                    initialValue: purchasingGroup || '0.00',
-                                    rules: [{
-                                    },{type: 'string',pattern: /^(?:(?!0\.00$))[\d\D]*$/ig,message: '请输入数量'}],
+                                    initialValue: purchasingGroup&&Number(purchasingGroup).toFixed(2) || '0.00',
+                                    rules: [{type: 'string',pattern: /^(?:(?!0\.00$))[\d\D]*$/ig,message: '请输入数量'}],
                                 })
                             }
                         />
