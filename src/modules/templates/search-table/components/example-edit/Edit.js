@@ -327,6 +327,7 @@ class Edit extends Component {
                             precision={2}
                             min={0}
                             className={"input-number"}
+                            disabled={btnFlag == 2}
                             {
                                 ...getFieldProps('purchasingGroup', {
                                     initialValue: purchasingGroup&&Number(purchasingGroup).toFixed(2) || '0.00',
