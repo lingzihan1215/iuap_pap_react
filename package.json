@@ -45,7 +45,7 @@
     "webpack-hot-middleware": "^2.21.0"
   },
   "dependencies": {
-    "ac-upload": "0.0.19",
+    "ac-upload": "0.0.20",
     "axios": "^0.18.0",
     "bee-autocomplete": "^1.0.4",
     "bee-city-select": "^1.0.6",
