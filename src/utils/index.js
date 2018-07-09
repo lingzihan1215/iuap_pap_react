@@ -19,7 +19,6 @@ export const Warning = (msg) => {
  * @param {*} successMsg 成功提示
  */
 export const processData = (response,successMsg) => {
-    console.log("reponse 类型",typeof response);
     if(typeof response != 'object') {
         Error('数据返回出错：1、请确保服务运行正常；2、请确保您的前端工程代理服务正常；3、请确认您已在本地登录过应用平台');
         return;

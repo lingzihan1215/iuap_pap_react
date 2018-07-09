@@ -9,6 +9,7 @@ class RefMultiple extends Component {
         super(props);
         this.state = {
             saveKeys:[],
+            showVal:''
         };
 
     }
@@ -35,31 +36,23 @@ class RefMultiple extends Component {
             onCancel: function (p) {
               console.log(p)
             },
-            onSave: function (sels) {
+            onSave: function (sels,showVal) {
               console.log(sels);
               var temp = sels.map(v=>v.key)
               self.setState({
                 saveKeys:temp,
+                showVal
               })
             },
             filterKey:[{title:'人员名称人员名称人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'},{title:'人员名称',key:'peoname'}],
-            textOption:{
-                modalTitle:'选择品类',
-                leftTitle:'品类结构',
-                rightTitle:'品类列表',
-                leftTransferText:'待选品类',
-                rightTransferText:'已选品类',
-                leftInfo:[{text:'流水号',key:'refname'},{text:'品类编码',key:'refname'},{text:'品类描述',key:'refname'}],
-                rightInfo:[{text:'流水号',key:'refname'},{text:'品类编码',key:'refname'},{text:'品类描述',key:'refname'}],
-            },
             showKey:'peoname',
+            showVal:self.state.showVal,
             verification:false,//是否进行校验
             verKey:'aaaa',//校验字段
             verVal:'111'
         }
-
         return (
-            <div className="ref-page">
+            <div className="yyuap-ref ref-page">
                 <h2>参照示例:</h2>
                 <div>多选</div>
                 <RefWithInput option={option} disabled={false}/>

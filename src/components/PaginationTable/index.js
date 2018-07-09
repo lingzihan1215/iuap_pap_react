@@ -13,8 +13,8 @@ import 'bee-pagination/build/Pagination.css';
 import './index.less'
 
 // const DragColumnTable = dragColumn(multiSelect(Table, Checkbox));
-// const MultiSelectTable = multiSelect(Table, Checkbox);
-const DragColumnTable = filterColumn(dragColumn(multiSelect(Table, Checkbox)),Popover);
+const MultiSelectTable = multiSelect(Table, Checkbox);
+// const DragColumnTable = filterColumn(dragColumn(multiSelect(Table, Checkbox)),Popover);
 
 const propTypes = {
     // 表格行数据
@@ -113,7 +113,7 @@ class PaginationTable extends Component {
         
         return (
             <div className="table-list">
-                <DragColumnTable
+                <MultiSelectTable
                     bordered
                     loading={{ show: showLoading, loadingType: "line" }}
                     rowKey={(r, i) => i}

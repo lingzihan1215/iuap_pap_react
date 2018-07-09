@@ -28,6 +28,7 @@ class Edit extends Component {
             fileNameData: props.rowData.attachment || [],//上传附件数据
             purchasing: [],
             rowData: {},
+            refKeyArray:[]
         }
     }
     async componentWillMount() {
@@ -44,9 +45,21 @@ class Edit extends Component {
         let { btnFlag } = searchObj;
         if (btnFlag && btnFlag > 0) {
             let { search_id } = searchObj;
-            let rowData = await actions.searchTable.queryDetail({ search_id });
+            let tempRowData = await actions.searchTable.queryDetail({ search_id });
+            console.log('tempRowData',tempRowData);
+            let rowData = {};
+            if(tempRowData){
+                let tempPurchasing = tempRowData.purchasing
+                let tempPurchasName = tempRowData.purchasingName
+                this.setState({
+                    refKeyArray:[tempPurchasing]
+                })
+                rowData = Object.assign({},tempRowData,{purchasing:tempPurchasName})
+            }
+            console.log('rowData',rowData);
             this.setState({
-                rowData
+                rowData:rowData,
+                
             })
         }
         
@@ -61,11 +74,13 @@ class Edit extends Component {
             if (err) {
                 Message.create({ content: '数据填写错误', color: 'danger' });
             } else {
-                let {rowData} = this.state; 
+                let {rowData,refKeyArray} = this.state; 
                 if (rowData && rowData.id) {
                     values.id = rowData.id;
                     values.ts = rowData.ts;
+                    
                 }
+                values.purchasing = refKeyArray.join();
                 console.log("save values", JSON.stringify(values));
                 actions.searchTable.save(values);
             }
@@ -156,7 +171,15 @@ class Edit extends Component {
 
     render() {
         const self = this;
-        const option = {
+        let { btnFlag } = queryString.parse(this.props.location.search);
+        btnFlag = Number(btnFlag);
+        let {rowData,refKeyArray } = this.state;
+        let title = this.onChangeHead(btnFlag);
+        // console.log("detailData", rowData);
+        let { orderCode, supplier, supplierName, type,type_name,purchasing, purchasingGroup, voucherDate, approvalState,approvalState_name,confirmState,confirmState_name,closeState,closeState_name} = rowData;
+        const { getFieldProps, getFieldError } = this.props.form;
+        console.log("keylist",self.state.refKeyArray);
+        let option = {
             title: '',
             refType: 5,//1:树形 2.单表 3.树卡型 4.多选 5.default
             className: '',
@@ -172,7 +195,9 @@ class Edit extends Component {
                 TableBarUrl:'/newref/rest/iref_ctr/refInfo',//表头请求ref/rest/iref_ctr/refInfo
             },
             filterRefUrl:'/iuap_pap_quickstart/common/filterRef',//get
-            keyList:self.state.purchasing,//选中的key
+            keyList:refKeyArray,//选中的key
+            // keyList:['123'],//选中的key
+
             // checkedArray: [],
             onCancel: function (p) {
                 console.log(p)
@@ -180,8 +205,9 @@ class Edit extends Component {
             onSave: function (sels) {
                 console.log(sels);
                 var temp = sels.map(v => v.key)
+                console.log("temp",temp);
                 self.setState({
-                    purchasing: temp,
+                    refKeyArray: temp,
                 })
             },
             filterKey: [{ title: '人员名称人员名称人员名称', key: 'peoname' }, { title: '人员名称', key: 'peoname' }, { title: '人员名称', key: 'peoname' }, { title: '人员名称', key: 'peoname' }, { title: '人员名称', key: 'peoname' }, { title: '人员名称', key: 'peoname' }, { title: '人员名称', key: 'peoname' }, { title: '人员名称', key: 'peoname' }, { title: '人员名称', key: 'peoname' }, { title: '人员名称', key: 'peoname' }, { title: '人员名称', key: 'peoname' }],
@@ -196,16 +222,9 @@ class Edit extends Component {
             },
             showKey:'peoname',
             verification:true,//是否进行校验
-            verKey:'aaaa',//校验字段
-            verVal:'111'
+            verKey:'purchasing',//校验字段
+            verVal:purchasing
         }
-        let { btnFlag } = queryString.parse(this.props.location.search);
-        btnFlag = Number(btnFlag);
-        let {rowData } = this.state;
-        let title = this.onChangeHead(btnFlag);
-        console.log("detailData", rowData);
-        let { orderCode, supplier, supplierName, type, purchasing, purchasingGroup, voucherDate, approvalState, confirmState, closeState } = rowData;
-        const { getFieldProps, getFieldError } = this.props.form;
 
         return (
             <div className='order-detail'>
@@ -231,10 +250,10 @@ class Edit extends Component {
                             订单编号：
                         </Label>
                         <FormControl disabled={true}
-                            placeholder="使用编码规则生成"
+                            placeholder=""
                             {
                             ...getFieldProps('orderCode', {
-                                initialValue: orderCode || '使用编码规则生成'
+                                initialValue: orderCode || ''
                             }
                             )}
                         />
@@ -283,7 +302,7 @@ class Edit extends Component {
                                         })
                                     }
                                 </Select>
-                            ) : (<FormControl disabled={btnFlag == 2} />)
+                            ) : (<FormControl disabled={btnFlag == 2} value={type_name} />)
                         }
 
                         <span className='error'>
@@ -296,15 +315,8 @@ class Edit extends Component {
                         <Label>
                             采购组织：
                         </Label>
-
-                        {/*<FormControl disabled={btnFlag==2}
-                            {
-                            ...getFieldProps('purchasing', {
-                                initialValue: purchasing || ''
-                            }
-                            )}
-                        />*/}
-                        <RefWithInput option={option} />
+                        
+                        <RefWithInput option={option} form={this.props.form}/>
 
                     </Col>
                     <Col md={4} xs={6}>
@@ -357,7 +369,7 @@ class Edit extends Component {
                                     selectedValue={this.state.approvalState}
                                     {
                                     ...getFieldProps('approvalState', {
-                                        initialValue: '0',
+                                        initialValue: approvalState||'0',
                                         validateTrigger: 'onBlur',
                                         rules: [{
                                             required: true, message: '请选择审批状态',
@@ -371,7 +383,7 @@ class Edit extends Component {
                                     <Radio value="0" disabled={true}>未审批</Radio>
                                     <Radio value="1" disabled={true}>已审批</Radio>
                                 </Radio.RadioGroup>) : (
-                                    <FormControl disabled={btnFlag == 2} value={approvalState} />
+                                    <FormControl disabled={btnFlag == 2} value={approvalState_name} />
                                 )
                         }
                         <span className='error'>
@@ -402,7 +414,7 @@ class Edit extends Component {
                                 <Radio value="1" disabled={true} >已确认</Radio>
                                 <Radio value="2" disabled={true}>拒绝</Radio>
                             </Radio.RadioGroup>
-                        ) : (<FormControl disabled={btnFlag == 2} value={confirmState} />)}
+                        ) : (<FormControl disabled={btnFlag == 2} value={confirmState_name} />)}
                         <span className='error'>
                             {getFieldError('confirmState')}
                         </span>
@@ -416,7 +428,7 @@ class Edit extends Component {
                                 selectedValue={this.state.closeState}
                                 {
                                 ...getFieldProps('closeState', {
-                                    initialValue: '0',
+                                    initialValue: closeState||'0',
                                     onChange(value) {
                                         self.setState({ closeState: value });
                                     },
@@ -426,7 +438,7 @@ class Edit extends Component {
                                 <Radio value="0" disabled={true} >未关闭</Radio>
                                 <Radio value="1" disabled={true} >已关闭</Radio>
                             </Radio.RadioGroup>) : (
-                                    <FormControl disabled={btnFlag == 2} value={closeState} />
+                                    <FormControl disabled={btnFlag == 2} value={closeState_name} />
                                 )
                         }
                         <span className='error'>
