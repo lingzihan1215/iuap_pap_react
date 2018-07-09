@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { actions } from "mirrorx";
 import queryString from 'query-string';
-import { Loading, Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Radio } from "tinper-bee";
+import { InputNumber,Loading, Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Radio } from "tinper-bee";
 import { BpmTaskApprovalWrap } from 'yyuap-bpm';
 import AcUpload from 'ac-upload';
 import Header from "components/Header";
@@ -59,10 +59,10 @@ class Edit extends Component {
             console.log('rowData',rowData);
             this.setState({
                 rowData:rowData,
-                
+
             })
         }
-        
+
     }
     save = () => {//保存
         this.props.form.validateFields((err, values) => {
@@ -74,11 +74,11 @@ class Edit extends Component {
             if (err) {
                 Message.create({ content: '数据填写错误', color: 'danger' });
             } else {
-                let {rowData,refKeyArray} = this.state; 
+                let {rowData,refKeyArray} = this.state;
                 if (rowData && rowData.id) {
                     values.id = rowData.id;
                     values.ts = rowData.ts;
-                    
+
                 }
                 values.purchasing = refKeyArray.join();
                 console.log("save values", JSON.stringify(values));
@@ -315,7 +315,7 @@ class Edit extends Component {
                         <Label>
                             采购组织：
                         </Label>
-                        
+
                         <RefWithInput option={option} form={this.props.form}/>
 
                     </Col>
@@ -323,16 +323,17 @@ class Edit extends Component {
                         <Label>
                             采购组：
                         </Label>
-                        <FormControl disabled={btnFlag == 2}
+                        <InputNumber
+                            precision={2}
+                            min={0}
+                            className={"input-number"}
                             {
-                            ...getFieldProps('purchasingGroup', {
-                                initialValue: purchasingGroup || '',
-                                validateTrigger: 'onBlur',
-                                rules: [{
-                                    type:'string',required: true, message: '请输入采购组',
-                                }],
+                                ...getFieldProps('purchasingGroup', {
+                                    initialValue: purchasingGroup || '0.00',
+                                    rules: [{
+                                    },{type: 'string',pattern: /^(?:(?!0\.00$))[\d\D]*$/ig,message: '请输入数量'}],
+                                })
                             }
-                            )}
                         />
                         <span className='error'>
                             {getFieldError('purchasingGroup')}
