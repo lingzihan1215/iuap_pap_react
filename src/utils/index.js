@@ -53,7 +53,7 @@ export const paramToUrl = (url,params,prefix) =>{
         url += '?r='+Math.random();
     }
     for(let attr in params){
-        if((attr=='pageIndex')&&(attr=='pageSize')){
+        if((attr=='pageIndex')||(attr=='pageSize')){
             url+='&'+attr+'='+params[attr];
         }else{
             url+='&'+prefix+attr+'='+params[attr];

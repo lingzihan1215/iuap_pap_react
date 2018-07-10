@@ -10,6 +10,8 @@ class RefTransfer extends Component {
         this.state = {
             btnDisable:false,
             saveKeys:[],
+            showVal:'',
+            saveData:[],
         };
 
     }
@@ -37,17 +39,19 @@ class RefTransfer extends Component {
                 TableBarUrl:'/newref/rest/iref_ctr/refInfo',//表头请求ref/rest/iref_ctr/refInfo
             },
 
-            // checkedArray: [],
+            // checkedArray: self.state.saveData,
             filterRefUrl:'/iuap_pap_quickstart/common/filterRef',//get
             keyList:self.state.saveKeys,//选中的key
             onCancel: function (p) {
               console.log(p)
             },
-            onSave: function (sels) {
+            onSave: function (sels,showVal) {
               console.log(sels);
               var temp = sels.map(v=>v.key)
               self.setState({
                 saveKeys:temp,
+                showVal,
+                saveData:sels
               })
             },
             textOption:{
@@ -60,20 +64,26 @@ class RefTransfer extends Component {
                 rightInfo:[{text:'流水号',key:'refname'},{text:'品类编码',key:'refname'},{text:'品类描述',key:'refname'}],
             },
             showKey:'peoname',
+            showVal:self.state.showVal,
             verification:false,//是否进行校验
             verKey:'aaaa',//校验字段
             verVal:'111'
         }
 
         return (
-            <div className="ref-page">
+            <div className="yyuap-ref ref-page">
                 <button onClick={this.setDisable.bind(this)}>{this.state.btnDisable?'禁用状态':'使用状态'}</button>
-                <h2>参照示例:</h2>
-                <div>穿梭框</div>
-                <RefWithInput option={option} disabled={this.state.btnDisable}/>
-                <div>穿梭框选中数据key数组:{this.state.saveKeys}</div>
+                <h1>参照示例:</h1>
+                <div style={{margin:'20px'}}>
+                    <div>穿梭框</div>
+                    <RefWithInput option={option} disabled={this.state.btnDisable}/>
+                </div>
+                <div style={{margin:'20px'}}>
+                    <div>穿梭框选中数据key数组:{this.state.saveKeys}</div>
+                    <div>穿梭框Input数据:{this.state.showVal}</div>
+                </div>
                 <h1>参数说明</h1>
-                <div>
+                <div style={{margin:'20px'}}>
                     <h2>0、使用</h2>
                     <h4>
                     import RefWithInput from 'yyuap-ref/dist2/refWithInput'<br/>
@@ -82,8 +92,12 @@ class RefTransfer extends Component {
                     option:控制参照 disbaled:控制是否禁用 form:表单检验(verification为true)
                     </h4>
                     <h2>1、初始渲染(2选1)</h2>
-                    <h4>filterRefUrl: 根据选中key获取全部数据</h4>
-                    <h4>keyList:选中的key </h4>
+                    <h4>渲染参照input<br/>
+                        showVal,保存的时候: onSave: function (sels,showVal) 保存onSave回调的showVal参数
+                    </h4>
+                    <h4>渲染参照内部全部数据<br/>
+                        filterRefUrl: 根据选中key获取全部数据<br/>
+                        keyList:选中的key </h4>
                     或者<br/>
                     <h4>checkedArray:选中的全部数据 </h4>
 

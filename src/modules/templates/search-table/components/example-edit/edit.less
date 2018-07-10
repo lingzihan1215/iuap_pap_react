@@ -3,15 +3,16 @@
         display: inline-block;
         min-width: 90px;
         text-align: left;
+        vertical-align: top;
     }
 
     .detail-body{
         color: #4A4A4A;
         background: #fff;
-        padding: 0 15px;
+        padding: 20px 15px;
         padding-bottom: 20px;
         >div{
-            height: 30px;
+            height: 60px;
             line-height: 30px;
             padding-bottom: 45px;
         }
@@ -35,8 +36,11 @@
             color: red;
             display: inline-block;
         }
+        .yyuapRef .error {
+            margin-left:-92px;
+        }
 
-      
+
         .refInputWrap {
             width: 240px;
             display: inline-block;
@@ -57,19 +61,35 @@
                 border-radius: 3px;
                 transition: all .3s;
             }
+            input.formDisable {
+                background: #eee;
+                border-color: #e0e0e0;
+                color: #bdbdbd;
+                cursor: not-allowed;
+            }
             i {
                 right:2%;
                 top:0;
             }
-        } 
+        }
+        .u-col-md-4.u-col-xs-6>div{
+            display:inline-block;
+            vertical-align: middle;
+        }
+        .u-col-md-4.u-col-xs-6>div .input-number input{
+            min-width:198px;
+        }
+        .datepicker-input-group.u-input-group .u-input-group-btn {
+            line-height: 28px;
+        }
     }
     .head-btn{
         display: inline-block;
-        float: right;  
+        float: right;
         .head-save{
             background: #1E7BE2;
             color:#fff;
             margin-left: 15px;
-        }  
+        }
     }
 }

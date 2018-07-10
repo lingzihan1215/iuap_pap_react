@@ -6,4 +6,4 @@ import model from './model'
 
 mirror.model(model);
 
-export const ConnectedMultiTable = connect( state => state.multi, null )(MultiTable);
+export const ConnectedMultiTable = connect(state => state.multi, null)(MultiTable);

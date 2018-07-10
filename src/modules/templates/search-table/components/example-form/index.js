@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { actions } from "mirrorx";
-import { Col, Row,FormControl, Label, Select, Radio } from "tinper-bee";
+import { InputNumber,Col, Row,FormControl, Label, Select, Radio } from "tinper-bee";
 import Form from 'bee-form';
 import DatePicker from 'bee-datepicker';
 import 'bee-datepicker/build/DatePicker.css';
