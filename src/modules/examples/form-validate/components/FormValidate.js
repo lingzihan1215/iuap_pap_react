@@ -423,6 +423,99 @@ class FormValidate extends Component {
                         </Col>
                     </Row>
 
+                     <div className='split'></div>
+
+                    {/* 三列带textarea */}
+
+                    <Row className = 'edit-panel edit-panel-textarea'>
+
+                            <Col md={1}>
+                                <Label>订单编号：
+                                    <span className='mast'>*</span>
+                                </Label>
+                            </Col>
+                            <Col md={3}>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('orderCode4', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, message: '请输入订单编号',
+                                        }],
+                                    })
+                                    }
+                                />
+                                <span className='error'>
+                                    {
+                                        getFieldError('orderCode4')
+                                    }
+                                </span>
+                            </Col>
+                            <Col md={1}>
+                                <Label>供应商名称：
+                                    <span className='mast'>*</span>
+                                </Label>
+                            </Col>
+                            <Col md={3}>
+                            <FormControl
+                                {
+                                    ...getFieldProps('supplierName4', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, message: '请输入供应商名称',
+                                        }],
+                                    })
+                                }
+                                />
+                                <span className='error'>
+                                    {
+                                        getFieldError('supplierName4')
+                                    }
+                                </span>
+                            </Col>
+                            <Col md={1}>
+                                <Label className='time'>凭证日期：</Label>
+                            </Col>
+                            <Col md={3}>
+                            <RangePicker
+                                    defaultValue={this.state.voucherDate}
+                                    placeholder={'开始 ~ 结束'}
+                                    dateInputPlaceholder={['开始', '结束']}
+                                    {
+                                    ...getFieldProps('voucherDate4', {
+                                        onChange: function (v) {
+                                            self.setState({
+                                                voucherDate3: v
+                                            })
+                                        }
+                                    })
+                                    }
+                                />
+                            </Col>
+                            <Col md={1}>
+                                <Label className='time'>备注：</Label>
+                            </Col>
+                            <Col md={11}>
+                            <FormControl type='textarea'
+                                {
+                                    ...getFieldProps('mark', {
+                                        initialValue: '',
+                                    })
+                                }
+                                />
+                            </Col>
+
+                        <Col md={12}>
+                            <div className = 'btn-group'>
+                                <Button size='sm' className = 'reset-btn' onClick={()=>{this.reset(4)}}>
+                                        重置
+                                </Button>
+                                <Button size='sm' className = 'submit-btn' onClick={()=>{this.search(4)}}>
+                                        提交
+                                </Button>
+                            </div>
+                        </Col>
+                    </Row>
                     
             </div>
         );
