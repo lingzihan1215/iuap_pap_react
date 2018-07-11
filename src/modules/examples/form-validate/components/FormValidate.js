@@ -496,7 +496,7 @@ class FormValidate extends Component {
                                 <Label className='time'>备注：</Label>
                             </Col>
                             <Col md={11}>
-                            <FormControl type='textarea'
+                            <textarea className='u-form-control'
                                 {
                                     ...getFieldProps('mark', {
                                         initialValue: '',
