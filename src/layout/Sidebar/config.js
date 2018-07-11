@@ -471,5 +471,59 @@ export default [
         "sort": 1,
         "openview": "curpage",
         "category": "engine"
-    }
+    },
+    // 华新丽华
+    {
+        "id": "application7",
+        "name": "华新丽华-销货通知单",
+        "location": "/application",
+        "menustatus": "Y",
+        "parentid": null,
+        "icon": "uf uf-9square-2",
+        "target": "",
+        "urltype": "url",
+        "children": [{
+            "id": "app701",
+            "name": "创建通知单",
+            "location": "/sales/sales-notice",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
+        },{
+            "id": "app702",
+            "name": "查询通知单",
+            "location": "/sales/sales-search",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
+        },{
+            "id": "app703",
+            "name": "销货通知单详情",
+            "location": "/sales/sales-detail",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
+        }],
+        "sort": 1,
+        "openview": "curpage",
+        "category": "engine"
+    },
 ]
