@@ -17,6 +17,7 @@ const propTypes = {
     onHide:PropTypes.func,//隐藏的钩子函数
     size:PropTypes.oneOf(["sm", "lg", "xlg", ""]),//模态框尺寸
     dialogClassName:PropTypes.string,//传递给模态框的样式	
+    hide:PropTypes.bool,//主动调用隐藏modal
 };
 
 const defaultProps = {
@@ -32,9 +33,13 @@ const defaultProps = {
     cancelFnName:'取消',
     showFooter:true,
     showTitle:true,
+    onShow:()=>{
+
+    },
     onHide:()=>{
 
-    }
+    },
+    hide:false,
 };
 
 
@@ -44,6 +49,13 @@ class DelModal extends Component {
         this.state = {
             showModal: false
         };
+    }
+    componentWillReceiveProps(nextProps){
+        if((nextProps.hide)){//当前hide是true,关闭模态框
+            this.setState({
+                showModal: false
+            })
+        }
     }
     close=()=> {
         this.setState({
@@ -62,10 +74,11 @@ class DelModal extends Component {
             showModal: true
         });
     }
-    onHide = ()=>{
+    onHide=()=>{
         this.setState({
             showModal: false
         });
+        this.props.onHide()
     }
     render() {
         const {children,className,modalContent,modalTitle,
