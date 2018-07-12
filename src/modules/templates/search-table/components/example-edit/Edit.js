@@ -143,7 +143,7 @@ class Edit extends Component {
     handlerUploadDelete = (file) => {
         this.setState(({ fileNameData }) => {
             for (let i = 0; i < fileNameData.length; i++) {
-                if (fileNameData[i].fileName == file.name) {
+                if (fileNameData[i].originalFileName == file.name) {
                     fileNameData[i]['del'] = 'del';
                 }
             }
