@@ -11,6 +11,7 @@ import Form from 'bee-form';
 import Select from 'bee-select';
 import RefWithInput from 'yyuap-ref/dist2/refWithInput'
 import moment from "moment";
+import options from "components/RefOption"
 import 'yyuap-ref/dist2/yyuap-ref.css'//参照样式
 import './edit.less';
 import 'ac-upload/build/ac-upload.css';
@@ -179,52 +180,6 @@ class Edit extends Component {
         let { orderCode, supplier, supplierName, type,type_name,purchasing, purchasingGroup, voucherDate, approvalState,approvalState_name,confirmState,confirmState_name,closeState,closeState_name} = rowData;
         const { getFieldProps, getFieldError } = this.props.form;
         console.log("keylist",self.state.refKeyArray);
-        let option = {
-            title: '',
-            refType: 5,//1:树形 2.单表 3.树卡型 4.多选 5.default
-            className: '',
-            param: {//url请求参数
-                refCode: 'common_ref',
-                tenantId: '',
-                sysId: '',
-                transmitParam: 'EXAMPLE_CONTACTS,EXAMPLE_ORGANIZATION',
-            },
-            refModelUrl:{
-                TreeUrl:'/newref/rest/iref_ctr/blobRefTree', //树请求
-                TableBodyUrl:'/newref/rest/iref_ctr/blobRefTreeGrid',//表体请求//ref/rest/iref_ctr/blobRefTreeGrid
-                TableBarUrl:'/newref/rest/iref_ctr/refInfo',//表头请求ref/rest/iref_ctr/refInfo
-            },
-            filterRefUrl:'/iuap_pap_quickstart/common/filterRef',//get
-            keyList:refKeyArray,//选中的key
-            // keyList:['123'],//选中的key
-
-            // checkedArray: [],
-            onCancel: function (p) {
-                console.log(p)
-            },
-            onSave: function (sels) {
-                console.log(sels);
-                var temp = sels.map(v => v.key)
-                console.log("temp",temp);
-                self.setState({
-                    refKeyArray: temp,
-                })
-            },
-            filterKey: [{ title: '人员名称人员名称人员名称', key: 'peoname' }, { title: '人员名称', key: 'peoname' }, { title: '人员名称', key: 'peoname' }, { title: '人员名称', key: 'peoname' }, { title: '人员名称', key: 'peoname' }, { title: '人员名称', key: 'peoname' }, { title: '人员名称', key: 'peoname' }, { title: '人员名称', key: 'peoname' }, { title: '人员名称', key: 'peoname' }, { title: '人员名称', key: 'peoname' }, { title: '人员名称', key: 'peoname' }],
-            textOption: {
-                modalTitle: '选择品类',
-                leftTitle: '品类结构',
-                rightTitle: '品类列表',
-                leftTransferText: '待选品类',
-                rightTransferText: '已选品类',
-                leftInfo: [{ text: '流水号', key: 'peoname' }, { text: '品类编码', key: 'institid' }, { text: '品类描述', key: 'refname' }],
-                rightInfo: [{ text: '流水号', key: 'id' }, { text: '品类编码', key: 'id' }, { text: '品类描述', key: 'peocode' }],
-            },
-            showKey:'peoname',
-            verification:true,//是否进行校验
-            verKey:'purchasing',//校验字段
-            verVal:purchasing
-        }
 
         return (
             <div className='order-detail'>
@@ -262,17 +217,30 @@ class Edit extends Component {
                         <Label>
                             供应商名称：
                         </Label>
-                        <FormControl disabled={btnFlag == 2}
-                            {
-                            ...getFieldProps('supplierName', {
-                                validateTrigger: 'onBlur',
-                                initialValue: supplierName || '',
-                                rules: [{
-                                    type:'string',required: true, message: '请输入供应商名称',
-                                }],
-                            }
-                            )}
-                        />
+                        <RefWithInput option={Object.assign(JSON.parse(options),{
+                            title: '',
+                            refType: 2,//1:树形 2.单表 3.树卡型 4.多选 5.default
+                            className: '',
+                            param: {//url请求参数
+                                refCode: 'bd_common_user',
+                                tenantId: '',
+                                sysId: '',
+                                transmitParam: 'EXAMPLE_CONTACTS,EXAMPLE_ORGANIZATION',
+                            },
+                            keyList:refKeyArray,//选中的key
+                            onSave: function (sels) {
+                                console.log(sels);
+                                var temp = sels.map(v => v.key)
+                                console.log("temp",temp);
+                                self.setState({
+                                    refKeyArray: temp,
+                                })
+                            },
+                            showKey:'name',
+                            verification:true,//是否进行校验
+                            verKey:'supplierName',//校验字段
+                            verVal:supplierName
+                        })} form={this.props.form}/>
                         <span className='error'>
                             {getFieldError('supplierName')}
                         </span>
@@ -316,7 +284,30 @@ class Edit extends Component {
                             采购组织：
                         </Label>
 
-                        <RefWithInput option={option} form={this.props.form}/>
+                        <RefWithInput option={Object.assign(JSON.parse(options),{
+                            title: '',
+                            refType: 5,//1:树形 2.单表 3.树卡型 4.多选 5.default
+                            className: '',
+                            param: {//url请求参数
+                            refCode: 'common_ref',
+                            tenantId: '',
+                            sysId: '',
+                            transmitParam: 'EXAMPLE_CONTACTS,EXAMPLE_ORGANIZATION',
+                        },
+                            keyList:refKeyArray,//选中的key
+                            onSave: function (sels) {
+                            console.log(sels);
+                            var temp = sels.map(v => v.key)
+                            console.log("temp",temp);
+                            self.setState({
+                            refKeyArray: temp,
+                        })
+                        },
+                            showKey:'peoname',
+                            verification:true,//是否进行校验
+                            verKey:'purchasing',//校验字段
+                            verVal:purchasing
+                        })} form={this.props.form}/>
 
                     </Col>
                     <Col md={4} xs={6}>
