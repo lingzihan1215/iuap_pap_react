@@ -20,17 +20,22 @@ export default {
     name: "searchTable",
     // 设置当前 Model 所需的初始化 state
     initialState: {
-        rowData:{},
-        showLoading:false,
+        rowData: {},
+        showLoading: false,
         list: [],
-        orderTypes:[],
-        pageIndex:1,
-        pageSize:10,
-        totalPages:1,
-        detail:{},
-        searchParam:{},
-        validateNum:99,//不存在的step
-        btnFlag:0
+        orderTypes: [],
+        pageIndex: 1,
+        pageSize: 10,
+        totalPages: 1,
+        detail: {},
+        searchParam: {},
+        validateNum: 99,//不存在的step
+        btnFlag: 0,
+        addAuth: false,//添加按钮权限
+        submitAuth: false,//提交流程按钮权限
+        recallAuth: false,//取消流程按钮权限
+        upadateAuth: false,//编辑流程按钮权限
+        deleteAuth: false,//删除流程按钮权限
     },
     reducers: {
         /**
@@ -53,8 +58,8 @@ export default {
          */
         async loadList(param, getState) {
             // 正在加载数据，显示加载 Loading 图标
-            actions.searchTable.updateState({ showLoading:true })
-            if(param){
+            actions.searchTable.updateState({ showLoading: true })
+            if (param) {
                 param.pageIndex = param.pageIndex ? param.pageIndex - 1 : 0;
                 param.pageSize = param.pageSize ? param.pageSize : 10;
             } else {
@@ -62,12 +67,12 @@ export default {
             }
             // 调用 getList 请求数据
             let res = processData(await api.getList(param));
-            actions.searchTable.updateState({  showLoading:false })
+            actions.searchTable.updateState({ showLoading: false })
             if (res) {
-                if(res.content&&res.content.length){
-                    for(let i=0;i<res.content.length;i++){
-                        let temp = Object.assign({},res.content[i]);
-                        res.content[i].key=i+1;
+                if (res.content && res.content.length) {
+                    for (let i = 0; i < res.content.length; i++) {
+                        let temp = Object.assign({}, res.content[i]);
+                        res.content[i].key = i + 1;
                         res.content[i].voucherDate = moment(temp.voucherDate).format('YYYY-MM-DD');
                         res.content[i].purchasing = temp.purchasingName;
                     }
@@ -75,8 +80,8 @@ export default {
                 // console.log('res content',res.content);
                 actions.searchTable.updateState({
                     list: res.content,
-                    pageIndex:res.number + 1,
-                    totalPages:res.totalPages,
+                    pageIndex: res.number + 1,
+                    totalPages: res.totalPages,
                 });
             }
         },
@@ -85,21 +90,21 @@ export default {
          * @param {*} param
          * @param {*} getState
          */
-        getOrderTypes(param,getState){
+        getOrderTypes(param, getState) {
             actions.searchTable.updateState({
-            orderTypes:  [{
-                "code":"0",
-                "name":"D001"
-            },{
-                "code":"1",
-                "name":"D002"
-            },{
-                "code":"2",
-                "name":"D003"
-            },{
-                "code":"3",
-                "name":"D004"
-            }]
+                orderTypes: [{
+                    "code": "0",
+                    "name": "D001"
+                }, {
+                    "code": "1",
+                    "name": "D002"
+                }, {
+                    "code": "2",
+                    "name": "D003"
+                }, {
+                    "code": "3",
+                    "name": "D004"
+                }]
             })
         },
         /**
@@ -117,34 +122,43 @@ export default {
          * @param {*} getState
          */
         async removeList(id, getState) {
-            let result = await api.deleteList([{id}]);
+            let result = await api.deleteList([{ id }]);
             return result;
         },
 
-        async delItem(param,getState){
+        async delItem(param, getState) {
             actions.searchTable.updateState({
-              showLoading:true
+                showLoading: true
             })
-            let res=processData(await api.delOrder(param.param),'删除成功');
+            let res = processData(await api.delOrder(param.param), '删除成功');
             actions.searchTable.loadList();
         },
 
-        async save(param,getState){//保存
+        async save(param, getState) {//保存
             actions.searchTable.updateState({
-              showLoading:true
+                showLoading: true
             })
-            let res=processData(await api.saveOrder(param),'保存成功');
-            if(res){
-               window.history.go(-1);
+            let res = processData(await api.saveOrder(param), '保存成功');
+            if (res) {
+                window.history.go(-1);
             }
             actions.searchTable.updateState({
-              showLoading:false
+                showLoading: false
             });
         },
 
-        async queryDetail(param,getState) {
-            let res=processData(await api.getDetail(param),'');
-            return  res.content[0];
+        async queryDetail(param, getState) {
+            let res = processData(await api.getDetail(param), '');
+            return res.content[0];
+        },
+        //查询按钮权限
+        async queryAuth(funcCode, getState) {
+            let { data } = await api.getAuth(funcCode);
+            for (let i = 0; i < data.length; i++) {
+                actions.searchTable.updateState({
+                    [`${data[i]}Auth`]: true
+                });
+            }
         }
     }
 };
