@@ -151,6 +151,7 @@ export default {
             let res = processData(await api.getDetail(param), '');
             return res.content[0];
         },
+        //查询按钮权限
         async queryAuth(funcCode, getState) {
             let { data } = await api.getAuth(funcCode);
             for (let i = 0; i < data.length; i++) {
