@@ -12,6 +12,8 @@ module.exports = {
   "POST": [
     { "/system/role/list": "./mock/sys-manage/role-manage/list.json" }, 
     { "/order/manage/list": "./mock/order/manage/list.json" }, 
-    { "/order/delivery/removelist": "./mock/order/delivery/removeList.json" }
+    { "/order/delivery/removelist": "./mock/order/delivery/removeList.json" },
+    // 销货通知单
+    { "/sales/customer/search": "./mock/sales/customer-info.json" }
   ]
 }

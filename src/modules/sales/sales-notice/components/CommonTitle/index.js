@@ -5,16 +5,27 @@ import PropTypes from 'prop-types'
 
 import './index.css'
 
-const CommonTitle = ({ type, title }) => (
-    <div className="commont-title">
-        <Icon type={type}  />
-        <span>{title}</span>
-    </div>
-)
+class CommonTitle extends Component {
+    constructor(props){
+        super(props)
+    }
+    render(){
+        let { type, title, children } = this.props;
+        return  (
+            <div className="commont-title">
+                <Icon className="title-icon" type={type}  />
+                <span>{title}</span>
+                <div className="common-title-container">{children}</div>
+            </div>
+        )
+    }
+}
+
 
 CommonTitle.propTypes = {
     type: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    children: PropTypes.element
 }
 
 CommonTitle.defaultProps = {

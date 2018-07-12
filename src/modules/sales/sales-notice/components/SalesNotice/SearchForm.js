@@ -14,10 +14,11 @@ class SearchForm extends Component {
 
         }
     }
-    search = () => {
-        this.props.form.validateFields((err, values) => {
-            actions.searchTable.searchCustomerInfo(values);
-        });
+    search = (err, values) => {
+        console.log(err)
+        console.log(values);
+
+        actions.salesNotice.searchCustomerInfo(values);
     }
     render(){
         const { getFieldProps, getFieldError } = this.props.form;
@@ -41,8 +42,8 @@ class SearchForm extends Component {
                                         validateTrigger: 'onBlur',
                                         rules: [{
                                             required: true, 
-                                            message: "客户代码格式不正确",
-                                            type: "number"
+                                            message: "客户代码格式不正确"
+                                            
                                         }]
                                     })
                                     }

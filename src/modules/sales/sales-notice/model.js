@@ -7,9 +7,20 @@ export default {
     initialState: {
         customerCode: "",
         customerInfo: {
-            customerName: "华新丽华",
-            edu: "1000,00"
-        }
+            customerName: "",
+            cradit: "",
+            total: ""
+        },
+        rowData:{},
+        showLoading:false,
+        list: [],
+        orderTypes:[],
+        pageIndex:1,
+        pageSize:10,
+        totalPages:1,
+        selectData: [],
+        searchParam:{},
+        validateNum:99,
     },
     reducers: {
         updateState(state, data) { 
@@ -25,7 +36,9 @@ export default {
             let res = processData(await api.getSalesInfo(param));
 
             actions.salesNotice.updateState({
-                customerInfo: res.customerInfo
+                customerInfo: res.customerInfo,
+                list: res.content,
+                totalPages: res.totalPages
             })
         }
     }

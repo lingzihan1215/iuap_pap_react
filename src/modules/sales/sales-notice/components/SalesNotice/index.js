@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { actions } from 'mirrorx';
 import Form from 'bee-form';
-import { Col, Row, FormControl, Label, Select, Radio } from "tinper-bee";
+import { Col, Row, FormControl, Label, Select, Radio, Button } from "tinper-bee";
 const FormItem = Form.FormItem;
 
 import Header from 'components/Header';
@@ -20,17 +20,23 @@ class SalesNotice extends Component {
 
         }
     }
-   
+    saveForm = () => {
+
+    }
     render(){
 
         return (
             <div className="sales-notice">
-                <Header title="销货通知单" back={true} />
+                <Header title="销货通知单" back={true}>
+                    <div className='head-btn' >
+                        <Button className='head-save' onClick={this.saveForm}>确认创建</Button>
+                    </div>
+                </Header>
                 <SearchForm {...this.props} />
                 <CustomerInfo customerInfo={ this.props.customerInfo } />
-                <EditSalesForm />
-                <GoodsInfo />
-                <EditSalesTable />
+                <EditSalesForm {...this.props} />
+                <GoodsInfo {...this.props} />
+                <EditSalesTable {...this.props} />
             </div>
         )
     }

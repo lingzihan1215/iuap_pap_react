@@ -14,18 +14,18 @@ class CustomerInfo extends Component {
         }
     }
     getCellsData(){
-        let { customerName, edu } = this.props.customerInfo;
+        let { customerName, cradit, total } = this.props.customerInfo;
         return [
             { name: "客户简称", codeName: "customerName", value: customerName },
-            { name: "信用额度", codeName: "edu", value: edu },
-            { name: "授信总额", codeName: "customerName", value: customerName },
-            { name: "应收账款", codeName: "customerName", value: customerName },
-            { name: "销售值", codeName: "customerName", value: customerName },
-            { name: "特殊负债", codeName: "customerName", value: customerName },
-            { name: "应收逾期", codeName: "customerName", value: customerName },
-            { name: "未结交货", codeName: "customerName", value: customerName },
-            { name: "授信揭露", codeName: "customerName", value: customerName },
-            { name: "税率", codeName: "customerName", value: customerName }
+            { name: "信用额度", codeName: "edu", value: cradit },
+            { name: "授信总额", codeName: "customerName", value: total },
+            { name: "应收账款", codeName: "customerName", value: total },
+            { name: "销售值", codeName: "customerName", value: total },
+            { name: "特殊负债", codeName: "customerName", value: total },
+            { name: "应收逾期", codeName: "customerName", value: total },
+            { name: "未结交货", codeName: "customerName", value: total },
+            { name: "授信揭露", codeName: "customerName", value: total },
+            { name: "税率", codeName: "customerName", value: total }
         ]
     } 
     
@@ -33,7 +33,7 @@ class CustomerInfo extends Component {
         const { getFieldProps, getFieldError } = this.props.form;
 
         return (
-            <Col key={index} md={3} xs={6}>
+            <Col key={index} md={4} xs={6}>
                 <FormItem>
                     <Label>
                         {name}：
