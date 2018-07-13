@@ -83,7 +83,9 @@ class MasterForm extends Component {
                 let {childList} = this.props;
                 let commitData = {
                     entity : values,
-                    sanyOrderDetailList:childList
+                    sublist:{
+                        showOffDetailList:childList
+                    }
                 };
                 console.log("save values", JSON.stringify(commitData));
                 actions.mastertable.save(commitData);
