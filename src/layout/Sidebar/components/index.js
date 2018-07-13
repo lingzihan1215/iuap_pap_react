@@ -113,7 +113,7 @@ export default class Siderbar extends Component {
           item.children.map(function(it){
             let blank =it.openview=="blank"?"_blank":"";
             list.push(<Menu.Item key={it.id}>
-              <NavLink key={it.id} ref="child" to={it.location}>{it.name}</NavLink>
+              <NavLink key={it.id} to={it.location}>{it.name}</NavLink>
             </Menu.Item>)
           });
 
