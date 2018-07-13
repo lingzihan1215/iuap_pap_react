@@ -80,7 +80,16 @@ class MasterForm extends Component {
                     values.ts = rowData.ts;
                 }
                 values.petId = refKeyArray.join();
-                let {childList} = this.props;
+                let {childList,cacheArray} = this.props;
+                // 编辑保存但是未修改参照,修改参照字段为参照id数组
+                if(childList) {
+                    childList.map((item,index)=>{
+                        let temp = item.confirmUserName;
+                        if(temp){
+                            item.confirmUser = cacheArray[index].confirmUser
+                        }
+                    })
+                }
                 let commitData = {
                     entity : values,
                     sublist:{
@@ -186,7 +195,7 @@ class MasterForm extends Component {
 
     render() {
         const self = this;
-
+        console.log("this.props",this.props);
         let { btnFlag } = queryString.parse(this.props.location.search);
         btnFlag = Number(btnFlag);
         let { rowData, refKeyArray,column } = this.state;

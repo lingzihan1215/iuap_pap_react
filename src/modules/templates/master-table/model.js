@@ -155,9 +155,18 @@ export default {
 
         async queryDetail(param,getState) {
             let {data:{detailMsg}}=await api.getDetail(param);
-            console.log("showOffDetailList",detailMsg.showOffDetailList);
+            let childData = detailMsg.showOffDetailList
+            console.log("showOffDetailList",childData);
+            let tempArray = [];
+            if(childData) {
+                tempArray = childData.map((item)=>{
+                    let temp = Object.assign({},item);
+                    item.confirmUser = item.confirmUserName
+                })
+            }
+            
             await actions.mastertable.updateState({
-                childList:detailMsg.showOffDetailList
+                childList:childData
             })
             return  detailMsg.entity;
         }

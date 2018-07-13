@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { actions ,connect } from "mirrorx";
+import queryString from 'query-string';
 import PaginationTable from 'components/PaginationTable';
 import options from "components/RefOption";
 import RefWithInput from 'yyuap-ref/dist2/refWithInput';
@@ -38,14 +39,15 @@ let id = 0;
 class ChildTable extends Component {
     constructor(props) {
         super(props);
+        
         this.state = { 
-            refKeyArray:[],
             selectData:[],
+            editFlag:true,
             column:[
             {
                 title: "订单编号",
-                dataIndex: "purchase_order_id",
-                key: "purchase_order_id",
+                dataIndex: "purchaseOrderId",
+                key: "purchaseOrderId",
                 width: 150,
                 /* render(record, text, index) {
                     return index + 1;
@@ -53,80 +55,80 @@ class ChildTable extends Component {
             },
             {
                 title: "订单明细编号",
-                dataIndex: "purchase_item_id",
-                key: "purchase_item_id",
+                dataIndex: "purchaseItemId",
+                key: "purchaseItemId",
                 width: 150,
-                render: (text, record,index) => this.renderColumns(text, record,index, 'purchase_item_id')
+                render: (text, record,index) => this.renderColumns(text, record,index, 'purchaseItemId')
             },
             {
                 title: "物料编号",
-                dataIndex: "material_id",
-                key: "material_id",
+                dataIndex: "materialId",
+                key: "materialId",
                 width: 150,
-                render: (text, record,index) => this.renderColumns(text, record,index, 'material_id')
+                render: (text, record,index) => this.renderColumns(text, record,index, 'materialId')
             },
             {
                 title: "订单行号",
-                dataIndex: "order_item",
-                key: "order_item",
+                dataIndex: "orderItem",
+                key: "orderItem",
                 width: 150,
-                render: (text, record,index) => this.renderColumns(text, record,index, 'order_item')
+                render: (text, record,index) => this.renderColumns(text, record,index, 'orderItem')
             },
             {
                 title: "物料数量",
-                dataIndex: "material_qty",
-                key: "material_qty",
+                dataIndex: "materialQty",
+                key: "materialQty",
                 width: 150,
-                render: (text, record,index) => this.renderColumnsInputNumber(text, record,index, 'material_qty')
+                render: (text, record,index) => this.renderColumnsInputNumber(text, record,index, 'materialQty')
             },
             {
                 title: "物料金额",
-                dataIndex: "material_price",
-                key: "material_price",
+                dataIndex: "materialPrice",
+                key: "materialPrice",
                 width: 150,
-                render: (text, record,index) => this.renderColumnsInputNumber(text, record,index, 'material_price')
+                render: (text, record,index) => this.renderColumnsInputNumber(text, record,index, 'materialPrice')
             },
             {
                 title: "物料单价",
-                dataIndex: "price_unit",
-                key: "price_unit",
+                dataIndex: "priceUnit",
+                key: "priceUnit",
                 width: 150,
-                render: (text, record,index) => this.renderColumnsInputNumber(text, record,index, 'price_unit')
+                render: (text, record,index) => this.renderColumnsInputNumber(text, record,index, 'priceUnit')
             },
             {
                 title: "确认时间",
-                dataIndex: "confirm_time",
-                key: "confirm_time",
+                dataIndex: "confirmTime",
+                key: "confirmTime",
                 width: 150,
-                render:(text, record,index) => this.renderDatePicker(text, record,index, 'confirm_time')
+                render:(text, record,index) => this.renderDatePicker(text, record,index, 'confirmTime')
             },
             {
                 title: "确认人员",
-                dataIndex: "confirm_user",
-                key: "confirm_user",
-                width: 100,
-                render:(text, record,index) => this.renderRef(text, record,index, 'confirm_user')
+                dataIndex: "confirmUser",
+                key: "confirmUser",
+                width: 150,
+                render:(text, record,index) => this.renderRef(text, record,index, 'confirmUser')
             },
             {
                 title: "发货状态",
-                dataIndex: "delivery_status",
-                key: "delivery_status",
+                dataIndex: "deliveryStatus",
+                key: "deliveryStatus",
                 width: 150,
-                render:(text, record,index) => this.renderSelect(text, record,index, 'delivery_status')
+                render:(text, record,index) => this.renderSelect(text, record,index, 'deliveryStatus')
             },
             {
                 title: "发货数量",
-                dataIndex: "delivery_qty",
-                key: "delivery_qty",
+                dataIndex: "deliveryQty",
+                key: "deliveryQty",
                 width: 150,
-                render: (text, record,index) => this.renderColumnsInputNumber(text, record,index, 'delivery_qty')
+                render: (text, record,index) => this.renderColumnsInputNumber(text, record,index, 'deliveryQty')
             },
             {
                 title: "收货地址",
-                dataIndex: "delivery_addr",
-                key: "delivery_addr",
+                dataIndex: "deliveryAddr",
+                key: "deliveryAddr",
                 width: 150,
-                render: (text, record,index) => this.renderColumns(text, record,index, 'delivery_addr')
+                render: (text, record,index) => this.renderColumns(text, record,index, 'deliveryAddr')
             },
             {
                 title: "操作",
@@ -145,6 +147,19 @@ class ChildTable extends Component {
                 }
             }]
         };
+    }
+
+    componentWillMount(){
+        // console.log("this.props",this.props);
+        // let editFlag = (btnFlag && btnFlag==2) ? false : true;
+    }
+
+    showFlag = (btnFlag) => {
+        if(btnFlag && btnFlag==2 ){
+            return false;
+        }else {
+            return true;
+        }
     }
 
     // 普通编辑框渲染
@@ -273,13 +288,12 @@ class ChildTable extends Component {
                 index={index}
                 self = {self}
                 fieldKey = {column}
-                refKeyArray = {this.state.refKeyArray}
                 // onChange={value => this.handleChangeNumber(value, record.id, column)}
             />
         );
     }
     
-    EditableCellRef = ({ editable, value ,index,self, fieldKey,refKeyArray}) =>(
+    EditableCellRef = ({ editable, value ,index,self, fieldKey}) =>(
         <div>
             {console.log(this.props.form)}
             {
@@ -294,7 +308,7 @@ class ChildTable extends Component {
                             sysId: '',
                             transmitParam: 'EXAMPLE_CONTACTS,EXAMPLE_ORGANIZATION',
                         },
-                        keyList: refKeyArray,//选中的key
+                        keyList: [],//选中的key
                         onSave: function (sels) {
                             console.log('sels',sels);
                             const showData = sels.map(v => v.peoname)
@@ -303,10 +317,15 @@ class ChildTable extends Component {
                             /* self.setState({
                                 refKeyArray: temp,
                             }) */
+                            console.log("index",index);
                             const newData = [...self.props.childList];
                             const target = newData.filter((item,newDataIndex) => index === newDataIndex)[0];
                             if (target) {
-                                target[fieldKey] = temp;
+                                /* let tempConfirmUserName = target.confirmUserName;
+                                if(tempConfirmUserName) {
+                                    delete target.confirmUserName;
+                                } */
+                                target[fieldKey] = temp.join();
                                 actions.mastertable.updateState({
                                     list: newData
                                 });
@@ -377,18 +396,18 @@ class ChildTable extends Component {
     onAddEmptyRow = ()=>{
         let tempArray = [...this.props.childList],
             emptyRow = {
-                purchase_order_id:"123",
-                purchase_item_id:123,
-                material_id:'123',
-                order_item:'234',
-                material_qty:'456',
-                material_price:'252',
-                price_unit:'773',
-                confirm_time:'2017-02-21',
-                confirm_user:'abc',
-                delivery_status:'1',
-                delivery_qty:'234',
-                delivery_addr:'用友'
+                purchaseOrderId:"123",
+                purchaseItemId:123,
+                materialId:'123',
+                orderItem:'234',
+                materialQty:'456',
+                materialPrice:'252',
+                priceUnit:'773',
+                confirmTime:'2017-02-21',
+                confirmUser:'abc',
+                deliveryStatus:'1',
+                deliveryQty:'234',
+                deliveryAddr:'用友'
             };
             tempArray.push(emptyRow);
             console.log("tempArray",tempArray);
