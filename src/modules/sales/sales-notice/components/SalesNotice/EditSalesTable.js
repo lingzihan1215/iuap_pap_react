@@ -13,7 +13,7 @@ export default class EditSalesTable extends Component {
         let self = this;
         this.state = {
             step: 10,
-            tableSelectedData: []
+            tableEditedData: []
         }
         this.columns = [
             {
@@ -82,15 +82,15 @@ export default class EditSalesTable extends Component {
         );
     }
     handleChange = (value, id, column) => {
-        console.log(id)
-        // const newData = [...this.props.selectData];
-        // const target = newData.filter(item => id === item.id)[0];
-        // if (target) {
-        //     target[column] = value;
-        //     actions.delivery.updateState({
-        //         list: newData
-        //     });
-        // }
+        const newData = [...this.props.selectData];
+        const target = newData.filter(item => id === item.id)[0];
+        debugger;
+        if (target) {
+            target[column] = value;
+            actions.delivery.updateState({
+                tableEditedData: newData
+            });
+        }
     }
     onTableSelectedData = data => {
         this.setState({

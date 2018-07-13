@@ -14,6 +14,7 @@ module.exports = {
     { "/order/manage/list": "./mock/order/manage/list.json" }, 
     { "/order/delivery/removelist": "./mock/order/delivery/removeList.json" },
     // 销货通知单
-    { "/sales/customer/search": "./mock/sales/customer-info.json" }
+    { "/sales/customer/search": "./mock/sales/customer-info.json" },
+    { "/sales/customer/create": "./mock/sales/customer-create.json" }
   ]
 }

@@ -20,7 +20,7 @@ export default {
         totalPages:1,
         selectData: [],
         searchParam:{},
-        validateNum:99,
+        tableEditedData: []
     },
     reducers: {
         updateState(state, data) { 
@@ -40,6 +40,13 @@ export default {
                 list: res.content,
                 totalPages: res.totalPages
             })
+        },
+        
+        postAllData({formData, tableEditedData}){
+            return processData(api.createSalesNotice({
+                table: formData,
+                form: tableEditedData
+            }))
         }
     }
 }
