@@ -475,7 +475,7 @@ export default [
     // 华新丽华
     {
         "id": "application7",
-        "name": "华新丽华-销货通知单",
+        "name": "销货通知单",
         "location": "/application",
         "menustatus": "Y",
         "parentid": null,

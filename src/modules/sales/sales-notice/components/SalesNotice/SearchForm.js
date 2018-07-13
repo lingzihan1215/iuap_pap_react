@@ -15,9 +15,6 @@ class SearchForm extends Component {
         }
     }
     search = (err, values) => {
-        console.log(err)
-        console.log(values);
-
         actions.salesNotice.searchCustomerInfo(values);
     }
     render(){

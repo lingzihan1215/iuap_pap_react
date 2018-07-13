@@ -75,30 +75,38 @@ export default class EditSalesTable extends Component {
         return (
             <div className="cel-edit-input">
                 <FormControl 
-                    value={text} 
+                    defaultValue={text} 
+                    key={record.id}
                     onChange={value => this.handleChange(value, record.id, column)} 
                 />
             </div>
         );
     }
-    handleChange = (value, id, column) => {
-        const newData = [...this.props.selectData];
-        const target = newData.filter(item => id === item.id)[0];
-        debugger;
-        if (target) {
-            target[column] = value;
-            actions.delivery.updateState({
-                tableEditedData: newData
-            });
-        }
+    /**
+     * 这里的性能开销需要注意
+     */
+    handleChange = async (value, id, column) => {
+        // 已经选中并且带下来的数据
+        let curData = [...this.props.selectData];
+        // 拿到当前所修改行的数据，并更新所修改的字段
+        await curData.forEach(item => {
+            if(id === item.id) item[column] = value;
+            return item;
+        });
+
+        actions.salesNotice.updateState({
+            tableEditedData: curData
+        });
     }
+    /**
+     * 拿到所选中的表格数据
+     */
     onTableSelectedData = data => {
         this.setState({
             tableSelectedData: data
         })
     }
     render(){
-        const self = this;
         let { selectData, showLoading } = this.props;
 
         return (

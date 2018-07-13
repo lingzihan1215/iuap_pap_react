@@ -94,7 +94,7 @@ class SalesNotice extends Component {
     /**
      * 获取填写的销货通知单表单信息的数据
      */
-    getFormData = () => {
+    saveForm(){
         let _this = this;
 
         this.props.form.validateFields((error,values)=>{
@@ -102,28 +102,30 @@ class SalesNotice extends Component {
                 Message.create({ content: '请继续完善信息', color: 'warning' });
                 return ;
             }
-            _this.setState({ formData: values });
+            values.voucherDate = values.voucherDate.format('YYYY-MM-DD')
+
+            // _this.setState({ formData: values });
+            _this.getFormData(values)
         })
     }
     /**
      * 获取所有数据，执行提交保存操作
      */
-    saveForm = () => {
-        this.getFormData();
-        let tableEditedData = actions.salesNotice.tableEditedData ;
+    async getFormData(values){
+        let tableEditedData = this.props.tableEditedData;
 
-        if(tableEditedData && tableEditedData.length) Message.create({ content: '请完善销货单明细信息', color: 'warning' });
-
-        let result = actions.salesNotice.postAllData({
-            formData: this.state.formData,
-            tableEditedData: tableEditedData
-        });
-
-        if (result.data.success) {
-            // this.setState({ loading: false });
-            // this.loadList();
-            Message.create({ content: '保存成功', color: 'success' });
-        }
+        if(tableEditedData && tableEditedData.length) {
+            let result = await actions.salesNotice.postAllData({
+                formData: values,
+                tableEditedData
+            });
+            
+            if (result.data.success) {
+                Message.create({ content: '保存成功', color: 'success' });
+            }
+        } else {
+            Message.create({ content: '请完善销货单明细信息', color: 'warning' });
+        } 
     }
    
     render(){
@@ -134,7 +136,7 @@ class SalesNotice extends Component {
             <div className="sales-notice">
                 <Header title="销货通知单" back={true}>
                     <div className='head-btn' >
-                        <Button className='head-save' onClick={this.saveForm}>确认创建</Button>
+                        <Button className='head-save' onClick={this.saveForm.bind(this)}>确认创建</Button>
                     </div>
                 </Header>
                 <SearchForm {...this.props} />
@@ -164,7 +166,7 @@ class SalesNotice extends Component {
                                     <DatePicker className="form-item" format={'YYYY-MM-DD'}
                                         {
                                             ...getFieldProps('voucherDate', {
-                                                initialValue: '',
+                                                initialValue: moment(),
                                             })
                                         }
                                     />

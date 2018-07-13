@@ -19,7 +19,7 @@ export default {
         pageSize:10,
         totalPages:1,
         selectData: [],
-        searchParam:{},
+        searchParam: {},
         tableEditedData: []
     },
     reducers: {
@@ -32,7 +32,6 @@ export default {
     },
     effects: {
         async searchCustomerInfo(param, getState){
-            // 调用 getList 请求数据
             let res = processData(await api.getSalesInfo(param));
 
             actions.salesNotice.updateState({
@@ -42,11 +41,11 @@ export default {
             })
         },
         
-        postAllData({formData, tableEditedData}){
-            return processData(api.createSalesNotice({
-                table: formData,
-                form: tableEditedData
-            }))
+        async postAllData(param, getState){
+            return await api.createSalesNotice({
+                table: param.tableEditedData,
+                form: param.formData
+            })
         }
     }
 }
