@@ -15,57 +15,66 @@ export default class GoodsInfo extends Component {
         }
         this.columns = [
             {
-                title: "供应商编码",
-                dataIndex: "supplierCode",
-                key: "supplierCode",
+                title: "序号",
+                dataIndex: "index",
+                key: "index",
                 width: 100,
                 render(record, text, index) {
                     return index + 1;
                 }
             },
             {
-                title: "供应商名称",
-                dataIndex: "supplierName",
-                key: "supplierName",
+                title: "产品",
+                dataIndex: "product",
+                key: "product",
+                width: 100
+            },
+            {
+                title: "收货人",
+                dataIndex: "receiver",
+                key: "receiver",
+                width: 100
+            },
+            {
+                title: "订单编码",
+                dataIndex: "orderCode",
+                key: "orderCode",
                 width: 250,
                 className:"td-detail",
-                onCellClick: (record) => this.cellClick(record,2)
+                onCellClick: (record) => this.cellClick(record,2),
+                render(record, text, index) {
+                    return <a href="">{text}</a>;
+                }
             },
             {
-                title: "类型",
-                dataIndex: "supplierType",
-                key: "supplierType",
+                title: "订单项次",
+                dataIndex: "orderTerms",
+                key: "orderTerms",
                 width: 100
             },
             {
-                title: "主要产品",
-                dataIndex: "mainProducts",
-                key: "mainProducts",
+                title: "尺寸厚度",
+                dataIndex: "sizeThickness",
+                key: "sizeThickness",
                 width: 100
             },
             {
-                title: "联系人",
-                dataIndex: "contacts",
-                key: "contacts",
+                title: "库存",
+                dataIndex: "repertory",
+                key: "repertory",
                 width: 100
             },
             {
-                title: "类别",
-                dataIndex: "supplierCategory",
-                key: "supplierCategory",
+                title: "营业交期",
+                dataIndex: "trading_period",
+                key: "trading_period",
                 width: 100
             },
             {
-                title: "货号",
-                dataIndex: "turnover",
-                key: "turnover",
-                width: 100
-            }, 
-            {
-                title: "联系电话",
-                dataIndex: "phone",
-                key: "phone",
-                width: 150
+                title: "备注",
+                dataIndex: "livelihoods",
+                key: "livelihoods",
+                width: 250
             },
             {
                 title: "操作",
@@ -153,7 +162,7 @@ export default class GoodsInfo extends Component {
                     onTableSelectedData={this.onTableSelectedData}
                     onPageSizeSelect={this.onPageSizeSelect}
                     onPageIndexSelect={this.onPageIndexSelect}
-                    scroll={{ x: 1000, y: 300}}
+                    scroll={{ x: 1300, y: 200}}
                 />
             </div>
 

@@ -5,12 +5,19 @@ import { processData } from 'utils';
 export default {
     name: "salesNotice",
     initialState: {
-        customerCode: "",
-        customerInfo: {
-            customerName: "",
-            cradit: "",
-            total: ""
+        customerCredit: {
+            userName: "",
+            creditLine: "",
+            totalCredit: "",
+            saleValue: "",
+            accountsReceivable: "",
+            specialLiabilities: "",
+            unmadeDelivery: "",
+            tax: "",
+            overdue: "",
+            creditDisclosure: ""
         },
+        saleOrder: {},
         rowData:{},
         showLoading:false,
         list: [],
@@ -35,8 +42,9 @@ export default {
             let res = processData(await api.getSalesInfo(param));
 
             actions.salesNotice.updateState({
-                customerInfo: res.customerInfo,
+                CustomerCredit: res.CustomerCredit,
                 list: res.content,
+                SaleOrder: res.SaleOrder,
                 totalPages: res.totalPages
             })
         },

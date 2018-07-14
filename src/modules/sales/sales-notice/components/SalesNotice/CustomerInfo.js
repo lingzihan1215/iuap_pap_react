@@ -14,18 +14,21 @@ class CustomerInfo extends Component {
         }
     }
     getCellsData(){
-        let { customerName, cradit, total } = this.props.customerInfo;
+        let { userName, creditLine, totalCredit, accountsReceivable, 
+            saleValue, specialLiabilities, overdue, unmadeDelivery, 
+            creditDisclosure, tax
+        } = this.props.customerCredit;
         return [
-            { name: "客户简称", codeName: "customerName", value: customerName },
-            { name: "信用额度", codeName: "edu", value: cradit },
-            { name: "授信总额", codeName: "customerName", value: total },
-            { name: "应收账款", codeName: "customerName", value: total },
-            { name: "销售值", codeName: "customerName", value: total },
-            { name: "特殊负债", codeName: "customerName", value: total },
-            { name: "应收逾期", codeName: "customerName", value: total },
-            { name: "未结交货", codeName: "customerName", value: total },
-            { name: "授信揭露", codeName: "customerName", value: total },
-            { name: "税率", codeName: "customerName", value: total }
+            { name: "客户简称", codeName: "userName", value: userName },
+            { name: "信用额度", codeName: "creditLine", value: creditLine },
+            { name: "授信总额", codeName: "totalCredit", value: totalCredit },
+            { name: "应收账款", codeName: "accountsReceivable", value: accountsReceivable },
+            { name: "销售值", codeName: "saleValue", value: saleValue },
+            { name: "特殊负债", codeName: "specialLiabilities", value: specialLiabilities },
+            { name: "应收逾期", codeName: "overdue", value: overdue },
+            { name: "未结交货", codeName: "unmadeDelivery", value: unmadeDelivery },
+            { name: "授信揭露", codeName: "creditDisclosure", value: creditDisclosure },
+            { name: "税率", codeName: "tax", value: tax }
         ]
     } 
     

@@ -31,13 +31,13 @@ class SalesNotice extends Component {
         let _this = this;
 
         return [
-            { name: "航次", codeName: "edu" },
-            { name: "码头", codeName: "customerName" },
-            // { name: "20尺", codeName: "customerName" },
-            // { name: "40尺", codeName: "customerName" },
-            { name: "散装", codeName: "customerName" },
-            { name: "CFS", codeName: "customerName" },
-            { name: "SAO", codeName: "customerName" },
+            { name: "船名", codeName: "shipName" },
+            { name: "航次", codeName: "flightNum" },
+            { name: "联络人", codeName: "liaisons" },
+            { name: "船公司", codeName: "shipCompany" },
+            { name: "电话", codeName: "phone" },
+            { name: "目的港", codeName: "destinationPort" },
+            // { name: "SAO", codeName: "customerName" },
             { name: "中午前结算", codeName: "isSettlement", children: () => {
                 return (
                     <Switch
@@ -55,16 +55,16 @@ class SalesNotice extends Component {
                         }
                     />
                 )
-            } },
-            { name: "联络人", codeName: "customerName" },
-            { name: "电话", codeName: "customerName" },
-            { name: "目的港", codeName: "customerName" },
-            { name: "每船限重", codeName: "customerName" },
-            { name: "公证行", codeName: "customerName" },
-            { name: "领货地点", codeName: "customerName" },
-            { name: "领货号码", codeName: "customerName" },
-            { name: "交货地点", codeName: "customerName" },
-            { name: "揽货公司", codeName: "customerName" }
+            } }
+            // { name: "联络人", codeName: "customerName" },
+            // { name: "电话", codeName: "customerName" },
+            // { name: "目的港", codeName: "customerName" },
+            // { name: "每船限重", codeName: "customerName" },
+            // { name: "公证行", codeName: "customerName" },
+            // { name: "领货地点", codeName: "customerName" },
+            // { name: "领货号码", codeName: "customerName" },
+            // { name: "交货地点", codeName: "customerName" },
+            // { name: "揽货公司", codeName: "customerName" }
         ]
     } 
     
@@ -131,6 +131,7 @@ class SalesNotice extends Component {
     render(){
         const { getFieldProps, getFieldError } = this.props.form;
         let _this = this;
+        let wharf = this.props.SaleOrder && this.props.SaleOrder.wharf || [];
 
         return (
             <div className="sales-notice">
@@ -149,23 +150,23 @@ class SalesNotice extends Component {
                                 <Label>销货单号：</Label><span className='mast'>*</span>
                                 <FormControl className="form-item"
                                     {
-                                    ...getFieldProps('customerCode', {
+                                    ...getFieldProps('orderNo', {
                                         initialValue: '',
                                         rules: [{required: true,message: "请输入单号"}]
                                     })
                                     }
                                 />
                                 <span className='error'>
-                                    {getFieldError('customerCode')}
+                                    {getFieldError('orderNo')}
                                 </span>
                             </FormItem>
                         </Col>
                         <Col md={4} xs={6}>
                             <FormItem>
-                                    <Label className='time'>结算日：</Label><span className='mast'>*</span>
+                                    <Label className='time'>出货结算日：</Label><span className='mast'>*</span>
                                     <DatePicker className="form-item" format={'YYYY-MM-DD'}
                                         {
-                                            ...getFieldProps('voucherDate', {
+                                            ...getFieldProps('settlementTime', {
                                                 initialValue: moment(),
                                             })
                                         }
@@ -174,42 +175,43 @@ class SalesNotice extends Component {
                         </Col>
                         <Col md={4} xs={6}>
                             <FormItem>
-                                <Label>船公司：</Label><span className='mast'>*</span>
+                                <Label>码头：</Label><span className='mast'>*</span>
                                 <Select className='form-item' {
-                                    ...getFieldProps('transportation', {
+                                    ...getFieldProps('wharf', {
                                         initialValue: '',
                                         rules: [{required: true,message: "请输入船公司名称"}]
                                     })
                                 }>
-                                    <Option value="0">中船重工</Option>
-                                    <Option value="1">大连航运</Option>
-                                    <Option value="2">铁路</Option>
-                                    <Option value="3">航空</Option>
+                                    {
+                                        wharf.map(item => <Option key={item.key} value={item.key}>{item.value}</Option> )
+                                    }
                                 </Select>
                                 <span className='error'>
-                                    {getFieldError('transportation')}
+                                    {getFieldError('wharf')}
                                 </span>
                             </FormItem>
                         </Col>
-                        <Col md={4} xs={6}>
-                            <FormItem>
-                                    <Label>规格：</Label>
-                                    <Radio.RadioGroup
-                                        selectedValue={this.state.approvalState}
-                                        {
-                                            ...getFieldProps('approvalState', {
-                                                initialValue: '',
-                                                onChange(value) {
-                                                    _this.setState({ approvalState: value });
-                                                },
-                                            })
-                                        }
-                                    >
-                                        <Radio value="0">20尺</Radio>
-                                        <Radio value="1">40尺</Radio>
-                                    </Radio.RadioGroup>
-                                </FormItem>
-                        </Col>
+                        {/*
+                            <Col md={4} xs={6}>
+                                <FormItem>
+                                        <Label>规格：</Label>
+                                        <Radio.RadioGroup
+                                            selectedValue={this.state.approvalState}
+                                            {
+                                                ...getFieldProps('approvalState', {
+                                                    initialValue: '',
+                                                    onChange(value) {
+                                                        _this.setState({ approvalState: value });
+                                                    },
+                                                })
+                                            }
+                                        >
+                                            <Radio value="0">20尺</Radio>
+                                            <Radio value="1">40尺</Radio>
+                                        </Radio.RadioGroup>
+                                    </FormItem>
+                            </Col>
+                        */}
                         {this.getCellsData().map((item, index) => {
                             let args = Object.assign(item, { index})
                             return this.RenderCells(args)
@@ -222,7 +224,7 @@ class SalesNotice extends Component {
                                 <textarea
                                         placeholder="请输入描述"
                                         {
-                                            ...getFieldProps('roleDescribe', {
+                                            ...getFieldProps('orderRemark', {
                                                 initialValue: "",
                                             }
                                         ) }

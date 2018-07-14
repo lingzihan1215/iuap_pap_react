@@ -34,7 +34,7 @@ class SearchForm extends Component {
                                 <Label>客户代号：</Label>
                                 <FormControl className='form-item' 
                                     {
-                                    ...getFieldProps('customerCode', {
+                                    ...getFieldProps('userCode', {
                                         initialValue: '',
                                         validateTrigger: 'onBlur',
                                         rules: [{
@@ -46,7 +46,7 @@ class SearchForm extends Component {
                                     }
                                 />
                                 <span className='error'>
-                                    {getFieldError('customerCode')}
+                                    {getFieldError('userCode')}
                                 </span>
                             </FormItem>
                         </Col>
