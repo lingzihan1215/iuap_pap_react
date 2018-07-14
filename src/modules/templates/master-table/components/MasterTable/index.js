@@ -94,6 +94,12 @@ export default class MasterTable extends Component {
         if (record) {
             id = record["id"];
         }
+
+        if(!btnFlag){
+            await actions.mastertable.updateState({
+                childList:[]
+            })
+        }
         actions.routing.push(
             {
                 pathname: 'master-form',

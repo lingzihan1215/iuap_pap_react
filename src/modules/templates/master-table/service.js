@@ -2,7 +2,7 @@ import request from "utils/request";
 
 //定义接口地址
 const URL = {
-    "GET_DETAIL":  `${GROBAL_HTTP_CTX}/show_off/getListWithAttach`,
+    "GET_DETAIL":  `${GROBAL_HTTP_CTX}/show_off/getAssoVo`,
     "GET_LIST":  `${GROBAL_HTTP_CTX}/show_off/getListWithAttach`,
     "SAVE_ORDER":  `${GROBAL_HTTP_CTX}/show_off/SaveAssoVo`,
     "DEL_ORDER":  `${GROBAL_HTTP_CTX}/show_off/deleteBatch`,

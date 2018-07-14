@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { actions ,connect } from "mirrorx";
+import queryString from 'query-string';
 import PaginationTable from 'components/PaginationTable';
+import options from "components/RefOption";
+import RefWithInput from 'yyuap-ref/dist2/refWithInput';
+import Form from 'bee-form';
 import { 
     InputNumber, InputGroup,FormControl, 
     Loading, 
@@ -16,6 +20,7 @@ import {
     Pagination
 } from "tinper-bee";
 
+import Select from 'bee-select';
 import DatePicker from 'bee-datepicker';
 import moment from "moment";
 import zhCN from "rc-calendar/lib/locale/zh_CN";
@@ -28,101 +33,102 @@ moment.locale('zh-cn');
 
 // console.log(moment("2017-02-13"))
 const format = "YYYY-MM-DD";
+const Option = Select.Option;
+
 let id = 0;
 class ChildTable extends Component {
     constructor(props) {
         super(props);
+        
         this.state = { 
             selectData:[],
-            column:[{
-                title: "行编号",
-                dataIndex: "id",
-                key: "id",
-                width: 100,
-                
-            },
+            editFlag:true,
+            column:[
             {
                 title: "订单编号",
-                dataIndex: "purchase_order_id",
-                key: "purchase_order_id",
-                width: 100,
-                render(record, text, index) {
+                dataIndex: "purchaseOrderId",
+                key: "purchaseOrderId",
+                width: 150,
+                /* render(record, text, index) {
                     return index + 1;
-                }
+                } */
             },
             {
                 title: "订单明细编号",
-                dataIndex: "purchase_item_id",
-                key: "purchase_item_id",
-                width: 100,
-                render: (text, record) => this.renderColumns(text, record, 'purchase_item_id')
+                dataIndex: "purchaseItemId",
+                key: "purchaseItemId",
+                width: 150,
+                render: (text, record,index) => this.renderColumns(text, record,index, 'purchaseItemId')
             },
             {
                 title: "物料编号",
-                dataIndex: "material_id",
-                key: "material_id",
-                width: 100,
-                render: (text, record) => this.renderColumns(text, record, 'material_id')
+                dataIndex: "materialId",
+                key: "materialId",
+                width: 150,
+                render: (text, record,index) => this.renderColumns(text, record,index, 'materialId')
             },
             {
                 title: "订单行号",
-                dataIndex: "order_item",
-                key: "order_item",
-                width: 100,
-                render: (text, record) => this.renderColumns(text, record, 'order_item')
+                dataIndex: "orderItem",
+                key: "orderItem",
+                width: 150,
+                render: (text, record,index) => this.renderColumns(text, record,index, 'orderItem')
             },
             {
                 title: "物料数量",
-                dataIndex: "material_qty",
-                key: "material_qty",
+                dataIndex: "materialQty",
+                key: "materialQty",
                 width: 150,
-                render: (text, record) => this.renderColumnsInputNumber(text, record, 'material_qty')
+                render: (text, record,index) => this.renderColumnsInputNumber(text, record,index, 'materialQty')
             },
             {
                 title: "物料金额",
-                dataIndex: "material_price",
-                key: "material_price",
+                dataIndex: "materialPrice",
+                key: "materialPrice",
                 width: 150,
-                render: (text, record) => this.renderColumnsInputNumber(text, record, 'material_price')
+                render: (text, record,index) => this.renderColumnsInputNumber(text, record,index, 'materialPrice')
             },
             {
                 title: "物料单价",
-                dataIndex: "price_unit",
-                key: "price_unit",
+                dataIndex: "priceUnit",
+                key: "priceUnit",
                 width: 150,
-                render: (text, record) => this.renderColumnsInputNumber(text, record, 'price_unit')
+                render: (text, record,index) => this.renderColumnsInputNumber(text, record,index, 'priceUnit')
             },
             {
                 title: "确认时间",
-                dataIndex: "confirm_time",
-                key: "confirm_time",
-                width: 200,
-                render:(text, record) => this.renderDatePicker(text, record, 'confirm_time')
+                dataIndex: "confirmTime",
+                key: "confirmTime",
+                width: 150,
+                render:(text, record,index) => this.renderDatePicker(text, record,index, 'confirmTime')
             },
             {
                 title: "确认人员",
-                dataIndex: "confirm_user",
-                key: "confirm_user",
-                width: 100,
-                // render:(text, record) => this.renderRef(text, record, 'confirm_user')
+                dataIndex: "confirmUser",
+                key: "confirmUser",
+                width: 150,
+                render:(text, record,index) => this.renderRef(text, record,index, 'confirmUser')
             },
             {
                 title: "发货状态",
-                dataIndex: "delivery_status",
-                key: "delivery_status",
-                width: 100,
+                dataIndex: "deliveryStatus",
+                key: "deliveryStatus",
+                width: 150,
+                render:(text, record,index) => this.renderSelect(text, record,index, 'deliveryStatus')
             },
             {
                 title: "发货数量",
-                dataIndex: "delivery_qty",
-                key: "delivery_qty",
-                width: 100,
+                dataIndex: "deliveryQty",
+                key: "deliveryQty",
+                width: 150,
+                render: (text, record,index) => this.renderColumnsInputNumber(text, record,index, 'deliveryQty')
             },
             {
                 title: "收货地址",
-                dataIndex: "delivery_addr",
-                key: "delivery_addr",
-                width: 100,
+                dataIndex: "deliveryAddr",
+                key: "deliveryAddr",
+                width: 150,
+                render: (text, record,index) => this.renderColumns(text, record,index, 'deliveryAddr')
             },
             {
                 title: "操作",
@@ -143,13 +149,26 @@ class ChildTable extends Component {
         };
     }
 
+    componentWillMount(){
+        // console.log("this.props",this.props);
+        // let editFlag = (btnFlag && btnFlag==2) ? false : true;
+    }
+
+    showFlag = (btnFlag) => {
+        if(btnFlag && btnFlag==2 ){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
     // 普通编辑框渲染
-    renderColumns = (text, record, column) =>{
+    renderColumns = (text, record,index, column) =>{
         return (
             <this.EditableCell
                 editable={true}
                 value={text}
-                onChange={value => this.handleChange(value, record.id, column)}
+                onChange={value => this.handleChange(value, index, column)}
             />
         );
     }
@@ -163,11 +182,12 @@ class ChildTable extends Component {
         </div>
     )
 
-    handleChange = (value, id, column)=>{
-        const newData = [this.props.childList];
-        const target = newData.filter(item => id === item.id)[0];
+    handleChange = (value, index, column)=>{
+        const newData = [...this.props.childList];
+        const target = newData.filter((item,newDataIndex) => index === newDataIndex)[0];
+        // debugger
         if (target) {
-            target[column] = parseInt(value);
+            target[column] = value;
             actions.mastertable.updateState({
                 list: newData
             });
@@ -175,12 +195,12 @@ class ChildTable extends Component {
     }
 
     //渲染数字列
-    renderColumnsInputNumber = (text, record, column) => {
+    renderColumnsInputNumber = (text, record,index, column) => {
         return (
             <this.EditableCellInputNumber
                 editable={true}
                 value={text}
-                onChange={value => this.handleChangeNumber(value, record.id, column)}
+                onChange={value => this.handleChangeNumber(value, index, column)}
             />
         );
     }
@@ -202,11 +222,13 @@ class ChildTable extends Component {
         </div>
     );
 
-    handleChangeNumber = (value, id, column)=>{
-        const newData = [this.props.childList];
-        const target = newData.filter(item => id === item.id)[0];
+    handleChangeNumber = (value, index, column)=>{
+        const newData = [...this.props.childList];
+        const target = newData.filter((item,newDataIndex) => index === newDataIndex)[0];
+        // debugger
         if (target) {
             target[column] = parseInt(value);
+            console.log("newData inputnumber"+newData);
             actions.mastertable.updateState({
                 list: newData
             });
@@ -214,12 +236,12 @@ class ChildTable extends Component {
     }
 
     // 渲染时间列
-    renderDatePicker = (text, record, column) =>{
+    renderDatePicker = (text, record,index, column) =>{
         return (
             <this.EditableCellDatePicker
                 editable={true}
                 value={text}
-                onChange={value => this.handleChangeDate(value, record.id, column)}
+                onChange={value => this.handleChangeDate(value, index, column)}
             />
         )
     }
@@ -242,18 +264,125 @@ class ChildTable extends Component {
         </div>
     )
 
-    handleChangeDate = (value, record, column)=> {
-        console.log("date",value.toISOString());
-        const newData = [...this.props.list];
-        const target = newData.filter(item => id === item.id)[0];
+    handleChangeDate = (value, index, column)=> {
+        // console.log("date",value.toISOString());
+        const newData = [...this.props.childList];
+        const target = newData.filter((item,newDataIndex) => index === newDataIndex)[0];
+        // debugger
         if (target) {
             target[column] = value.toISOString();
+            console.log("newData date",newData)
             actions.mastertable.updateState({
                 list: newData
             });
         }
     }
 
+    // 渲染参照
+    renderRef = (text, record,index, column) => {
+        let self = this;
+        return (
+            <this.EditableCellRef
+                editable={true}
+                value={text}
+                index={index}
+                self = {self}
+                fieldKey = {column}
+                // onChange={value => this.handleChangeNumber(value, record.id, column)}
+            />
+        );
+    }
+    
+    EditableCellRef = ({ editable, value ,index,self, fieldKey}) =>(
+        <div>
+            {console.log(this.props.form)}
+            {
+                editable?(
+                    <RefWithInput disabled={false} option={Object.assign(JSON.parse(options), {
+                        title: '',
+                        refType: 5,//1:树形 2.单表 3.树卡型 4.多选 5.default
+                        className: '',
+                        param: {//url请求参数
+                            refCode: 'common_ref',
+                            tenantId: '',
+                            sysId: '',
+                            transmitParam: 'EXAMPLE_CONTACTS,EXAMPLE_ORGANIZATION',
+                        },
+                        keyList: [],//选中的key
+                        onSave: function (sels) {
+                            console.log('sels',sels);
+                            const showData = sels.map(v => v.peoname)
+                            var temp = sels.map(v => v.key)
+                            console.log("temp", temp);
+                            /* self.setState({
+                                refKeyArray: temp,
+                            }) */
+                            console.log("index",index);
+                            const newData = [...self.props.childList];
+                            const target = newData.filter((item,newDataIndex) => index === newDataIndex)[0];
+                            if (target) {
+                                /* let tempConfirmUserName = target.confirmUserName;
+                                if(tempConfirmUserName) {
+                                    delete target.confirmUserName;
+                                } */
+                                target[fieldKey] = temp.join();
+                                actions.mastertable.updateState({
+                                    list: newData
+                                });
+                            }
+                        },
+                        showKey: 'peoname',
+                        verification: true,//是否进行校验
+                        verKey: fieldKey,//校验字段
+                        verVal: value
+                    })} form={this.props.form} />
+               ) 
+               :value
+            }
+        </div>
+        
+    )
+
+    // 渲染下拉框
+    renderSelect = (text, record,index, column) => {
+        return (
+            <this.EditableCellSelect
+                editable={true}
+                value={text}
+                onSelect={value => this.handleTableSelect(value, index, column)}
+            />
+        );
+    }
+
+    EditableCellSelect = ({editable,value,onSelect}) =>(
+        <div>
+            {editable
+                ? (
+                    <Select
+                        defaultValue = '0'
+                        onSelect = {value=>onSelect(value)}
+                        >
+                        <Option value="0">未发货</Option>
+                        <Option value="1">已发货</Option>
+                    </Select>
+                )
+                : value
+            }
+        </div>
+    )
+
+    handleTableSelect = (value, index, column)=> {
+        const newData = [...this.props.list];
+        const target = newData.filter((item,newDataIndex) => index === newDataIndex)[0];
+        if (target) {
+            target[column] = value;
+            actions.mastertable.updateState({
+                list: newData
+            });
+        }
+    }
+
+    // 分页选择信息
     handleSelect = ()=>{
 
     }
@@ -267,19 +396,18 @@ class ChildTable extends Component {
     onAddEmptyRow = ()=>{
         let tempArray = [...this.props.childList],
             emptyRow = {
-                id:id++,
-                purchase_order_id:"123",
-                purchase_item_id:123,
-                material_id:'123',
-                order_item:'234',
-                material_qty:456,
-                material_price:252,
-                price_unit:'773',
-                confirm_time:'2017-02-21',
-                confirm_user:'abc',
-                delivery_status:'已发货',
-                delivery_qty:'234',
-                delivery_addr:'用友'
+                purchaseOrderId:"123",
+                purchaseItemId:123,
+                materialId:'123',
+                orderItem:'234',
+                materialQty:'456',
+                materialPrice:'252',
+                priceUnit:'773',
+                confirmTime:'2017-02-21',
+                confirmUser:'abc',
+                deliveryStatus:'1',
+                deliveryQty:'234',
+                deliveryAddr:'用友'
             };
             tempArray.push(emptyRow);
             console.log("tempArray",tempArray);
@@ -339,4 +467,4 @@ class ChildTable extends Component {
     }
 }
 
-export default connect( state => state.mastertable, null ) (ChildTable);
+export default connect( state => state.mastertable, null )(Form.createForm()(ChildTable));

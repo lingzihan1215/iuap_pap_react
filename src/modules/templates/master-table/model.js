@@ -34,6 +34,7 @@ export default {
         childPageSize:10,
         childTotalPages:1,
 
+        refKeyArray:[],     //参照
         detail:{},
         searchParam:{},
         validateNum:99,//不存在的step
@@ -142,7 +143,8 @@ export default {
             actions.mastertable.updateState({
               showLoading:true
             })
-            let res=processData(await api.saveMasterForm(param),'保存成功');
+            let res=await api.saveMasterForm(param);
+            console.log("保存信息",res);
             if(res){
                window.history.go(-1);
             }
@@ -152,8 +154,21 @@ export default {
         },
 
         async queryDetail(param,getState) {
-            let res=processData(await api.getDetail(param),'');
-            return  res.content[0];
+            let {data:{detailMsg}}=await api.getDetail(param);
+            let childData = detailMsg.showOffDetailList
+            console.log("showOffDetailList",childData);
+            let tempArray = [];
+            if(childData) {
+                tempArray = childData.map((item)=>{
+                    let temp = Object.assign({},item);
+                    item.confirmUser = item.confirmUserName
+                })
+            }
+            
+            await actions.mastertable.updateState({
+                childList:childData
+            })
+            return  detailMsg.entity;
         }
     }
 };

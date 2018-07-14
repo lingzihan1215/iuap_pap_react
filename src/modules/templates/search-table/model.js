@@ -44,6 +44,7 @@ export default {
          * @param {*} data
          */
         updateState(state, data) { //更新state
+            console.log("当前state",state,"即将更新data",data)
             return {
                 ...state,
                 ...data
