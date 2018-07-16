@@ -74,6 +74,7 @@ class MasterForm extends Component {
             if (err) {
                 Message.create({ content: '数据填写错误', color: 'danger' });
             } else {
+                console.log("init value:"+JSON.stringify(values));
                 let { rowData, refKeyArray } = this.state;
                 if (rowData && rowData.id) {
                     values.id = rowData.id;
@@ -81,13 +82,23 @@ class MasterForm extends Component {
                 }
                 values.petId = refKeyArray.join();
                 let {childList,cacheArray} = this.props;
+                console.log('save childList',childList)
+                console.log('save cacheArray',cacheArray)
                 // 编辑保存但是未修改参照,修改参照字段为参照id数组
                 if(childList) {
                     childList.map((item,index)=>{
-                        let temp = item.confirmUserName;
+                        // 判断参照值是否有改动
+                        let temp = item["confirmUser"+index];
+                        let tempConfirmUser = item['confirmUser'];
+                        let tempConfirmUserName = item['confirmUserName']
                         if(temp){
-                            item.confirmUser = cacheArray[index].confirmUser
+                            // 参照有改动
+                            item.confirmUser = temp;
+                        }else if(tempConfirmUserName ){
+                            // 参照无改动
+                            item.confirmUser = cacheArray[index].confirmUser;
                         }
+
                     })
                 }
                 let commitData = {
@@ -101,9 +112,23 @@ class MasterForm extends Component {
             }
         });
     }
-    cancel = () => {
+/*     cancel = () => {
+        actions.mastertable.updateState({
+            childList: [],
+            cacheArray:[]
+        })
+        window.history.go(-1);
+    } */
+
+    onBack = async ()=>{
+        console.log("进入返回事件");
+        await actions.mastertable.updateState({
+            childList: [],
+            cacheArray:[]
+        })
         window.history.go(-1);
     }
+
     // 跳转到流程图
     onClickToBPM = (rowData) => {
         console.log("actions", actions);
@@ -182,16 +207,6 @@ class MasterForm extends Component {
         }
     }
 
-    // 标签切换
-    taskSwitch = flag => {
-        return ()=>{
-            actions.mastertable.updateState({childPageFlag:flag})
-        }
-    }
-
-    onAddEmptyRow = ()=>{
-
-    }
 
     render() {
         const self = this;
@@ -200,9 +215,6 @@ class MasterForm extends Component {
         btnFlag = Number(btnFlag);
         let { rowData, refKeyArray,column } = this.state;
         let title = this.onChangeHead(btnFlag);
-        // 任务分解与附件信息切换标识
-        let {childPageFlag} = this.props;
-        // console.log("detailData", rowData);
         let { petId, quantity, shipDate, status, complete, } = rowData;
         const { getFieldProps, getFieldError } = this.props.form;
         let optionpetId = {
@@ -261,10 +273,10 @@ class MasterForm extends Component {
                     loadingType="line"
                     show={this.props.showLoading}
                 />
-                <Header title={title} back={true}>
+                <Header title={title} back={true} backFn={this.onBack}>
                     {(btnFlag < 2) ? (
                         <div className='head-btn'>
-                            <Button className='head-cancel' onClick={this.cancel}>取消</Button>
+                            <Button className='head-cancel' onClick={this.onBack}>取消</Button>
                             <Button className='head-save' onClick={this.save}>保存</Button>
                         </div>
                     ) : ''}
@@ -409,21 +421,11 @@ class MasterForm extends Component {
                 </Row>
                 <div className="master-tag">
                     <div className="childhead">
-                        <span className={childPageFlag?"workbreakdown":"annexinfo"} onClick={this.taskSwitch(true)}>任务分解</span>
-                        <span className={childPageFlag?"annexinfo":"workbreakdown"} onClick={this.taskSwitch(false)}>附件信息</span>
+                        <span className="workbreakdown" >任务分解</span>
                     </div>
                 </div>
-                {
-                    function (childPageFlag){
-                        if(childPageFlag){
-                            return (
-                                <div>
-                                    <ChildTable />
-                                </div>
-                            )
-                        }
-                    }(childPageFlag)
-                }
+                
+                <ChildTable />
             </div>
         )
     }

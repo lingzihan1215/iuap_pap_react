@@ -23,23 +23,22 @@ export default {
     initialState: {
         rowData:{},
         showLoading:false,
-        list: [],
-        childList:[],
+        list: [],              //主表
         orderTypes:[],
-        pageIndex:1, //主表
+        pageIndex:1,           
         pageSize:10,
         totalPages:1,
-
-        childPageIndex:1, //子表
+        
+        childList:[],          //子表
+        cacheArray:[],         //缓存数据
+        childPageIndex:1, 
         childPageSize:10,
         childTotalPages:1,
 
-        refKeyArray:[],     //参照
         detail:{},
         searchParam:{},
         validateNum:99,//不存在的step
         btnFlag:0,
-        childPageFlag:true
     },
     reducers: {
         /**
@@ -149,24 +148,38 @@ export default {
                window.history.go(-1);
             }
             actions.mastertable.updateState({
-              showLoading:false
+              showLoading:false,
+
             });
         },
 
         async queryDetail(param,getState) {
+            await actions.mastertable.updateState({childList:[]});
             let {data:{detailMsg}}=await api.getDetail(param);
-            let childData = detailMsg.showOffDetailList
+            let childData = [...detailMsg.showOffDetailList] ;
+            let cacheArray = [...detailMsg.showOffDetailList];
+            console.log('cacheArray',cacheArray);
             console.log("showOffDetailList",childData);
             let tempArray = [];
             if(childData) {
-                tempArray = childData.map((item)=>{
+                childData.map((item)=>{
                     let temp = Object.assign({},item);
+                    tempArray.push(temp);
+                    // item.confirmUser = temp.confirmUserName
+                })
+            }
+
+            if(tempArray) {
+                tempArray.map((item)=>{
                     item.confirmUser = item.confirmUserName
                 })
             }
             
+            console.log("model tempArray",tempArray);
+
             await actions.mastertable.updateState({
-                childList:childData
+                childList:tempArray,
+                cacheArray:cacheArray
             })
             return  detailMsg.entity;
         }
