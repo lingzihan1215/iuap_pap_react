@@ -18,18 +18,21 @@ class CustomerInfo extends Component {
             saleValue, specialLiabilities, overdue, unmadeDelivery, 
             creditDisclosure, tax
         } = this.props.customerCredit;
-        return [
-            { name: "客户简称", codeName: "userName", value: userName },
-            { name: "信用额度", codeName: "creditLine", value: creditLine },
-            { name: "授信总额", codeName: "totalCredit", value: totalCredit },
-            { name: "应收账款", codeName: "accountsReceivable", value: accountsReceivable },
-            { name: "销售值", codeName: "saleValue", value: saleValue },
-            { name: "特殊负债", codeName: "specialLiabilities", value: specialLiabilities },
-            { name: "应收逾期", codeName: "overdue", value: overdue },
-            { name: "未结交货", codeName: "unmadeDelivery", value: unmadeDelivery },
-            { name: "授信揭露", codeName: "creditDisclosure", value: creditDisclosure },
-            { name: "税率", codeName: "tax", value: tax }
+
+        let celldata = [
+            { name: "客户简称", codeName: "userName", value: userName || "" },
+            { name: "信用额度", codeName: "creditLine", value: creditLine || "" },
+            { name: "授信总额", codeName: "totalCredit", value: totalCredit || "" },
+            { name: "应收账款", codeName: "accountsReceivable", value: accountsReceivable || "" },
+            { name: "销售值", codeName: "saleValue", value: saleValue || "" },
+            { name: "特殊负债", codeName: "specialLiabilities", value: specialLiabilities || "" },
+            { name: "应收逾期", codeName: "overdue", value: overdue || "" },
+            { name: "未结交货", codeName: "unmadeDelivery", value: unmadeDelivery || "" },
+            { name: "授信揭露", codeName: "creditDisclosure", value: creditDisclosure || "" },
+            { name: "税率", codeName: "tax", value: tax || "" }
         ]
+
+        return celldata;
     } 
     
     RenderCells({ name, codeName, value, index }) {
@@ -44,7 +47,7 @@ class CustomerInfo extends Component {
                     <FormControl className='form-item' disabled={true}
                         {
                             ...getFieldProps(codeName, {
-                                initialValue: value || '',
+                                initialValue: value || ''
                             })
                         }
                     />
@@ -52,19 +55,25 @@ class CustomerInfo extends Component {
             </Col>
         )
     } 
-   
+    renderFormList = () => {
+        let _this = this;
+
+        return this.getCellsData().map((item, index) => {
+            let args = Object.assign(item, {index})
+            
+            return _this.RenderCells(args)
+        })
+    }
     render(){
-       
         return (
             <div className="edit-panel">
                 <CommonTitle title="客户信用资料" type="uf-building" />
                 <Row className='edit-body'>
-                    {this.getCellsData().map((item, index) => {
-                        let args = Object.assign(item, {index})
-                        return this.RenderCells(args)
-                    })}
+                    { 
+                        this.renderFormList()
+                        /* this.renderFormList() */
+                    }
                 </Row>
-                
             </div>
         )
     }

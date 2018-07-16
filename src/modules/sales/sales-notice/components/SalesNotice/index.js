@@ -22,7 +22,12 @@ class SalesNotice extends Component {
         this.state = {
             formData: {},
             checked: true,
-            approvalState: ""
+            approvalState: "",
+            wharf: [
+                { key: "001", value: "天津港"},
+                { key: "002", value: "大连码头"},
+                { key: "003", value: "青岛港"}
+            ]
         }
     }
    
@@ -131,8 +136,6 @@ class SalesNotice extends Component {
     render(){
         const { getFieldProps, getFieldError } = this.props.form;
         let _this = this;
-        let wharf = this.props.SaleOrder && this.props.SaleOrder.wharf || [];
-
         return (
             <div className="sales-notice">
                 <Header title="销货通知单" back={true}>
@@ -141,7 +144,7 @@ class SalesNotice extends Component {
                     </div>
                 </Header>
                 <SearchForm {...this.props} />
-                <CustomerInfo customerInfo={ this.props.customerInfo } />
+                <CustomerInfo {...this.props} />
                 <div className="edit-sales-form common-panel edit-panel">
                     <CommonTitle title="销货通知单信息填写" type="uf-pencil-c" />
                     <Row className="edit-body">
@@ -183,7 +186,7 @@ class SalesNotice extends Component {
                                     })
                                 }>
                                     {
-                                        wharf.map(item => <Option key={item.key} value={item.key}>{item.value}</Option> )
+                                        this.state.wharf.map(item => <Option key={item.key} value={item.key}>{item.value}</Option> )
                                     }
                                 </Select>
                                 <span className='error'>

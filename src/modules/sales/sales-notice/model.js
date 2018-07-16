@@ -5,19 +5,20 @@ import { processData } from 'utils';
 export default {
     name: "salesNotice",
     initialState: {
-        customerCredit: {
-            userName: "",
-            creditLine: "",
-            totalCredit: "",
-            saleValue: "",
-            accountsReceivable: "",
-            specialLiabilities: "",
-            unmadeDelivery: "",
-            tax: "",
-            overdue: "",
-            creditDisclosure: ""
-        },
-        saleOrder: {},
+        // // customerCredit: {
+        // userName: "",
+        // creditLine: "",
+        // totalCredit: "",
+        // saleValue: "",
+        // accountsReceivable: "",
+        // specialLiabilities: "",
+        // unmadeDelivery: "",
+        // tax: "",
+        // overdue: null,
+        // creditDisclosure: null,
+        // // },
+        // // saleOrder: {},
+        customerCredit: {},
         rowData:{},
         showLoading:false,
         list: [],
@@ -26,7 +27,7 @@ export default {
         pageSize:10,
         totalPages:1,
         selectData: [],
-        searchParam: {},
+        // searchParam: {},
         tableEditedData: []
     },
     reducers: {
@@ -39,14 +40,25 @@ export default {
     },
     effects: {
         async searchCustomerInfo(param, getState){
-            let res = processData(await api.getSalesInfo(param));
+            let { customerCredit, customerCreditDetailList} = processData(await api.getSalesInfo(param));
+            // let { userName, creditLine,totalCredit,saleValue,accountsReceivable,
+            //     specialLiabilities, unmadeDelivery, tax,overdue,creditDisclosure} = customerCredit;
 
             actions.salesNotice.updateState({
-                CustomerCredit: res.CustomerCredit,
-                list: res.content,
-                SaleOrder: res.SaleOrder,
-                totalPages: res.totalPages
+                // userName,
+                // creditLine,
+                // totalCredit,
+                // saleValue,
+                // accountsReceivable,
+                // specialLiabilities,
+                // unmadeDelivery,
+                // tax,
+                // overdue,
+                // creditDisclosure,
+                customerCredit: customerCredit,
+                list: customerCreditDetailList
             })
+
         },
         
         async postAllData(param, getState){

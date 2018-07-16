@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development uba server --chunks ",
     "test": "cross-env NODE_ENV=production uba server --chunks ",
-    "build": "cross-env NODE_ENV=production uba build -p",
+    "build": "cross-env NODE_ENV=production uba build",
     "sanyinstall": "npm install --registry http://bdp.sany.com.cn/nexus3/repository/sany-npm-group"
   },
   "author": "yonyou fed team",
