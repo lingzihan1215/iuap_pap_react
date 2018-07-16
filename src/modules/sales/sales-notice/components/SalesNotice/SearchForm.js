@@ -15,6 +15,7 @@ class SearchForm extends Component {
         }
     }
     search = (err, values) => {
+        actions.salesNotice.updateState({search_id: values.search_id});
         actions.salesNotice.searchCustomerInfo({search_id: values.search_id});
     }
     render(){

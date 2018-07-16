@@ -98,9 +98,6 @@ export default class EditSalesTable extends Component {
             tableEditedData: curData
         });
     }
-    /**
-     * 拿到所选中的表格数据
-     */
     onTableSelectedData = data => {
         this.setState({
             tableSelectedData: data

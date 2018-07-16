@@ -87,7 +87,7 @@ class EditSalesForm extends Component {
                 Message.create({ content: '请继续完善信息', color: 'warning' });
                 return ;
             }
-            values.voucherDate = values.voucherDate.format('YYYY-MM-DD')
+            values.settlementTime = values.settlementTime.format('YYYY-MM-DD')
 
             _this.getFormData(values)
         })

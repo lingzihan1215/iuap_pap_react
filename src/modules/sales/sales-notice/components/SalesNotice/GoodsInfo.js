@@ -136,7 +136,7 @@ export default class GoodsInfo extends Component {
                     children={ 
                         <div className="head-btn" style={{marginLeft: "10px"}}>
                             <Button className='head-save' onClick={() => this.editTable("add")}>添加</Button>
-                            <Button onClick={() => () => this.editTable("cancel")}>取消</Button>
+                            <Button onClick={() => this.editTable("cancel")}>取消</Button>
                         </div>
                     } 
                 />

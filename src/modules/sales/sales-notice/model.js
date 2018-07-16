@@ -14,7 +14,8 @@ export default {
         pageSize:10,
         totalPages:1,
         selectData: [],
-        tableEditedData: []
+        tableEditedData: [],
+        search_id: ""
     },
     reducers: {
         updateState(state, data) { 
@@ -27,20 +28,8 @@ export default {
     effects: {
         async searchCustomerInfo(param, getState){
             let { customerCredit, customerCreditDetailList} = processData(await api.getSalesInfo(param));
-            // let { userName, creditLine,totalCredit,saleValue,accountsReceivable,
-            //     specialLiabilities, unmadeDelivery, tax,overdue,creditDisclosure} = customerCredit;
-
+        
             actions.salesNotice.updateState({
-                // userName,
-                // creditLine,
-                // totalCredit,
-                // saleValue,
-                // accountsReceivable,
-                // specialLiabilities,
-                // unmadeDelivery,
-                // tax,
-                // overdue,
-                // creditDisclosure,
                 customerCredit: customerCredit,
                 list: customerCreditDetailList
             })
@@ -48,9 +37,12 @@ export default {
         },
         
         async postAllData(param, getState){
+           
             return await api.createSalesNotice({
-                table: param.tableEditedData,
-                form: param.formData
+                sublist: {
+                    saleOrderDetailList: param.tableEditedData,
+                    entity: { ...param.formData, "id": getState().salesNotice.search_id}
+                }
             })
         }
     }
