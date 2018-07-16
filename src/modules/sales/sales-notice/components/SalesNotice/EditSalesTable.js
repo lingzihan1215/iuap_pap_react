@@ -18,20 +18,20 @@ export default class EditSalesTable extends Component {
         this.columns = [
             {
                 title: "订单号码",
-                dataIndex: "supplierCode",
-                key: "supplierCode",
+                dataIndex: "orderCode",
+                key: "orderCode",
                 width: 100
             },
             {
                 title: "主要产品",
-                dataIndex: "mainProducts",
-                key: "mainProducts",
+                dataIndex: "product",
+                key: "product",
                 width: 100
             },
             {
-                title: "货号",
-                dataIndex: "turnover",
-                key: "turnover",
+                title: "订单项次",
+                dataIndex: "orderTerms",
+                key: "orderTerms",
                 width: 100
             }, 
             {

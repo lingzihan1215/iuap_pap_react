@@ -69,10 +69,7 @@ class CustomerInfo extends Component {
             <div className="edit-panel">
                 <CommonTitle title="客户信用资料" type="uf-building" />
                 <Row className='edit-body'>
-                    { 
-                        this.renderFormList()
-                        /* this.renderFormList() */
-                    }
+                    { this.renderFormList() }
                 </Row>
             </div>
         )

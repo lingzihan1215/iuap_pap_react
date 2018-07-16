@@ -5,19 +5,6 @@ import { processData } from 'utils';
 export default {
     name: "salesNotice",
     initialState: {
-        // // customerCredit: {
-        // userName: "",
-        // creditLine: "",
-        // totalCredit: "",
-        // saleValue: "",
-        // accountsReceivable: "",
-        // specialLiabilities: "",
-        // unmadeDelivery: "",
-        // tax: "",
-        // overdue: null,
-        // creditDisclosure: null,
-        // // },
-        // // saleOrder: {},
         customerCredit: {},
         rowData:{},
         showLoading:false,
@@ -27,7 +14,6 @@ export default {
         pageSize:10,
         totalPages:1,
         selectData: [],
-        // searchParam: {},
         tableEditedData: []
     },
     reducers: {

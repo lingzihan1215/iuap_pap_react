@@ -41,10 +41,7 @@ export default class GoodsInfo extends Component {
                 key: "orderCode",
                 width: 250,
                 className:"td-detail",
-                onCellClick: (record) => this.cellClick(record,2),
-                render(record, text, index) {
-                    return <a href="">{text}</a>;
-                }
+                onCellClick: (record) => this.cellClick(record,2)
             },
             {
                 title: "订单项次",
@@ -75,47 +72,25 @@ export default class GoodsInfo extends Component {
                 dataIndex: "livelihoods",
                 key: "livelihoods",
                 width: 250
-            },
-            {
-                title: "操作",
-                dataIndex: "d",
-                key: "d",
-                width:100,
-                // fixed: "right",
-                render(text, record, index) {
-                    return (
-                        <div className='operation-btn'>
-                            <i size='sm' className='uf uf-search edit-btn' onClick={() => { self.cellClick(record,2) }}></i>
-                            <i size='sm' className='uf uf-pencil edit-btn' onClick={() => { self.cellClick(record,1) }}></i>
-                            <i size='sm' className='uf uf-del del-btn' onClick={() => { self.delItem(record, index) }}></i>
-                        </div>
-                    )
-                }
             }
         ]
     }
   
     cellClick = async (record,btnFlag) => {
-        await actions.salesNotice.updateState({
-            rowData : record,
-        });
+        // await actions.salesNotice.updateState({
+        //     rowData : record,
+        // });
 
-        let id = "";
-        if(record){
-            id = record["id"];
-        }
-        actions.routing.push(
-            {
-                pathname: 'example-edit',
-                search:`?search_id=${id}&btnFlag=${btnFlag}`
-            }
-        )
-    }
-    delItem = (record, index) => {
-        actions.salesNotice.delItem({
-            param: [record],
-            index: index
-        });
+        // let id = "";
+        // if(record){
+        //     id = record["id"];
+        // }
+        // actions.routing.push(
+        //     {
+        //         pathname: 'example-edit',
+        //         search:`?search_id=${id}&btnFlag=${btnFlag}`
+        //     }
+        // )
     }
     onTableSelectedData = data => {
         this.setState({
@@ -132,14 +107,27 @@ export default class GoodsInfo extends Component {
             pageIndex: value
         })
     }
-    editTable = () => {
+    editTable = (action) => {
         let data = this.state.tableSelectedData
-        actions.salesNotice.updateState({selectData: data})
+        let buf = [];
+
+        if( action == "add") {
+            actions.salesNotice.updateState({selectData: data})
+        } else {
+            let cancelData = this.props.list.filter((item, index) => {
+                data.forEach(i => {
+                    if(i.id != item.id) {
+                        buf.push(item)
+                    }
+                })
+            })
+            actions.salesNotice.updateState({selectData: buf})
+        }
     }
     render(){
         const self = this;
         let { list, showLoading, pageIndex, pageSize, totalPages } = this.props;
-
+        
         return (
             <div className='common-panel'>
                 <CommonTitle 
@@ -147,7 +135,8 @@ export default class GoodsInfo extends Component {
                     type="uf-listsearch"
                     children={ 
                         <div className="head-btn" style={{marginLeft: "10px"}}>
-                            <Button className='head-save' onClick={this.editTable}>修改产品明细</Button>
+                            <Button className='head-save' onClick={() => this.editTable("add")}>添加</Button>
+                            <Button onClick={() => () => this.editTable("cancel")}>取消</Button>
                         </div>
                     } 
                 />
@@ -162,7 +151,7 @@ export default class GoodsInfo extends Component {
                     onTableSelectedData={this.onTableSelectedData}
                     onPageSizeSelect={this.onPageSizeSelect}
                     onPageIndexSelect={this.onPageIndexSelect}
-                    scroll={{ x: 1300, y: 200}}
+                    scroll={{ x: 1200, y: 200}}
                 />
             </div>
 

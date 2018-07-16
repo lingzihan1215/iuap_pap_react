@@ -1,34 +1,37 @@
 import React, { Component } from 'react';
 import { actions } from 'mirrorx';
-
 import Form from 'bee-form';
-import { Col, Row, FormControl, Label, Select, Radio, Switch } from "tinper-bee";
+import { Col, Row, FormControl, Label, Select, Radio, Switch, Button, Message } from "tinper-bee";
 const FormItem = Form.FormItem;
 import moment from 'moment';
 import DatePicker from 'bee-datepicker';
 import 'bee-datepicker/build/DatePicker.css';
-import CommonTitle from '../CommonTitle/index';
+import classNames from 'classnames'
 
 class EditSalesForm extends Component {
     constructor(props){
         super(props)
         this.state = {
-            checked: true
+            enableFlag: true
         }
+        this.wharf = [
+            { key: "001", value: "天津港"},
+            { key: "002", value: "大连码头"},
+            { key: "003", value: "青岛港"}
+        ]
     }
     getCellsData(){
         const { getFieldProps, getFieldError } = this.props.form;
         let _this = this;
 
         return [
-            { name: "船名", codeName: "customerName" },
-            { name: "航次", codeName: "edu" },
-            { name: "码头", codeName: "customerName" },
-            { name: "20尺", codeName: "customerName" },
-            { name: "40尺", codeName: "customerName" },
-            { name: "散装", codeName: "customerName" },
-            { name: "CFS", codeName: "customerName" },
-            { name: "SAO", codeName: "customerName" },
+            { name: "船名", codeName: "shipName" },
+            { name: "航次", codeName: "flightNum" },
+            { name: "联络人", codeName: "liaisons" },
+            { name: "船公司", codeName: "shipCompany" },
+            { name: "电话", codeName: "phone" },
+            { name: "目的港", codeName: "destinationPort" },
+            // { name: "SAO", codeName: "customerName" },
             { name: "中午前结算", codeName: "isSettlement", children: () => {
                 return (
                     <Switch
@@ -46,16 +49,7 @@ class EditSalesForm extends Component {
                         }
                     />
                 )
-            } },
-            { name: "联络人", codeName: "customerName" },
-            { name: "电话", codeName: "customerName" },
-            { name: "目的港", codeName: "customerName" },
-            { name: "每船限重", codeName: "customerName" },
-            { name: "公证行", codeName: "customerName" },
-            { name: "领货地点", codeName: "customerName" },
-            { name: "领货号码", codeName: "customerName" },
-            { name: "交货地点", codeName: "customerName" },
-            { name: "揽货公司", codeName: "customerName" }
+            } }
         ]
     } 
     
@@ -67,7 +61,7 @@ class EditSalesForm extends Component {
                 <FormItem>
                     <Label>{name}：</Label>
                     { (typeof children == "function") ? children() : (
-                        <FormControl className="form-item"
+                        <FormControl className="form-item" disabled={this.state.enableFlag}
                             {
                                 ...getFieldProps(codeName, {
                                     initialValue: ''
@@ -82,34 +76,109 @@ class EditSalesForm extends Component {
             </Col>
         )
     } 
-   
+    /**
+     * 获取填写的销货通知单表单信息的数据
+     */
+    saveForm(){
+        let _this = this;
+
+        this.props.form.validateFields((error,values)=>{
+            if(error) {
+                Message.create({ content: '请继续完善信息', color: 'warning' });
+                return ;
+            }
+            values.voucherDate = values.voucherDate.format('YYYY-MM-DD')
+
+            _this.getFormData(values)
+        })
+    }
+    /**
+     * 获取所有数据，执行提交保存操作
+     */
+    async getFormData(values){
+        let tableEditedData = this.props.tableEditedData;
+
+        if(tableEditedData && tableEditedData.length) {
+            let result = await actions.salesNotice.postAllData({
+                formData: values,
+                tableEditedData
+            });
+            
+            if (result.data.success) {
+                Message.create({ content: '保存成功', color: 'success' });
+            }
+        } else {
+            Message.create({ content: '请完善销货单明细信息', color: 'warning' });
+        } 
+    }
+    /**
+     * 设置是否可编辑的状态位
+     */
+    setEnableFlag = () => {
+        this.setState({
+            enableFlag: !this.state.enableFlag
+        })
+    }
+    /**
+     * 设置按钮样式和显示隐藏
+     */
+    setButtonStyles = () => {
+        return {
+            createBtnStyles: classNames({ 
+                'btn-sales-create': this.state.enableFlag,
+                'btn-sales-create-disable': !this.state.enableFlag
+             }),
+             handlerBtnStyles: classNames({ 
+                'is-btn-show': this.state.enableFlag,
+                'btn-handler': true
+             })
+        }
+    }
     render(){
         const { getFieldProps, getFieldError } = this.props.form;
+        let _this = this;
+        let { createBtnStyles, handlerBtnStyles } = this.setButtonStyles();
+        let setEnableFlag = this.state.setEnableFlag;
+        let btnDisabledFlag = !setEnableFlag ? "disabled" : "";
 
         return (
             <div className="edit-sales-form common-panel edit-panel">
-                <CommonTitle title="销货通知单信息填写" type="uf-pencil-c" />
+                <div className="form-handler-aria">
+                    <Button 
+                        btnDisabledFlag
+                        className={createBtnStyles}
+                        onClick={this.setEnableFlag.bind(this)}>建立销货通知单</Button>
+                    <Button 
+                        className={handlerBtnStyles}
+                        onClick={this.saveForm.bind(this)}>保存</Button>
+                    <Button 
+                        className={handlerBtnStyles}
+                        onClick={this.setEnableFlag.bind(this)}>取消</Button>
+                </div>
                 <Row className="edit-body">
                     <Col md={4} xs={6}>
                         <FormItem>
-                            <Label>销货单号：</Label>
-                            <FormControl className="form-item"
+                            <Label>销货单号：</Label><span className='mast'>*</span>
+                            <FormControl className="form-item" disabled={this.state.enableFlag}
                                 {
-                                ...getFieldProps('customerCode', {
+                                ...getFieldProps('orderNo', {
                                     initialValue: '',
-                                    rules: [{ }]
+                                    rules: [{required: true,message: "请输入单号"}]
                                 })
                                 }
                             />
+                            <span className='error'>
+                                {getFieldError('orderNo')}
+                            </span>
                         </FormItem>
                     </Col>
                     <Col md={4} xs={6}>
                         <FormItem>
-                                <Label className='time'>结算日：</Label><span className='mast'>*</span>
-                                <DatePicker className="form-item" format={'YYYY-MM-DD'}
+                                <Label className='time'>出货结算日：</Label><span className='mast'>*</span>
+                                <DatePicker className="form-item" format={'YYYY-MM-DD'}  disabled={this.state.enableFlag}
                                     {
-                                        ...getFieldProps('voucherDate', {
-                                            initialValue: '',
+                                        ...getFieldProps('settlementTime', {
+                                            initialValue: moment(),
                                         })
                                     }
                                 />
@@ -117,26 +186,25 @@ class EditSalesForm extends Component {
                     </Col>
                     <Col md={4} xs={6}>
                         <FormItem>
-                            <Label>船公司：</Label><span className='mast'>*</span>
-                            <Select className='form-item' {
-                                ...getFieldProps('transportation', {
+                            <Label>码头：</Label><span className='mast'>*</span>
+                            <Select className='form-item' disabled={this.state.enableFlag}  {
+                                ...getFieldProps('wharf', {
                                     initialValue: '',
                                     rules: [{required: true,message: "请输入船公司名称"}]
                                 })
                             }>
-                                <Option value="0">中船重工</Option>
-                                <Option value="1">大连航运</Option>
-                                <Option value="2">铁路</Option>
-                                <Option value="3">航空</Option>
+                                {
+                                    this.wharf.map(item => <option key={item.key} value={item.key}>{item.value}</option> )
+                                }
                             </Select>
                             <span className='error'>
-                                {getFieldError('customerCode')}
+                                {getFieldError('wharf')}
                             </span>
                         </FormItem>
                     </Col>
-                    {this.getCellsData().map((item, index) => {
-                        let args = Object.assign(item, { index})
-                        return this.RenderCells(args)
+                    {_this.getCellsData().map((item, index) => {
+                        let args = {...item, index};
+                        return _this.RenderCells(args)
                     })}
                 </Row>
                 <Row>
@@ -145,8 +213,9 @@ class EditSalesForm extends Component {
                         <FormItem>
                             <textarea
                                     placeholder="请输入描述"
+                                    disabled={this.state.enableFlag}
                                     {
-                                        ...getFieldProps('roleDescribe', {
+                                        ...getFieldProps('orderRemark', {
                                             initialValue: "",
                                         }
                                     ) }
@@ -159,4 +228,4 @@ class EditSalesForm extends Component {
     }
 }
 
-export default Form.createForm()(EditSalesForm)
+export default Form.createForm()(EditSalesForm) 
