@@ -68,7 +68,7 @@ class MasterForm extends Component {
 
     }
     save = () => {//保存
-        this.props.form.validateFields((err, values) => {
+        this.props.form.validateFields(async (err, values) => {
             values.attachment = this.state.fileNameData;
             values.complete = Boolean(values.complete);
             if (err) {
@@ -81,14 +81,14 @@ class MasterForm extends Component {
                     values.ts = rowData.ts;
                 }
                 values.petId = refKeyArray.join();
-                let {childList,cacheArray} = this.props;
-                console.log('save childList',childList)
-                console.log('save cacheArray',cacheArray)
+                let {childList,cacheArray,delArray} = this.props;
+                
                 // 编辑保存但是未修改参照,修改参照字段为参照id数组
                 if(childList) {
                     childList.map((item,index)=>{
                         // 判断参照值是否有改动
-                        let temp = item["confirmUser"+index];
+                        let uuid = item.uuid;
+                        let temp = item["confirmUser"+uuid];
                         let tempConfirmUser = item['confirmUser'];
                         let tempConfirmUserName = item['confirmUserName']
                         if(temp){
@@ -96,35 +96,38 @@ class MasterForm extends Component {
                             item.confirmUser = temp;
                         }else if(tempConfirmUserName ){
                             // 参照无改动
-                            item.confirmUser = cacheArray[index].confirmUser;
+                            let target = cacheArray.filter(item=>item.uuid==uuid)[0];
+                            item.confirmUser = target.confirmUser;
                         }
-
                     })
                 }
+                console.log('save childList',childList)
+                console.log('save delArray',delArray);
+                // 添加删除的数组，删除的数组中dr项的值都为1
+                let resultArray = childList.concat(delArray);
+
                 let commitData = {
                     entity : values,
                     sublist:{
-                        showOffDetailList:childList
+                        showOffDetailList:resultArray
                     }
                 };
                 console.log("save values", JSON.stringify(commitData));
-                actions.mastertable.save(commitData);
+                await actions.mastertable.save(commitData);
+                // 置空缓存数据和删除数组
+                await actions.mastertable.updateState({
+                    cacheArray:[],
+                    delArray:[]
+                })
             }
         });
     }
-/*     cancel = () => {
-        actions.mastertable.updateState({
-            childList: [],
-            cacheArray:[]
-        })
-        window.history.go(-1);
-    } */
 
     onBack = async ()=>{
-        console.log("进入返回事件");
         await actions.mastertable.updateState({
             childList: [],
-            cacheArray:[]
+            cacheArray:[],
+            delArray:[]
         })
         window.history.go(-1);
     }
@@ -207,10 +210,18 @@ class MasterForm extends Component {
         }
     }
 
+    arryDeepClone = (array)=>{
+        let result = [];
+        if(array){
+            array.map((item)=>{
+                let temp = Object.assign([],item);
+                result.push(temp);
+            })
+        }
+    }
 
     render() {
         const self = this;
-        console.log("this.props",this.props);
         let { btnFlag } = queryString.parse(this.props.location.search);
         btnFlag = Number(btnFlag);
         let { rowData, refKeyArray,column } = this.state;

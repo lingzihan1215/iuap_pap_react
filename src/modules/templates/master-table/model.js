@@ -31,6 +31,7 @@ export default {
         
         childList:[],          //子表
         cacheArray:[],         //缓存数据
+        delArray:[],
         childPageIndex:1, 
         childPageSize:10,
         childTotalPages:1,
@@ -157,25 +158,28 @@ export default {
             await actions.mastertable.updateState({childList:[]});
             let {data:{detailMsg}}=await api.getDetail(param);
             let childData = [...detailMsg.showOffDetailList] ;
-            let cacheArray = [...detailMsg.showOffDetailList];
-            console.log('cacheArray',cacheArray);
-            console.log("showOffDetailList",childData);
+            let cacheArray = [];
             let tempArray = [];
             if(childData) {
                 childData.map((item)=>{
                     let temp = Object.assign({},item);
+                    temp.uuid = setTimeout(function(){},1);
                     tempArray.push(temp);
                     // item.confirmUser = temp.confirmUserName
                 })
             }
 
+            // tempArray中修改参照字段
             if(tempArray) {
                 tempArray.map((item)=>{
-                    item.confirmUser = item.confirmUserName
+                    // item.uuid = setTimeout(function(){},1);
+                    let temp = Object.assign({},item);
+                    cacheArray.push(temp);
+                    item.confirmUser = item.confirmUserName;
                 })
             }
             
-            console.log("model tempArray",tempArray);
+            console.log("childList,cacheArray",tempArray,cacheArray);
 
             await actions.mastertable.updateState({
                 childList:tempArray,

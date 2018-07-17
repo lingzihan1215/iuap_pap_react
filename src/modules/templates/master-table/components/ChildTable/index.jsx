@@ -31,7 +31,6 @@ import './index.less'
 
 moment.locale('zh-cn');
 
-// console.log(moment("2017-02-13"))
 const format = "YYYY-MM-DD";
 const Option = Select.Option;
 
@@ -39,11 +38,12 @@ let id = 0;
 class ChildTable extends Component {
     constructor(props) {
         super(props);
-        
         this.state = { 
             selectData:[],
             editFlag:true,
-            column:[
+            
+        };
+        this.column = [
             {
                 title: "订单编号",
                 dataIndex: "purchaseOrderId",
@@ -58,108 +58,93 @@ class ChildTable extends Component {
                 dataIndex: "purchaseItemId",
                 key: "purchaseItemId",
                 width: 150,
-                render: (text, record,index) => this.renderColumns(text, record,index, 'purchaseItemId')
+                render: (text, record, index) => this.renderColumns(text, record, index, 'purchaseItemId')
             },
             {
                 title: "物料编号",
                 dataIndex: "materialId",
                 key: "materialId",
                 width: 150,
-                render: (text, record,index) => this.renderColumns(text, record,index, 'materialId')
+                render: (text, record, index) => this.renderColumns(text, record, index, 'materialId')
             },
             {
                 title: "订单行号",
                 dataIndex: "orderItem",
                 key: "orderItem",
                 width: 150,
-                render: (text, record,index) => this.renderColumns(text, record,index, 'orderItem')
+                render: (text, record, index) => this.renderColumns(text, record, index, 'orderItem')
             },
             {
                 title: "物料数量",
                 dataIndex: "materialQty",
                 key: "materialQty",
                 width: 150,
-                render: (text, record,index) => this.renderColumnsInputNumber(text, record,index, 'materialQty')
+                render: (text, record, index) => this.renderColumnsInputNumber(text, record, index, 'materialQty')
             },
             {
                 title: "物料金额",
                 dataIndex: "materialPrice",
                 key: "materialPrice",
                 width: 150,
-                render: (text, record,index) => this.renderColumnsInputNumber(text, record,index, 'materialPrice')
+                render: (text, record, index) => this.renderColumnsInputNumber(text, record, index, 'materialPrice')
             },
             {
                 title: "物料单价",
                 dataIndex: "priceUnit",
                 key: "priceUnit",
                 width: 150,
-                render: (text, record,index) => this.renderColumnsInputNumber(text, record,index, 'priceUnit')
+                render: (text, record, index) => this.renderColumnsInputNumber(text, record, index, 'priceUnit')
             },
             {
                 title: "确认时间",
                 dataIndex: "confirmTime",
                 key: "confirmTime",
                 width: 150,
-                render:(text, record,index) => this.renderDatePicker(text, record,index, 'confirmTime')
+                render: (text, record, index) => this.renderDatePicker(text, record, index, 'confirmTime')
             },
             {
                 title: "确认人员",
                 dataIndex: "confirmUser",
                 key: "confirmUser",
                 width: 150,
-                render:(text, record,index) => this.renderRef(text, record,index, 'confirmUser')
+                render: (text, record, index) => this.renderRef(text, record, index, 'confirmUser')
             },
             {
                 title: "发货状态",
                 dataIndex: "deliveryStatus",
                 key: "deliveryStatus",
                 width: 150,
-                render:(text, record,index) => this.renderSelect(text, record,index, 'deliveryStatus')
+                render: (text, record, index) => this.renderSelect(text, record, index, 'deliveryStatus')
             },
             {
                 title: "发货数量",
                 dataIndex: "deliveryQty",
                 key: "deliveryQty",
                 width: 150,
-                render: (text, record,index) => this.renderColumnsInputNumber(text, record,index, 'deliveryQty')
+                render: (text, record, index) => this.renderColumnsInputNumber(text, record, index, 'deliveryQty')
             },
             {
                 title: "收货地址",
                 dataIndex: "deliveryAddr",
                 key: "deliveryAddr",
                 width: 150,
-                render: (text, record,index) => this.renderColumns(text, record,index, 'deliveryAddr')
+                render: (text, record, index) => this.renderColumns(text, record, index, 'deliveryAddr')
             },
             {
                 title: "操作",
                 dataIndex: "d",
                 key: "d",
                 width: 100,
-                // fixed: "right",
-                render(text, record, index) {
+                render:(text, record, index)=> {
                     return (
                         <div className='operation-btn'>
                             {/* <i size='sm' className='uf uf-search edit-btn' onClick={() => { self.cellClick(record, 2) }}></i> */}
                             {/* <i size='sm' className='uf uf-pencil edit-btn' onClick={() => { self.cellClick(record, 1) }}></i> */}
-                            <i size='sm' className='uf uf-del del-btn' onClick={() => { self.delItem(record, index) }}></i>
+                            <i size='sm' className='uf uf-del del-btn' onClick={() => { this.onChildDel(record, index) }}></i>
                         </div>
                     )
                 }
             }]
-        };
-    }
-
-    componentWillMount(){
-        // console.log("this.props",this.props);
-        // let editFlag = (btnFlag && btnFlag==2) ? false : true;
-    }
-
-    showFlag = (btnFlag) => {
-        if(btnFlag && btnFlag==2 ){
-            return false;
-        }else {
-            return true;
-        }
     }
 
     // 普通编辑框渲染
@@ -225,10 +210,8 @@ class ChildTable extends Component {
     handleChangeNumber = (value, index, column)=>{
         const newData = [...this.props.childList];
         const target = newData.filter((item,newDataIndex) => index === newDataIndex)[0];
-        // debugger
         if (target) {
             target[column] = parseInt(value);
-            console.log("newData inputnumber"+newData);
             actions.mastertable.updateState({
                 list: newData
             });
@@ -268,10 +251,9 @@ class ChildTable extends Component {
         // console.log("date",value.toISOString());
         const newData = [...this.props.childList];
         const target = newData.filter((item,newDataIndex) => index === newDataIndex)[0];
-        // debugger
         if (target) {
             target[column] = value.toISOString();
-            console.log("newData date",newData)
+            // console.log("newData date",newData)
             actions.mastertable.updateState({
                 list: newData
             });
@@ -283,6 +265,15 @@ class ChildTable extends Component {
         let self = this;
         // 处理参照的key值
         let cacheArray = [...this.props.cacheArray];
+        let childRefKey =[],
+            uuid = record.uuid;
+        cacheArray.map((item)=>{
+            let temp = item.uuid;
+            if(temp && uuid && (temp ==uuid)){
+                childRefKey = item[column]? item[column].split(','):[]
+            }
+        })
+        
         return (
             <this.EditableCellRef
                 editable={true}
@@ -290,12 +281,13 @@ class ChildTable extends Component {
                 index={index}
                 self = {self}
                 fieldKey = {column}
-                childRefKey = {(cacheArray&&(index<cacheArray.length))?cacheArray[index][column].split(','):[]}
+                record = {record}
+                childRefKey = {childRefKey}
             />
         );
     }
     
-    EditableCellRef = ({ editable, value ,index,self, fieldKey,childRefKey}) =>(
+    EditableCellRef = ({ editable, value ,index,self, fieldKey,record,childRefKey}) =>(
         <div>
             {
                 editable?(
@@ -314,14 +306,11 @@ class ChildTable extends Component {
                             const showData = sels.map(v => v.peoname)
                             var temp = sels.map(v => v.key)
                             const newData = [...self.props.childList];
-                            const target = newData.filter((item,newDataIndex) => index === newDataIndex)[0];
+                            const target = newData.filter((item,newDataIndex) => record.uuid === item.uuid)[0];
                             if (target) {
-                                /* let tempConfirmUserName = target.confirmUserName;
-                                if(tempConfirmUserName) {
-                                    delete target.confirmUserName;
-                                }
-                                target[fieldKey] = temp.join(); */
-                                target[fieldKey+index] = temp.join();
+                                let uuid = target['uuid'];
+                                // target[fieldKey+index] = temp.join();
+                                target[fieldKey+uuid] = temp.join();
                                 actions.mastertable.updateState({
                                     list: newData
                                 });
@@ -329,7 +318,8 @@ class ChildTable extends Component {
                         },
                         showKey: 'peoname',
                         verification: true,//是否进行校验
-                        verKey: fieldKey+index,//校验字段
+                        // verKey: fieldKey+index,//校验字段
+                        verKey: 'abc'+record['uuid'],//校验字段
                         verVal: value
                     })} form={this.props.form} />
                ) 
@@ -406,35 +396,81 @@ class ChildTable extends Component {
                 deliveryQty:'',
                 deliveryAddr:''
             };
+            // UUID用于表示新增数据，在保存数据时需要删掉uuid字段
+            // let uuid = this.guid();
+            let uuid = setTimeout(function(){},1);
+            emptyRow['uuid'] = uuid;
             tempArray.push(emptyRow);
-            console.log("tempArray",tempArray);
             actions.mastertable.updateState({childList:tempArray})
     }
+
+    // 产生uuid备用
+    guid = ()=>{
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+            return v.toString(16);
+        });
+    }
+    // 子表删除
+    onChildDel = async (record, index)=>{
+
+        console.log("行删除",record,index);
+        let childList = this.deepClone("childList"),
+            cacheArray = this.deepClone("cacheArray"),
+            id = record['id'],
+            uuid = record['uuid'],
+            delArray = this.deepClone('delArray');
+        
+        let childLen = childList.length,
+            cacheLen = cacheArray.length;
+
+        if(uuid) {
+            let tempIndex = 0;
+            for(let i=0;i<childLen;i++) {
+                let item = Object.assign([],childList[i]);
+                let temp = item.uuid;
+                if(temp && temp==uuid){
+                    tempIndex = i;
+                }
+                
+            }
+            delArray.push(Object.assign({},childList[tempIndex],{dr:1}));
+            childList.splice(tempIndex,1);
+            console.log("delArray",delArray);
+        }
+        
+
+        console.log("this.props.childList",this.props.childList);
+        console.log("删除后",childList,cacheArray)
+        
+        await actions.mastertable.updateState({
+            childList:childList,
+            cacheArray:cacheArray,
+            delArray
+        })
+
+    }
+
+    deepClone = (param)=>{
+        let array = [];
+        this.props[param].map(item=>{
+            let temp = Object.assign({},item);
+            array.push(item);
+        })
+        return array;
+    }
+
 
     render() {
         let {childList,
             childPageIndex,childPageSize,childTotalPages
         } = this.props;
-        console.log('render',childList)
-        let {column} = this.state;
+        
         return (
             <div className="child-table">
                 <div className="chidtable-operate-btn">
                     <Button size='sm' colors="primary" onClick={this.onAddEmptyRow}>增行</Button>
                 </div>
-                {/* <PaginationTable
-                    data={childList}
-                    pageIndex={childPageIndex}
-                    pageSize={childPageSize}
-                    totalPages={childTotalPages}
-                    columns={column}
-                    checkMinSize={6}
-                    getSelectedDataFunc={this.tabelSelect}
-                    onTableSelectedData={this.onTableSelectedData}
-                    onPageSizeSelect={this.onPageSizeSelect}
-                    onPageIndexSelect={this.onPageIndexSelect}
-                    scroll={{ x: 1300, y: 500 }}
-                /> */}
                 <Row className='table-list'>
                     <Col md={12}>
                         <Table
@@ -443,7 +479,7 @@ class ChildTable extends Component {
                             emptyText={() => <NoData />}
                             data={childList}
                             rowKey={r => r.id}
-                            columns={column}
+                            columns={this.column}
                             scroll={{ x: 1300, y: 520 }}
                             footer={() => <Pagination
                                 first
