@@ -42,7 +42,7 @@ export default {
                 sublist: {
                     saleOrderDetailList: param.tableEditedData
                 },
-                entity: param.formData
+                entity: {...param.formData, customerCreditId: getState().salesNotice.search_id}
             })
         }
     }

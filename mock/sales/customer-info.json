@@ -1,111 +1,30 @@
 {
-    "success": "success",
-    "message": null,
-    "detailMsg": {
-        "data": {
-            "customerCredit": {
-                "userName": "用友网络",
-                "creditLine": "2000000",
-                "totalCredit": "",
-                "saleValue": "",
-                "accountsReceivable": "",
-                "specialLiabilities": "",
-                "unmadeDelivery": "",
-                "tax": "",
-                "overdue": "",
-                "creditDisclosure": ""
-            },
-            "SaleOrder": {
-                "customerCreditId": "",
-                "orderNo": "销货单号",
-                "settlementTime": "2018-10-21",
-                "shipCompany": "船公司",
-                "shipName": "船名",
-                "flightNum": "船次",
-                "wharf": [{
-                    "key": "0",
-                    "value": "一號碼頭"
-                }, {
-                    "key": "1",
-                    "value": "二號碼頭"
-                }, {
-                    "key": "2",
-                    "value": "三號碼頭"
-                }],
-                "liaisons": "guoyff@yonyou.com",
-                "phone": "13552329234",
-                "destinationPort": "目的港",
-                "orderRemark": "备注"
-            },
-            "content":[{
-                "id": "1",
-                "product": "产品名称",
-                "receiver": "收货人",
-                "orderCode": "订单号码",
-                "orderTerms": "订单项次",
-                "sizeThickness": "尺寸厚度222",
-                "repertory": "库存111",
-                "trading_period": "营业交期2018-09-02",
-                "livelihoods": "备注信息，哈哈哈哈哈"
-            },{
-                "id": "2",
-                "product": "产品名称",
-                "receiver": "收货人",
-                "orderCode": "订单号码",
-                "orderTerms": "订单项次",
-                "sizeThickness": "尺寸厚度222",
-                "repertory": "库存111",
-                "trading_period": "营业交期2018-09-02",
-                "livelihoods": "备注信息，哈哈哈哈哈"
-            },{
-                "id": "3",
-                "product": "产品名称",
-                "receiver": "收货人",
-                "orderCode": "订单号码",
-                "orderTerms": "订单项次",
-                "sizeThickness": "尺寸厚度222",
-                "repertory": "库存111",
-                "trading_period": "营业交期2018-09-02",
-                "livelihoods": "备注信息，哈哈哈哈哈"
-            },{
-                "id": "4",
-                "product": "产品名称",
-                "receiver": "收货人",
-                "orderCode": "订单号码",
-                "orderTerms": "订单项次",
-                "sizeThickness": "尺寸厚度222",
-                "repertory": "库存111",
-                "trading_period": "营业交期2018-09-02",
-                "livelihoods": "备注信息，哈哈哈哈哈"
-            },{
-                "id": "5",
-                "product": "产品名称",
-                "receiver": "收货人",
-                "orderCode": "订单号码",
-                "orderTerms": "订单项次",
-                "sizeThickness": "尺寸厚度222",
-                "repertory": "库存111",
-                "trading_period": "营业交期2018-09-02",
-                "livelihoods": "备注信息，哈哈哈哈哈"
-            },{
-                "id": "6",
-                "product": "产品名称",
-                "receiver": "收货人",
-                "orderCode": "订单号码",
-                "orderTerms": "订单项次",
-                "sizeThickness": "尺寸厚度222",
-                "repertory": "库存111",
-                "trading_period": "营业交期2018-09-02",
-                "livelihoods": "备注信息，哈哈哈哈哈"
-            }] ,
-            "last": true,
-            "totalElements": 5,
-            "totalPages": 1,
-            "numberOfElements": 5,
-            "first": true,
-            "sort": null,
-            "size": 10,
-            "number": 0
-        }
-    }
+	"sublist": {
+			"saleOrderDetailList": [
+				{
+					"orderCode": "0001113",
+					"orderTerms": "003113",
+					"product": "测试12113",
+					"shipments": "3",
+					"orderNum": "13",
+					"singleCode": "0003",
+					"orderAdjustment": "0003",
+					"orderdetailRemark": "测试数据备注"
+				}
+			]
+		},
+	"entity": {
+            "customerCreditId": "14bb079ed1894e20bf2d741f5dc2f81a",
+            "orderNo": "0013",
+            "settlementTime": "2018-07-10T06:45:06.494Z",
+            "shipCompany": "测试公司22321",
+            "shipName": "测试船111",
+            "flightNum": "333332",
+            "wharf": "s号码头",
+            "liaisons": "测试联系人",
+            "phone": "15981879343",
+            "destinationPort": "3",
+            "orderRemark": "备注备注备注11"
+		}
 }
+		

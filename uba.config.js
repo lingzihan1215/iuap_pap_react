@@ -26,6 +26,7 @@ const proxyConfig = [
     ],
     url: 'http://10.10.24.43:8080'  
   },
+  // 应用平台
   {
     enable: true,
     headers: {
@@ -38,6 +39,7 @@ const proxyConfig = [
     ],
     url: 'http://159.138.20.189:8080'  
   },
+  // 后台开发服务
   {
     enable: true,
     headers: {
