@@ -7,6 +7,8 @@ import moment from "moment/moment";
 import Header from 'components/Header';
 import Searchform from '../Search-form';
 
+import './index.less'
+
 export default class MasterTable extends Component {
     constructor(props) {
         super(props);
@@ -95,11 +97,12 @@ export default class MasterTable extends Component {
             id = record["id"];
         }
 
-        if(!btnFlag){
-            await actions.mastertable.updateState({
-                childList:[]
-            })
-        }
+        // 新增、编辑、查看时,先清空子表数据
+        await actions.mastertable.updateState({
+            childList:[],
+            cacheArray:[]
+        })
+        
         actions.routing.push(
             {
                 pathname: 'master-form',
@@ -190,11 +193,11 @@ export default class MasterTable extends Component {
         let { selectData } = this.state;
         console.log("list", list)
         return (
-            <div className='show_off-root'>
+            <div className='master-table'>
                 <Header title='主子表示例' back={true} />
                 <Searchform {...this.props} />
                 <div className='table-header'>
-                    <Button style={{ "margin-left": 15 }} size='sm' shape="border" onClick={() => { self.cellClick({}, 0) }}>
+                    <Button size='sm' shape="border" onClick={() => { self.cellClick({}, 0) }}>
                         新增
                     </Button>
                     <BpmButtonSubmit

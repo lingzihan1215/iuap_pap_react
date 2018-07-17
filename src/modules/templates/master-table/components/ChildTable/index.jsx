@@ -281,6 +281,8 @@ class ChildTable extends Component {
     // 渲染参照
     renderRef = (text, record,index, column) => {
         let self = this;
+        // 处理参照的key值
+        let cacheArray = [...this.props.cacheArray];
         return (
             <this.EditableCellRef
                 editable={true}
@@ -288,18 +290,17 @@ class ChildTable extends Component {
                 index={index}
                 self = {self}
                 fieldKey = {column}
-                // onChange={value => this.handleChangeNumber(value, record.id, column)}
+                childRefKey = {(cacheArray&&(index<cacheArray.length))?cacheArray[index][column].split(','):[]}
             />
         );
     }
     
-    EditableCellRef = ({ editable, value ,index,self, fieldKey}) =>(
+    EditableCellRef = ({ editable, value ,index,self, fieldKey,childRefKey}) =>(
         <div>
-            {console.log(this.props.form)}
             {
                 editable?(
                     <RefWithInput disabled={false} option={Object.assign(JSON.parse(options), {
-                        title: '',
+                        title: '我的参照组织',
                         refType: 5,//1:树形 2.单表 3.树卡型 4.多选 5.default
                         className: '',
                         param: {//url请求参数
@@ -308,24 +309,19 @@ class ChildTable extends Component {
                             sysId: '',
                             transmitParam: 'EXAMPLE_CONTACTS,EXAMPLE_ORGANIZATION',
                         },
-                        keyList: [],//选中的key
+                        keyList: childRefKey||[],//选中的key
                         onSave: function (sels) {
-                            console.log('sels',sels);
                             const showData = sels.map(v => v.peoname)
                             var temp = sels.map(v => v.key)
-                            console.log("temp", temp);
-                            /* self.setState({
-                                refKeyArray: temp,
-                            }) */
-                            console.log("index",index);
                             const newData = [...self.props.childList];
                             const target = newData.filter((item,newDataIndex) => index === newDataIndex)[0];
                             if (target) {
                                 /* let tempConfirmUserName = target.confirmUserName;
                                 if(tempConfirmUserName) {
                                     delete target.confirmUserName;
-                                } */
-                                target[fieldKey] = temp.join();
+                                }
+                                target[fieldKey] = temp.join(); */
+                                target[fieldKey+index] = temp.join();
                                 actions.mastertable.updateState({
                                     list: newData
                                 });
@@ -333,7 +329,7 @@ class ChildTable extends Component {
                         },
                         showKey: 'peoname',
                         verification: true,//是否进行校验
-                        verKey: fieldKey,//校验字段
+                        verKey: fieldKey+index,//校验字段
                         verVal: value
                     })} form={this.props.form} />
                ) 
@@ -360,6 +356,7 @@ class ChildTable extends Component {
                 ? (
                     <Select
                         defaultValue = '0'
+                        value = {value}
                         onSelect = {value=>onSelect(value)}
                         >
                         <Option value="0">未发货</Option>
@@ -396,18 +393,18 @@ class ChildTable extends Component {
     onAddEmptyRow = ()=>{
         let tempArray = [...this.props.childList],
             emptyRow = {
-                purchaseOrderId:"123",
-                purchaseItemId:123,
-                materialId:'123',
-                orderItem:'234',
-                materialQty:'456',
-                materialPrice:'252',
-                priceUnit:'773',
-                confirmTime:'2017-02-21',
-                confirmUser:'abc',
-                deliveryStatus:'1',
-                deliveryQty:'234',
-                deliveryAddr:'用友'
+                purchaseOrderId:"",
+                purchaseItemId:"",
+                materialId:'',
+                orderItem:'',
+                materialQty:'',
+                materialPrice:'',
+                priceUnit:'',
+                confirmTime:moment().toISOString(),
+                confirmUser:'',
+                deliveryStatus:'',
+                deliveryQty:'',
+                deliveryAddr:''
             };
             tempArray.push(emptyRow);
             console.log("tempArray",tempArray);
