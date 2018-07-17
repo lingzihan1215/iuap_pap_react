@@ -2,9 +2,12 @@ import request from "utils/request";
 
 //定义接口地址
 const URL = { 
-    "SALES_INFO":  `/sales/customer/search`,
+    "SALES_INFO":  `/customer_credit/getAssoVo`,
     "SALES_CREATE":  `/sales/customer/create`,
-    // "SALES_INFO":  `${GROBAL_HTTP_CTX}/sales/customer/search`,
+    // "SALES_CREATE":  `${GROBAL_HTTP_CTX}/sale_order/SaveAssoVo`,
+    // "SALES_INFO":  `${GROBAL_HTTP_CTX}/customer_credit/getAssoVo`,
+          
+
 }
 
 
@@ -13,8 +16,11 @@ const URL = {
  * @param {*} params 
  */
 export const getSalesInfo = (params) => { 
-    return request(URL.SALES_INFO, {
-        method: "post",
+    let search_id = params.search_id
+    let reuestURL = `${URL.SALES_INFO}?search_id=${search_id}`;
+
+    return request(reuestURL, {
+        method: "get",
         data: params
     });
 }

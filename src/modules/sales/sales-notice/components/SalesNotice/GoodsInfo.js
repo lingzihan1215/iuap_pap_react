@@ -15,98 +15,82 @@ export default class GoodsInfo extends Component {
         }
         this.columns = [
             {
-                title: "供应商编码",
-                dataIndex: "supplierCode",
-                key: "supplierCode",
+                title: "序号",
+                dataIndex: "index",
+                key: "index",
                 width: 100,
                 render(record, text, index) {
                     return index + 1;
                 }
             },
             {
-                title: "供应商名称",
-                dataIndex: "supplierName",
-                key: "supplierName",
+                title: "产品",
+                dataIndex: "product",
+                key: "product",
+                width: 100
+            },
+            {
+                title: "收货人",
+                dataIndex: "receiver",
+                key: "receiver",
+                width: 100
+            },
+            {
+                title: "订单编码",
+                dataIndex: "orderCode",
+                key: "orderCode",
                 width: 250,
                 className:"td-detail",
                 onCellClick: (record) => this.cellClick(record,2)
             },
             {
-                title: "类型",
-                dataIndex: "supplierType",
-                key: "supplierType",
+                title: "订单项次",
+                dataIndex: "orderTerms",
+                key: "orderTerms",
                 width: 100
             },
             {
-                title: "主要产品",
-                dataIndex: "mainProducts",
-                key: "mainProducts",
+                title: "尺寸厚度",
+                dataIndex: "sizeThickness",
+                key: "sizeThickness",
                 width: 100
             },
             {
-                title: "联系人",
-                dataIndex: "contacts",
-                key: "contacts",
+                title: "库存",
+                dataIndex: "repertory",
+                key: "repertory",
                 width: 100
             },
             {
-                title: "类别",
-                dataIndex: "supplierCategory",
-                key: "supplierCategory",
+                title: "营业交期",
+                dataIndex: "trading_period",
+                key: "trading_period",
                 width: 100
             },
             {
-                title: "货号",
-                dataIndex: "turnover",
-                key: "turnover",
-                width: 100
-            }, 
-            {
-                title: "联系电话",
-                dataIndex: "phone",
-                key: "phone",
-                width: 150
-            },
-            {
-                title: "操作",
-                dataIndex: "d",
-                key: "d",
-                width:100,
-                // fixed: "right",
-                render(text, record, index) {
-                    return (
-                        <div className='operation-btn'>
-                            <i size='sm' className='uf uf-search edit-btn' onClick={() => { self.cellClick(record,2) }}></i>
-                            <i size='sm' className='uf uf-pencil edit-btn' onClick={() => { self.cellClick(record,1) }}></i>
-                            <i size='sm' className='uf uf-del del-btn' onClick={() => { self.delItem(record, index) }}></i>
-                        </div>
-                    )
-                }
+                title: "备注",
+                dataIndex: "livelihoods",
+                key: "livelihoods",
+                width: 250
             }
         ]
     }
   
     cellClick = async (record,btnFlag) => {
-        await actions.salesNotice.updateState({
-            rowData : record,
-        });
+        // await actions.salesNotice.updateState({
+        //     rowData : record,
+        // });
 
-        let id = "";
-        if(record){
-            id = record["id"];
-        }
-        actions.routing.push(
-            {
-                pathname: 'example-edit',
-                search:`?search_id=${id}&btnFlag=${btnFlag}`
-            }
-        )
-    }
-    delItem = (record, index) => {
-        actions.salesNotice.delItem({
-            param: [record],
-            index: index
-        });
+        // let id = "";
+        // if(record){
+        //     id = record["id"];
+        // }
+        // actions.routing.push(
+        //     {
+        //         pathname: 'example-edit',
+        //         search:`?search_id=${id}&btnFlag=${btnFlag}`
+        //     }
+        // )
     }
     onTableSelectedData = data => {
         this.setState({
@@ -123,14 +107,27 @@ export default class GoodsInfo extends Component {
             pageIndex: value
         })
     }
-    editTable = () => {
+    editTable = (action) => {
         let data = this.state.tableSelectedData
-        actions.salesNotice.updateState({selectData: data})
+        let buf = [];
+
+        if( action == "add") {
+            actions.salesNotice.updateState({selectData: data})
+        } else {
+            let cancelData = this.props.list.filter((item, index) => {
+                data.forEach(i => {
+                    if(i.id != item.id) {
+                        buf.push(item)
+                    }
+                })
+            })
+            actions.salesNotice.updateState({selectData: buf})
+        }
     }
     render(){
         const self = this;
         let { list, showLoading, pageIndex, pageSize, totalPages } = this.props;
-
+        
         return (
             <div className='common-panel'>
                 <CommonTitle 
@@ -138,7 +135,8 @@ export default class GoodsInfo extends Component {
                     type="uf-listsearch"
                     children={ 
                         <div className="head-btn" style={{marginLeft: "10px"}}>
-                            <Button className='head-save' onClick={this.editTable}>修改产品明细</Button>
+                            <Button className='head-save' onClick={() => this.editTable("add")}>添加</Button>
+                            <Button onClick={() => this.editTable("cancel")}>取消</Button>
                         </div>
                     } 
                 />
@@ -153,7 +151,7 @@ export default class GoodsInfo extends Component {
                     onTableSelectedData={this.onTableSelectedData}
                     onPageSizeSelect={this.onPageSizeSelect}
                     onPageIndexSelect={this.onPageIndexSelect}
-                    scroll={{ x: 1000, y: 300}}
+                    scroll={{ x: 1200, y: 200}}
                 />
             </div>
 

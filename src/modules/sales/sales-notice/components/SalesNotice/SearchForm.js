@@ -15,7 +15,8 @@ class SearchForm extends Component {
         }
     }
     search = (err, values) => {
-        actions.salesNotice.searchCustomerInfo(values);
+        actions.salesNotice.updateState({search_id: values.search_id});
+        actions.salesNotice.searchCustomerInfo({search_id: values.search_id});
     }
     render(){
         const { getFieldProps, getFieldError } = this.props.form;
@@ -34,7 +35,7 @@ class SearchForm extends Component {
                                 <Label>客户代号：</Label>
                                 <FormControl className='form-item' 
                                     {
-                                    ...getFieldProps('customerCode', {
+                                    ...getFieldProps('search_id', {
                                         initialValue: '',
                                         validateTrigger: 'onBlur',
                                         rules: [{
@@ -46,7 +47,7 @@ class SearchForm extends Component {
                                     }
                                 />
                                 <span className='error'>
-                                    {getFieldError('customerCode')}
+                                    {getFieldError('search_id')}
                                 </span>
                             </FormItem>
                         </Col>

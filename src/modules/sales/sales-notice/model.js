@@ -5,12 +5,7 @@ import { processData } from 'utils';
 export default {
     name: "salesNotice",
     initialState: {
-        customerCode: "",
-        customerInfo: {
-            customerName: "",
-            cradit: "",
-            total: ""
-        },
+        customerCredit: {},
         rowData:{},
         showLoading:false,
         list: [],
@@ -19,8 +14,8 @@ export default {
         pageSize:10,
         totalPages:1,
         selectData: [],
-        searchParam: {},
-        tableEditedData: []
+        tableEditedData: [],
+        search_id: ""
     },
     reducers: {
         updateState(state, data) { 
@@ -32,19 +27,22 @@ export default {
     },
     effects: {
         async searchCustomerInfo(param, getState){
-            let res = processData(await api.getSalesInfo(param));
-
+            let { customerCredit, customerCreditDetailList} = processData(await api.getSalesInfo(param));
+        
             actions.salesNotice.updateState({
-                customerInfo: res.customerInfo,
-                list: res.content,
-                totalPages: res.totalPages
+                customerCredit: customerCredit,
+                list: customerCreditDetailList
             })
+
         },
         
         async postAllData(param, getState){
+           
             return await api.createSalesNotice({
-                table: param.tableEditedData,
-                form: param.formData
+                sublist: {
+                    saleOrderDetailList: param.tableEditedData,
+                    entity: { ...param.formData, "id": getState().salesNotice.search_id}
+                }
             })
         }
     }
