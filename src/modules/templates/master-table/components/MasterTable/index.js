@@ -110,6 +110,7 @@ export default class MasterTable extends Component {
             }
         )
     }
+    // 行删除
     delItem = (record, index) => {
         actions.mastertable.delItem({
             param: [record],
@@ -153,7 +154,6 @@ export default class MasterTable extends Component {
 
     // 撤回成功，失败，开始回调函数
     onRecallSuc = async () => {
-        console.log("onRecallSuc 成功进入recall回调");
         await actions.searchTable.loadList();
         actions.mastertable.updateState({ showLine: false });
         Message.create({ content: '单据撤回成功', color: 'success' });
@@ -170,7 +170,6 @@ export default class MasterTable extends Component {
 
     //查看方法
     onExamine = async (text, record, index) => {
-        console.log("record", record);
         await actions.mastertable.updateState({ rowData: record });
         await actions.routing.push(
             {
@@ -191,7 +190,6 @@ export default class MasterTable extends Component {
         const self = this;
         let { list, showLoading, pageIndex, pageSize, totalPages } = this.props;
         let { selectData } = this.state;
-        console.log("list", list)
         return (
             <div className='master-table'>
                 <Header title='主子表示例' back={true} />
