@@ -99,7 +99,6 @@ export default class EditSalesTable extends Component {
         await curData.forEach((item, index) => {
              // 匹配到当前被修改的行数据
             if(orderCode === item.orderCode) {
-                // 1、假设有3行；2、改第二行第一次
                 if(tableEditedData.length && tableEditedData[index]) {
                     tableEditedData[index][column] = value
                 }else {
@@ -107,11 +106,8 @@ export default class EditSalesTable extends Component {
                     tableEditedData.push(item)
                 }
             }
-            
-            // return item;
         });
-        console.log(tableEditedData)
-        
+
         actions.salesNotice.updateState({
             tableEditedData: tableEditedData
         });
