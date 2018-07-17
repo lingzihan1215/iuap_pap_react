@@ -12,8 +12,7 @@ export default class EditSalesTable extends Component {
         super(props);
         let self = this;
         this.state = {
-            step: 10,
-            tableEditedData: []
+            step: 10
         }
         this.columns = [
             {
@@ -76,8 +75,8 @@ export default class EditSalesTable extends Component {
             <div className="cel-edit-input">
                 <FormControl 
                     defaultValue={text} 
-                    key={record.id}
-                    onChange={value => this.handleChange(value, record.id, column)} 
+                    key={record.orderCode}
+                    onChange={value => this.handleChange(value, record.orderCode, column)} 
                 />
             </div>
         );
@@ -85,12 +84,16 @@ export default class EditSalesTable extends Component {
     /**
      * 这里的性能开销需要注意
      */
-    handleChange = async (value, id, column) => {
+    handleChange = async (value, orderCode, column) => {
         // 已经选中并且带下来的数据
-        let curData = [...this.props.selectData];
+        let curData = [...this.props.selectData.map(item => {
+            let { orderCode,orderTerms ,product,shipments,orderNum,singleCode,orderAdjustment,orderdetailRemark} = item;
+            return { orderCode,orderTerms ,product,shipments,orderNum,singleCode,orderAdjustment,orderdetailRemark}
+        })];
+        // let curData = [...this.props.selectData];
         // 拿到当前所修改行的数据，并更新所修改的字段
         await curData.forEach(item => {
-            if(id === item.id) item[column] = value;
+            if(orderCode === item.orderCode) item[column] = value;
             return item;
         });
 
@@ -99,9 +102,9 @@ export default class EditSalesTable extends Component {
         });
     }
     onTableSelectedData = data => {
-        this.setState({
-            tableSelectedData: data
-        })
+        // this.setState({
+        //     tableSelectedData: data
+        // })
     }
     render(){
         let { selectData, showLoading } = this.props;

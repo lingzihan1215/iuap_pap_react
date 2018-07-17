@@ -138,13 +138,13 @@ class EditSalesForm extends Component {
         let _this = this;
         let { createBtnStyles, handlerBtnStyles } = this.setButtonStyles();
         let setEnableFlag = this.state.setEnableFlag;
-        let btnDisabledFlag = !setEnableFlag ? "disabled" : "";
+        let btndisabledflag = setEnableFlag ? {"disabled": true} : {};
 
         return (
             <div className="edit-sales-form common-panel edit-panel">
                 <div className="form-handler-aria">
                     <Button 
-                        btnDisabledFlag
+                        {...btndisabledflag}
                         className={createBtnStyles}
                         onClick={this.setEnableFlag.bind(this)}>建立销货通知单</Button>
                     <Button 
