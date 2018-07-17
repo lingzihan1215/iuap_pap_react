@@ -23,51 +23,51 @@ export default class EditSalesTable extends Component {
                 width: 100
             },
             {
-                title: "主要产品",
-                dataIndex: "product",
-                key: "product",
-                width: 100
-            },
-            {
                 title: "订单项次",
                 dataIndex: "orderTerms",
                 key: "orderTerms",
                 width: 100
+            },
+            {
+                title: "产品",
+                dataIndex: "product",
+                key: "product",
+                width: 100
             }, 
             {
                 title: "出货数量",
-                dataIndex: "goodsNum",
-                key: "goodsNum",
+                dataIndex: "shipments",
+                key: "shipments",
                 width: 50,
-                render: (text, record) => this.renderColumns(text, record, 'goodsNum')
+                render: (text, record) => this.renderColumns(text, record, 'shipments')
+            },
+            {
+                title: "订单数量",
+                dataIndex: "orderNum",
+                key: "orderNum",
+                width: 100,
+                render: (text, record) => this.renderColumns(text, record, 'orderNum')
             },
             {
                 title: "调货单号",
-                dataIndex: "goodsCode",
-                key: "goodsCode",
+                dataIndex: "singleCode",
+                key: "singleCode",
                 width: 100,
-                render: (text, record) => this.renderColumns(text, record, 'goodsCode')
+                render: (text, record) => this.renderColumns(text, record, 'singleCode')
             },
             {
                 title: "调货项次",
-                dataIndex: "goodsIndex",
-                key: "goodsIndex",
+                dataIndex: "orderAdjustment",
+                key: "orderAdjustment",
                 width: 100,
-                render: (text, record) => this.renderColumns(text, record, 'goodsIndex')
+                render: (text, record) => this.renderColumns(text, record, 'orderAdjustment')
             },
             {
-                title: "调货重量(MT)",
-                dataIndex: "goodsHeave",
-                key: "goodsHeave",
+                title: "备注",
+                dataIndex: "orderdetailRemark",
+                key: "orderdetailRemark",
                 width: 100,
-                render: (text, record) => this.renderColumns(text, record, 'goodsHeave')
-            },
-            {
-                title: "调货确认码",
-                dataIndex: "goodsConfirmCode",
-                key: "goodsConfirmCode",
-                width: 100,
-                render: (text, record) => this.renderColumns(text, record, 'goodsConfirmCode')
+                render: (text, record) => this.renderColumns(text, record, 'orderdetailRemark')
             }
         ]
     }
