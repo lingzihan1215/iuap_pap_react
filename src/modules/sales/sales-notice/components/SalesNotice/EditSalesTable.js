@@ -69,6 +69,7 @@ export default class EditSalesTable extends Component {
                 render: (text, record) => this.renderColumns(text, record, 'orderdetailRemark')
             }
         ]
+        
     }
     renderColumns = (text, record, column) => {
         return (
@@ -81,6 +82,9 @@ export default class EditSalesTable extends Component {
             </div>
         );
     }
+    componentWillReceiveProps(nextPorps, props){
+        
+    }
     /**
      * 这里的性能开销需要注意
      */
@@ -90,15 +94,26 @@ export default class EditSalesTable extends Component {
             let { orderCode,orderTerms ,product,shipments,orderNum,singleCode,orderAdjustment,orderdetailRemark} = item;
             return { orderCode,orderTerms ,product,shipments,orderNum,singleCode,orderAdjustment,orderdetailRemark}
         })];
-        // let curData = [...this.props.selectData];
-        // 拿到当前所修改行的数据，并更新所修改的字段
-        await curData.forEach(item => {
-            if(orderCode === item.orderCode) item[column] = value;
-            return item;
+        let tableEditedData = this.props.tableEditedData;
+       
+        await curData.forEach((item, index) => {
+             // 匹配到当前被修改的行数据
+            if(orderCode === item.orderCode) {
+                // 1、假设有3行；2、改第二行第一次
+                if(tableEditedData.length && tableEditedData[index]) {
+                    tableEditedData[index][column] = value
+                }else {
+                    item[column] = value;
+                    tableEditedData.push(item)
+                }
+            }
+            
+            // return item;
         });
-
+        console.log(tableEditedData)
+        
         actions.salesNotice.updateState({
-            tableEditedData: curData
+            tableEditedData: tableEditedData
         });
     }
     onTableSelectedData = data => {
