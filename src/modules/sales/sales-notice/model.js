@@ -27,10 +27,10 @@ export default {
     },
     effects: {
         async searchCustomerInfo(param, getState){
-            let { customerCredit, customerCreditDetailList} = processData(await api.getSalesInfo(param));
+            let { entity, customerCreditDetailList} = processData(await api.getSalesInfo(param));
         
             actions.salesNotice.updateState({
-                customerCredit: customerCredit,
+                customerCredit: entity,
                 list: customerCreditDetailList
             })
 
@@ -40,9 +40,9 @@ export default {
            
             return await api.createSalesNotice({
                 sublist: {
-                    saleOrderDetailList: param.tableEditedData,
-                    entity: { ...param.formData, "id": getState().salesNotice.search_id}
-                }
+                    saleOrderDetailList: param.tableEditedData
+                },
+                entity: {...param.formData, customerCreditId: getState().salesNotice.search_id}
             })
         }
     }

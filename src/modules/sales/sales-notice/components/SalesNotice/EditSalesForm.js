@@ -14,10 +14,10 @@ class EditSalesForm extends Component {
         this.state = {
             enableFlag: true
         }
-        this.wharf = [
-            { key: "001", value: "天津港"},
-            { key: "002", value: "大连码头"},
-            { key: "003", value: "青岛港"}
+        this.shipCompany = [
+            { key: "001", value: "中船重工"},
+            { key: "002", value: "大连货运"},
+            { key: "003", value: "青岛船运股份"}
         ]
     }
     getCellsData(){
@@ -28,28 +28,27 @@ class EditSalesForm extends Component {
             { name: "船名", codeName: "shipName" },
             { name: "航次", codeName: "flightNum" },
             { name: "联络人", codeName: "liaisons" },
-            { name: "船公司", codeName: "shipCompany" },
+            { name: "码头", codeName: "wharf" },
             { name: "电话", codeName: "phone" },
-            { name: "目的港", codeName: "destinationPort" },
-            // { name: "SAO", codeName: "customerName" },
-            { name: "中午前结算", codeName: "isSettlement", children: () => {
-                return (
-                    <Switch
-                        checked={this.state.checked}
+            { name: "目的港", codeName: "destinationPort" }
+            // { name: "中午前结算", codeName: "isSettlement", children: () => {
+            //     return (
+            //         <Switch
+            //             checked={this.state.checked}
                         
-                        {
-                            ...getFieldProps("isSettlement", {
-                                initialValue: '',
-                                onChange(){
-                                    _this.setState({
-                                        checked: !_this.state.checked
-                                    });
-                                }
-                            })
-                        }
-                    />
-                )
-            } }
+            //             {
+            //                 ...getFieldProps("isSettlement", {
+            //                     initialValue: '',
+            //                     onChange(){
+            //                         _this.setState({
+            //                             checked: !_this.state.checked
+            //                         });
+            //                     }
+            //                 })
+            //             }
+            //         />
+            //     )
+            // } }
         ]
     } 
     
@@ -139,13 +138,13 @@ class EditSalesForm extends Component {
         let _this = this;
         let { createBtnStyles, handlerBtnStyles } = this.setButtonStyles();
         let setEnableFlag = this.state.setEnableFlag;
-        let btnDisabledFlag = !setEnableFlag ? "disabled" : "";
+        let btndisabledflag = setEnableFlag ? {"disabled": true} : {};
 
         return (
             <div className="edit-sales-form common-panel edit-panel">
                 <div className="form-handler-aria">
                     <Button 
-                        btnDisabledFlag
+                        {...btndisabledflag}
                         className={createBtnStyles}
                         onClick={this.setEnableFlag.bind(this)}>建立销货通知单</Button>
                     <Button 
@@ -186,19 +185,19 @@ class EditSalesForm extends Component {
                     </Col>
                     <Col md={4} xs={6}>
                         <FormItem>
-                            <Label>码头：</Label><span className='mast'>*</span>
+                            <Label>船公司：</Label><span className='mast'>*</span>
                             <Select className='form-item' disabled={this.state.enableFlag}  {
-                                ...getFieldProps('wharf', {
+                                ...getFieldProps('shipCompany', {
                                     initialValue: '',
                                     rules: [{required: true,message: "请输入船公司名称"}]
                                 })
                             }>
                                 {
-                                    this.wharf.map(item => <option key={item.key} value={item.key}>{item.value}</option> )
+                                    this.shipCompany.map(item => <option key={item.key} value={item.key}>{item.value}</option> )
                                 }
                             </Select>
                             <span className='error'>
-                                {getFieldError('wharf')}
+                                {getFieldError('shipCompany')}
                             </span>
                         </FormItem>
                     </Col>
