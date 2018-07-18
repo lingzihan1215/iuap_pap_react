@@ -15,7 +15,7 @@ const svrConfig = {
 // 远程代理访问，可以配置多个代理服务：https://github.com/chimurai/http-proxy-middleware
 const proxyConfig = [
   {
-    enable: false,
+    enable: true,
     headers: {
       // 这是之前网页的地址，从中可以看到当前请求页面的链接。
       "Referer": "http://10.10.24.43:8080/"    
@@ -28,7 +28,7 @@ const proxyConfig = [
   },
   // 应用平台
   {
-    enable: true,
+    enable: false,
     headers: {
       // 这是之前网页的地址，从中可以看到当前请求页面的链接。
       "Referer": "http://159.138.20.189:8080"    
@@ -41,7 +41,7 @@ const proxyConfig = [
   },
   // 后台开发服务
   {
-    enable: true,
+    enable: false,
     headers: {
       // 这是之前网页的地址，从中可以看到当前请求页面的链接。
       "Referer": "http://159.138.20.189:8180"    

@@ -49,9 +49,7 @@ class ChildTable extends Component {
                 dataIndex: "purchaseOrderId",
                 key: "purchaseOrderId",
                 width: 150,
-                /* render(record, text, index) {
-                    return index + 1;
-                } */
+                render: (text, record, index) => this.renderColumns(text, record, index, 'purchaseOrderId')
             },
             {
                 title: "订单明细编号",
@@ -86,14 +84,14 @@ class ChildTable extends Component {
                 dataIndex: "materialPrice",
                 key: "materialPrice",
                 width: 150,
-                render: (text, record, index) => this.renderColumnsInputNumber(text, record, index, 'materialPrice')
+                render: (text, record, index) => this.renderColumnsFloat(text, record, index, 'materialPrice')
             },
             {
                 title: "物料单价",
                 dataIndex: "priceUnit",
                 key: "priceUnit",
                 width: 150,
-                render: (text, record, index) => this.renderColumnsInputNumber(text, record, index, 'priceUnit')
+                render: (text, record, index) => this.renderColumnsFloat(text, record, index, 'priceUnit')
             },
             {
                 title: "确认时间",
@@ -179,7 +177,7 @@ class ChildTable extends Component {
         }
     }
 
-    //渲染数字列
+    //渲染整型数字列
     renderColumnsInputNumber = (text, record,index, column) => {
         return (
             <this.EditableCellInputNumber
@@ -191,14 +189,14 @@ class ChildTable extends Component {
     }
 
      //行编辑InputNumber
-    EditableCellInputNumber = ({ editable, value, onChange }) => (
+    EditableCellInputNumber = ({ editable, value,onChange }) => (
         <div>
             {editable
                 ? <InputNumber
                     iconStyle="one"
                     max={9999}
                     min={0}
-                    step={1}
+                    step={ 1}
                     value={parseInt(value)}
                     onChange={value => onChange(value)}
                 />
@@ -212,6 +210,44 @@ class ChildTable extends Component {
         const target = newData.filter((item,newDataIndex) => index === newDataIndex)[0];
         if (target) {
             target[column] = parseInt(value);
+            actions.mastertable.updateState({
+                list: newData
+            });
+        }
+    }
+
+    // 渲染浮点类型数字列
+    renderColumnsFloat = (text, record,index, column) => {
+        return (
+            <this.EditableCellFloat
+                editable={true}
+                value={text}
+                onChange={value => this.handleChangeFloat(value, index, column)}
+            />
+        );
+    }
+
+     //行编辑InputNumber
+     EditableCellFloat = ({ editable, value,onChange }) => (
+        <div>
+            {editable
+                ? <InputNumber
+                    precision={2}
+                    min={0}
+                    step={ 1}
+                    value={value}
+                    onChange={value => onChange(value)}
+                />
+                : value
+            }
+        </div>
+    );
+
+    handleChangeFloat = (value, index, column)=>{
+        const newData = [...this.props.childList];
+        const target = newData.filter((item,newDataIndex) => index === newDataIndex)[0];
+        if (target) {
+            target[column] = value;
             actions.mastertable.updateState({
                 list: newData
             });
@@ -346,7 +382,7 @@ class ChildTable extends Component {
                 ? (
                     <Select
                         defaultValue = '0'
-                        value = {value}
+                        value = {value+""}
                         onSelect = {value=>onSelect(value)}
                         >
                         <Option value="0">未发货</Option>
@@ -434,7 +470,11 @@ class ChildTable extends Component {
                 }
                 
             }
-            delArray.push(Object.assign({},childList[tempIndex],{dr:1}));
+            let delItem = childList[tempIndex];
+            let delItemId = delItem.id;
+            if(delItemId){
+                delArray.push(Object.assign({},childList[tempIndex],{dr:1}));
+            }
             childList.splice(tempIndex,1);
             console.log("delArray",delArray);
         }
