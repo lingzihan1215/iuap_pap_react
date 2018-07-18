@@ -460,6 +460,23 @@ class ChildTable extends Component {
         return array;
     }
 
+    // 子表分页信息
+
+    tabelSelect = ()=>{
+
+    }
+
+    onTableSelectedData = ()=>{
+
+    }
+
+    onPageSizeSelect = ()=>{
+
+    }
+
+    onPageIndexSelect = ()=>{
+
+    }
 
     render() {
         let {childList,
@@ -493,6 +510,20 @@ class ChildTable extends Component {
                                 dataNum={1}
                             />}
                         />
+                        {/* <PaginationTable
+                            data={childList}
+                            showLoading={false}
+                            pageIndex={childPageIndex}
+                            pageSize={childPageSize}
+                            totalPages={childTotalPages}
+                            columns={this.column}
+                            checkMinSize={6}
+                            getSelectedDataFunc={this.tabelSelect}
+                            onTableSelectedData={this.onTableSelectedData}
+                            onPageSizeSelect={this.onPageSizeSelect}
+                            onPageIndexSelect={this.onPageIndexSelect}
+                            scroll={{ x: 1300, y: 520 }}
+                        /> */}
                     </Col>
                 </Row>
             </div>

@@ -149,7 +149,7 @@ export default {
                window.history.go(-1);
             }
             actions.mastertable.updateState({
-              showLoading:false,
+                showLoading:false,
 
             });
         },
