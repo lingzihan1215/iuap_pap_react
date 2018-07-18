@@ -546,17 +546,6 @@ class ChildTable extends Component {
                             rowKey={r => r.id}
                             columns={this.column}
                             scroll={{ x: 1300, y: 520 }}
-                            footer={() => <Pagination
-                                first
-                                last
-                                boundaryLinks
-                                items={childTotalPages}
-                                activePage={childPageIndex}
-                                onSelect={this.handleSelect}
-                                // onDataNumSelect={this.dataNumSelect}
-                                // showJump={true}
-                                dataNum={1}
-                            />}
                         />
                         {/* <PaginationTable
                             data={childList}
