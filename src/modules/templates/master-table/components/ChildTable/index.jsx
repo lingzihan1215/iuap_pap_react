@@ -43,90 +43,94 @@ class ChildTable extends Component {
             editFlag:true,
             
         };
+        let {btnFlag} = this.props;
+        this.editFlag = btnFlag ? btnFlag<2 : true;
+        // console.log("editFlag",this.editFlag);
+        
         this.column = [
             {
                 title: "订单编号",
                 dataIndex: "purchaseOrderId",
                 key: "purchaseOrderId",
                 width: 150,
-                render: (text, record, index) => this.renderColumns(text, record, index, 'purchaseOrderId')
+                render: (text, record, index) => this.renderColumns(text, record, index, 'purchaseOrderId',this.editFlag)
             },
             {
                 title: "订单明细编号",
                 dataIndex: "purchaseItemId",
                 key: "purchaseItemId",
                 width: 150,
-                render: (text, record, index) => this.renderColumns(text, record, index, 'purchaseItemId')
+                render: (text, record, index) => this.renderColumns(text, record, index, 'purchaseItemId',this.editFlag)
             },
             {
                 title: "物料编号",
                 dataIndex: "materialId",
                 key: "materialId",
                 width: 150,
-                render: (text, record, index) => this.renderColumns(text, record, index, 'materialId')
+                render: (text, record, index) => this.renderColumns(text, record, index, 'materialId',this.editFlag)
             },
             {
                 title: "订单行号",
                 dataIndex: "orderItem",
                 key: "orderItem",
                 width: 150,
-                render: (text, record, index) => this.renderColumns(text, record, index, 'orderItem')
+                render: (text, record, index) => this.renderColumns(text, record, index, 'orderItem',this.editFlag)
             },
             {
                 title: "物料数量",
                 dataIndex: "materialQty",
                 key: "materialQty",
                 width: 150,
-                render: (text, record, index) => this.renderColumnsInputNumber(text, record, index, 'materialQty')
+                render: (text, record, index) => this.renderColumnsInputNumber(text, record, index, 'materialQty',this.editFlag)
             },
             {
                 title: "物料金额",
                 dataIndex: "materialPrice",
                 key: "materialPrice",
                 width: 150,
-                render: (text, record, index) => this.renderColumnsFloat(text, record, index, 'materialPrice')
+                render: (text, record, index) => this.renderColumnsFloat(text, record, index, 'materialPrice',this.editFlag)
             },
             {
                 title: "物料单价",
                 dataIndex: "priceUnit",
                 key: "priceUnit",
                 width: 150,
-                render: (text, record, index) => this.renderColumnsFloat(text, record, index, 'priceUnit')
+                render: (text, record, index) => this.renderColumnsFloat(text, record, index, 'priceUnit',this.editFlag)
             },
             {
                 title: "确认时间",
                 dataIndex: "confirmTime",
                 key: "confirmTime",
                 width: 150,
-                render: (text, record, index) => this.renderDatePicker(text, record, index, 'confirmTime')
+                render: (text, record, index) => this.renderDatePicker(text, record, index, 'confirmTime',this.editFlag)
             },
             {
                 title: "确认人员",
                 dataIndex: "confirmUser",
                 key: "confirmUser",
                 width: 150,
-                render: (text, record, index) => this.renderRef(text, record, index, 'confirmUser')
+                render: (text, record, index) => this.renderRef(text, record, index, 'confirmUser',this.editFlag)
             },
             {
                 title: "发货状态",
                 dataIndex: "deliveryStatus",
                 key: "deliveryStatus",
                 width: 150,
-                render: (text, record, index) => this.renderSelect(text, record, index, 'deliveryStatus')
+                render: (text, record, index) => this.renderSelect(text, record, index, 'deliveryStatus',this.editFlag)
             },
             {
                 title: "发货数量",
                 dataIndex: "deliveryQty",
                 key: "deliveryQty",
                 width: 150,
-                render: (text, record, index) => this.renderColumnsInputNumber(text, record, index, 'deliveryQty')
+                render: (text, record, index) => this.renderColumnsInputNumber(text, record, index, 'deliveryQty',this.editFlag)
             },
             {
                 title: "收货地址",
                 dataIndex: "deliveryAddr",
                 key: "deliveryAddr",
                 width: 150,
-                render: (text, record, index) => this.renderColumns(text, record, index, 'deliveryAddr')
+                render: (text, record, index) => this.renderColumns(text, record, index, 'deliveryAddr',this.editFlag)
             },
             {
                 title: "操作",
@@ -134,22 +138,25 @@ class ChildTable extends Component {
                 key: "d",
                 width: 100,
                 render:(text, record, index)=> {
-                    return (
+                    return  (
+                        
                         <div className='operation-btn'>
-                            {/* <i size='sm' className='uf uf-search edit-btn' onClick={() => { self.cellClick(record, 2) }}></i> */}
-                            {/* <i size='sm' className='uf uf-pencil edit-btn' onClick={() => { self.cellClick(record, 1) }}></i> */}
-                            <i size='sm' className='uf uf-del del-btn' onClick={() => { this.onChildDel(record, index) }}></i>
+                            {
+                                this.editFlag?<i size='sm' className='uf uf-del del-btn' onClick={() => { this.onChildDel(record, index) }}></i> :text
+                            }
                         </div>
-                    )
+                    ) 
+                        
+                    
                 }
             }]
     }
 
     // 普通编辑框渲染
-    renderColumns = (text, record,index, column) =>{
+    renderColumns = (text, record,index, column,editFlag) =>{
         return (
             <this.EditableCell
-                editable={true}
+                editable={editFlag}
                 value={text}
                 onChange={value => this.handleChange(value, index, column)}
             />
@@ -178,10 +185,10 @@ class ChildTable extends Component {
     }
 
     //渲染整型数字列
-    renderColumnsInputNumber = (text, record,index, column) => {
+    renderColumnsInputNumber = (text, record,index, column,editFlag) => {
         return (
             <this.EditableCellInputNumber
-                editable={true}
+                editable={editFlag}
                 value={text}
                 onChange={value => this.handleChangeNumber(value, index, column)}
             />
@@ -217,10 +224,10 @@ class ChildTable extends Component {
     }
 
     // 渲染浮点类型数字列
-    renderColumnsFloat = (text, record,index, column) => {
+    renderColumnsFloat = (text, record,index, column,editFlag) => {
         return (
             <this.EditableCellFloat
-                editable={true}
+                editable={editFlag}
                 value={text}
                 onChange={value => this.handleChangeFloat(value, index, column)}
             />
@@ -255,10 +262,10 @@ class ChildTable extends Component {
     }
 
     // 渲染时间列
-    renderDatePicker = (text, record,index, column) =>{
+    renderDatePicker = (text, record,index, column,editFlag) =>{
         return (
             <this.EditableCellDatePicker
-                editable={true}
+                editable={editFlag}
                 value={text}
                 onChange={value => this.handleChangeDate(value, index, column)}
             />
@@ -297,7 +304,7 @@ class ChildTable extends Component {
     }
 
     // 渲染参照
-    renderRef = (text, record,index, column) => {
+    renderRef = (text, record,index, column,editFlag) => {
         let self = this;
         // 处理参照的key值
         let cacheArray = [...this.props.cacheArray];
@@ -312,7 +319,7 @@ class ChildTable extends Component {
         
         return (
             <this.EditableCellRef
-                editable={true}
+                editable={editFlag}
                 value={text}
                 index={index}
                 self = {self}
@@ -366,10 +373,10 @@ class ChildTable extends Component {
     )
 
     // 渲染下拉框
-    renderSelect = (text, record,index, column) => {
+    renderSelect = (text, record,index, column,editFlag) => {
         return (
             <this.EditableCellSelect
-                editable={true}
+                editable={editFlag}
                 value={text}
                 onSelect={value => this.handleTableSelect(value, index, column)}
             />
@@ -382,7 +389,7 @@ class ChildTable extends Component {
                 ? (
                     <Select
                         defaultValue = '0'
-                        value = {value+""}
+                        value = {value+""||'0'}
                         onSelect = {value=>onSelect(value)}
                         >
                         <Option value="0">未发货</Option>
@@ -520,13 +527,13 @@ class ChildTable extends Component {
 
     render() {
         let {childList,
-            childPageIndex,childPageSize,childTotalPages
+            childPageIndex,childPageSize,childTotalPages,
         } = this.props;
-        
+        console.log("editFlag",this.editFlag);
         return (
             <div className="child-table">
                 <div className="chidtable-operate-btn">
-                    <Button size='sm' colors="primary" onClick={this.onAddEmptyRow}>增行</Button>
+                    <Button disabled={!this.editFlag} size='sm' colors="primary" onClick={this.onAddEmptyRow}>增行</Button>
                 </div>
                 <Row className='table-list'>
                     <Col md={12}>

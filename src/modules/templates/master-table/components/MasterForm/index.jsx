@@ -436,7 +436,7 @@ class MasterForm extends Component {
                     </div>
                 </div>
                 
-                <ChildTable />
+                <ChildTable btnFlag={btnFlag} />
             </div>
         )
     }

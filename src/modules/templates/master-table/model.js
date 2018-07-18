@@ -39,7 +39,7 @@ export default {
         detail:{},
         searchParam:{},
         validateNum:99,//不存在的step
-        btnFlag:0,
+        // btnFlag:0,
     },
     reducers: {
         /**
