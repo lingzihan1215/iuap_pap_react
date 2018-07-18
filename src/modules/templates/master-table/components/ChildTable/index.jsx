@@ -389,7 +389,7 @@ class ChildTable extends Component {
                 ? (
                     <Select
                         defaultValue = '0'
-                        value = {value+""||'0'}
+                        value = {value==1?value+'':'0'}
                         onSelect = {value=>onSelect(value)}
                         >
                         <Option value="0">未发货</Option>
@@ -402,9 +402,10 @@ class ChildTable extends Component {
     )
 
     handleTableSelect = (value, index, column)=> {
-        const newData = [...this.props.list];
+        const newData = [...this.props.childList];
         const target = newData.filter((item,newDataIndex) => index === newDataIndex)[0];
         if (target) {
+            console.log("select data",value);
             target[column] = value;
             actions.mastertable.updateState({
                 list: newData
