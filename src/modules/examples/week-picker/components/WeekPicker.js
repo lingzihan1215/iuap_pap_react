@@ -25,15 +25,17 @@ class WeekPickerC extends Component {
     render() {
         const { getFieldProps } = this.props.form;
         const self = this;
-        return ( 
+        return (
             <div className = 'example' >
                 <Header title = '周选择示例'/>
+                <div className='file-src'>文件位置：src/modules/examples/week-picker</div>
                 <Row className="example-ctn">
                     <Col md = {6} >
-                        <WeekPicker placeholder="选择周" defaultValue={this.state.weekDate}
+                        <WeekPicker placeholder="选择周"
                             {
                                 ...getFieldProps('weekDate', {
-                                    onChange: function (v) { 
+                                    initialValue:'',
+                                    onChange: function (v) {
                                         self.setState({
                                             weekDate: v
                                         })

@@ -1,0 +1,30 @@
+{
+	"sublist": {
+			"saleOrderDetailList": [
+				{
+					"orderCode": "0001113",
+					"orderTerms": "003113",
+					"product": "测试12113",
+					"shipments": "3",
+					"orderNum": "13",
+					"singleCode": "0003",
+					"orderAdjustment": "0003",
+					"orderdetailRemark": "测试数据备注"
+				}
+			]
+		},
+	"entity": {
+            "customerCreditId": "14bb079ed1894e20bf2d741f5dc2f81a",
+            "orderNo": "0013",
+            "settlementTime": "2018-07-10T06:45:06.494Z",
+            "shipCompany": "测试公司22321",
+            "shipName": "测试船111",
+            "flightNum": "333332",
+            "wharf": "s号码头",
+            "liaisons": "测试联系人",
+            "phone": "15981879343",
+            "destinationPort": "3",
+            "orderRemark": "备注备注备注11"
+		}
+}
+		

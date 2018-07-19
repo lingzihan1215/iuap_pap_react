@@ -2,11 +2,13 @@ import request from "utils/request";
 
 //定义接口地址
 const URL = { 
-    "GET_LIST":  `${GROBAL_HTTP_CTX}/sany_order/list`,
+    "GET_LIST":  `${GROBAL_HTTP_CTX}/sany_order/getListWithAttach`,
     "DELETE": `${GROBAL_HTTP_CTX}/sany_delivery/delete`,
     "SAVE": `${GROBAL_HTTP_CTX}/sany_delivery/save`,
-    "SAVE_ORDER":  `${GROBAL_HTTP_CTX}/sany_order/save`,
+    "SAVE_ORDER":  `${GROBAL_HTTP_CTX}/sany_order/saveWithAttach`,
     "DEL_ORDER":  `${GROBAL_HTTP_CTX}/sany_order/deleteBatch`,
+    "GET_DETAIL" : `${GROBAL_HTTP_CTX}/sany_order/getListWithAttach`,
+    "GET_AUTH" : `/wbalone/security/auth`
 }
 
 /**
@@ -65,5 +67,28 @@ export const delOrder = (params) => {
     return request(URL.DEL_ORDER, {
         method: "post",
         data: params
+    });
+}
+
+/** 
+ * 通过search_id 查询列表详情,使用查询列表接口
+*/
+
+export const getDetail = (params) => { 
+    return request(URL.GET_DETAIL, {
+        method: "get",
+        param: params
+    });
+}
+
+/** 
+ * 通过funcCode查询按钮权限
+*/
+export const getAuth = (funcCode) => { 
+    return request(URL.GET_AUTH, {
+        method: "get",
+        param: {
+            funcCode
+        }
     });
 }

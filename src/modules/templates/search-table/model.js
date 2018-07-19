@@ -1,106 +1,117 @@
 import { actions } from "mirrorx";
 // 引入services，如不需要接口请求可不写
-import * as api from "./service"; 
+import * as api from "./service";
 // 接口返回数据公共处理方法，根据具体需要
-import { processData } from "utils"; 
+import { processData } from "utils";
+import moment from 'moment';
 
-/** 
+/**
  *          btnFlag为按钮状态，新增、修改是可编辑，查看详情不可编辑，
  *          新增表格为空
  *          修改需要将行数据带上并显示在卡片页面
  *          查看详情携带行数据但是表格不可编辑
  *          0表示新增、1表示编辑，2表示查看详情 3提交
+ *
+ *          rowData为行间距
 */
 
 export default {
     // 确定 Store 中的数据模型作用域
-    name: "searchTable", 
+    name: "searchTable",
     // 设置当前 Model 所需的初始化 state
-    initialState: {  
-        showLoading:false,
+    initialState: {
+        rowData: {},
+        showLoading: false,
         list: [],
-        orderTypes:[],
-        pageIndex:1,
-        pageSize:10,
-        totalPages:1,
-        detail:{},
-        searchParam:{},
-        validateNum:99,//不存在的step
-        btnFlag:0
+        orderTypes: [],
+        pageIndex: 1,
+        pageSize: 10,
+        totalPages: 1,
+        detail: {},
+        searchParam: {},
+        validateNum: 99,//不存在的step
+        btnFlag: 0,
+        addAuth: false,//添加按钮权限
+        submitAuth: false,//提交流程按钮权限
+        recallAuth: false,//取消流程按钮权限
+        upadateAuth: false,//编辑流程按钮权限
+        deleteAuth: false,//删除流程按钮权限
     },
     reducers: {
         /**
          * 纯函数，相当于 Redux 中的 Reducer，只负责对数据的更新。
-         * @param {*} state 
-         * @param {*} data 
+         * @param {*} state
+         * @param {*} data
          */
         updateState(state, data) { //更新state
+            console.log("当前state",state,"即将更新data",data)
             return {
                 ...state,
                 ...data
             };
         }
     },
-    effects: { 
+    effects: {
         /**
          * 加载列表数据
-         * @param {*} param 
-         * @param {*} getState 
+         * @param {*} param
+         * @param {*} getState
          */
         async loadList(param, getState) {
             // 正在加载数据，显示加载 Loading 图标
-            actions.searchTable.updateState({ showLoading:true })
-            if(param){
+            actions.searchTable.updateState({ showLoading: true })
+            if (param) {
                 param.pageIndex = param.pageIndex ? param.pageIndex - 1 : 0;
                 param.pageSize = param.pageSize ? param.pageSize : 10;
             } else {
                 param = {}
             }
             // 调用 getList 请求数据
-            let res = processData(await api.getList(param)); 
-            
-            actions.searchTable.updateState({  showLoading:false })
-
+            let res = processData(await api.getList(param));
+            actions.searchTable.updateState({ showLoading: false })
             if (res) {
-                if(res.content&&res.content.length){
-                    for(var i=0;i<res.content.length;i++){
-                        res.content[i].key=i+1;
+                if (res.content && res.content.length) {
+                    for (let i = 0; i < res.content.length; i++) {
+                        let temp = Object.assign({}, res.content[i]);
+                        res.content[i].key = i + 1;
+                        res.content[i].voucherDate = moment(temp.voucherDate).format('YYYY-MM-DD');
+                        res.content[i].purchasing = temp.purchasingName;
                     }
                 }
+                // console.log('res content',res.content);
                 actions.searchTable.updateState({
                     list: res.content,
-                    pageIndex:res.number + 1,
-                    pageSize:res.size,
-                    totalPages:res.totalPages,
+                    pageIndex: res.number + 1,
+                    totalPages: res.totalPages,
                 });
             }
         },
         /**
          * getSelect：获取下拉列表数据
-         * @param {*} param 
-         * @param {*} getState 
+         * @param {*} param
+         * @param {*} getState
          */
-        getOrderTypes(param,getState){
+        getOrderTypes(param, getState) {
             actions.searchTable.updateState({
-            orderTypes:  [{
-                "code":"0",
-                "name":"D001"
-            },{
-                "code":"1",
-                "name":"D002"
-            },{
-                "code":"2",
-                "name":"D003"
-            },{
-                "code":"3",
-                "name":"D004"
-            }]
+                orderTypes: [{
+                    "code": "0",
+                    "name": "D001"
+                }, {
+                    "code": "1",
+                    "name": "D002"
+                }, {
+                    "code": "2",
+                    "name": "D003"
+                }, {
+                    "code": "3",
+                    "name": "D004"
+                }]
             })
         },
         /**
          * getSelect：保存table数据
-         * @param {*} param 
-         * @param {*} getState 
+         * @param {*} param
+         * @param {*} getState
          */
         async saveList(param, getState) {
             let result = await api.saveList(param);
@@ -108,32 +119,47 @@ export default {
         },
         /**
          * 删除table数据
-         * @param {*} id 
-         * @param {*} getState 
+         * @param {*} id
+         * @param {*} getState
          */
         async removeList(id, getState) {
-            let result = await api.deleteList([{id}]);
+            let result = await api.deleteList([{ id }]);
             return result;
         },
-        
-        async delItem(param,getState){
+
+        async delItem(param, getState) {
             actions.searchTable.updateState({
-              showLoading:true
+                showLoading: true
             })
-            let res=processData(await api.delOrder(param.param),'删除成功');
+            let res = processData(await api.delOrder(param.param), '删除成功');
             actions.searchTable.loadList();
-          },
-          async save(param,getState){//保存
+        },
+
+        async save(param, getState) {//保存
             actions.searchTable.updateState({
-              showLoading:true
+                showLoading: true
             })
-            let res=processData(await api.saveOrder(param),'保存成功');
-            if(res){
-               window.history.go(-1);
+            let res = processData(await api.saveOrder(param), '保存成功');
+            if (res) {
+                window.history.go(-1);
             }
             actions.searchTable.updateState({
-              showLoading:false
+                showLoading: false
             });
-          },
+        },
+
+        async queryDetail(param, getState) {
+            let res = processData(await api.getDetail(param), '');
+            return res.content[0];
+        },
+        //查询按钮权限
+        async queryAuth(funcCode, getState) {
+            let { data } = await api.getAuth(funcCode);
+            for (let i = 0; i < data.length; i++) {
+                actions.searchTable.updateState({
+                    [`${data[i]}Auth`]: true
+                });
+            }
+        }
     }
 };

@@ -76,10 +76,7 @@ export default class SimpleSelectTable extends Component {
                 title: "凭证日期",
                 dataIndex: "voucherDate",
                 key: "voucherDate",
-                width: 100,
-                render(record, text, index) {
-                    return moment(text).format('YYYY-MM-DD')
-                }
+                width: 100
             },
             {
                 title: "审批状态",

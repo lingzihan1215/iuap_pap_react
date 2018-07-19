@@ -10,6 +10,8 @@ import order from "modules/order/router";
 import Supplier from "modules/supplier/router";
 import contracts from "modules/contract/router";
 import system from 'modules/sys-manage/router';
+// 台湾-华新丽华-功能路由
+import sales from 'modules/sales/router';
 
 // 典型案例与应用组件示例
 import templates from 'modules/templates/router';
@@ -29,6 +31,7 @@ export default class App extends Component {
         <Route path="/system" component={system} />
         <Route path="/templates" component={templates} />
         <Route path="/examples" component={examples} />
+        <Route path="/sales" component={sales} />
       </div>
     )
   }

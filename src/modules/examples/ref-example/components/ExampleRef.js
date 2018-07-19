@@ -66,6 +66,7 @@ class ExampleRef  extends Component {
         return (
             <div className='example-ref'>
                 <Header title='参照示例'/>
+                <div className='file-src'>文件位置：src/modules/examples/ref-example</div>
                 <div className='edit-panel'>
                     <FormItem>
                         <Label  className='time'>可供货品类：</Label>

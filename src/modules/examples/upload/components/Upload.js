@@ -22,18 +22,19 @@ class UploadComp extends Component {
         return (
             <div className = 'example'>
                 <Header title = '上传示例' / >
-                <Row className="example-ctn">
-                    <Col md = {12} >
-                        <AcUpload
-                            action="/iuap_pap_quickstart/fileMananger/fastDfs/imgUpload"
-                            multiple={true}
-                            onError={this.handlerUploadError}
-                            onSuccess={this.handlerUploadSuccess}
-                        >
-                            <Button shape="border" colors="success">上传</Button>
-                        </AcUpload>  
-                    </Col> 
-                </Row> 
+                <div className='file-src'>文件位置：src/modules/examples/upload</div>
+                    <Row className="example-ctn">
+                        <Col md = {12} >
+                            <AcUpload
+                                action="/iuap_pap_quickstart/fileMananger/fastDfs/imgUpload"
+                                multiple={true}
+                                onError={this.handlerUploadError}
+                                onSuccess={this.handlerUploadSuccess}
+                            >
+                                <Button shape="border" colors="success">上传</Button>
+                            </AcUpload>  
+                        </Col> 
+                    </Row> 
             </div>
         );
     }

@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+// const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const glob = require('glob');
 
@@ -19,24 +19,40 @@ const proxyConfig = [
     enable: false,
     headers: {
       // 这是之前网页的地址，从中可以看到当前请求页面的链接。
-      // "Referer": "http://172.20.23.242:8080/"    },
-      "Referer": "http://10.10.24.43:8080/"    },
+      "Referer": "http://10.10.24.43:8080/"    
+    },
     // context，如果不配置，默认就是代理全部。
     router: [
       '/wbalone', '/iuap_pap_quickstart', '/iuap-example','/eiap-plus/','/newref/'
     ],
-    url: 'http://172.20.23.242:8080'  
+    url: 'http://10.10.24.43:8080'  
   },
+  // 应用平台
   {
     enable: true,
     headers: {
-    "Referer": "http://10.10.24.43:8080/" },
+      // 这是之前网页的地址，从中可以看到当前请求页面的链接。
+      "Referer": "http://159.138.20.189:8080"    
+    },
+    // context，如果不配置，默认就是代理全部。
     router: [
-    '/wbalone', '/iuap_pap_quickstart', '/iuap-example','/eiap-plus/','/newref/'
+      '/wbalone'
     ],
-    url: 'http://10.10.24.43:8080'
+    url: 'http://159.138.20.189:8080'  
+  },
+  // 后台开发服务
+  {
+    enable: true,
+    headers: {
+      // 这是之前网页的地址，从中可以看到当前请求页面的链接。
+      "Referer": "http://159.138.20.189:8180"    
+    },
+    // context，如果不配置，默认就是代理全部。
+    router: [
+      '/iuap_pap_quickstart'
+    ],
+    url: 'http://159.138.20.189:8180'  
   }
-    
 ];
 
 const globalEnvConfig = new webpack.DefinePlugin({

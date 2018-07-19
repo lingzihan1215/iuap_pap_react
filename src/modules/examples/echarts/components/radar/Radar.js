@@ -22,6 +22,7 @@ class Radar extends Component {
         return (
             <div className="radar">
                 <Header title="雷达图示例"/>
+                <div className='file-src'>文件位置：src/modules/examples/echarts/radar</div>
                 <Panel>
                     <ReactEcharts theme={"macarons"} option={radarOption} />
                 </Panel>    

@@ -10,6 +10,11 @@ import {
 } from './search-table/container';
 
 import {
+    ConnectedMasterTable,
+    ConnectedMasterForm
+} from './master-table/container'
+
+import {
     ConnectedCardTable
 } from './card-table/container';
 
@@ -45,6 +50,7 @@ import BPM from './bpm/components/BPM/Bpm'
  * 5、复杂信息表单【complex-form】：如供应商注册功能页面
  * 6、参照功能示例【ref-exmaple】：
  * 7、BPM 流程功能示例【bpm-table】：如督办任务功能页面
+ * 8、新节点主子表【master-table】
  */
 export default ({ match }) => (
     <div className="templates-route">
@@ -61,5 +67,7 @@ export default ({ match }) => (
         <Route exact path={`${match.url}/bpm-table`} component={ConnectedBpmTable} />
         <Route exact path={`${match.url}/bpm-card`} component={ConnectedBpmCard} />
         <Route exact path={`${match.url}/bpm`} component={BPM} />
+        <Route exact path={`${match.url}/master-table`} component={ConnectedMasterTable} />
+        <Route exact path={`${match.url}/master-form`} component={ConnectedMasterForm} />
     </div>
 )

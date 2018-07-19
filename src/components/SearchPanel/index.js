@@ -25,12 +25,14 @@ const propTypes = {
     reset:PropTypes.func,//重置的回调
     resetName:PropTypes.string,//重置的文字
     searchName:PropTypes.string,//查询的文字
+    title: PropTypes.string
 };
 
 const defaultProps = {
     searchOpen:false,
     search: () => {},
-    reset: () => {}
+    reset: () => {},
+    title: "查询与筛选"
 };
 
 
@@ -71,7 +73,7 @@ class SearchPanel extends Component {
             return (
                 <div className="clearfix" onClick={this.open}>
                     <span  className={'search-panel-title'}>
-                        查询与筛选
+                        {this.props.title}
                     </span>
                     <span  className={'search-panel-icon'}>
                         {this.state.searchOpen ? '收起' : '展开'}

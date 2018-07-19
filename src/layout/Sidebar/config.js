@@ -91,6 +91,19 @@ export default [
             "sort": 1,
             "openview": "curpage",
             "category": "engine"
+        },{
+            "id": "app08",
+            "name": "主子表",
+            "location": "/templates/master-table",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
         }],
         "sort": 1,
         "openview": "curpage",
@@ -443,8 +456,75 @@ export default [
         "urltype": "url",
         "children": [{
             "id": "app601",
-            "name": "树形参照",
-            "location": "/examples/ref-example",
+            "name": "穿梭框参照",
+            "location": "/examples/ref-transfer-example",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
+        },{
+            "id": "app602",
+            "name": "多过滤项参照",
+            "location": "/examples/ref-multile-example",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 2,
+            "openview": "curpage",
+            "category": "engine"
+        }],
+        "sort": 1,
+        "openview": "curpage",
+        "category": "engine"
+    },
+    // 华新丽华
+    {
+        "id": "application7",
+        "name": "销货通知单",
+        "location": "/application",
+        "menustatus": "Y",
+        "parentid": null,
+        "icon": "uf uf-9square-2",
+        "target": "",
+        "urltype": "url",
+        "children": [{
+            "id": "app701",
+            "name": "创建通知单",
+            "location": "/sales/sales-notice",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
+        },{
+            "id": "app702",
+            "name": "查询通知单",
+            "location": "/sales/sales-search",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
+        },{
+            "id": "app703",
+            "name": "销货通知单详情",
+            "location": "/sales/sales-detail",
             "menustatus": "Y",
             "parentid": null,
             "icon": "uf uf-9square-2",
@@ -458,5 +538,5 @@ export default [
         "sort": 1,
         "openview": "curpage",
         "category": "engine"
-    }
+    },
 ]

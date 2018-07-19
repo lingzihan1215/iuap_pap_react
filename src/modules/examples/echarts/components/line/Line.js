@@ -24,6 +24,7 @@ class Line extends Component {
         return (
             <div className="line">
                 <Header title="折线图示例"/>
+                <div className='file-src'>文件位置：src/modules/examples/echarts/line</div>
                 <Panel>
                     <ReactEcharts theme={"macarons"} option={lineOption} />
                 </Panel>

@@ -38,6 +38,10 @@ import {
     CtFormValidate
 } from './form-validate/container'
 
+import {
+    ConnectedRefTransfer,
+    ConnectedRefMultiple,
+} from './ref-example/container'
 
 /**
  * 路由说明：
@@ -67,5 +71,8 @@ export default ({ match }) => (
         <Route exact path={`${match.url}/search-panel`} component={CtSearchPanel} />
         <Route exact path={`${match.url}/edit-table`} component={ConnectedEditTable} />
         <Route exact path={`${match.url}/form-validate`} component={CtFormValidate} />
+        <Route exact path={`${match.url}/ref-transfer-example`} component={ConnectedRefTransfer} />
+        <Route exact path={`${match.url}/ref-multile-example`} component={ConnectedRefMultiple} />
+
     </div>
 )
