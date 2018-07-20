@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react'
 import { actions } from 'mirrorx';
-import { Col, Row, FormControl, Label, Select, Radio, Button } from "tinper-bee";
+import { Col, Row, FormControl, Label, Select, Radio, Button, InputNumber, Message } from "tinper-bee";
 import moment from "moment/moment";
 import CommonTitle from '../CommonTitle/index';
 import Table from 'bee-table';
@@ -37,7 +37,7 @@ export default class EditSalesTable extends Component {
                 title: "出货数量",
                 dataIndex: "shipments",
                 key: "shipments",
-                width: 50,
+                width: 100,
                 render: (text, record) => this.renderColumns(text, record, 'shipments')
             },
             {
@@ -74,11 +74,22 @@ export default class EditSalesTable extends Component {
     renderColumns = (text, record, column) => {
         return (
             <div className="cel-edit-input">
+                
                 <FormControl 
                     defaultValue={text} 
                     key={record.orderCode}
                     onChange={value => this.handleChange(value, record.orderCode, column)} 
                 />
+                {/*
+                <InputNumber
+                    iconStyle="one"
+                    max={9999}
+                    min={0}
+                    step={1}
+                    value={parseInt(text)}
+                    onChange={value => this.handleChange(value, record.orderCode, column)}
+                />
+                */}
             </div>
         );
     }
@@ -89,6 +100,11 @@ export default class EditSalesTable extends Component {
      * 这里的性能开销需要注意
      */
     handleChange = async (value, orderCode, column) => {
+        if(!/^\d+$/.test(value)) {
+            Message.create({ duration: 1, content: '请输入大于0的数字', color: 'warning' });
+            return ;
+        }
+
         // 已经选中并且带下来的数据
         let curData = [...this.props.selectData.map(item => {
             let { orderCode,orderTerms ,product,shipments,orderNum,singleCode,orderAdjustment,orderdetailRemark} = item;

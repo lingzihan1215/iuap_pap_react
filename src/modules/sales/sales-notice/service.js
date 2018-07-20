@@ -2,10 +2,10 @@ import request from "utils/request";
 
 //定义接口地址
 const URL = { 
-    // "SALES_INFO":  `/customer_credit/getAssoVo`,
-    // "SALES_CREATE":  `/sales/customer/create`,
-    "SALES_CREATE":  `${GROBAL_HTTP_CTX}/sale_order/SaveAssoVo`,
-    "SALES_INFO":  `${GROBAL_HTTP_CTX}/customer_credit/getAssoVo`
+    "SALES_INFO":  `/customer_credit/getAssoVo`,
+    "SALES_CREATE":  `/sales/customer/create`
+    // "SALES_CREATE":  `${GROBAL_HTTP_CTX}/sale_order/SaveAssoVo`,
+    // "SALES_INFO":  `${GROBAL_HTTP_CTX}/customer_credit/getAssoVo`
           
 
 }
