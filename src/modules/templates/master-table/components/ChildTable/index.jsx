@@ -34,6 +34,8 @@ moment.locale('zh-cn');
 const format = "YYYY-MM-DD";
 const Option = Select.Option;
 
+console.log("childtable",actions)
+
 let id = 0;
 class ChildTable extends Component {
     constructor(props) {
@@ -41,7 +43,6 @@ class ChildTable extends Component {
         this.state = { 
             selectData:[],
             editFlag:true,
-            
         };
         let {btnFlag} = this.props;
         this.editFlag = btnFlag ? btnFlag<2 : true;
@@ -81,7 +82,7 @@ class ChildTable extends Component {
                 dataIndex: "materialQty",
                 key: "materialQty",
                 width: 150,
-                render: (text, record, index) => this.renderColumnsInputNumber(text, record, index, 'materialQty',this.editFlag)
+                render: (text, record, index) => this.renderColumnsInt(text, record, index, 'materialQty',this.editFlag)
             },
             {
                 title: "物料金额",
@@ -123,7 +124,7 @@ class ChildTable extends Component {
                 dataIndex: "deliveryQty",
                 key: "deliveryQty",
                 width: 150,
-                render: (text, record, index) => this.renderColumnsInputNumber(text, record, index, 'deliveryQty',this.editFlag)
+                render: (text, record, index) => this.renderColumnsInt(text, record, index, 'deliveryQty',this.editFlag)
             },
             {
                 title: "收货地址",
@@ -142,7 +143,8 @@ class ChildTable extends Component {
                         
                         <div className='operation-btn'>
                             {
-                                this.editFlag?<i size='sm' className='uf uf-del del-btn' onClick={() => { this.onChildDel(record, index) }}></i> :text
+                               this.editFlag ? <i size='sm' className='uf uf-del' onClick={() => { this.onChildDel(record, index) }}></i>
+                               :<i size='sm' className='uf uf-del del-btn'></i>
                             }
                         </div>
                     ) 
@@ -185,7 +187,7 @@ class ChildTable extends Component {
     }
 
     //渲染整型数字列
-    renderColumnsInputNumber = (text, record,index, column,editFlag) => {
+    renderColumnsInt = (text, record,index, column,editFlag) => {
         return (
             <this.EditableCellInputNumber
                 editable={editFlag}
@@ -413,16 +415,6 @@ class ChildTable extends Component {
         }
     }
 
-    // 分页选择信息
-    handleSelect = ()=>{
-
-    }
-
-    dataNumSelect = ()=>{
-
-    }
-
-
     // 增加空行
     onAddEmptyRow = ()=>{
         let tempArray = [...this.props.childList],
@@ -508,33 +500,16 @@ class ChildTable extends Component {
         return array;
     }
 
-    // 子表分页信息
-
-    tabelSelect = ()=>{
-
-    }
-
-    onTableSelectedData = ()=>{
-
-    }
-
-    onPageSizeSelect = ()=>{
-
-    }
-
-    onPageIndexSelect = ()=>{
-
-    }
-
     render() {
-        let {childList,
-            childPageIndex,childPageSize,childTotalPages,
-        } = this.props;
+        let {childList} = this.props;
+        console.log(this.props);
         console.log("editFlag",this.editFlag);
         return (
             <div className="child-table">
                 <div className="chidtable-operate-btn">
-                    <Button disabled={!this.editFlag} size='sm' colors="primary" onClick={this.onAddEmptyRow}>增行</Button>
+                {
+                   this.editFlag ?  <Button size='sm' colors="primary" onClick={this.onAddEmptyRow}>增行</Button> :""
+                }
                 </div>
                 <Row className='table-list'>
                     <Col md={12}>
@@ -547,20 +522,6 @@ class ChildTable extends Component {
                             columns={this.column}
                             scroll={{ x: 1300, y: 520 }}
                         />
-                        {/* <PaginationTable
-                            data={childList}
-                            showLoading={false}
-                            pageIndex={childPageIndex}
-                            pageSize={childPageSize}
-                            totalPages={childTotalPages}
-                            columns={this.column}
-                            checkMinSize={6}
-                            getSelectedDataFunc={this.tabelSelect}
-                            onTableSelectedData={this.onTableSelectedData}
-                            onPageSizeSelect={this.onPageSizeSelect}
-                            onPageIndexSelect={this.onPageIndexSelect}
-                            scroll={{ x: 1300, y: 520 }}
-                        /> */}
                     </Col>
                 </Row>
             </div>
@@ -569,3 +530,4 @@ class ChildTable extends Component {
 }
 
 export default connect( state => state.mastertable, null )(Form.createForm()(ChildTable));
+// export default Form.createForm()(ChildTable);

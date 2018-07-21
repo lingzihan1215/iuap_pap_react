@@ -32,9 +32,8 @@ export default {
         childList:[],          //子表
         cacheArray:[],         //缓存数据
         delArray:[],
-        childPageIndex:1, 
-        childPageSize:10,
-        childTotalPages:1,
+
+                               //按钮权限
 
         detail:{},
         searchParam:{},
@@ -165,7 +164,6 @@ export default {
                     let temp = Object.assign({},item);
                     temp.uuid = setTimeout(function(){},1);
                     tempArray.push(temp);
-                    // item.confirmUser = temp.confirmUserName
                 })
             }
 
@@ -186,6 +184,15 @@ export default {
                 cacheArray:cacheArray
             })
             return  detailMsg.entity;
+        },
+        // 查询按钮权限
+        async queryAuth(funcCode, getState) {
+            let { data } = await api.getAuth(funcCode);
+            for (let i = 0; i < data.length; i++) {
+                actions.searchTable.updateState({
+                    [`${data[i]}Auth`]: true
+                });
+            }
         }
     }
 };

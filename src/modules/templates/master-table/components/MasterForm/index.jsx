@@ -89,7 +89,7 @@ class MasterForm extends Component {
                         // 判断参照值是否有改动
                         let uuid = item.uuid;
                         let temp = item["confirmUser"+uuid];
-                        let tempConfirmUser = item['confirmUser'];
+                        // let tempConfirmUser = item['confirmUser'];
                         let tempConfirmUserName = item['confirmUserName']
                         if(temp){
                             // 参照有改动
@@ -224,6 +224,8 @@ class MasterForm extends Component {
         const self = this;
         let { btnFlag } = queryString.parse(this.props.location.search);
         btnFlag = Number(btnFlag);
+        // let {childList,cacheArray,delArray} = this.props;
+        // let childObj = {childList,cacheArray,delArray};
         let { rowData, refKeyArray,column } = this.state;
         let title = this.onChangeHead(btnFlag);
         let { petId, quantity, shipDate, status, complete, } = rowData;

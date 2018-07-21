@@ -6,6 +6,7 @@ const URL = {
     "GET_LIST":  `${GROBAL_HTTP_CTX}/show_off/getListWithAttach`,
     "SAVE_ORDER":  `${GROBAL_HTTP_CTX}/show_off/SaveAssoVo`,
     "DEL_ORDER":  `${GROBAL_HTTP_CTX}/show_off/deleteBatch`,
+    "GET_AUTH" : `/wbalone/security/auth`
 }
 
 /**
@@ -75,5 +76,17 @@ export const getDetail = (params) => {
     return request(URL.GET_DETAIL, {
         method: "get",
         param: params
+    });
+}
+
+/** 
+ * 通过funcCode查询按钮权限
+*/
+export const getAuth = (funcCode) => { 
+    return request(URL.GET_AUTH, {
+        method: "get",
+        param: {
+            funcCode
+        }
     });
 }
