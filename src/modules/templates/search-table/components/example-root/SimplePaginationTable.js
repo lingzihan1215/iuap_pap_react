@@ -228,6 +228,7 @@ export default class SimplePaginationTable extends Component {
                         funccode="react"
                         nodekey="003"
                         url={`${GROBAL_HTTP_CTX}/sany_order/submit`}
+                        urlAssignSubmit={`${GROBAL_HTTP_CTX}/sany_order/assignSubmit`}
                         onSuccess={this.onSubmitSuc}
                         onError={this.onSubmitFail}
                         onStart={this.onSubmitStart}
