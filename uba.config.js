@@ -18,39 +18,39 @@ const proxyConfig = [
     enable: true,
     headers: {
       // 这是之前网页的地址，从中可以看到当前请求页面的链接。
-      "Referer": "http://10.10.24.43:8080/"    
+      "Referer": "http://10.10.24.43:8080/"
     },
     // context，如果不配置，默认就是代理全部。
     router: [
       '/wbalone', '/iuap_pap_quickstart', '/iuap-example','/eiap-plus/','/newref/'
     ],
-    url: 'http://10.10.24.43:8080'  
+    url: 'http://10.10.24.43:8080'
   },
   // 应用平台
   {
     enable: false,
     headers: {
       // 这是之前网页的地址，从中可以看到当前请求页面的链接。
-      "Referer": "http://159.138.20.189:8080"    
+      "Referer": "http://159.138.20.189:8080"
     },
     // context，如果不配置，默认就是代理全部。
     router: [
       '/wbalone'
     ],
-    url: 'http://159.138.20.189:8080'  
+    url: 'http://159.138.20.189:8080'
   },
   // 后台开发服务
   {
     enable: false,
     headers: {
       // 这是之前网页的地址，从中可以看到当前请求页面的链接。
-      "Referer": "http://159.138.20.189:8180"    
+      "Referer": "http://159.138.20.189:8180"
     },
     // context，如果不配置，默认就是代理全部。
     router: [
       '/iuap_pap_quickstart'
     ],
-    url: 'http://159.138.20.189:8180'  
+    url: 'http://159.138.20.189:8180'
   }
 ];
 
@@ -68,6 +68,7 @@ const MINIMIZE_FLAG = (process.env.NODE_ENV == "production") ? true : false;
 function getVendors() {
   let pkg = require("./package.json");
   let _vendors = [];
+  _vendors.push('babel-polyfill');
   for (const key in pkg.dependencies) {
     _vendors.push(key);
   }
@@ -152,7 +153,7 @@ const devConfig = {
   devtool: 'cheap-module-eval-source-map',
   entry: {
     vendors: getVendors(),
-    app: ['babel-polyfill', './src/app.jsx', hotMiddlewareScript]
+    app: ['./src/app.jsx', hotMiddlewareScript]
   },
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -192,7 +193,7 @@ const prodConfig = {
   devtool: 'source-map',
   entry: {
     vendors: getVendors(),
-    app: ['babel-polyfill', './src/app.jsx']
+    app: ['./src/app.jsx']
   },
   output: {
     path: path.resolve(__dirname, './dist'),
