@@ -1,5 +1,6 @@
 {
   "Header.back": "返回",
   "SearchPanel.clear": "清空",
-  "SearchPanel.search": "查询"
+  "SearchPanel.search": "查询",
+  "sales.customerCode": "客户代号："
 }

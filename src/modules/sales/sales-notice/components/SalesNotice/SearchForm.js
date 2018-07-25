@@ -7,6 +7,8 @@ import Form from 'bee-form';
 import { Col, Row, FormControl, Label, Select, Radio } from "tinper-bee";
 const FormItem = Form.FormItem;
 
+import { FormattedMessage, defineMessages } from 'react-intl';
+
 class SearchForm extends Component {
     constructor(props){
         super(props)
@@ -32,7 +34,7 @@ class SearchForm extends Component {
                     <Row>
                         <Col md={4} xs={6}>
                             <FormItem>
-                                <Label>客户代号：</Label>
+                                <Label><FormattedMessage id="sales.customerCode" defaultMessage="编码" /></Label>
                                 <FormControl className='form-item' 
                                     {
                                     ...getFieldProps('search_id', {

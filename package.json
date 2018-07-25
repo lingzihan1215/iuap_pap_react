@@ -7,8 +7,7 @@
     "dev": "cross-env NODE_ENV=development uba server --chunks",
     "test": "cross-env NODE_ENV=production uba server --chunks",
     "build": "cross-env NODE_ENV=production uba build -p",
-    "sanyinstall": "npm install --registry http://bdp.sany.com.cn/nexus3/repository/sany-npm-group",
-    "trans": "atool-l10n"
+    "sanyinstall": "npm install --registry http://bdp.sany.com.cn/nexus3/repository/sany-npm-group"
   },
   "author": "yonyou fed team",
   "license": "MIT",
@@ -74,11 +73,8 @@
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.3.2",
     "react-hot-keys": "^1.2.0",
-<<<<<<< HEAD
     "react-intl": "^2.4.0",
-=======
     "react-loadable": "^5.4.0",
->>>>>>> master
     "react-transition-group": "^2.4.0",
     "tinper-bee": "1.5.0",
     "yyuap-bpm": "0.0.17",

@@ -1,5 +1,6 @@
 {
   "Header.back": "return",
   "SearchPanel.clear": "empty",
-  "SearchPanel.search": "The query"
+  "SearchPanel.search": "The query",
+  "sales.customerCode": "customer code11:"
 }

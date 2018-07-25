@@ -18,9 +18,9 @@ import "./app.less";
 
 const MiddlewareConfig = [];
 
-const appLocale = window.appLocale;
+// const appLocale = window.appLocale;
 
-addLocaleData(appLocale.data);
+// addLocaleData(appLocale.data);
 
 if (__MODE__ == "development") MiddlewareConfig.push(logger);
 
@@ -32,7 +32,7 @@ mirror.defaults({
 
 render(
     <Locale locale={appLocale.tinperBee}>
-        <IntlProvider locale={appLocale.locale} messages={appLocale.messages}>
+        <IntlProvider locale="en" messages={appLocale.messages}>
             <Router>
                 <MainLayout />
             </Router>
