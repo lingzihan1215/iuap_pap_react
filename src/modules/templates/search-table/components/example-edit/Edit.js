@@ -159,11 +159,14 @@ class Edit extends Component {
         if ((btnFlag == 2) && rowData && rowData['id']) {
             console.log("showBpmComponent", btnFlag)
             return (
-                <BpmTaskApprovalWrap
-                    id={rowData.id}
-                    onBpmFlowClick={() => { this.onClickToBPM(rowData) }}
-                    appType={"1"}
-                />
+                <div className="mt44">
+                    <BpmTaskApprovalWrap
+                        id={rowData.id}
+                        onBpmFlowClick={() => { this.onClickToBPM(rowData) }}
+                        appType={"1"}
+                    />
+                </div>
+                
             );
         }
     }
