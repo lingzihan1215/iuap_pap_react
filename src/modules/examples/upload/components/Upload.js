@@ -5,7 +5,7 @@ import AcUpload from 'ac-upload';
 import Header from "components/Header";
 import './index.less';
 
-class Upload extends Component {
+class UploadComp extends Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -40,4 +40,4 @@ class Upload extends Component {
     }
 }
 
-export default Upload;
+export default UploadComp;

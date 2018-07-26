@@ -1,0 +1,11 @@
+{
+  "Header.back": "return",
+  "SearchPanel.clear": "empty",
+  "SearchPanel.search": "The query",
+  "sales.customerCode": "customer code11:",
+  "sales.SearchForm.title": "search sales notice",
+  "sales.SearchForm.tips": "please input customer code here",
+  "SearchPanel.open": "open",
+  "SearchPanel.close": "close",
+  "sales.SalesNotice.title": "create sales notice"
+}

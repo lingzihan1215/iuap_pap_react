@@ -1,0 +1,18 @@
+[
+  {
+    "id": "SearchPanel.clear",
+    "defaultMessage": "清空"
+  },
+  {
+    "id": "SearchPanel.search",
+    "defaultMessage": "查询"
+  },
+  {
+    "id": "SearchPanel.open",
+    "defaultMessage": "展开"
+  },
+  {
+    "id": "SearchPanel.close",
+    "defaultMessage": "收起"
+  }
+]

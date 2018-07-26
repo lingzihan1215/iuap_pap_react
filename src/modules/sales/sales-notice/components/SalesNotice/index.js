@@ -10,6 +10,15 @@ import EditSalesForm from './EditSalesForm';
 
 import './index.less'
 
+import { FormattedMessage, defineMessages } from 'react-intl';
+
+const messages = defineMessages({
+    title: {
+        id: 'sales.SalesNotice.title',
+        defaultMessage: '创建销货通知单',
+    }
+});
+
 class SalesNotice extends Component {
     constructor(props){
         super(props)
@@ -17,7 +26,7 @@ class SalesNotice extends Component {
     render(){
         return (
             <div className="sales-notice">
-                <Header title="销货通知单" back={true} />
+                <Header title={<FormattedMessage {...messages.title} />} back={true} />
                 <SearchForm {...this.props} />
                 <CustomerInfo {...this.props} />
                 <EditSalesForm {...this.props} /> 

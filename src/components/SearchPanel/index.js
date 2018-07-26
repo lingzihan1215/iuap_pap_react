@@ -2,7 +2,28 @@ import React, { Component } from 'react';
 import { Panel,Button } from 'tinper-bee';
 import PropTypes from 'prop-types';
 import './index.less';
-import classnames from 'classnames';
+import { FormattedMessage, defineMessages } from 'react-intl';
+import classnames from 'classnames'
+
+const messages = defineMessages({
+    clear: {
+        id: 'SearchPanel.clear',
+        defaultMessage: '清空',
+    },
+    search: {
+        id: 'SearchPanel.search',
+        defaultMessage: '查询',
+    },
+    open: {
+        id: "SearchPanel.open",
+        defaultMessage: "展开"
+    },
+    close: {
+        id: "SearchPanel.close",
+        defaultMessage: "收起"
+    }
+});
+
 /**
  * 部分不能通过this.props.form.resetFields()清空的组件，需要传reset方法，在reset方法中自行清空
  */
@@ -12,7 +33,10 @@ const propTypes = {
     reset:PropTypes.func,//重置的回调
     resetName:PropTypes.string,//重置的文字
     searchName:PropTypes.string,//查询的文字
-    title: PropTypes.string
+    title: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element
+    ])
 };
 
 const defaultProps = {
@@ -63,7 +87,7 @@ class SearchPanel extends Component {
                         {this.props.title}
                     </span>
                     <span  className={'search-panel-icon'}>
-                        {this.state.searchOpen ? '收起' : '展开'}
+                        {this.state.searchOpen ? <FormattedMessage {...messages.close} /> : <FormattedMessage {...messages.open} />}
                         <i className={classnames({
                                 'uf': true,
                                 'uf-arrow-down': this.state.searchOpen,
@@ -77,8 +101,22 @@ class SearchPanel extends Component {
            <Panel className={classes}  header={header()}  collapsible expanded={this.state.searchOpen}>
                 {children}
                 <div className='search-panel-btn'>
-                    <Button size='sm' className='reset-btn' onClick={this.reset}>{resetName?resetName:'清空'}</Button>
-                    <Button size='sm' className='submit-btn' onClick={this.search}>{searchName?searchName:'查询'}</Button>
+                    <Button
+                        size='sm'
+                        className='reset-btn'
+                        onClick={this.reset}>
+                        {
+                            resetName?resetName:<FormattedMessage {...messages.clear} />
+                        }
+                        </Button>
+                    <Button
+                        size='sm'
+                        className='submit-btn'
+                        onClick={this.search}>
+                        {
+                            searchName?searchName:<FormattedMessage {...messages.search} />
+                        }
+                        </Button>
                 </div>
            </Panel>
         )
