@@ -1,5 +1,4 @@
 const path = require('path');
-const hotMiddlewareScript = 'webpack-hot-middleware/client?reload=true';
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -152,11 +151,14 @@ const rules = [{
 ]
 //开发环境的webpack配置
 const devConfig = {
-<<<<<<< HEAD
   devtool: 'cheap-module-eval-source-map',
   entry: {
     vendors: getVendors(),
-    app: ['./src/app.jsx', hotMiddlewareScript]
+    app: [
+        './src/app.jsx', 
+        'webpack/hot/dev-server',
+        'webpack-hot-middleware/client?reload=true'
+    ]
   },
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -185,40 +187,6 @@ const devConfig = {
       hash: false,
       favicon: './src/static/images/favicon.png'
     })
-=======
-    devtool: 'cheap-module-eval-source-map',
-    entry: {
-        vendors: getVendors(),
-        app: ['babel-polyfill', './src/locales/en-US.js', './src/app.jsx', hotMiddlewareScript]
-    },
-    output: {
-        path: path.resolve(__dirname, './dist'),
-        filename: 'js/[name].[hash:8].js',
-        chunkFilename: 'js/[name].[hash:8].bundle.js',
-        publicPath: '/'
-    },
-    externals: externals,
-    module: {
-        rules: rules
-    },
-    plugins: [
-        new CommonsChunkPlugin({
-            name: "vendors"
-        }),
-        new ExtractTextPlugin({
-            filename: 'css/app.css'
-        }),
-        globalEnvConfig,
-        new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: './src/index.html',
-            inject: 'body',
-            hash: false,
-            favicon: './src/static/images/favicon.png'
-        })
->>>>>>> i18n
 
     ],
     resolve: resolve
@@ -227,7 +195,6 @@ const devConfig = {
 
 //生产环境的webpack配置
 const prodConfig = {
-<<<<<<< HEAD
   devtool: 'source-map',
   entry: {
     vendors: getVendors(),
@@ -283,63 +250,6 @@ const prodConfig = {
     })
   ],
   resolve: resolve
-=======
-    devtool: 'source-map',
-    entry: {
-        vendors: getVendors(),
-        app: ['babel-polyfill', './src/locales/zh-Hans-CN.js', './src/app.jsx']
-    },
-    output: {
-        path: path.resolve(__dirname, './dist'),
-        chunkFilename: 'js/[name].[hash:8].bundle.js',
-        filename: 'js/[name].[hash:8].js'
-    },
-    externals: externals,
-    module: {
-        rules: rules
-    },
-    plugins: [
-        new CommonsChunkPlugin({
-            name: "vendors"
-        }),
-        new ExtractTextPlugin({
-            filename: 'css/app.css'
-        }),
-        globalEnvConfig,
-        new webpack.optimize.UglifyJsPlugin({
-            sourceMap: true,
-            compress: {
-                warnings: false,
-                drop_debugger: true,
-                drop_console: true
-            }
-        }),
-        new CleanWebpackPlugin(['dist']),
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: './src/index.html',
-            inject: 'body',
-            hash: true,
-            favicon: './src/static/images/favicon.png',
-            minify: {
-                removeComments: true,
-                collapseWhitespace: true,
-                removeRedundantAttributes: true,
-                useShortDoctype: true,
-                removeEmptyAttributes: true,
-                removeStyleLinkTypeAttributes: true,
-                keepClosingSlash: true,
-                minifyJS: true,
-                minifyCSS: true,
-                minifyURLs: true
-            }
-        }),
-        new BundleAnalyzerPlugin({
-            analyzerMode: 'static'
-        })
-    ],
-    resolve: resolve
->>>>>>> i18n
 }
 
 

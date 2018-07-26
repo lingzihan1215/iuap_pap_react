@@ -7,6 +7,7 @@ import 'core-js/es6/map';
 import 'core-js/es6/set';
 import logger from "redux-logger";
 import mirror, { render,Router } from "mirrorx";
+import { hot } from 'react-hot-loader'
 
 import MainLayout from "./layout";
 

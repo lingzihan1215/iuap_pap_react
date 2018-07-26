@@ -4,7 +4,7 @@
   "description": "iuap 应用平台前端典型示例工程",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development uba server --chunks",
+    "dev": "cross-env NODE_ENV=development uba server --chunks --hot",
     "test": "cross-env NODE_ENV=production uba server --chunks",
     "build": "cross-env NODE_ENV=production uba build -p",
     "sanyinstall": "npm install --registry http://bdp.sany.com.cn/nexus3/repository/sany-npm-group"
@@ -39,6 +39,7 @@
     "open-browser-webpack-plugin": "^0.0.5",
     "postcss-flexbugs-fixes": "^3.3.0",
     "postcss-loader": "^2.1.0",
+    "react-hot-loader": "^4.3.4",
     "redux-logger": "^3.0.6",
     "style-loader": "^0.20.2",
     "uba": "2.3.11",
