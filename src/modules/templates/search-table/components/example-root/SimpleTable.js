@@ -12,12 +12,12 @@ import './index.less';
  * ExampleRoot Component
  */
 class ExampleRoot  extends Component {
-    constructor(props) { 
+    constructor(props) {
         super(props);
         this.state = { }
     }
     /**
-     * 
+     *
      */
     componentWillMount() {
         this.getTableData();
@@ -28,7 +28,7 @@ class ExampleRoot  extends Component {
     getTableData = () => {
         actions.searchTable.loadList();
     }
-   
+
     render() {
         let { pageSize, pageIndex, totalPages} = this.props;
         return (

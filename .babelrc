@@ -19,6 +19,7 @@
       {
         "messagesDir": "./i18n-messages"
       }
-    ]
+    ],
+    ["react-hot-loader/babel"]
   ]
 }

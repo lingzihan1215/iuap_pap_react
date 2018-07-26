@@ -15,7 +15,7 @@ const svrConfig = {
 // 远程代理访问，可以配置多个代理服务：https://github.com/chimurai/http-proxy-middleware
 const proxyConfig = [
   {
-    enable: false,
+    enable: true,
     headers: {
       // 这是之前网页的地址，从中可以看到当前请求页面的链接。
       "Referer": "http://10.10.24.43:8080/"
@@ -154,11 +154,9 @@ const devConfig = {
   devtool: 'cheap-module-eval-source-map',
   entry: {
     vendors: getVendors(),
-    app: [
-        './src/app.jsx', 
-        'webpack/hot/dev-server',
-        'webpack-hot-middleware/client?reload=true'
-    ]
+    app: ['webpack-hot-middleware/client?reload=true',
+        'react-hot-loader/patch',
+        'webpack/hot/only-dev-server','./src/app.jsx']
   },
   output: {
     path: path.resolve(__dirname, './dist'),

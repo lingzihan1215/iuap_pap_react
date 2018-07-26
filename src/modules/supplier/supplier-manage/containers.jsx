@@ -7,6 +7,6 @@ import model from './models';
 import RegisterInfo from './components/RegisterInfo';
 
 //注入Model
-mirror.model(model);
+if(!(model.name in mirror.actions)){    mirror.model(model);};
 
 export const registerInfo= connect((state) => state.supplier)(RegisterInfo);

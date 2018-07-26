@@ -4,6 +4,6 @@ import WeekPicker from './components/WeekPicker';//多选table
 
 import model from './model'
 
-mirror.model(model);
+if(!(model.name in mirror.actions)){    mirror.model(model);};
 
 export const ConnectedWeekPicker = connect( state => state.weekPicker, null )(WeekPicker);

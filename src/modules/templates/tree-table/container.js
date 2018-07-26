@@ -4,6 +4,6 @@ import TreeTable from './components/TreeTable';//多选table
 
 import model from './model'
 
-mirror.model(model);
+if(!(model.name in mirror.actions)){    mirror.model(model);};
 
 export const ConnectedTreeTable = connect( state => state.tree, null )(TreeTable);

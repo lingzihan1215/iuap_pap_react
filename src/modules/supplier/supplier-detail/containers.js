@@ -8,6 +8,6 @@ import model from './models';
 import SupplierDetail from './components/detail';
 
 //注入Model
-mirror.model(model);
+if(!(model.name in mirror.actions)){    mirror.model(model);};
 
 export const supplierDetail= connect((state) => state.supplier)(SupplierDetail);

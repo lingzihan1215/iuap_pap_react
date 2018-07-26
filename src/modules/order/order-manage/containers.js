@@ -8,7 +8,7 @@ import manageDetail from './components/Detail';
 import model from './models'
 
 //注入Model
-mirror.model(model);
+if(!(model.name in mirror.actions)){    mirror.model(model);};
 
 
 export const orderList= connect((state) => state.order)(manageList);

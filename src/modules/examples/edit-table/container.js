@@ -4,6 +4,6 @@ import EditTable from './components/EditTable';//多选table
 
 import model from './model'
 
-mirror.model(model);
+if(!(model.name in mirror.actions)){    mirror.model(model);};
 
 export const ConnectedEditTable = connect( state => state.editTable, null )(EditTable);

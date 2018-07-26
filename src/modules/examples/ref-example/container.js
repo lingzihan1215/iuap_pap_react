@@ -7,7 +7,7 @@ import RefMultiple from './components2/index'
 
 import model from './model'
 
-mirror.model(model);
+if(!(model.name in mirror.actions)){    mirror.model(model);};
 
 // export const ConnectedRef = connect( state => state.ref, null )(ExampleRef);
 export const ConnectedRefTransfer = connect( state => state.ref,null )(RefTransfer);

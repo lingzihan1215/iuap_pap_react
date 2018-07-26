@@ -8,7 +8,7 @@ import Edit from './components/Edit';
 import model from './models'
 
 //注入Model
-mirror.model(model);
+if(!(model.name in mirror.actions)){    mirror.model(model);};
 
 
 export const roleList= connect((state) => state.role)(List);

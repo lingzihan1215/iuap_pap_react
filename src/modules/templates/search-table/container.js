@@ -10,7 +10,7 @@ import ExampleBpmChart from './components/example-bpm-chart'
 
 // 数据模型引入
 import model from './model'
-mirror.model(model);
+if(!(model.name in mirror.actions)){    mirror.model(model);};
 
 // 数据和组件UI关联、绑定
 export const ConnectedSimpleTable = connect( state => state.searchTable, null )(SimpleTable);

@@ -7,7 +7,7 @@ import 'core-js/es6/map';
 import 'core-js/es6/set';
 import logger from "redux-logger";
 import mirror, { render,Router } from "mirrorx";
-import { hot } from 'react-hot-loader'
+import { AppContainer } from 'react-hot-loader';
 
 import MainLayout from "./layout";
 
@@ -17,7 +17,7 @@ import Intl from './components/Intl/index.js'
 const MiddlewareConfig = [];
 
 if (__MODE__ == "development") {
-    
+
     MiddlewareConfig.push(logger);
 }
 
@@ -27,10 +27,28 @@ mirror.defaults({
 });
 
 render(
-    <Intl>
-        <Router>
-            <MainLayout />
-        </Router>
-    </Intl>,
+    <AppContainer>
+        <Intl>
+            <Router>
+                <MainLayout />
+            </Router>
+        </Intl>
+    </AppContainer>,
     document.querySelector("#app")
 );
+
+if (module.hot) {
+    module.hot.accept("./layout", () => {
+        require("./layout");
+        render(
+            <AppContainer>
+                <Intl>
+                    <Router>
+                        <MainLayout />
+                    </Router>
+                </Intl>
+            </AppContainer>,
+            document.getElementById('app')
+        );
+    });
+}

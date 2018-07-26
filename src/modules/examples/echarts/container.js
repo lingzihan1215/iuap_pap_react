@@ -8,7 +8,7 @@ import Radar from './components/radar/Radar';
 
 import model from './model'
 
-mirror.model(model);
+if(!(model.name in mirror.actions)){    mirror.model(model);};
 
 export const ConnectedBar = connect( state => state.echarts, null )(Bar);
 export const ConnectedLine = connect( state => state.echarts, null )(Line);
