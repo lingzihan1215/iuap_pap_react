@@ -7,6 +7,6 @@ export default {
     ...zhMessages,
   },
   tinperBee: CN,
-  locale: 'zh-Hans-CN',
+  locale: 'zh-CN',
   data: appLocaleData,
 };

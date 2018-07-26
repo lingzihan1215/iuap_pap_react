@@ -41,8 +41,8 @@ class Header extends Component {
                 </Headers>
 
                 <Nav pullRight>
-                    <span className="lang" onClick={() => this.chooseLang("zh")}>中文</span>
-                    <span className="lang" onClick={() => this.chooseLang("en")}>english</span>
+                    <span className="lang" onClick={() => this.chooseLang("zh-CN")}>中文</span>
+                    <span className="lang" onClick={() => this.chooseLang("en-US")}>english</span>
                     {/*<Menu mode="horizontal" className="dropdown">*/}
                     {/*<SubMenu title={<span><span className="avatar-icon"><img src="https://gw.alipayobjects.com/zos/rmsportal/eHBsAsOrrJcnvFlnzNTT.png" /></span>赵宇<Icon type="uf-triangle-down"></Icon></span>}>*/}
                     {/*<Menu.Item key="setting:2"><i className="uf uf-users-o"></i>个人中心</Menu.Item>*/}

@@ -9,7 +9,7 @@ import en_US from './locales/en-US';
 let intlModel = {
     name: "intl",
     initialState: {
-        lang: "zh"
+        lang: "zh-CN"
     },
     reducers: {
         updateState(state, data) { 
@@ -42,12 +42,12 @@ class Inter extends Component {
 function chooseLocale(val) {
   let _val = val || navigator.language.split('_')[0];
   switch (_val) {
-    case 'en':
+    case 'en-US':
       return en_US;
-    case 'zh':
+    case "zh-CN":
       return zh_CN;
     default:
-      return en_US;
+      return zh_CN;
   }
 }
 

@@ -11,7 +11,7 @@ import { FormattedMessage, defineMessages } from 'react-intl';
 const messages = defineMessages({
     title: {
         id: 'sales.SearchForm.title',
-        defaultMessage: '查询客户信用资料清空',
+        defaultMessage: '查询信用资料',
     },
     code: {
         id: 'sales.customerCode',
