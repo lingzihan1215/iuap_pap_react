@@ -14,6 +14,14 @@ const messages = defineMessages({
         id: 'SearchPanel.search',
         defaultMessage: '查询',
     },
+    open: {
+        id: "SearchPanel.open",
+        defaultMessage: "展开"
+    },
+    close: {
+        id: "SearchPanel.close",
+        defaultMessage: "收起"
+    }
 });
 
 /**
@@ -25,7 +33,10 @@ const propTypes = {
     reset:PropTypes.func,//重置的回调
     resetName:PropTypes.string,//重置的文字
     searchName:PropTypes.string,//查询的文字
-    title: PropTypes.string
+    title: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element
+    ])
 };
 
 const defaultProps = {
@@ -76,7 +87,7 @@ class SearchPanel extends Component {
                         {this.props.title}
                     </span>
                     <span  className={'search-panel-icon'}>
-                        {this.state.searchOpen ? '收起' : '展开'}
+                        {this.state.searchOpen ? <FormattedMessage {...messages.close} /> : <FormattedMessage {...messages.open} />}
                         <i className={classnames({
                                 'uf': true,
                                 'uf-arrow-down': this.state.searchOpen,

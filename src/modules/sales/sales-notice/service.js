@@ -6,8 +6,6 @@ const URL = {
     // "SALES_CREATE":  `/sales/customer/create`,
     "SALES_CREATE":  `${GROBAL_HTTP_CTX}/sale_order/SaveAssoVo`,
     "SALES_INFO":  `${GROBAL_HTTP_CTX}/customer_credit/getAssoVo`
-          
-
 }
 
 

@@ -1,6 +1,14 @@
 [
   {
+    "id": "sales.SearchForm.title",
+    "defaultMessage": "查询客户信用资料清空"
+  },
+  {
     "id": "sales.customerCode",
     "defaultMessage": "编码"
+  },
+  {
+    "id": "sales.SearchForm.tips",
+    "defaultMessage": "客户编码格式不正确"
   }
 ]

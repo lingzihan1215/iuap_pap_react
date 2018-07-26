@@ -2,5 +2,10 @@
   "Header.back": "返回",
   "SearchPanel.clear": "清空",
   "SearchPanel.search": "查询",
-  "sales.customerCode": "客户代号："
+  "sales.customerCode": "客户代号：",
+  "sales.SearchForm.title": "销货通知单查询",
+  "sales.SearchForm.tips": "客户编码格式不正确",
+  "SearchPanel.open": "展开",
+  "SearchPanel.close": "收起",
+  "sales.SalesNotice.title": "创建销货通知单"
 }
