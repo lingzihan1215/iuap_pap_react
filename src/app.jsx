@@ -6,7 +6,6 @@ import React, {Component} from "react";
 import 'core-js/es6/map';
 import 'core-js/es6/set';
 import logger from "redux-logger";
-
 import { addLocaleData, IntlProvider } from 'react-intl';
 import {Locale} from 'tinper-bee';
 import mirror, { render,Router } from "mirrorx";
@@ -18,21 +17,30 @@ import "./app.less";
 
 const MiddlewareConfig = [];
 
-// const appLocale = window.appLocale;
+import en from './locales/en-US'
+import zh from './locales/zh-Hans-CN'
 
-// addLocaleData(appLocale.data);
+let LANG_MODE = 'zh';
+let appLocale = {};
 
-if (__MODE__ == "development") MiddlewareConfig.push(logger);
+if(LANG_MODE == 'en') appLocale = en;
+if(LANG_MODE == 'zh') appLocale = zh;
+
+addLocaleData(appLocale.data);
+
+if (__MODE__ == "development") {
+    
+    MiddlewareConfig.push(logger);
+}
 
 mirror.defaults({
     historyMode: "hash",
     middlewares: MiddlewareConfig
 });
 
-
 render(
     <Locale locale={appLocale.tinperBee}>
-        <IntlProvider locale="en" messages={appLocale.messages}>
+        <IntlProvider locale={appLocale.locale} messages={appLocale.messages}>
             <Router>
                 <MainLayout />
             </Router>
