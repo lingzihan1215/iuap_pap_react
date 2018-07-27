@@ -153,17 +153,33 @@ class Edit extends Component {
             }
         });
     }
-
+    onBpmStart = () => {
+        actions.searchTable.updateState({ showLoading: true });
+    }
+    onBpmEnd = () => {
+        actions.searchTable.updateState({ showLoading: false });
+    }
+    onBpmSuccess = () => {
+        actions.searchTable.updateState({ showLoading: false });
+        actions.routing.push('pagination-table');
+    }
+    onBpmError = () => {
+        actions.searchTable.updateState({ showLoading: false });
+    }
     showBpmComponent = (btnFlag, rowData) => {
         // btnFlag为2表示为详情
         if ((btnFlag == 2) && rowData && rowData['id']) {
             console.log("showBpmComponent", btnFlag)
             return (
-                <div className="mt44">
+                <div className="">
                     <BpmTaskApprovalWrap
                         id={rowData.id}
                         onBpmFlowClick={() => { this.onClickToBPM(rowData) }}
                         appType={"1"}
+                        onStart={this.onBpmStart}
+                        onEnd={this.onBpmEnd}
+                        onSuccess={this.onBpmSuccess}
+                        onError={this.onBpmError}
                     />
                 </div>
                 

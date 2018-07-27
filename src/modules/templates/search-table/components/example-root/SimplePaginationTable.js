@@ -162,7 +162,9 @@ export default class SimplePaginationTable extends Component {
     // 提交操作初始执行操作
     onSubmitStart = () => {
         actions.searchTable.updateState({ showLoading: true });
-
+    }
+    onSubmitEnd = () => {
+        actions.searchTable.updateState({ showLoading: false });
     }
     // 提交失败回调函数
     onSubmitFail = (error) => {
@@ -232,6 +234,7 @@ export default class SimplePaginationTable extends Component {
                         onSuccess={this.onSubmitSuc}
                         onError={this.onSubmitFail}
                         onStart={this.onSubmitStart}
+                        onEnd={this.onSubmitEnd}
                     />}
                     {recallAuth && <BpmButtonRecall
                         className="ml5 "
@@ -240,14 +243,15 @@ export default class SimplePaginationTable extends Component {
                         onSuccess={this.onRecallSuc}
                         onError={this.onRecallFail}
                         onStart={this.onRecallStart}
+                        onEnd={this.onSubmitEnd}
                     />}
                 </div>
-                {/* <Loading
+                <Loading
                     fullScreen
                     loadingType="line"
                     showBackDrop={true}
                     show={showLoading}
-                /> */}
+                />
                 <PaginationTable
                     data={list}
                     pageIndex={pageIndex}
