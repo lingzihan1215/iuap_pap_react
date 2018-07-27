@@ -242,12 +242,12 @@ export default class SimplePaginationTable extends Component {
                         onStart={this.onRecallStart}
                     />}
                 </div>
-                <Loading
+                {/* <Loading
                     fullScreen
                     loadingType="line"
                     showBackDrop={true}
                     show={showLoading}
-                />
+                /> */}
                 <PaginationTable
                     data={list}
                     pageIndex={pageIndex}
