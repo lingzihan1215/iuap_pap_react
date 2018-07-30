@@ -70,7 +70,7 @@ export default class SimplePaginationTable extends Component {
                     width: 100,
                     render(text, record, index) {
                         let _text;
-                        switch (_text) {
+                        switch (text) {
                             case 0:
                                 _text = "待确认";
                                 break;
@@ -83,7 +83,6 @@ export default class SimplePaginationTable extends Component {
                             case 3:
                                 _text = "已完结";
                                 break;
-
                             default:
                                 _text = "待确认";
                                 break;
