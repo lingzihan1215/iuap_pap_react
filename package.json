@@ -78,7 +78,7 @@
     "react-loadable": "^5.4.0",
     "react-transition-group": "^2.4.0",
     "tinper-bee": "1.5.0",
-    "yyuap-bpm": "^0.1.12",
+    "yyuap-bpm": "^0.1.14",
     "yyuap-ref": "^1.0.88"
   }
 }

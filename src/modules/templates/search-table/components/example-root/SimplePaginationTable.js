@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PaginationTable from 'components/PaginationTable'
 import { BpmButtonSubmit, BpmButtonRecall } from 'yyuap-bpm';
 import { actions } from 'mirrorx';
-import { Button, Message,Loading } from 'tinper-bee';
+import { Button, Message, Loading } from 'tinper-bee';
 import moment from "moment/moment";
 import Header from 'components/Header';
 import ExampleForm from '../example-form';
@@ -65,9 +65,31 @@ export default class SimplePaginationTable extends Component {
                 },
                 {
                     title: "审批状态",
-                    dataIndex: "approvalState_name",
-                    key: "approvalState_name",
-                    width: 100
+                    dataIndex: "bpmState",
+                    key: "bpmState",
+                    width: 100,
+                    render(text, record, index) {
+                        let _text;
+                        switch (_text) {
+                            case 0:
+                                _text = "待确认";
+                                break;
+                            case 1:
+                                _text = "执行中";
+                                break;
+                            case 2:
+                                _text = "执行中";
+                                break;
+                            case 3:
+                                _text = "已完结";
+                                break;
+
+                            default:
+                                _text = "待确认";
+                                break;
+                        }
+                        return _text;
+                    }
                 },
                 {
                     title: "确认状态",
