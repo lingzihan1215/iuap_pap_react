@@ -161,7 +161,8 @@ class Edit extends Component {
     }
     onBpmSuccess = () => {
         actions.searchTable.updateState({ showLoading: false });
-        actions.routing.push('pagination-table');
+        // actions.routing.push('pagination-table');
+        actions.routing.goBack();
     }
     onBpmError = () => {
         actions.searchTable.updateState({ showLoading: false });
