@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { actions } from "mirrorx";
 import queryString from 'query-string';
-import { InputNumber,Loading, Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Radio } from "tinper-bee";
+import { InputNumber, Loading, Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Radio } from "tinper-bee";
 import { BpmTaskApprovalWrap } from 'yyuap-bpm';
 import AcUpload from 'ac-upload';
 import Header from "components/Header";
@@ -29,7 +29,7 @@ class Edit extends Component {
             fileNameData: props.rowData.attachment || [],//上传附件数据
             purchasing: [],
             rowData: {},
-            refKeyArray:[]
+            refKeyArray: []
         }
     }
     async componentWillMount() {
@@ -47,19 +47,19 @@ class Edit extends Component {
         if (btnFlag && btnFlag > 0) {
             let { search_id } = searchObj;
             let tempRowData = await actions.searchTable.queryDetail({ search_id });
-            console.log('tempRowData',tempRowData);
+            console.log('tempRowData', tempRowData);
             let rowData = {};
-            if(tempRowData){
+            if (tempRowData) {
                 let tempPurchasing = tempRowData.purchasing
                 let tempPurchasName = tempRowData.purchasingName
                 this.setState({
-                    refKeyArray:[tempPurchasing]
+                    refKeyArray: [tempPurchasing]
                 })
-                rowData = Object.assign({},tempRowData,{purchasing:tempPurchasName})
+                rowData = Object.assign({}, tempRowData, { purchasing: tempPurchasName })
             }
-            console.log('rowData',rowData);
+            console.log('rowData', rowData);
             this.setState({
-                rowData:rowData,
+                rowData: rowData,
 
             })
         }
@@ -75,7 +75,7 @@ class Edit extends Component {
             if (err) {
                 Message.create({ content: '数据填写错误', color: 'danger' });
             } else {
-                let {rowData,refKeyArray} = this.state;
+                let { rowData, refKeyArray } = this.state;
                 if (rowData && rowData.id) {
                     values.id = rowData.id;
                     values.ts = rowData.ts;
@@ -183,23 +183,44 @@ class Edit extends Component {
                         onError={this.onBpmError}
                     />
                 </div>
-                
+
             );
         }
     }
-
+    //bpmState转换真实文本
+    bpmStateToText = (text) => {
+        let _text;
+        switch (text) {
+            case 0:
+                _text = "待确认";
+                break;
+            case 1:
+                _text = "执行中";
+                break;
+            case 2:
+                _text = "执行中";
+                break;
+            case 3:
+                _text = "已完结";
+                break;
+            default:
+                _text = "待确认";
+                break;
+        }
+        return _text;
+    }
     // 通过search_id查询数据
 
     render() {
         const self = this;
         let { btnFlag } = queryString.parse(this.props.location.search);
         btnFlag = Number(btnFlag);
-        let {rowData,refKeyArray } = this.state;
+        let { rowData, refKeyArray } = this.state;
         let title = this.onChangeHead(btnFlag);
         // console.log("detailData", rowData);
-        let { orderCode, supplier, supplierName, type,type_name,purchasing, purchasingGroup, voucherDate, approvalState,approvalState_name,confirmState,confirmState_name,closeState,closeState_name} = rowData;
+        let { orderCode, bpmState, supplier, supplierName, type, type_name, purchasing, purchasingGroup, voucherDate, approvalState, approvalState_name, confirmState, confirmState_name, closeState, closeState_name } = rowData;
         const { getFieldProps, getFieldError } = this.props.form;
-        console.log("keylist",self.state.refKeyArray);
+        console.log("keylist", self.state.refKeyArray);
 
         return (
             <div className='order-detail'>
@@ -237,7 +258,7 @@ class Edit extends Component {
                         <Label>
                             供应商名称：
                         </Label>
-                        <RefWithInput option={Object.assign(JSON.parse(options),{
+                        <RefWithInput option={Object.assign(JSON.parse(options), {
                             title: '',
                             refType: 2,//1:树形 2.单表 3.树卡型 4.多选 5.default
                             className: '',
@@ -247,20 +268,20 @@ class Edit extends Component {
                                 sysId: '',
                                 transmitParam: 'EXAMPLE_CONTACTS,EXAMPLE_ORGANIZATION',
                             },
-                            keyList:refKeyArray,//选中的key
+                            keyList: refKeyArray,//选中的key
                             onSave: function (sels) {
                                 console.log(sels);
                                 var temp = sels.map(v => v.key)
-                                console.log("temp",temp);
+                                console.log("temp", temp);
                                 self.setState({
                                     refKeyArray: temp,
                                 })
                             },
-                            showKey:'name',
-                            verification:true,//是否进行校验
-                            verKey:'supplierName',//校验字段
-                            verVal:supplierName
-                        })} form={this.props.form}/>
+                            showKey: 'name',
+                            verification: true,//是否进行校验
+                            verKey: 'supplierName',//校验字段
+                            verVal: supplierName
+                        })} form={this.props.form} />
                         <span className='error'>
                             {getFieldError('supplierName')}
                         </span>
@@ -277,7 +298,7 @@ class Edit extends Component {
                                         initialValue: type || '',
                                         validateTrigger: 'onBlur',
                                         rules: [{
-                                            type:'string',required: true, message: '请选择类型',
+                                            type: 'string', required: true, message: '请选择类型',
                                         }],
                                     }
                                     )}>
@@ -304,30 +325,30 @@ class Edit extends Component {
                             采购组织：
                         </Label>
 
-                        <RefWithInput option={Object.assign(JSON.parse(options),{
+                        <RefWithInput option={Object.assign(JSON.parse(options), {
                             title: '',
                             refType: 5,//1:树形 2.单表 3.树卡型 4.多选 5.default
                             className: '',
                             param: {//url请求参数
-                            refCode: 'common_ref',
-                            tenantId: '',
-                            sysId: '',
-                            transmitParam: 'EXAMPLE_CONTACTS,EXAMPLE_ORGANIZATION',
-                        },
-                            keyList:refKeyArray,//选中的key
+                                refCode: 'common_ref',
+                                tenantId: '',
+                                sysId: '',
+                                transmitParam: 'EXAMPLE_CONTACTS,EXAMPLE_ORGANIZATION',
+                            },
+                            keyList: refKeyArray,//选中的key
                             onSave: function (sels) {
-                            console.log(sels);
-                            var temp = sels.map(v => v.key)
-                            console.log("temp",temp);
-                            self.setState({
-                            refKeyArray: temp,
-                        })
-                        },
-                            showKey:'peoname',
-                            verification:true,//是否进行校验
-                            verKey:'purchasing',//校验字段
-                            verVal:purchasing
-                        })} form={this.props.form}/>
+                                console.log(sels);
+                                var temp = sels.map(v => v.key)
+                                console.log("temp", temp);
+                                self.setState({
+                                    refKeyArray: temp,
+                                })
+                            },
+                            showKey: 'peoname',
+                            verification: true,//是否进行校验
+                            verKey: 'purchasing',//校验字段
+                            verVal: purchasing
+                        })} form={this.props.form} />
 
                     </Col>
                     <Col md={4} xs={6}>
@@ -340,10 +361,10 @@ class Edit extends Component {
                             className={"input-number"}
                             disabled={btnFlag == 2}
                             {
-                                ...getFieldProps('purchasingGroup', {
-                                    initialValue: purchasingGroup&&Number(purchasingGroup).toFixed(2) || '0.00',
-                                    rules: [{type: 'string',pattern: /^(?:(?!0\.00$))[\d\D]*$/ig,message: '请输入数量'}],
-                                })
+                            ...getFieldProps('purchasingGroup', {
+                                initialValue: purchasingGroup && Number(purchasingGroup).toFixed(2) || '0.00',
+                                rules: [{ type: 'string', pattern: /^(?:(?!0\.00$))[\d\D]*$/ig, message: '请输入数量' }],
+                            })
                             }
                         />
                         <span className='error'>
@@ -381,7 +402,7 @@ class Edit extends Component {
                                     selectedValue={this.state.approvalState}
                                     {
                                     ...getFieldProps('approvalState', {
-                                        initialValue: approvalState||'0',
+                                        initialValue: approvalState || '0',
                                         validateTrigger: 'onBlur',
                                         rules: [{
                                             required: true, message: '请选择审批状态',
@@ -395,7 +416,7 @@ class Edit extends Component {
                                     <Radio value="0" disabled={true}>未审批</Radio>
                                     <Radio value="1" disabled={true}>已审批</Radio>
                                 </Radio.RadioGroup>) : (
-                                    <FormControl disabled={btnFlag == 2} value={approvalState_name} />
+                                    <FormControl disabled={btnFlag == 2} value={this.bpmStateToText(bpmState)} />
                                 )
                         }
                         <span className='error'>
@@ -440,7 +461,7 @@ class Edit extends Component {
                                 selectedValue={this.state.closeState}
                                 {
                                 ...getFieldProps('closeState', {
-                                    initialValue: closeState||'0',
+                                    initialValue: closeState || '0',
                                     onChange(value) {
                                         self.setState({ closeState: value });
                                     },
