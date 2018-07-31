@@ -60,7 +60,7 @@ class Edit extends Component {
             console.log('rowData', rowData);
             this.setState({
                 rowData: rowData,
-
+                fileNameData: rowData.attachment
             })
         }
 
