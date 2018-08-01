@@ -167,7 +167,7 @@ class Edit extends Component {
     onBpmError = () => {
         actions.searchTable.updateState({ showLoading: false });
     }
-    showBpmComponent = (btnFlag, rowData) => {
+    showBpmComponent = (btnFlag,appType, rowData) => {
         // btnFlag为2表示为详情
         if ((btnFlag == 2) && rowData && rowData['id']) {
             console.log("showBpmComponent", btnFlag)
@@ -176,7 +176,7 @@ class Edit extends Component {
                     <BpmTaskApprovalWrap
                         id={rowData.id}
                         onBpmFlowClick={() => { this.onClickToBPM(rowData) }}
-                        appType={"1"}
+                        appType={appType}
                         onStart={this.onBpmStart}
                         onEnd={this.onBpmEnd}
                         onSuccess={this.onBpmSuccess}
@@ -213,7 +213,7 @@ class Edit extends Component {
 
     render() {
         const self = this;
-        let { btnFlag } = queryString.parse(this.props.location.search);
+        let { btnFlag,appType } = queryString.parse(this.props.location.search);
         btnFlag = Number(btnFlag);
         let { rowData, refKeyArray } = this.state;
         let title = this.onChangeHead(btnFlag);
@@ -238,7 +238,7 @@ class Edit extends Component {
                     ) : ''}
                 </Header>
                 {
-                    self.showBpmComponent(btnFlag, rowData)
+                    self.showBpmComponent(btnFlag,appType ? appType : "1", rowData)
                 }
                 <Row className='detail-body'>
                     <Col md={4} xs={6}>
