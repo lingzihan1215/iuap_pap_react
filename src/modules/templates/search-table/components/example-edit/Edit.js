@@ -167,13 +167,13 @@ class Edit extends Component {
     onBpmError = () => {
         actions.searchTable.updateState({ showLoading: false });
     }
-    showBpmComponent = (btnFlag,appType, rowData) => {
+    showBpmComponent = (btnFlag, appType, id, processDefinitionId, processInstanceId, rowData) => {
         // btnFlag为2表示为详情
         if ((btnFlag == 2) && rowData && rowData['id']) {
             console.log("showBpmComponent", btnFlag)
             return (
                 <div className="">
-                    <BpmTaskApprovalWrap
+                    {appType == 1 &&<BpmTaskApprovalWrap
                         id={rowData.id}
                         onBpmFlowClick={() => { this.onClickToBPM(rowData) }}
                         appType={appType}
@@ -181,7 +181,18 @@ class Edit extends Component {
                         onEnd={this.onBpmEnd}
                         onSuccess={this.onBpmSuccess}
                         onError={this.onBpmError}
-                    />
+                    />}
+                    {appType == 2 &&<BpmTaskApprovalWrap
+                        id={id}
+                        processDefinitionId={processDefinitionId}
+                        processInstanceId={processInstanceId}
+                        onBpmFlowClick={() => { this.onClickToBPM(rowData) }}
+                        appType={appType}
+                        onStart={this.onBpmStart}
+                        onEnd={this.onBpmEnd}
+                        onSuccess={this.onBpmSuccess}
+                        onError={this.onBpmError}
+                    />}
                 </div>
 
             );
@@ -213,7 +224,7 @@ class Edit extends Component {
 
     render() {
         const self = this;
-        let { btnFlag,appType } = queryString.parse(this.props.location.search);
+        let { btnFlag, appType, id, processDefinitionId, processInstanceId } = queryString.parse(this.props.location.search);
         btnFlag = Number(btnFlag);
         let { rowData, refKeyArray } = this.state;
         let title = this.onChangeHead(btnFlag);
@@ -238,7 +249,7 @@ class Edit extends Component {
                     ) : ''}
                 </Header>
                 {
-                    self.showBpmComponent(btnFlag,appType ? appType : "1", rowData)
+                    self.showBpmComponent(btnFlag, appType ? appType : "1", id, processDefinitionId, processInstanceId, rowData)
                 }
                 <Row className='detail-body'>
                     <Col md={4} xs={6}>
