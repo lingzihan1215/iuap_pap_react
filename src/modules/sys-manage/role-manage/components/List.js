@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { actions } from "mirrorx";
-import { Loading,Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Select,Radio } from "tinper-bee";
+import { Loading, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Select,Radio } from "tinper-bee";
 import Form from 'bee-form';
+import { BpmButtonSubmit, BpmButtonRecall } from 'yyuap-bpm';
 import Pagination from 'bee-pagination';
 import 'bee-pagination/build/Pagination.css';
+import Table from 'bee-table';
+import multiSelect from "bee-table/build/lib/newMultiSelect";
 import Header from "components/Header";
 import SearchPanel from 'components/SearchPanel';
 import './list.less';
+const MultiSelectTable = multiSelect(Table, Checkbox);
 const FormItem = Form.FormItem;
 
 
@@ -15,6 +19,7 @@ class List extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            selectData: [],
         }
     }
     componentDidMount() {
@@ -25,7 +30,11 @@ class List extends Component {
         values.pageSize=pageObj.pageSize||this.props.pageSize||10,
         actions.role.loadList(values);
     }
-
+    tabelSelect = (data) => {//tabel选中数据
+        this.setState({
+            selectData: data
+        })
+    }
     getList=(pageObj)=>{
         //获得表单数据
         this.props.form.validateFields((err, values) => {
@@ -169,12 +178,35 @@ class List extends Component {
                         <Button size='sm' shape="border" onClick={()=>{this.edit(true,{})}}>
                            新增
                         </Button>
+                        <BpmButtonSubmit
+                            className="ml5 "
+                            checkedArray={this.state.selectData}
+                            funccode="react"
+                            nodekey="003"
+                            url={`${GROBAL_HTTP_CTX}/sany_order/submit`}
+                            urlAssignSubmit={`${GROBAL_HTTP_CTX}/sany_order/assignSubmit`}
+                            onSuccess={this.onSubmitSuc}
+                            onError={this.onSubmitFail}
+                            onStart={this.onSubmitStart}
+                            onEnd={this.onSubmitEnd}
+                        />
+                        <BpmButtonRecall
+                            className="ml5 "
+                            checkedArray={this.state.selectData}
+                            url={`${GROBAL_HTTP_CTX}/sany_order/recall`}
+                            onSuccess={this.onRecallSuc}
+                            onError={this.onRecallFail}
+                            onStart={this.onRecallStart}
+                            onEnd={this.onSubmitEnd}
+                        />
                     </div>
-                    <Table
+                    <MultiSelectTable
                         loading={{show:showLoading,loadingType:"line"}}
                         rowKey={(r,i)=>i}
                         columns={column}
                         data={list}
+                        multiSelect={{ type: "checkbox" }}
+                        getSelectedDataFunc={this.tabelSelect}
                     />
                     <div className='pagination'>
                         <Pagination
