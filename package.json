@@ -49,7 +49,7 @@
     "webpack-hot-middleware": "^2.21.0"
   },
   "dependencies": {
-    "ac-upload": "0.0.20",
+    "ac-upload": "^0.1.0",
     "axios": "^0.18.0",
     "bee-autocomplete": "^1.0.4",
     "bee-city-select": "^1.0.6",
@@ -78,7 +78,7 @@
     "react-loadable": "^5.4.0",
     "react-transition-group": "^2.4.0",
     "tinper-bee": "1.5.0",
-    "yyuap-bpm": "0.2.4",
-    "yyuap-ref": "1.0.91"
+    "yyuap-bpm": "^0.2.10",
+    "yyuap-ref": "^1.1.6"
   }
 }
