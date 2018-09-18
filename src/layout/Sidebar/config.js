@@ -552,7 +552,7 @@ export default [
         "children": [{
             "id": "app801",
             "name": "云端认证管理",
-            "location": "/tenant/manage",
+            "location": "/tenant/tenantlist",//对应租户列表页面url
             "menustatus": "Y",
             "parentid": null,
             "icon": "uf uf-9square-2",
@@ -565,7 +565,7 @@ export default [
         },{
             "id": "app802",
             "name": "云端接口资源",
-            "location": "/tenant/inter",
+            "location": "/tenant/interlist",//对应接口列表页面url
             "menustatus": "Y",
             "parentid": null,
             "icon": "uf uf-9square-2",

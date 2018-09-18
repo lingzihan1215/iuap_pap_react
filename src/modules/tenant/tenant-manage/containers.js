@@ -12,4 +12,4 @@ if(!(model.name in mirror.actions)){    mirror.model(model);};
 
 
 export const tenantList= connect((state) => state.tenant)(manageList);
-export const orderDetail= connect((state) => state.tenant)(manageDetail);
+export const tenantDetail= connect((state) => state.tenant)(manageDetail);

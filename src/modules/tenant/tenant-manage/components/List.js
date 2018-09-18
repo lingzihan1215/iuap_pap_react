@@ -83,7 +83,7 @@ class List extends Component {
     cellClick = (record, editFlag) => {//进入详情
         actions.routing.push(
             {
-                pathname: 'managedetail',
+                pathname: 'tenantdetail',//租户详情页面url，位于router.jsx
                 detailObj: record,
                 editFlag: !!editFlag
             }
