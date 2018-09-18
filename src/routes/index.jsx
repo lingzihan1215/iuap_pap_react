@@ -13,6 +13,9 @@ import system from 'modules/sys-manage/router';
 // 台湾-华新丽华-功能路由
 import sales from 'modules/sales/router';
 
+// 云主数据管理-租户管理-功能路由
+import tenant from 'modules/tenant/router';
+
 // 典型案例与应用组件示例
 import templates from 'modules/templates/router';
 import examples from 'modules/examples/router';
@@ -32,6 +35,7 @@ export default class App extends Component {
         <Route path="/templates" component={templates} />
         <Route path="/examples" component={examples} />
         <Route path="/sales" component={sales} />
+        <Route path="/tenant" component={tenant} />
       </div>
     )
   }

@@ -539,4 +539,58 @@ export default [
         "openview": "curpage",
         "category": "engine"
     },
+    // 云主数据管理
+    {
+        "id": "application8",
+        "name": "云主数据管理",
+        "location": "/application",
+        "menustatus": "Y",
+        "parentid": null,
+        "icon": "uf uf-9square-2",
+        "target": "",
+        "urltype": "url",
+        "children": [{
+            "id": "app801",
+            "name": "云端认证管理",
+            "location": "/tenant/manage",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
+        },{
+            "id": "app802",
+            "name": "云端接口资源",
+            "location": "/tenant/inter",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
+        },{
+            "id": "app803",
+            "name": "租户资源分配",
+            "location": "/tenant/interAssign",
+            "menustatus": "Y",
+            "parentid": null,
+            "icon": "uf uf-9square-2",
+            "target": "",
+            "urltype": "url",
+            "children": [],
+            "sort": 1,
+            "openview": "curpage",
+            "category": "engine"
+        }],
+        "sort": 1,
+        "openview": "curpage",
+        "category": "engine"
+    },
 ]

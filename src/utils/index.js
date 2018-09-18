@@ -26,13 +26,13 @@ export const processData = (response,successMsg) => {
     
     if(response.status=='200'){
         let data=response.data;
-        if(data.success=='success'){
+        if(data.code=='0'){
             if(successMsg){
                 success(successMsg);
             }
-            return data.detailMsg.data;
+            return data;
         }else{
-            Error(data.message||'数据返回出错');
+            Error(data.msg||'数据返回出错');
             return;
         }
     }else{
