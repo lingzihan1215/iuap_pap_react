@@ -70,7 +70,7 @@ class List extends Component {
     cellClick = (record, editFlag) => {//进入详情
         actions.routing.push(
             {
-                pathname: 'managedetail',
+                pathname: 'interdetail',
                 detailObj: record,
                 editFlag: !!editFlag
             }

@@ -3,7 +3,7 @@ import { paramToUrl } from "utils";
 
 const URL = {
     "GET_LIST":  `${GROBAL_HTTP_CTX}/inter/selectAllByPage`,
-    "SAVE_ORDER":  `${GROBAL_HTTP_CTX}/sany_order/save`,
+    "SAVE_INTER":  `${GROBAL_HTTP_CTX}/inter/add`,
     "DEL_ORDER":  `${GROBAL_HTTP_CTX}/sany_order/delete`,
     "GET_ORDER_TYPE": "/order/manage/orderType"
 }
@@ -21,8 +21,8 @@ export const getOrderType = (params) => {
         data: params
     });
 }
-export const saveOrder = (params) => {
-    return request(URL.SAVE_ORDER, {
+export const saveInter = (params) => {
+    return request(URL.SAVE_INTER, {
         method: "post",
         data: params
     });

@@ -94,7 +94,7 @@ export default {
       actions.tenant.updateState({
         showLoading:true
       })
-      let res=processData(await api.saveOrder(param),'保存成功');
+      let res=processData(await api.saveTenant(param),'保存成功');
       if(res){
          window.history.go(-1);
       }

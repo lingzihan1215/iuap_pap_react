@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Link } from "mirrorx";
 import { tenantList,tenantDetail } from "./tenant-manage/containers";
-import { interList } from "./inter-manage/containers";
+import { interList,interDetail } from "./inter-manage/containers";
 
 const Routers = ({ match }) => (
   <div>
@@ -20,6 +20,11 @@ const Routers = ({ match }) => (
       exact
       path={`${match.url}/interlist`}   //接口列表url
       component={interList}
+    />
+    <Route
+      exact
+      path={`${match.url}/interdetail`}  //接口详情url
+      component={interDetail}
     />
     
   </div>

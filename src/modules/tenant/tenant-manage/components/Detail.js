@@ -19,7 +19,9 @@ class Detail extends Component {
             confirmState:'0'
         }
     }
-    componentWillMount(){
+
+    componentWillMount(){//render执行之前的动作
+        console.log("component will mount")
         if(this.props.location.detailObj&&this.props.location.detailObj.id){
             let {approvalState,closeState,confirmState}=this.props.location.detailObj;
             this.setState({
@@ -29,28 +31,29 @@ class Detail extends Component {
             })
         }
     }
+    
     save = () => {//保存
+        console.log("save tenant")
         this.props.form.validateFields((err, values) => {
-            values.approvalState=Number(values.approvalState);
-            values.closeState=Number(values.closeState);
-            values.confirmState=Number(values.confirmState);
-            values.voucherDate=values.voucherDate!=undefined?values.voucherDate.format('YYYY-MM-DD'):'';
             if(err){
                 Message.create({ content: '数据填写错误', color : 'danger'  });
             }else{
                 if(this.props.location.detailObj&&this.props.location.detailObj.id){
                     values.id=this.props.location.detailObj.id;
                 }
-                actions.order.save(values);
+                actions.tenant.save(values);
             }
         });
     }
+
     cancel=()=>{
-        window.history.go(-1);
+        // window.history.go(-1);//返回+刷新
+        window.history.back();//返回不刷新
     }
+
     render (){
         const self=this;
-        let {orderTypes,orderCode,supplier,supplierName,type,purchasing,purchasingGroup,voucherDate,approvalState,confirmState,closeState} = this.props.location.detailObj;
+        let {tenant_name,corp_name,contact_person,mobile,email,tenant_code,tenant_key,note} = this.props.location.detailObj;
         const editFlag = this.props.location.editFlag;
         const { getFieldProps, getFieldError } = this.props.form;
         return (
@@ -60,7 +63,7 @@ class Detail extends Component {
             loadingType="line"
             show={this.props.showLoading}
             />
-                <Header title={editFlag?'订单编辑':'订单详情'} back={true}>
+                <Header title={editFlag?'租户编辑':'租户详情'} back={true}>
                     {editFlag?(
                         <div className='head-btn'>
                             <Button className='head-cancel' onClick={this.cancel}>取消</Button>
@@ -71,163 +74,99 @@ class Detail extends Component {
                 <Row className='detail-body'>
                     <Col md={4} xs={6}>
                         <Label>
-                            订单编号：
+                        租户名称：
                         </Label>
-                        <FormControl disabled={true} 
-                            placeholder="使用编码规则生成"
+                        <FormControl disabled={!editFlag} 
                             {
-                                ...getFieldProps('orderCode', {
-                                    initialValue: orderCode
+                                ...getFieldProps('tenant_name', {
+                                    initialValue: tenant_name
                                 }
                             ) }
                         />
                     </Col>
                     <Col md={4} xs={6}>
                         <Label>
-                        供应商名称：
+                        公司名称：
                         </Label>
                         <FormControl disabled={!editFlag} 
                             {
-                                ...getFieldProps('supplierName', {
-                                    initialValue: supplierName
+                                ...getFieldProps('corp_name', {
+                                    initialValue: corp_name
                                 }
                             )}
                         />
                     </Col>
                     <Col md={4} xs={6}>
                         <Label>
-                        类型：
-                        </Label>
-                        {
-                            editFlag?(
-                                <Select  
-                                {
-                                ...getFieldProps('type', {
-                                    initialValue: type||'',
-                                }
-                                )}>
-                                <Option value="">请选择</Option>
-                                {
-                                    self.props.orderTypes.map((item,index)=>{
-                                        return (
-                                            <Option key={index} value={item.code}>{item.name}</Option>
-                                        )
-                                    })
-                                }
-                            </Select>
-                            ):(<FormControl disabled={!editFlag} />)
-                        }
-
-                        
-                    </Col>
-                    <Col md={4} xs={6}>
-                        <Label>
-                            采购组织：
+                        联系人：
                         </Label>
                         <FormControl disabled={!editFlag} 
                             {
-                                ...getFieldProps('purchasing', {
-                                    initialValue: purchasing
+                                ...getFieldProps('contact_person', {
+                                    initialValue: contact_person
                                 }
                             )}
                         />
                     </Col>
                     <Col md={4} xs={6}>
                         <Label>
-                            采购组：
+                        电话：
                         </Label>
                         <FormControl disabled={!editFlag} 
                             {
-                                ...getFieldProps('purchasingGroup', {
-                                    initialValue: purchasingGroup
+                                ...getFieldProps('mobile', {
+                                    initialValue: mobile
                                 }
                             )}
                         />
                     </Col>
                     <Col md={4} xs={6}>
-                        <Label className='time'>
-                            凭证日期：
+                        <Label>
+                        邮箱：
                         </Label>
-                        <DatePicker className='form-item' disabled={!editFlag} 
-                            defaultValue={moment(voucherDate)}
-                            format = "YYYY-MM-DD"
+                        <FormControl disabled={!editFlag} 
                             {
-                                ...getFieldProps('voucherDate', {
-                                    initialValue: moment(voucherDate)
+                                ...getFieldProps('email', {
+                                    initialValue: email
                                 }
                             )}
                         />
                     </Col>
                     <Col md={4} xs={6}>
                         <Label>
-                            审批状态：
+                        认证代码：
                         </Label>
-                        {
-                            editFlag?
-                            (<Radio.RadioGroup
-                                selectedValue={this.state.approvalState}
-                                {
-                                    ...getFieldProps('approvalState', {
-                                        initialValue: '0',
-                                        onChange(value) {
-                                            self.setState({ approvalState: value });
-                                        },
-                                    }
-                                    ) }
-                                >
-                                <Radio value="0" >未审批</Radio>
-                                <Radio value="1" >已审批</Radio>
-                                </Radio.RadioGroup>):(
-                                <FormControl disabled={!editFlag} value={approvalState}/>
-                            )
-                        }
-                        
+                        <FormControl disabled={!editFlag} 
+                            {
+                                ...getFieldProps('tenant_code', {
+                                    initialValue: tenant_code
+                                }
+                            )}
+                        />
                     </Col>
                     <Col md={4} xs={6}>
                         <Label>
-                            确认状态：
+                        认证KEY：
                         </Label>
-                        {editFlag?(
-                                <Radio.RadioGroup
-                                selectedValue={this.state.confirmState}
-                                    {
-                                        ...getFieldProps('confirmState', {
-                                            initialValue: '0',
-                                            onChange(value) {
-                                                self.setState({ confirmState: value });
-                                            },
-                                        }
-                                        ) }
-                                    >
-                                   <Radio value="0" >未确认</Radio>
-                                    <Radio value="1" >已确认</Radio>
-                                    <Radio value="2" >拒绝</Radio>
-                                </Radio.RadioGroup>
-                        ):(<FormControl disabled={!editFlag} value={confirmState}/>)}
-                        
+                        <FormControl disabled={!editFlag} 
+                            {
+                                ...getFieldProps('tenant_key', {
+                                    initialValue: tenant_key
+                                }
+                            )}
+                        />
                     </Col>
                     <Col md={4} xs={6}>
                         <Label>
-                            关闭状态：
+                        备注：
                         </Label>
-                        {
-                            editFlag?(<Radio.RadioGroup
-                                selectedValue={this.state.closeState}
-                                    {
-                                        ...getFieldProps('closeState', {
-                                            initialValue: '0',
-                                            onChange(value) {
-                                                self.setState({ closeState: value });
-                                            },
-                                        }
-                                        ) }
-                                    >
-                                    <Radio value="0" >未关闭</Radio>
-                                    <Radio value="1" >已关闭</Radio>
-                                </Radio.RadioGroup>):(
-                                    <FormControl disabled={!editFlag} value={closeState}/>
-                                )
-                        }
+                        <FormControl disabled={!editFlag} 
+                            {
+                                ...getFieldProps('note', {
+                                    initialValue: note
+                                }
+                            )}
+                        />
                     </Col>
                 </Row>
             </div>
