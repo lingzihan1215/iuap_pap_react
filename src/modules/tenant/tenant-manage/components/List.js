@@ -67,11 +67,12 @@ class List extends Component {
     // 多选表格包装函数  结束
 
     cellClick = (record, editFlag) => {//进入详情
+        console.log(record.tenant_id);
         actions.routing.push(
             {
                 pathname: 'tenantdetail',//租户详情页面url，位于router.jsx
-                detailObj: record,
-                editFlag: !!editFlag
+                detailObj: record,//选中记录放到detailObj对象中，传到detail页面
+                editFlag: !!editFlag//记录是否可编辑标志，传到detail页面
             }
         )
     }
@@ -115,7 +116,7 @@ class List extends Component {
                 title: "租户名称",
                 dataIndex: "tenant_name",
                 key: "tenant_name",
-                onCellClick: (record) => this.cellClick(record, false)
+                onCellClick: (record) => this.cellClick(record,true)
             },
             {
                 title: "公司名称",

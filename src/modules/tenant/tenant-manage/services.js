@@ -3,7 +3,7 @@ import { paramToUrl } from "utils";
 
 const URL = {
     "GET_LIST":  `${GROBAL_HTTP_CTX}/tenant/selectAllByPage`,
-    "SAVE_TENANT":  `${GROBAL_HTTP_CTX}/tenant/add`,
+    "SAVE_TENANT":  `${GROBAL_HTTP_CTX}/tenant/save`,
     "DEL_ORDER":  `${GROBAL_HTTP_CTX}/sany_order/delete`,
     "GET_ORDER_TYPE": "/order/manage/orderType"
 }

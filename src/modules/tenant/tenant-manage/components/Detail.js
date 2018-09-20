@@ -22,13 +22,7 @@ class Detail extends Component {
 
     componentWillMount(){//render执行之前的动作
         console.log("component will mount")
-        if(this.props.location.detailObj&&this.props.location.detailObj.id){
-            let {approvalState,closeState,confirmState}=this.props.location.detailObj;
-            this.setState({
-                approvalState:String(approvalState),
-                closeState:String(closeState),
-                confirmState:String(confirmState)
-            })
+        if(this.props.location.detailObj&&this.props.location.detailObj.tenant_id){
         }
     }
     
@@ -38,8 +32,8 @@ class Detail extends Component {
             if(err){
                 Message.create({ content: '数据填写错误', color : 'danger'  });
             }else{
-                if(this.props.location.detailObj&&this.props.location.detailObj.id){
-                    values.id=this.props.location.detailObj.id;
+                if(this.props.location.detailObj&&this.props.location.detailObj.tenant_id){
+                    values.tenant_id=this.props.location.detailObj.tenant_id;
                 }
                 actions.tenant.save(values);
             }
@@ -53,8 +47,12 @@ class Detail extends Component {
 
     render (){
         const self=this;
-        let {tenant_name,corp_name,contact_person,mobile,email,tenant_code,tenant_key,note} = this.props.location.detailObj;
+        
+        //获取从list页面传来的记录字段值
+        let {tenant_id,tenant_name,corp_name,contact_person,mobile,
+            email,tenant_code,tenant_key,note} = this.props.location.detailObj;
         const editFlag = this.props.location.editFlag;
+
         const { getFieldProps, getFieldError } = this.props.form;
         return (
             <div className='order-detail'>
