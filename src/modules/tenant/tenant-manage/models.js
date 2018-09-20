@@ -55,7 +55,7 @@ export default {
         }
 
         //更新tenant组件
-        actions.tenant.updateState({ 
+        actions.tenant.updateState({
           list: res.data.content,
           pageIndex:res.data.number+1,
           pageSize:res.data.size,
@@ -64,24 +64,6 @@ export default {
       }
     },
 
-    async getOrderType(param,getState){//订单类型
-      actions.tenant.updateState({ 
-        orderTypes:  [{
-          "code":"0",
-          "name":"D001"
-        },{
-          "code":"1",
-          "name":"D002"
-        },{
-          "code":"2",
-          "name":"D003"
-        },{
-          "code":"3",
-          "name":"D004"
-        }]
-      });
-    },
-    
     async delItem(param,getState){
       actions.tenant.updateState({
         showLoading:true
@@ -90,7 +72,7 @@ export default {
       actions.tenant.loadList();
     },
 
-    async save(param,getState){//保存
+    async save(param,getState){//保存，新增或更新租户
       actions.tenant.updateState({
         showLoading:true
       })
@@ -103,7 +85,7 @@ export default {
       });
     },
 
-    async updateStatus(param){//更新状态
+    async updateStatus(param){//更新租户状态
       actions.tenant.updateState({
         showLoading:true
       })

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { actions } from "mirrorx";
 import { Loading, Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Select, Radio } from "tinper-bee";
+import PaginationTable from 'components/PaginationTable'
 import Form from 'bee-form';
 import Pagination from 'bee-pagination';
 import NoData from 'components/NoData';
@@ -28,6 +29,10 @@ class List extends Component {
         }
     }
 
+    componentWillMount() {
+        
+    }
+
     componentDidMount() {//页面渲染完毕后（render执行完毕后）的动作
         console.log('first enter page')
         this.getList({
@@ -50,7 +55,8 @@ class List extends Component {
         actions.tenant.loadList(values);
     }
 
-    updateStatus = (statusFlag) => {
+
+    updateStatus = async (statusFlag) => {//启用停用，更新租户状态
         console.log('update status');
         let { selectData } = this.state,paramArray = []; 
         paramArray = selectData.map( item => {
@@ -60,8 +66,12 @@ class List extends Component {
             return obj ;
         })
 
-        console.log("paramArray"+JSON.stringify(paramArray));
-        actions.tenant.updateStatus(paramArray);
+        console.log("paramArray:"+JSON.stringify(paramArray));
+        await actions.tenant.updateStatus(paramArray);
+        this.setState({
+            selectData:[]
+        });
+        // await actions.tenant.loadList();
     }
 
     reset = () => {//重置
@@ -72,8 +82,7 @@ class List extends Component {
     }
 
     tabelSelect = (data) => {//tabel选中数据
-        console.log('table select');
-        console.log(data);
+        // console.log('table select',data);
         this.setState({
             selectData: data
         })
@@ -206,6 +215,8 @@ class List extends Component {
         ];
         let { form, list, pageSize, pageIndex, totalPages, orderTypes, showLoading } = this.props;
         const { getFieldProps, getFieldError } = form;
+
+        console.log("selectData"+JSON.stringify(this.state.selectData))
         return (
             <div className='order-list'>
                 <Header title='租户认证管理' back={true} />
@@ -307,7 +318,7 @@ class List extends Component {
                             停用
                         </Button>
                     </div>
-                    <div className="scroll-height">
+                    {/* <div className="scroll-height">
                         <Scrollbars>
                             <MultiSelectTable
                                 loading={{ show: showLoading, loadingType: "line" }}
@@ -333,7 +344,20 @@ class List extends Component {
                             onSelect={this.onPageSelect}
                             showJump={true}
                         />
-                    </div>
+                    </div> */}
+                    <PaginationTable
+                        data={list}
+                        pageIndex={pageIndex}
+                        pageSize={pageSize}
+                        totalPages={totalPages}
+                        // total = {total}
+                        columns={column}
+                        checkMinSize={6}
+                        getSelectedDataFunc={this.tabelSelect}
+                        onTableSelectedData={this.tabelSelect}
+                        onPageSizeSelect={this.dataNumSelect}
+                        onPageIndexSelect={this.onPageSelect}
+                />
                 </div>
             </div>
         )
