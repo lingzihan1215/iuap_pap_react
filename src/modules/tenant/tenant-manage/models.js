@@ -103,5 +103,17 @@ export default {
       });
     },
 
+    async updateStatus(param){//更新状态
+      actions.tenant.updateState({
+        showLoading:true
+      })
+      let res=processData(await api.updateStatus(param),'保存成功');
+      actions.tenant.updateState({
+        showLoading:false
+      });
+
+      actions.tenant.loadList();
+    },
+
   }
 };

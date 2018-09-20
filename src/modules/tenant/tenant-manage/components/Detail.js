@@ -61,7 +61,7 @@ class Detail extends Component {
             loadingType="line"
             show={this.props.showLoading}
             />
-                <Header title={editFlag?'租户编辑':'租户详情'} back={true}>
+                <Header title={tenant_id?'租户编辑':'租户新增'} back={true}>
                     {editFlag?(
                         <div className='head-btn'>
                             <Button className='head-cancel' onClick={this.cancel}>取消</Button>

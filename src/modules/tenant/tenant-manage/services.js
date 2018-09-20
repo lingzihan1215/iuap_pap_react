@@ -4,6 +4,7 @@ import { paramToUrl } from "utils";
 const URL = {
     "GET_LIST":  `${GROBAL_HTTP_CTX}/tenant/selectAllByPage`,
     "SAVE_TENANT":  `${GROBAL_HTTP_CTX}/tenant/save`,
+    "UPDATE_STATUS":  `${GROBAL_HTTP_CTX}/tenant/batchUpdateStatus`,
     "DEL_ORDER":  `${GROBAL_HTTP_CTX}/sany_order/delete`,
     "GET_ORDER_TYPE": "/order/manage/orderType"
 }
@@ -23,6 +24,12 @@ export const getOrderType = (params) => {
 }
 export const saveTenant = (params) => {
     return request(URL.SAVE_TENANT, {
+        method: "post",
+        data: params
+    });
+}
+export const updateStatus = (params) => {
+    return request(URL.UPDATE_STATUS, {
         method: "post",
         data: params
     });

@@ -50,6 +50,20 @@ class List extends Component {
         actions.tenant.loadList(values);
     }
 
+    updateStatus = (statusFlag) => {
+        console.log('update status');
+        let { selectData } = this.state,paramArray = []; 
+        paramArray = selectData.map( item => {
+            let obj = {};
+            obj["tenant_id"] = item["tenant_id"] ;
+            obj["status"] = statusFlag?1:0;
+            return obj ;
+        })
+
+        console.log("paramArray"+JSON.stringify(paramArray));
+        actions.tenant.updateStatus(paramArray);
+    }
+
     reset = () => {//重置
         console.log("reset search condition");
         this.setState({
@@ -59,6 +73,7 @@ class List extends Component {
 
     tabelSelect = (data) => {//tabel选中数据
         console.log('table select');
+        console.log(data);
         this.setState({
             selectData: data
         })
@@ -284,6 +299,12 @@ class List extends Component {
                     <div className='table-header'>
                         <Button size='sm' shape="border" onClick={() => { self.cellClick({}, true) }}>
                             新增
+                        </Button>
+                        <Button size='sm' shape="border" onClick={() => { self.updateStatus(true) }}>
+                            启用
+                        </Button>
+                        <Button size='sm' shape="border" onClick={() => { self.updateStatus(false) }}>
+                            停用
                         </Button>
                     </div>
                     <div className="scroll-height">
