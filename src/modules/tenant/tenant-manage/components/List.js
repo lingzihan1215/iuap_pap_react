@@ -18,6 +18,7 @@ const MultiSelectTable = multiSelect(Table, Checkbox);
 const FormItem = Form.FormItem;
 const { RangePicker } = DatePicker;
 import moment from "moment/moment";
+import { Error } from "../../../../utils";
 
 
 class List extends Component {
@@ -27,10 +28,6 @@ class List extends Component {
             selectData: [],
             tenantStatus: ''
         }
-    }
-
-    componentWillMount() {
-        
     }
 
     componentDidMount() {//页面渲染完毕后（render执行完毕后）的动作
@@ -43,35 +40,45 @@ class List extends Component {
         // actions.multi.getOrderType();//订单类型下拉框
     }
 
-    getList=(pageObj)=>{//获得表单数据
+    getList = (pageObj) => {//获得表单数据
         this.props.form.validateFields((err, values) => {
             this.search(pageObj, err, values);
         });
     }
 
-    search = (pageObj,err,values) => {//查询
+    search = (pageObj, err, values) => {//查询
         values.pageIndex = pageObj.pageIndex || this.props.pageIndex || 1,
-        values.pageSize = pageObj.pageSize || this.props.pageSize || 10,
-        actions.tenant.loadList(values);
+            values.pageSize = pageObj.pageSize || this.props.pageSize || 10,
+            actions.tenant.loadList(values);
     }
 
 
     updateStatus = async (statusFlag) => {//启用停用，更新租户状态
         console.log('update status');
-        let { selectData } = this.state,paramArray = []; 
-        paramArray = selectData.map( item => {
+        let { selectData } = this.state, paramArray = [];
+
+        if(selectData.length == 0){
+            // console.log("没有选中记录");
+            Error('没有选中记录');
+            return;
+        }
+
+        //拼装请求参数
+        //[{"tenant_id":"xxx","status":1},{"tenant_id":"xxx","status":1}]
+        paramArray = selectData.map(item => {
             let obj = {};
-            obj["tenant_id"] = item["tenant_id"] ;
-            obj["status"] = statusFlag?1:0;
-            return obj ;
+            obj["tenant_id"] = item["tenant_id"];
+            obj["status"] = statusFlag ? 1 : 0;
+            return obj;
         })
 
-        console.log("paramArray:"+JSON.stringify(paramArray));
+        console.log("paramArray:" + JSON.stringify(paramArray));
         await actions.tenant.updateStatus(paramArray);
         this.setState({
-            selectData:[]
+            selectData: []
         });
-        // await actions.tenant.loadList();
+
+        await actions.tenant.loadList();//刷新页面
     }
 
     reset = () => {//重置
@@ -111,7 +118,7 @@ class List extends Component {
 
     dataNumSelect = (value) => {//分页条数操作，针对于5条/10条/15条/20条选项
         console.log('page data num select');
-        let pageSize = (value + 1) * 5;
+        let pageSize = (value + 1) * 10;
         this.getList({
             pageSize: pageSize,
             pageIndex: 1
@@ -140,7 +147,7 @@ class List extends Component {
                 title: "租户名称",
                 dataIndex: "tenant_name",
                 key: "tenant_name",
-                onCellClick: (record) => this.cellClick(record,true)
+                onCellClick: (record) => this.cellClick(record, true)
             },
             {
                 title: "公司名称",
@@ -187,13 +194,13 @@ class List extends Component {
                 dataIndex: "update_time",
                 key: "update_time",
                 render(record, text, index) {
-                    if(record){
+                    if (record) {
                         return moment(record).format('YYYY-MM-DD HH:mm:ss')
                     }
                 }
             },
             {
-                title: "更新人",    
+                title: "更新人",
                 dataIndex: "update_user",
                 key: "update_user",
             },
@@ -202,7 +209,7 @@ class List extends Component {
                 dataIndex: "create_time",
                 key: "create_time",
                 render(record, text, index) {
-                    if(record){
+                    if (record) {
                         return moment(record).format('YYYY-MM-DD HH:mm:ss')
                     }
                 }
@@ -213,15 +220,15 @@ class List extends Component {
                 key: "create_user",
             }
         ];
-        let { form, list, pageSize, pageIndex, totalPages, orderTypes, showLoading } = this.props;
+        let { form, list, pageSize, pageIndex, totalPages, total, showLoading } = this.props;
         const { getFieldProps, getFieldError } = form;
 
-        console.log("selectData"+JSON.stringify(this.state.selectData))
+        // console.log("selectData" + JSON.stringify(this.state.selectData))
         return (
             <div className='order-list'>
                 <Header title='租户认证管理' back={true} />
 
-                <SearchPanel form={form} search={(error,values)=>{this.search({},error,values)}} reset={this.reset}>
+                <SearchPanel form={form} search={(error, values) => { this.search({}, error, values) }} reset={this.reset}>
                     <Row>
                         <Col md={4} xs={6}>
                             <FormItem>
@@ -350,14 +357,14 @@ class List extends Component {
                         pageIndex={pageIndex}
                         pageSize={pageSize}
                         totalPages={totalPages}
-                        // total = {total}
+                        total = {total}
                         columns={column}
                         checkMinSize={6}
                         getSelectedDataFunc={this.tabelSelect}
                         onTableSelectedData={this.tabelSelect}
                         onPageSizeSelect={this.dataNumSelect}
                         onPageIndexSelect={this.onPageSelect}
-                />
+                    />
                 </div>
             </div>
         )

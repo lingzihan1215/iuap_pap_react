@@ -13,6 +13,7 @@ export default {
     pageIndex:1,
     pageSize:10,
     totalPages:1,
+    total:0,
     detail:{}
   },
   reducers: {
@@ -60,6 +61,7 @@ export default {
           pageIndex:res.data.number+1,
           pageSize:res.data.size,
           totalPages:res.data.totalPages,
+          total:res.data.totalElements,
         });
       }
     },
@@ -94,7 +96,7 @@ export default {
         showLoading:false
       });
 
-      actions.tenant.loadList();
+      // actions.tenant.loadList();
     },
 
   }
