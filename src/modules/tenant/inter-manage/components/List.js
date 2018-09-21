@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { actions } from "mirrorx";
 import { Loading, Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Select, Radio } from "tinper-bee";
+import PaginationTable from 'components/PaginationTable';
 import Form from 'bee-form';
 import Pagination from 'bee-pagination';
 import NoData from 'components/NoData';
@@ -17,6 +18,7 @@ const MultiSelectTable = multiSelect(Table, Checkbox);
 const FormItem = Form.FormItem;
 const { RangePicker } = DatePicker;
 import moment from "moment/moment";
+import { Error } from "../../../../utils";
 
 
 class List extends Component {
@@ -34,8 +36,6 @@ class List extends Component {
             pageIndex: 1,
             pageSize: 10
         })
-        // actions.tenant.loadList();
-        // actions.multi.getOrderType();//订单类型下拉框
     }
 
     getList=(pageObj)=>{//获得表单数据
@@ -50,7 +50,33 @@ class List extends Component {
         actions.inter.loadList(values);
     }
 
-    
+    updateStatus = async (statusFlag) => {//启用停用，更新租户状态
+        console.log('update status');
+        let { selectData } = this.state, paramArray = [];
+
+        if(selectData.length == 0){
+            // console.log("没有选中记录");
+            Error('没有选中记录');
+            return;
+        }
+
+        //拼装请求参数
+        //[{"interfaceId":"xxx","status":1},{"interfaceId":"xxx","status":1}]
+        paramArray = selectData.map(item => {
+            let obj = {};
+            obj["interfaceId"] = item["interfaceId"];
+            obj["status"] = statusFlag ? 1 : 0;
+            return obj;
+        })
+
+        console.log("paramArray:" + JSON.stringify(paramArray));
+        await actions.inter.updateStatus(paramArray);
+        this.setState({
+            selectData: []
+        });
+
+        await actions.inter.loadList();//刷新页面
+    }
 
     reset = () => {//重置
         this.setState({
@@ -64,8 +90,6 @@ class List extends Component {
             selectData: data
         })
     }
-
-    // 多选表格包装函数  结束
 
     cellClick = (record, editFlag) => {//进入详情
         actions.routing.push(
@@ -87,7 +111,7 @@ class List extends Component {
 
     dataNumSelect = (value) => {//分页条数操作，针对于5条/10条/15条/20条选项
         console.log('page data num select');
-        let pageSize = (value + 1) * 5;
+        let pageSize = (value + 1) * 10;
         this.getList({
             pageSize: pageSize,
             pageIndex: 1
@@ -117,7 +141,7 @@ class List extends Component {
                 title: "资源编码",
                 dataIndex: "interfaceCode",
                 key: "interfaceCode",
-                onCellClick: (record) => this.cellClick(record, false)
+                onCellClick: (record) => this.cellClick(record, true)
             },
             {
                 title: "资源名称",
@@ -130,6 +154,11 @@ class List extends Component {
                 key: "url",
             },
             {
+                title: "状态",
+                dataIndex: "status",
+                key: "status",
+            },
+            {
                 title: "分页大小",
                 dataIndex: "pageSize",
                 key: "pageSize",
@@ -139,13 +168,8 @@ class List extends Component {
                 dataIndex: "callFrequency",
                 key: "callFrequency",
             },
-            {
-                title: "状态",
-                dataIndex: "status",
-                key: "status",
-            }
         ];
-        let { form, list, pageSize, pageIndex, totalPages, orderTypes, showLoading } = this.props;
+        let { form, list, pageSize, pageIndex, totalPages, total, showLoading } = this.props;
         const { getFieldProps, getFieldError } = form;
         return (
             <div className='order-list'>
@@ -205,8 +229,14 @@ class List extends Component {
                         <Button size='sm' shape="border" onClick={() => { self.cellClick({}, true) }}>
                             新增
                         </Button>
+                        <Button size='sm' shape="border" onClick={() => { self.updateStatus(true) }}>
+                            启用
+                        </Button>
+                        <Button size='sm' shape="border" onClick={() => { self.updateStatus(false) }}>
+                            停用
+                        </Button>
                     </div>
-                    <div className="scroll-height">
+                    {/* <div className="scroll-height">
                         <Scrollbars>
                             <MultiSelectTable
                                 loading={{ show: showLoading, loadingType: "line" }}
@@ -232,7 +262,20 @@ class List extends Component {
                             onSelect={this.onPageSelect}
                             showJump={true}
                         />
-                    </div>
+                    </div> */}
+                    <PaginationTable
+                        data={list}
+                        pageIndex={pageIndex}
+                        pageSize={pageSize}
+                        totalPages={totalPages}
+                        total = {total}
+                        columns={column}
+                        checkMinSize={6}
+                        getSelectedDataFunc={this.tabelSelect}
+                        onTableSelectedData={this.tabelSelect}
+                        onPageSizeSelect={this.dataNumSelect}
+                        onPageIndexSelect={this.onPageSelect}
+                    />
                 </div>
             </div>
         )

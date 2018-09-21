@@ -13,6 +13,7 @@ export default {
     pageIndex:1,
     pageSize:10,
     totalPages:1,
+    total:0,
     detail:{}
   },
   reducers: {
@@ -61,28 +62,11 @@ export default {
           pageIndex:res.data.number+1,
           pageSize:res.data.size,
           totalPages:res.data.totalPages,
+          total:res.data.totalElements,
         });
       }
     },
 
-    async getOrderType(param,getState){//订单类型
-      actions.inter.updateState({ 
-        orderTypes:  [{
-          "code":"0",
-          "name":"D001"
-        },{
-          "code":"1",
-          "name":"D002"
-        },{
-          "code":"2",
-          "name":"D003"
-        },{
-          "code":"3",
-          "name":"D004"
-        }]
-      });
-    },
-    
     async delItem(param,getState){
       actions.inter.updateState({
         showLoading:true
@@ -100,6 +84,16 @@ export default {
          window.history.go(-1);
       }
       actions.inter.updateState({
+        showLoading:false
+      });
+    },
+
+    async updateStatus(param){//更新接口状态
+      actions.tenant.updateState({
+        showLoading:true
+      })
+      let res=processData(await api.updateStatus(param),'保存成功');
+      actions.tenant.updateState({
         showLoading:false
       });
     },

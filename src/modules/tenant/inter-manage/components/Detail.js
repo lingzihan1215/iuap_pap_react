@@ -26,8 +26,8 @@ class Detail extends Component {
             if(err){
                 Message.create({ content: '数据填写错误', color : 'danger'  });
             }else{
-                if(this.props.location.detailObj&&this.props.location.detailObj.id){
-                    values.id=this.props.location.detailObj.id;
+                if(this.props.location.detailObj&&this.props.location.detailObj.interfaceId){
+                    values.interfaceId=this.props.location.detailObj.interfaceId;
                 }
                 actions.inter.save(values);
             }
@@ -40,7 +40,8 @@ class Detail extends Component {
 
     render (){
         const self=this;
-        let {interfaceCode,interfaceName,url,pageSize,callFrequency,note} = this.props.location.detailObj;
+        let {interfaceId,interfaceCode,interfaceName,url,pageSize,callFrequency,
+            note} = this.props.location.detailObj;
         const editFlag = this.props.location.editFlag;
         const { getFieldProps, getFieldError } = this.props.form;
         return (
@@ -50,7 +51,7 @@ class Detail extends Component {
             loadingType="line"
             show={this.props.showLoading}
             />
-                <Header title={editFlag?'接口资源编辑':'接口资源详情'} back={true}>
+                <Header title={interfaceId?'接口资源编辑':'接口资源新增'} back={true}>
                     {editFlag?(
                         <div className='head-btn'>
                             <Button className='head-cancel' onClick={this.cancel}>取消</Button>

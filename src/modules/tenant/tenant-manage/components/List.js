@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { actions } from "mirrorx";
 import { Loading, Table, Button, Col, Row, Icon, InputGroup, FormControl, Checkbox, Modal, Panel, PanelGroup, Label, Message, Select, Radio } from "tinper-bee";
-import PaginationTable from 'components/PaginationTable'
+import PaginationTable from 'components/PaginationTable';
 import Form from 'bee-form';
 import Pagination from 'bee-pagination';
 import NoData from 'components/NoData';
@@ -36,8 +36,6 @@ class List extends Component {
             pageIndex: 1,
             pageSize: 10
         })
-        // actions.tenant.loadList();
-        // actions.multi.getOrderType();//订单类型下拉框
     }
 
     getList = (pageObj) => {//获得表单数据
